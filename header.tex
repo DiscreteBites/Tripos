@@ -1,0 +1,280 @@
+\usepackage{alltt}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{mathdots}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{textcomp}
+\usepackage{slashed}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage[normalem]{ulem}
+\usepackage[all]{xy}
+
+\pgfplotsset{compat=1.18}
+\pagestyle{fancyplain}
+
+\lhead{\emph{\nouppercase{\leftmark}}}
+\rhead{
+  \ifnum\thepage=1
+  \else
+    \npart\ \vline\ \ncourse
+  \fi}
+
+\def\nauthor{Marcus Ng}
+\author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
+\date{\nterm\ \nyear}
+\title{Part \npart\ --- \ncourse}
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
+\newcommand {\pd}[2][ ]{
+  \ifx #1 { }
+    \frac{\partial}{\partial #2}
+  \else
+    \frac{\partial^{#1}}{\partial #2^{#1}}
+  \fi
+}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem*{aim}{Aim}
+\newtheorem*{axiom}{Axiom}
+\newtheorem*{claim}{Claim}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{defi}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{ex}{Exercise}
+\newtheorem*{fact}{Fact}
+\newtheorem*{law}{Law}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notation}{Notation}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{question}{Question}
+\newtheorem*{problem}{Problem}
+\newtheorem*{rrule}{Rule}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{assumption}{Assumption}
+\newtheorem*{assertion}{Assertion}
+
+\newtheorem*{remark}{Remark}
+\newtheorem*{warning}{Warning}
+\newtheorem*{exercise}{Exercise}
+
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nlemma}[nthm]{Lemma}
+\newtheorem{nprop}[nthm]{Proposition}
+\newtheorem{ncor}[nthm]{Corollary}
+
+% \renewcommand{\labelitemi}{--}
+% \renewcommand{\labelitemii}{$\circ$}
+% \renewcommand{\labelenumi}{(\roman{*})}
+
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+% Strike through
+\def\st{\bgroup \ULdepth=-.55ex \ULset}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Maths Symbols %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\U\relax
+\let\C\relax
+\let\G\relax
+
+% Matrix groups
+% \newcommand{\GL}{\mathrm{GL}}
+% \newcommand{\Or}{\mathrm{O}}
+% \newcommand{\PGL}{\mathrm{PGL}}
+% \newcommand{\PSL}{\mathrm{PSL}}
+% \newcommand{\PSO}{\mathrm{PSO}}
+% \newcommand{\PSU}{\mathrm{PSU}}
+% \newcommand{\SL}{\mathrm{SL}}
+% \newcommand{\SO}{\mathrm{SO}}
+% \newcommand{\Spin}{\mathrm{Spin}}
+% \newcommand{\Sp}{\mathrm{Sp}}
+% \newcommand{\SU}{\mathrm{SU}}
+\newcommand{\U}{\mathrm{U}}
+% \newcommand{\Mat}{\mathrm{Mat}}
+
+% Matrix algebras
+% \newcommand{\gl}{\mathfrak{gl}}
+% \newcommand{\ort}{\mathfrak{o}}
+% \newcommand{\so}{\mathfrak{so}}
+% \newcommand{\su}{\mathfrak{su}}
+% \newcommand{\uu}{\mathfrak{u}}
+% \renewcommand{\sl}{\mathfrak{sl}}
+
+% Special sets
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\CP}{\mathbb{CP}}
+\newcommand{\GG}{\mathbb{G}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\Z}{\mathbb{Z}}
+\renewcommand{\H}{\mathbb{H}}
+
+% Brackets
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\bket}[1]{\left\lvert #1\right\rangle}
+\newcommand{\brak}[1]{\left\langle #1 \right\rvert}
+\newcommand{\braket}[2]{\left\langle #1\middle\vert #2 \right\rangle}
+\newcommand{\bra}{\langle}
+\newcommand{\ket}{\rangle}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\normalorder}[1]{\mathop{:}\nolimits\!#1\!\mathop{:}\nolimits}
+\newcommand{\tv}[1]{|#1|}
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+% not-math
+% \newcommand{\bolds}[1]{{\bfseries #1}}
+% \newcommand{\cat}[1]{\mathsf{#1}}
+% \newcommand{\ph}{\,\cdot\,}
+% \newcommand{\term}[1]{\emph{#1}\index{#1}}
+% \newcommand{\phantomeq}{\hphantom{{}={}}}
+
+% Probability
+% \DeclareMathOperator{\Bernoulli}{Bernoulli}
+% \DeclareMathOperator{\betaD}{beta}
+% \DeclareMathOperator{\bias}{bias}
+% \DeclareMathOperator{\binomial}{binomial}
+% \DeclareMathOperator{\corr}{corr}
+% \DeclareMathOperator{\cov}{cov}
+% \DeclareMathOperator{\gammaD}{gamma}
+% \DeclareMathOperator{\mse}{mse}
+% \DeclareMathOperator{\multinomial}{multinomial}
+% \DeclareMathOperator{\Poisson}{Poisson}
+% \DeclareMathOperator{\var}{var}
+% \newcommand{\E}{\mathbb{E}}
+% \newcommand{\Prob}{\mathbb{P}}
+
+% Algebra
+% \DeclareMathOperator{\adj}{adj}
+% \DeclareMathOperator{\Ann}{Ann}
+% \DeclareMathOperator{\Aut}{Aut}
+% \DeclareMathOperator{\Char}{char}
+% \DeclareMathOperator{\disc}{disc}
+% \DeclareMathOperator{\dom}{dom}
+% \DeclareMathOperator{\fix}{fix}
+% \DeclareMathOperator{\Hom}{Hom}
+% \DeclareMathOperator{\id}{id}
+% \DeclareMathOperator{\image}{image}
+% \DeclareMathOperator{\im}{im}
+% \DeclareMathOperator{\re}{re}
+% \DeclareMathOperator{\tr}{tr}
+% \DeclareMathOperator{\Tr}{Tr}
+% \newcommand{\Bilin}{\mathrm{Bilin}}
+% \newcommand{\Frob}{\mathrm{Frob}}
+
+% Others
+% \newcommand\ad{\mathrm{ad}}
+% \newcommand\Art{\mathrm{Art}}
+% \newcommand{\B}{\mathcal{B}}
+% \newcommand{\cU}{\mathcal{U}}
+% \newcommand{\Der}{\mathrm{Der}}
+% \newcommand{\D}{\mathrm{D}}
+% \newcommand{\dR}{\mathrm{dR}}
+% \newcommand{\exterior}{\mathchoice{{\textstyle\bigwedge}}{{\bigwedge}}{{\textstyle\wedge}}{{\scriptstyle\wedge}}}
+% \newcommand{\F}{\mathbb{F}}
+% \newcommand{\G}{\mathcal{G}}
+% \newcommand{\Gr}{\mathrm{Gr}}
+% \newcommand{\haut}{\mathrm{ht}}
+% \newcommand{\Hol}{\mathrm{Hol}}
+% \newcommand{\hol}{\mathfrak{hol}}
+% \newcommand{\Id}{\mathrm{Id}}
+% \newcommand{\lie}[1]{\mathfrak{#1}}
+% \newcommand{\op}{\mathrm{op}}
+% \newcommand{\Oc}{\mathcal{O}}
+% \newcommand{\pr}{\mathrm{pr}}
+% \newcommand{\Ps}{\mathcal{P}}
+% \newcommand{\pt}{\mathrm{pt}}
+% \newcommand{\qeq}{\mathrel{``{=}"}}
+% \newcommand{\Rs}{\mathcal{R}}
+% \newcommand{\Vect}{\mathrm{Vect}}
+% \newcommand{\wsto}{\stackrel{\mathrm{w}^*}{\to}}
+% \newcommand{\wt}{\mathrm{wt}}
+% \newcommand{\wto}{\stackrel{\mathrm{w}}{\to}}
+% \renewcommand{\d}{\mathrm{d}}
+% \renewcommand{\P}{\mathbb{P}}
+%\renewcommand{\F}{\mathcal{F}}
+
+\let\Im\relax
+\let\Re\relax
+
+% \DeclareMathOperator{\area}{area}
+% \DeclareMathOperator{\card}{card}
+% \DeclareMathOperator{\ccl}{ccl}
+% \DeclareMathOperator{\ch}{ch}
+% \DeclareMathOperator{\cl}{cl}
+% \DeclareMathOperator{\cls}{\overline{\mathrm{span}}}
+% \DeclareMathOperator{\coker}{coker}
+% \DeclareMathOperator{\conv}{conv}
+% \DeclareMathOperator{\cosec}{cosec}
+% \DeclareMathOperator{\cosech}{cosech}
+% \DeclareMathOperator{\covol}{covol}
+% \DeclareMathOperator{\diag}{diag}
+% \DeclareMathOperator{\diam}{diam}
+% \DeclareMathOperator{\Diff}{Diff}
+% \DeclareMathOperator{\End}{End}
+% \DeclareMathOperator{\energy}{energy}
+% \DeclareMathOperator{\erfc}{erfc}
+% \DeclareMathOperator{\erf}{erf}
+% \DeclareMathOperator*{\esssup}{ess\,sup}
+% \DeclareMathOperator{\ev}{ev}
+% \DeclareMathOperator{\Ext}{Ext}
+% \DeclareMathOperator{\fst}{fst}
+% \DeclareMathOperator{\Fit}{Fit}
+% \DeclareMathOperator{\Frac}{Frac}
+% \DeclareMathOperator{\Gal}{Gal}
+% \DeclareMathOperator{\gr}{gr}
+% \DeclareMathOperator{\hcf}{hcf}
+\DeclareMathOperator{\Im}{Im}
+% \DeclareMathOperator{\Ind}{Ind}
+% \DeclareMathOperator{\Int}{Int}
+% \DeclareMathOperator{\Isom}{Isom}
+% \DeclareMathOperator{\lcm}{lcm}
+% \DeclareMathOperator{\length}{length}
+% \DeclareMathOperator{\Lie}{Lie}
+% \DeclareMathOperator{\like}{like}
+% \DeclareMathOperator{\Lk}{Lk}
+% \DeclareMathOperator{\Maps}{Maps}
+% \DeclareMathOperator{\orb}{orb}
+% \DeclareMathOperator{\ord}{ord}
+% \DeclareMathOperator{\otp}{otp}
+% \DeclareMathOperator{\poly}{poly}
+% \DeclareMathOperator{\rank}{rank}
+% \DeclareMathOperator{\rel}{rel}
+% \DeclareMathOperator{\Rad}{Rad}
+\DeclareMathOperator{\Re}{Re}
+% \DeclareMathOperator*{\res}{res}
+% \DeclareMathOperator{\Res}{Res}
+% \DeclareMathOperator{\Ric}{Ric}
+% \DeclareMathOperator{\rk}{rk}
+% \DeclareMathOperator{\Rees}{Rees}
+% \DeclareMathOperator{\Root}{Root}
+% \DeclareMathOperator{\sech}{sech}
+% \DeclareMathOperator{\sgn}{sgn}
+% \DeclareMathOperator{\snd}{snd}
+% \DeclareMathOperator{\Spec}{Spec}
+% \DeclareMathOperator{\spn}{span}
+% \DeclareMathOperator{\stab}{stab}
+% \DeclareMathOperator{\St}{St}
+% \DeclareMathOperator{\supp}{supp}
+% \DeclareMathOperator{\Syl}{Syl}
+% \DeclareMathOperator{\Sym}{Sym}
+% \DeclareMathOperator{\vol}{vol}
