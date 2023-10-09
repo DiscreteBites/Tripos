@@ -42,5 +42,237 @@
 
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 5/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Proofs and Logic}
+\subsection{Proofs}
+
+We begin by getting a handle on proofs and how we prove things.
+
+\begin{defi}[Proof]
+    A \emph{proof} is a sequence of true statements that follow without logical gaps, establishing some conclusion.
+\end{defi}
+
+Note that this definition is still not entirely fleshed out. We have yet to clarify what we mean by \emph{true statements} as well as what constitutes a logical \emph{conclusion}. Furthermore, it is worth while considering why we need to prove things. For the most part, a proof will show definitively that something is true i.e; that a certain property holds for all the integers and not just for the cases that we've manually checked. Constructing proofs may also give us insight into why things are true and in such cases we may find them beautiful.
+
+\begin{eg}
+    Let's consider some truth statements that we can try to prove.
+    \begin{enumerate}
+        \item There exists infinitely many primes $p$ such that $2p + 1$ is also a prime
+        \item There exists infinitely many primes $p$ such that one of $p+2, p+4, \cdots, p+246$ is also prime
+        \item For all positive integers $n$ there exists a prime $p$ such that $n < p < 2n$
+        \item There is no computer algorithm which will factor an $n$ digit integer in at most $n^3$ steps
+        \item Every non-constant polynomial with complex coefficients has a root in the complex numbers
+        \item For all integers, $m$ and $n$, $m * n = n * m$
+        \item 1 + 1 = 2
+    \end{enumerate}
+
+    Remarks and interesting things about the statemenets above
+    \begin{enumerate}
+        \item It is unkown is this is true. Primes of this type as known as Sophie Germain Primes
+        \item This was proved in 2014, and has to do with the twin prime conjecture.
+        \item Not obvious but true
+        \item Would be bad if false, as modern day RSA encryption relies on the truth of this statement
+        \item This is known as the Fundamental Theorem of Algebra
+        \item Worth thinking about. 
+        \item Does this need proving?
+    \end{enumerate}
+\end{eg}
+\subsection{Examples of proofs}
+
+A proof has to do more than simply being correct. A proof must also be able to convince the reader of its correctness. An interesting note by my DOS, Dr Loewe (I'm paraphrasing): 
+\begin{quote}
+    Even though proofs appear to be purely logical, they are in fact highly context dependant -- A proof given to a first year student will look very different to the same proof if given to a third year student. When we grow in doing mathematics our ability to make larger and larger logical leaps increases, drastically changing what we need to show to prove a fact to our peers. The catch is, of course, that we are prepared to produce every step accurately when asked \ldots
+\end{quote}
+
+Hence it is important to get a sense of proofs and non-proofs. Here are some examples
+\begin{assert}
+    For all positive integers $n$, $n^3 - n$ is a multiple of $3$.
+\end{assert}
+
+\begin{proof}
+    Let's observe that we can factor the expression. \\[10pt]
+    $n^3 - n = n(n^2 - 1) = n(n-1)(n+1) = (n-1)n(n+1)$ \\[10pt]
+    Since, one of $n-1$, $n$ or $n+1$ must be a multiple of $3$, so is their product
+\end{proof}
+
+\begin{assert}
+    For all positive integers $n$, If $n^2$ is even, then so is $n$.
+\end{assert}
+
+\begin{proof}
+    Given a positive integer $n$ which is even, we can write $n = 2k$, for some positive integer $k$. Hence $n^2 = (2k)^2 = 2 \cdot (2k^2)$ which is even
+\end{proof}
+
+This is not a proof! We wanted to show that ``if ($n^2$ is even) then ($n$ is even)''. However, the proof instead showed that ``if ($n$ is even) then ($n^2$ is even)'', which is not the same thing (we got it backwards!). Before we get back to this statement let's do one more example.
+
+\begin{assert}
+    For all positive integers $n$, if $n^2$ is a multiple of $9$ then so is $n$.
+\end{assert}
+
+An important step not to miss when evaluating assertions is to consider a few small cases to see if the statement is obviously wrong. We can see that this assertion is false. We can take $n = 3$ as a counter-example. From this we note that in order to show that ``if $A$ then $B$'' is false, it is enough to show that there is one instance where $A$ is true and $B$ is false. For this particular case, we can see that this statement is wrong for all even multiples of $3$.
+
+Let's revist the earlier assertion that if $n^2$ is even, $n$ is even.
+
+\begin{proof}
+    Suppose on the contrary that $n^2$ is even, but $n$ is not.\\
+    Then $n = 2k+1$ for some positive integer $k$.\\
+    Then $n^2 = (2k +1)^2 = 4k^2 + 4k + 1 = 4(k^2 + k) + 1$, which is odd.\\
+    This contradicts the assumption that $n^2$ is even. \contradiction
+\end{proof}
+
+This is our first example of a proof by \emph{contradiction}. (We will use this \contradiction symbol to indicate that contradiction has been reached). Similarly to the previous example, in order to show that ``if $A$ then $B$'' is true, we shoed that there is no case where $A$ is true and $B$ is false.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 2: 7/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{assert}
+    The solution to $x^2 - 5x + 6 = 0$ is $x = 2$ or $x = 3$.
+\end{assert}
+
+We note that these are in fact 2 different assertions:
+\begin{enumerate}
+    \item $x = 2$ and $x = 3$ are solutions
+    \item There are no other solutions
+\end{enumerate}
+
+We can go about the proof in two parts
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item if $x = 2$ or $x = 3$, then $x - 2 = 0$ or $x - 3 = 0$\\
+        so, $(x - 2)(x - 3) = 0$\\
+        so, $x^2 - 5x + 6 = 0$ 
+        \item if $x^2 - 5x + 6 = 0$, then $(x - 2)(x - 3) = 0$\\
+        so*, $x - 2 = 0$ or $x - 3 = 0$\\
+        so, $x = 2$ or $x = 3$
+    \end{enumerate}
+
+    Alternatively, we can notice that the second argument is the first argument reversed. We can write this in a more concise manner using the ``if and only if'' $\Leftrightarrow$ symbol. When we use this symbol we need to make sure that both the forward and reverse implications hold (which we had just done).
+    \begin{align*}
+        x = 2 \ \text{or} \ x = 3&\Leftrightarrow x - 2 = 0 \ \text{or} \ x - 3 = 0\\
+        &\Leftrightarrow (x - 2)(x - 3) = 0\\
+        &\Leftrightarrow x^2 - 5x + 6 = 0
+    \end{align*}
+\end{proof}
+
+Note that in the proof, there was a logical step (*), where we used the fact that if two numbers multiply to $0$, then at least one of the numbers are equal to $0$. Although this works for the real numbers, this is not neccesarily true in other number systems.
+
+\begin{assert}
+    Every positive real number is $\geq 1$
+\end{assert}
+
+\begin{proof}
+    Let $r$ be the least positive real number. Then either $r = 1$, $r < 1$ or $r > 1$.
+    \begin{enumerate}[cases]
+        \item if $r < 1$, then $0 < r^2 < r$, which contradicts the premise \contradiction
+        \item if $r > 1$, then $0 < \sqrt{r} < r$, which contradicts the premise \contradiction
+    \end{enumerate}
+    Therefore, as there is only one case remaining $r = 1$.
+\end{proof}
+
+This is obviously false. The problem lies in the initial claim that $r$ was a least positive real number -- such a thing can not exist! This shows us that we need to justify \underline{all} of our claims, being careful that to not sneak claims in.
+
+\subsection{Logic}
+
+Now that we have come across some examples of truth statements, we can consider the different ways in which we can combine them. Let $A$ and $B$ be assertions / truth statements / boolean variables. We can write:
+\begin{center}
+    \begin{tabular}{ c c c }
+        $A \wedge B$ & for & $A$ and $B$ \\
+        $A \vee B$ & for & $A$ or $B$ \\
+        $\neg A$ & for & not $A$
+    \end{tabular}
+\end{center}
+The truth of each of these combined assertions depends on $A$ and $B$. These can be summarised into a truth table:
+\begin{center}
+    \begin{tabular}{ c|c|c|c|c }
+    $A$ \quad $B$ & $A \wedge B$ & $A \vee B$ & $\neg A$ & $A \Rightarrow B$ \\
+    \midrule
+    F \quad F & F & F & T & T \\
+    F \quad T & F & T & T & T \\
+    T \quad F & F & T & F & F \\
+    T \quad T & T & T & F & T \\
+    \end{tabular}
+\end{center}
+
+We can note that for the truth table of $A \Rightarrow B$, the assertion is only false if we are able to show that there is a case where $A$ is true and $B$ is false; otherwise the implication still holds. 
+
+It is also worth being careful when negating brackets. For example,
+\[
+    \neg (A \wedge B) \Leftrightarrow (\neg A \vee \neg B)
+\]
+Note that when we negate an ``OR'' it becomes ``AND''. We can check this fact in the truth table. An interesting way to do this is to think of negating both the $A$ and $B$ columns in the table as an inversion of the $A \vee B$ column.
+
+By observation we can also see that
+\[
+    (A \Rightarrow B) \Leftrightarrow (\neg A \vee B)
+\]
+This we can check as well in a similar fashion, now swapping the top and bottom two rows of the $A \vee B$ column. An interesting manipulation we can do is that
+\[
+    (\neg A \vee B) \Leftrightarrow (B \vee \neg A) \Leftrightarrow (\neg B \Rightarrow \neg A)
+\]
+Since order is not important for an ``OR'' clause. This is known as the contrapositive.
+
+As seen in the examples, we also have quantifiers -- mainly $\forall$ to mean ``for all'' and $\exists$ to mean ``there exists''. We observer what happens when we negate quantifiers.
+
+For a given sock $x$ is my drawer, let $A(x)$ denote that $x$ is red, and $B(x)$ denote that $x$ is blue. Then, consider the negation of the follow two statements
+\begin{enumerate}
+    \item $\neg (\forall x A(x))$
+    \item $\neg (\exists x B(x))$
+\end{enumerate}
+
+These two statements read; (i) all my socks are red, (ii) there exists a blue sock. When negating these statements, we get; (i) there exists a sock that is not red, (ii) all socks are not blue. These can be written symbolically:
+\begin{enumerate}
+    \item $\exists x \neg A(x)$
+    \item $\forall x \neg B(x)$
+\end{enumerate}
+
+\section{Elementary Number Theory}
+\subsection{Natural numbers}
+
+The natural numbers $\N$ consist of (for this course we will exclude 0):
+\[
+    1, 1+1, 1+1+1, 1+1+1+1, \cdots 
+\]
+We should think deeply about their construction. What can we assume about these numbers and what can we prove? Two questions were raised. How do we know that we have captured all of them? How do we know that they are all distinct? These questions are non-obvious and lead us to come up with axioms from which we can start to prove statements.
+
+\begin{defi}[Natural Numbers $\N$]
+    The natural numbers, written $\N$ is a set containing a special element $1$ with an operation $+1$ which satisfies the following properties
+    \begin{enumerate}
+        \item $\forall n \in \N \quad n+1 \neq 1$
+        \item $\forall m, n \in \N \quad  m \neq n \Rightarrow m + 1 \neq n + 1$
+        \item for any property $p(n)$, if $p(n)$ is true, and $\forall n \in \N \quad p(n) \Rightarrow p(n + 1)$, then $p(n)$ is true $\forall n \in \N$
+    \end{enumerate}
+\end{defi}
+
+These are known as the \emph{Peano Axioms} (although a quick google search shows that thats not entirely true \ldots). The first two axioms (i) and (ii) capture the idea that any 2 natural numbers are distinct. The third axiom is unsurprisingly known as the induction axiom. It helps formalise the idea that the list of natural numbers is complete. For instance, take $p(n) = $ ``$n$ is on the list''. Since we know that $p(1)$ is true (by definition), $p(1)$ implies $p(1 + 1)$ by the first axiom (i).
+
+With these axioms, we can now start to create labels; $2$ for $1 + 1$, $3$ for $1 + 1 + 1$, etc. We can then define a $+k$ operation for any natural number $k$.
+
+\begin{defi}[$+k$]
+    For every natural number $n$, we define an operation $+k$ as follows:
+    \[
+        n + (k + 1) = (n + k) + 1
+    \]
+    We then define the property $p(k) = $ ``$+k$ is defined''. Then by the induction axiom, we have defined $+k$ for all natural numbers $k$.
+\end{defi}
+
+To get a better sense for how the induction axiom works let's work through a few examples. We have by defintion $+1$. Let's construct $+2$. By the definition above, using $k = 1$
+\[
+    n + (1 + 1) = (n + 1) + 1 \Rightarrow n + 2 = (n + 1) + 1
+\]
+
+Note that we define $+2$ using only what we know about $+1$ by using the stated definition. Similarly, to construct $+3$ we use $k = 2$
+\[
+    n + (2 + 1) = (n + 2) + 1 \Rightarrow n + 3 = (n + 2) + 1
+\]
+
+We can now apply the induction axiom. We have demonstrated that the definition for an operation $+k$ implies the operation $+(k + 1)$.
+\[
+    p(k) \Rightarrow p(k + 1)
+\]
+Hence we may apply the induction axiom to define $+k$ for all the natural numbers inductively.
 
 \end{document}
