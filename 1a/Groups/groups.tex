@@ -454,7 +454,7 @@ We are particularly interested in cases where $X$ is finite.
 \begin{defi}[Subgroup]
     Let $(G, \cdot_G, e_G)$ and $(H, \cdot_H, e_H)$ be groups. If
     \begin{enumerate}
-        \item $H \subset G$
+        \item $H \subseteq G$
         \item $e_H = e_G$
         \item $\forall a, b \in H, \quad a \cdot_H b = a \cdot_G b$
     \end{enumerate}
@@ -462,7 +462,7 @@ We are particularly interested in cases where $X$ is finite.
 \end{defi}
 
 \begin{prop}[Subgroup Criterion]
-    Let $G$ be a group and $H \subset G$ be a non-empty subset. If
+    Let $G$ be a group and $H \subseteq G$ be a non-empty subset. If
     \[
         \forall a, b \in H, \quad a \cdot_G b^-1 \in H
     \]
@@ -495,9 +495,9 @@ We are particularly interested in cases where $X$ is finite.
             H = \bigcap_{i}{H_i} \leq G   
         \]
         is a subgroup.
-        \item For any subset $X \subset G$, define
+        \item For any subset $X \subseteq G$, define
         \[
-            \anglebk{X} = \bigcap_{X \subset H \leq G}{H} \leq G
+            \anglebk{X} = \bigcap_{X \subseteq H \leq G}{H} \leq G
         \]
         This is known as the subgroup \emph{generated} by $X$. In the case that $\anglebk{X} = G$ we say that $X$ \emph{generates} $G$
     \end{enumerate}
