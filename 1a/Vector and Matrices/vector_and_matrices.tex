@@ -7,6 +7,7 @@
 \def\ncourse {Vector and Matrices}
 
 \input{../../header.tex}
+\numberwithin{equation}{section}
 
 \begin{document}
 \maketitle{
@@ -46,5 +47,139 @@
 
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 6/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Complex Numbers}
+\subsection{Basic properties}
+\begin{defi}[Complex number]
+    A \emph{complex number} $z \in \C$ is
+    \[
+        z = a + ib, \quad a, b \in \R, \quad i = \sqrt{-1}  
+    \]
+    We define two other functions, $\Re()$ and $\Im()$ such that,
+    \[
+        \Re(z) = a \quad \Im(z) = b 
+    \]
+    Clearly, we may note that $\R \subset \C$ in the case where $b = 0$
+\end{defi}
 
+We can define algebraic manipulation over the complex numbers,
+\begin{align*}
+    z_1 \pm z_2 &= a_1 \pm a_2 + i(b_1 \pm b_2) \\
+    z_1z_2 &= a_1a_2 - b_1b_2 + i(a_1b_2 + a_2b_1)
+\end{align*}
+We can define the inverse of a complex number
+\begin{equation}
+    z^{-1} = \frac{1}{a + ib} = \frac{a - ib}{a^2 + b^2}\label{eq:1}
+\end{equation}
+this demonstrates that $\C$ is \emph{closed} under addition and multiplication. We also define a complex conjugate of $z = a + ib$ as $\overline{z}$ or $z^*$.
+\[
+    \overline{z}, z^* = a - ib
+\]
+The modulus of $z$ as $\abs{z}$
+\begin{align*}
+    \abs{z} &= \abs{a + ib} = \sqrt{a^2 + b^2} \\
+    z\overline{z} &= a^2 + b^2 = \abs{z}^2 \\
+    z^{-1} &= \frac{\overline{z}}{\abs{z}^2} \tag{see \eqref{eq:1}}
+\end{align*}
+We also introduce the Argand Diagram, where the coordinate axes are the Real and Imaginary axes. We can see that $\overline{z}$ is the reflection of $z$ in the $x$-axis.
+
+% draw an argand diagram in tikz
+\begin{defi}[Triangle inequality]
+    For $z_1, z_2 \in \C$, the triangle inequality states that
+    \begin{equation}
+        \abs{z_1 + z_2} \leq \abs{z_1} + \abs{z_2}\label{eq:2}
+    \end{equation}
+\end{defi}
+
+\begin{prop}
+    The triangle inequality has another common alternative form,
+    \begin{equation}
+        \abs{z_1 - z_2} \geq \abs{\abs{z_1} - \abs{z_2}}\label{eq:3}
+    \end{equation}
+\end{prop}
+
+\begin{proof}
+    Write $z_1 = z^{\prime}_1 - z^{\prime}_2$, and $z_2 = z^{\prime}_2$ and substitute them into \eqref{eq:2}. Then,
+    \begin{align*}
+        &\abs{z^{\prime}_1} \leq \abs{z^{\prime}_1 - z^{\prime}_2} + \abs{z^{\prime}_2} \\
+        \Rightarrow& \abs{z^{\prime}_1} - \abs{z^{\prime}_2} \leq\abs{z^{\prime}_1 - z^{\prime}_2}\\
+        \Rightarrow& \abs{z^{\prime}_1 - z^{\prime}_2} \geq \abs{z^{\prime}_1} - \abs{z^{\prime}_2} \tag{$\star$}
+    \end{align*}
+    Notice that our labelling of $z_1$ and $z_2$ was arbitrary, and so we can freely swap the assignment. This gives,
+    \[
+        \abs{z^{\prime}_1 - z^{\prime}_2} \geq \abs{z^{\prime}_2} - \abs{z^{\prime}_1} \tag{$\star\star$}
+    \]
+    Since $\abs{z^{\prime}_1 - z^{\prime}_2} \geq (\star) \ \text{and} \ (\star\star)$, hence, \eqref{eq:3}
+\end{proof}
+
+\begin{defi}[Polar Representation]
+    For a complex number $z = a + ib$ we use the argand diagram to write $z = r(\cos{\theta} + i\sin{\theta})$, where
+    \[
+        r = \abs{z} \quad \text{and} \quad \theta = \arctan\left(\frac{b}{a}\right) = arg(z)  
+    \]
+\end{defi}
+
+\begin{remark}
+    Note that the mapping $(r, \theta) \rightarrow z$ is unique. However, the reverse $r \rightarrow (r, \theta)$ is \emph{NOT} unique since for each value of $\theta$, $\theta + 2n\pi$ is equally valid.
+
+    In order to make this mapping single valued, we will by convention restrict $\theta$ to the principle value, where
+    \[
+        -\pi < \theta \leq \pi  
+    \]
+
+    This multivalued property becomes quite interesting when we consider complex functions. We can imagine taking the multivalued imaginary $\ln$ function as a multistory carpark, walking round and round up and down. To fix this what we do is to build a brick wall on the upramp (``branch cut'').
+\end{remark}
+
+Using complex numbers in this form allows us to view complex arithmetic geometrically. For instance, let
+\begin{align*}
+    z_k &= x_k + iy_k \quad \text{for} \quad k = 1, 2 \\
+    &= r_k(\cos{\theta_k} + i\sin(\theta_k))
+\end{align*}
+\begin{align*}
+    z_1z_2 &= r_1(\cos{\theta_1} + i\sin{\theta_1})r_2(\cos{\theta_2} + i\sin{\theta_2}) \\
+    &= r_1r_2[(\cos{\theta_1}\cos{\theta_2} - \sin{\theta_1}\sin{\theta_2}) + i(\cos{\theta_1}\sin{\theta_2} + \sin{\theta_1}\cos{\theta_2})] \\
+    &= r_1r_2(\cos{(\theta_1 + \theta_2)} + i\sin{(\theta_1 + \theta_2)}) \numberthis \label{eq:4}
+\end{align*}
+
+\subsection{Complex exponential function}
+\begin{defi}[Complex exponential function]
+    \begin{align*}
+        exp(z) &= 1 + z + \frac{z^2}{2!} + \cdots + \frac{z^n}{n!} + \cdots \\
+        &=\sum_{n=0}^{\infty}{\frac{z^n}{n!}} \numberthis \label{eq:5}
+    \end{align*}
+\end{defi}
+This function is ``uniformly convergent'' (something that we will cover next term in analysis). That means that we are able to do lots of algebraic manipulation without too much hesitation. =
+
+\begin{prop}[Multiplication]
+    \[
+        exp(z_1)exp(z_2) = exp(z_1 + z_2)  
+    \]
+\end{prop}
+\begin{proof}
+    We will consider the double sum
+    \begin{align*}
+        \sum_{m,n=0}^{\infty}{a_mn} &= a_{00} + a_{01} + a_{02} + a_{03} + \cdots \\
+         &+ a_{10} + a_{11} + a_{12} + \cdots \\
+         &+ a_{20} + a_{21} + a_{22} + \cdots \\
+         &+ a_{30} + a_{31} + a_{32} + \cdots \\
+         &\vdots
+    \end{align*}
+    Then by collecting terms along the diagonal we can regroup the sum into
+    \[
+        =\sum_{r=0}^{\infty}\sum_{m=0}^{r}{a_{r-m, m}}
+    \]
+    Hence, 
+    \begin{align*}
+        exp(z_1) \cdot exp(z_2) &= \sum_{r=0}^{\infty}\sum_{m=0}^{r}{\frac{z_1^{r-m}}{(r-m)!}\frac{z_2^{m}}{m!}} \\
+        &= \sum_{r=0}^{\infty}{\frac{1}{r!}}\sum_{m=0}^{r}{\frac{r!}{(r-m)!m!}z_1^{r-m}z_2^{m}} \\
+        &= \sum_{r=0}^{\infty}{\frac{1}{r!} (z_1 + z_2)^r} \\
+        &= exp(z_1 + z_2)
+    \end{align*}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 2: 8/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
