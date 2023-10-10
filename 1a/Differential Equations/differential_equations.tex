@@ -41,5 +41,279 @@
 
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 6/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic Calculus}
+\subsection{Differentiation}
+\begin{defi}[Derivative of a function]
+    Define the derivative of $f(x)$ w.r.t its argument $x$ as the function
+    \[
+        \frac{df}{dx} \equiv \lim_{h \rightarrow 0}{\frac{f(x +h) - f(x)}{h}}
+    \]
+
+    % Insert the diagram of the slopy thing.
+
+    Note that for a derivative to exist at point $x$, both the left and right hand limits must exist and be equal. 
+    \[
+        \lim_{h \rightarrow 0^-}{\frac{f(x +h) - f(x)}{h}} = \lim_{h \rightarrow 0^+}{\frac{f(x +h) - f(x)}{h}}
+    \]
+\end{defi}
+
+\begin{eg}[$f(x) = \abs{x}$]
+    \begin{align*}
+        \text{LHL} &= \lim_{h \rightarrow 0^-}{\frac{\abs{h}}{h}} = -1 \\
+        \text{RHL} &= \lim_{h \rightarrow 0^-}{\frac{\abs{h}}{h}} = 1
+    \end{align*}
+    We see that $\abs{x}$ is not differentiable at $x=0$
+\end{eg}
+
+Some notational differences. Most often Newton's notation is used to denote differentiation with respect to time. 
+\begin{center}
+    \begin{tabular}{ c|c|c }    
+        Leibnitz & Lagrange & Newton \\
+        \midrule
+        $\frac{df}{dx}$ & $f^{\prime}(x)$ & $\dot{f}(x)$
+    \end{tabular}
+\end{center}
+
+For sufficiently smooth functions, we can define higher derivatives. Here are some second derivatives
+\[
+    \frac{d}{dx}\left(\frac{df}{dx}\right) = \frac{d^2f}{dx^2} \quad \text{or} \quad f^{\prime\prime}(x) \quad \text{or} \quad \ddot{f}(x)
+\]
+For $n^{th}$ derivatives we tend to use this notation
+\[
+    f^{(n)}(x)
+\]
+
+\subsection{Big $O$ and little $\underline{o}$ notation}.
+These are known as order parameters and are very useful when comparing the behaviour of 2 functions sufficiently close to some point $x_o$ or as $x$ tends to infinity. They are particular useful in deal with approximations where the remainder depends upon a parameter.
+
+\begin{defi}[$O$ and $\underline{o}$]\leavevmode
+    \begin{enumerate}
+        \item $f(x)$ is $O(g(x))$ as $x \rightarrow x_0$ if $\exists \delta > 0$ and $M > 0$ such that $\forall x$ with $0 < \abs{x - x_0} < \delta$,
+        \[
+            \abs{f(x)} \leq M\abs{g(x)}  
+        \]
+        It follows from this that $\frac{f(x)}{g(x)}$ remains bounded as $x \rightarrow x_0$
+        \item $f(x)$ is $\underline{o}(g(x))$ as $x \rightarrow x_0$ if $\forall \epsilon > 0, \exists \delta > 0$ such that $\forall x$ with $0 < \abs{x - x_0} < \delta$,
+        \[
+            \abs{f(x)} \leq \epsilon\abs{g(x)}  
+        \]
+        This means that $f(x)$ needs to be much smaller than $g(x)$. It follows similarly that if $g(x) \neq 0 $
+        \[
+            \lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}} = 0  
+        \]
+    \end{enumerate}
+    We often write that $f(x) = O(g(x))$ or $f(x) = \underline{o}(g(x))$, but this is an abuse of notation. A more accurate notation would be to write
+    \[
+        f(x) \in O(g(x)) \quad f(x) \in \underline{o}(g(x))
+    \]
+    Since these actually represent classes of functions. We can also notice that $\underline{o}$ is a much stronger statement than $O$ since, for $\underline{o}$ we need to be able to produce a value of $x$ that results in an arbitrarily small multiple of $g(x)$
+
+    We can also extend this to behaviour as $x \rightarrow \infty$. We say that $f(x) = O(g(x))$ if $\exists X > 0$ and $M > 0$ such that $\forall x > X$,
+    \[
+        \abs{f(x)} \leq M\abs{g(x)}  
+    \]
+
+    Note that
+    \[
+        f(x) = \underline{0}(g(x)) \Rightarrow f(x) = O(g(x))  
+    \]
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Given $f(x) = 2x, \quad f(x) = O(x)$ as $x \rightarrow 0$. However, $f(x) \neq \underline{o}(g(x))$ as $x \rightarrow 0$ since,
+        \[
+            \lim_{x \rightarrow 0}{\abs{\frac{f(x)}{x}}} = 2 \neq 0  
+        \]
+        \item Given $f(x) = x^2, \quad f(x) = \underline{o}(x)$ as $x \rightarrow 0$ since, 
+        \[
+            \lim_{x \rightarrow 0}{\abs{\frac{x^2}{x}}} = 0
+        \]
+        \item Given $f(x) = x^2 + x, \quad f(x) = O(x^2)$ as $x \rightarrow \infty$ since for any $x > 1$,
+        \[
+            \abs{x^2 + x} \leq 2\abs{x^2}  
+        \]
+        In general, any polynomial where $a_n \neq 0$
+        \[
+            a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0 = O(x^n) \quad \text{as} \quad x \rightarrow 0
+        \]
+        \item Given $f(x) = \sin{2x}, \quad f(x) = O(x)$ as $x \rightarrow 0$ since, $\sin{2x} \approx 2x$ for $x << 1$
+    \end{enumerate}
+\end{eg}
+
+\begin{remark}
+    When using order paramters, constants do not matter. If 
+    \begin{align*}
+        f(x) &= O(g(x)) \Rightarrow af(x) = O(g(x)) \\
+        f(x) &= O(ag(x)) \quad \text{for} \ a \neq 0
+    \end{align*}
+\end{remark}
+
+Order paramters are useful to classify remainder terms before taking a limit. Consider the following expression
+\[
+    f(x_0 + h) - f(x_0) = h f^{\prime}(x_0) + \varepsilon(h) 
+\]
+By comparing this with the definition of the derivative, we can take a limit
+\begin{align*}
+    \lim_{h \rightarrow 0}{\frac{f(x_0 + h) - f(x_0)}{h}} &= f^{\prime}(x_0) + \lim_{h \rightarrow 0}{\varepsilon(h)} \\
+    &\therefore  \lim_{h \rightarrow 0}{\varepsilon(h)} = 0 \\
+    &\Rightarrow \varepsilon(h) = \underline{o}(h)
+\end{align*}
+\[
+    \therefore f(x_0 + h) = f(x_0) + h f^{\prime}(x_0) + \underline{o}(h)
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 2: 8/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Rules for differentiation}
+\begin{thm}[Chain Rule]
+    Given $f(x) = F(g(x))$,
+    \[
+        \frac{df}{dx} = F^{\prime}(g(x)) \cdot \frac{dg}{dx}   = \frac{dF}{dg}\frac{dg}{dx}
+    \]
+    Note that $F^{\prime}(g(x))$ refers to the derivative of the function $F$ with respect to its argument $g$ and then evaluated at $g(x)$
+\end{thm}
+
+\begin{proof}[See notes]
+    
+\end{proof}
+
+\begin{eg}
+    \[
+        \frac{d}{dx} \sin{(x^2 -x +2)} = \cos{(x^2 -x +2)}[2x - 1]
+    \]
+\end{eg}
+
+\begin{thm}[Product Rule]
+    Given $f(x) = u(x)v(x)$,
+    \[
+        \frac{df}{dx} = v \frac{du}{dx} + u \frac{dv}{dx}
+    \]
+    The Quotient rule is a special case of the product rule, when $v \rightarrow \frac{1}{v}$
+    \begin{align*}
+        \frac{d}{dx}\left(\frac{u}{v}\right) &= \frac{1}{v}\frac{du}{dx} + u \frac{d}{dx}\left(\frac{1}{v}\right) \\
+        &= \frac{1}{v}\frac{du}{dx} + \frac{u}{v^2} \frac{dv}{dx} \\
+        &= \frac{vu^{\prime} - v^{\prime}u}{v^2}
+    \end{align*}
+\end{thm}
+
+\begin{thm}[Leibnitz'z Rule]
+    Consider $f(x) = u(x)v(x)$ then,
+    \begin{align*}
+        f^{\prime} &= u^{\prime}v + uv^{\prime} \\
+        f^{\prime\prime} &= u^{\prime\prime}v + 2u^{\prime}v^{\prime} + uv^{\prime\prime} \\
+        f^{\prime\prime\prime} &= u^{\prime\prime\prime}v + 3u^{\prime\prime}v^{\prime} + 3u^{\prime}v^{\prime\prime} + uv^{\prime\prime\prime} \\
+        \vdots
+    \end{align*}
+
+    We have that
+    \[
+        f^{(n)}(x) = \sum_{r=0}^{n}{\binom{n}{k}u^{(n-r)}(x)v^{r}(x)}
+    \]
+    Note that
+    \[
+        u^{(0)}(x) \equiv u(x)  
+    \]
+\end{thm}
+
+\begin{proof}[Exercise by induction]
+    
+\end{proof}
+
+\subsection{Taylor Series}
+A taylor series is an infinite series that tries to approximate a function in the vincity of some point. It is constructed to match the first $n$ differentials of a function.
+
+\begin{defi}[Taylor Series]
+    For $f(x)$ infinitely differentiable at $x_0$, the taylor series $T_f(x)$ is defined to be
+    \[
+        T_f(x) = f(x_0) + (x - x_0)f^{\prime}(x) + \frac{(x - x_0)^2}{2!}f^{\prime\prime}(x) + \cdots + \frac{(x - x_0)^n}{n!}f^{(n)}(x) + \cdots
+    \]
+\end{defi}
+
+Taylor series are often used for approximations. To consider the errors these approximations have, we look at Taylor's Theorem.
+
+\begin{thm}[Taylor's Theorem]
+    For $n$-times differentiable $f(x)$ at $x_0$,
+    \[
+        f(x_0 + h) = f(x_0) + hf^{\prime}(x_0) + \frac{h^2}{2!}f^{\prime\prime}(x_0) + \cdots + \frac{h^n}{n!}f^{(n)}(x) + E_n
+    \]
+    Where $E_n$ accounts for the error in the approximation. Taylor's theorem states that
+    \[
+        E_n = \underline{o}(h^n) \quad \text{as} \quad x \rightarrow 0  
+    \]
+\end{thm}
+
+A stronger form of this exists, if $f^{(n+1)}(x)$ exists $\forall x \in [x_0, x_0 + h]$ as in continuous in this range,
+\begin{align*}
+    E_n &= O(h^{n+1}) \quad \text{as} \quad x \rightarrow 0 \\
+    &= \frac{f^{n+1}(x_n)}{(n+1)!}h^{n+1} \quad \text{for} \quad x \in [x_0, x_0 +h]
+\end{align*}
+This is due to Lagrange. Note that $E_n = O(h^{n+1})$ is stronger than $\underline{o}(h^n)$. For instance, consider $h^{n + 0.5} = \underline{o}(h^n)$ but $\neq O(h^{n+1})$ as $h \rightarrow 0$
+
+\begin{defi}[Taylor Polynomials]
+    With $x = x_0 + h$ and Taylor's theorem gives
+    \[
+        f(x) = f(x_0) + (x - x_0)f^{\prime}(x) + \frac{(x - x_0)^2}{2!}f^{\prime\prime}(x) + \cdots + \frac{(x - x_0)^n}{n!}f^{(n)}(x) + E_n
+    \]
+    This is called the ``$n^{th}$'' Taylor polynomial about $x_0$. It is constructed to match the first $n$ derivatives of $f(x)$ as $x_0$ and provides a local approximation to $f(x)$ in the vicinity of $x_0$ with error $E_n = O(h^{n+1})$. If we have that
+    \[
+        \lim_{n \rightarrow \infty}{E_n} = 0  
+    \]
+    then the Taylor Polynomial converges to $f(x)$
+\end{defi}
+
+\subsection{L'H\^opital's Rule}
+This theorem allows us to deal with limits of \emph{indeterminant forms}. For example $\lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}}$ where $\lim_{x \rightarrow x_0}{f(x)} = \lim_{x \rightarrow x_0}{g(x)} = 0$.
+
+\begin{thm}[L'H\^opital's Rule]
+    Let $f(x)$ and $g(x)$ be differentiable at $x_0$ and have continuous first derivatives there, and
+    \begin{align*}
+        \lim_{x \rightarrow x_0}{f(x)} &= f(x_0) = 0 \\
+        \lim_{x \rightarrow x_0}{g(x)} &= g(x_0) = 0
+    \end{align*}
+    Then if $g^{\prime}(x_0) \neq 0$,
+    \[
+        \lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}} = \lim_{x \rightarrow x_0}{\frac{f^{\prime}(x)}{g^{\prime}(x)}}
+    \]
+    Provided that the second limit exists. Note that the non-existence of the second limit does not give any information about the original limit.
+\end{thm}
+
+\begin{proof}
+    Using the result at the end of the section discussing order parameters,
+    \begin{align*}
+        f(x) &= f(x_0) + (x - x_0)f^{\prime}(x_0) + \underline{o}(x - x_0) \quad \text{as} \quad x \rightarrow x_0 \\
+        g(x) &= g(x_0) + (x - x_0)g^{\prime}(x_0) + \underline{o}(x - x_0) \quad \text{as} \quad x \rightarrow x_0
+    \end{align*}
+    \[
+        \lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}} = \lim_{x \rightarrow x_0}{\frac{f^{\prime}(x_0) + \frac{\underline{o}(x - x_0)}{x - x_0}}{g^{\prime}(x_0) + \frac{\underline{o}(x - x_0)}{x - x_0}}}
+    \]
+    Since we have that $g^{\prime}(x_0) \neq 0$, 
+    \begin{align*}
+        \lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}} &= \frac{f^{\prime}(x_0)}{g^{\prime}(x_0)} \\
+        &= \frac{\lim_{x \rightarrow x_0}{f^{\prime}(x)}}{\lim_{x \rightarrow x_0}{g^{\prime}(x)}} \tag{assuming continuous first derivatives}\\
+        &= \lim_{x \rightarrow x_0}{\frac{f^{\prime}(x)}{g^{\prime}(x)}} \tag{already checked $g(x_0) \neq 0$}
+    \end{align*}
+\end{proof}
+
+We can generalise, by repeating L'\^opital's Rule, given that the conditions hold. For instance, we can have if $f^{\prime}(x_0) = g^{\prime}(x_0) = 0$
+\[
+    \lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}} = \frac{f^{\prime\prime}(x_0)}{g^{\prime\prime}(x_0)}
+\]
+
+\begin{eg}
+    \begin{align*}
+        f(x) &= 3\sin{x} - \sin{3x}
+        g(x) = 2x - \sin{2x}
+    \end{align*}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 3: 11/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
