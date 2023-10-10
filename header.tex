@@ -16,6 +16,7 @@
 \usepackage{slashed}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usetikzlibrary{graphs}
 \usepackage{tkz-euclide}
 \usepackage[normalem]{ulem}
 \usepackage[all]{xy}
@@ -70,7 +71,6 @@
 
 \newtheorem*{remark}{Remark}
 \newtheorem*{warning}{Warning}
-\newtheorem*{exercise}{Exercise}
 
 \newtheorem{nthm}{Theorem}[section]
 \newtheorem{nlemma}[nthm]{Lemma}
@@ -148,6 +148,7 @@
 
 % Brackets
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\anglebk}[1]{\left\langle #1\right\rangle}
 \newcommand{\bket}[1]{\left\lvert #1\right\rangle}
 \newcommand{\brak}[1]{\left\langle #1 \right\rvert}
 \newcommand{\braket}[2]{\left\langle #1\middle\vert #2 \right\rangle}
