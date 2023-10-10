@@ -117,7 +117,7 @@ We also introduce the Argand Diagram, where the coordinate axes are the Real and
 \begin{defi}[Polar Representation]
     For a complex number $z = a + ib$ we use the argand diagram to write $z = r(\cos{\theta} + i\sin{\theta})$, where
     \[
-        r = \abs{z} \quad \text{and} \quad \theta = \arctan\left(\frac{b}{a}\right) = arg(z)  
+        r = \abs{z} \quad \text{and} \quad \theta = \arctan\left(\frac{b}{a}\right) = \arg{(z)}  
     \]
 \end{defi}
 
@@ -146,15 +146,15 @@ Using complex numbers in this form allows us to view complex arithmetic geometri
 \subsection{Complex exponential function}
 \begin{defi}[Complex exponential function]
     \begin{align*}
-        exp(z) &= 1 + z + \frac{z^2}{2!} + \cdots + \frac{z^n}{n!} + \cdots \\
+        \exp(z) &= 1 + z + \frac{z^2}{2!} + \cdots + \frac{z^n}{n!} + \cdots \\
         &=\sum_{n=0}^{\infty}{\frac{z^n}{n!}} \numberthis \label{eq:5}
     \end{align*}
 \end{defi}
 This function is ``uniformly convergent'' (something that we will cover next term in analysis). That means that we are able to do lots of algebraic manipulation without too much hesitation. =
 
-\begin{prop}[Multiplication]
+\begin{prop}[Multiplication of $\exp()$]
     \[
-        exp(z_1)exp(z_2) = exp(z_1 + z_2)  
+        \exp(z_1)\exp(z_2) = \exp(z_1 + z_2)  
     \]
 \end{prop}
 \begin{proof}
@@ -172,14 +172,186 @@ This function is ``uniformly convergent'' (something that we will cover next ter
     \]
     Hence, 
     \begin{align*}
-        exp(z_1) \cdot exp(z_2) &= \sum_{r=0}^{\infty}\sum_{m=0}^{r}{\frac{z_1^{r-m}}{(r-m)!}\frac{z_2^{m}}{m!}} \\
+        \exp(z_1) \cdot \exp(z_2) &= \sum_{r=0}^{\infty}\sum_{m=0}^{r}{\frac{z_1^{r-m}}{(r-m)!}\frac{z_2^{m}}{m!}} \\
         &= \sum_{r=0}^{\infty}{\frac{1}{r!}}\sum_{m=0}^{r}{\frac{r!}{(r-m)!m!}z_1^{r-m}z_2^{m}} \\
         &= \sum_{r=0}^{\infty}{\frac{1}{r!} (z_1 + z_2)^r} \\
-        &= exp(z_1 + z_2)
+        &= \exp(z_1 + z_2)
     \end{align*}
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%
 % Lecture 2: 8/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+Similarly, we can define the complex $\sin(z)$ and $\cos(z)$ functions.
+\begin{defi}[Complex sine and cosine]
+    \begin{align*}
+        \sin{z} &= \sum_{n=0}^{\infty}{(-1)^n\frac{z^{2n+1}}{(2n+1)!}} \\
+        \cos{z} &= \sum_{n=0}^{\infty}{(-1)^n\frac{z^{2n}}{(2n)!}} \numberthis \label{eq:6}
+    \end{align*}
+\end{defi}
+
+From \eqref{eq:5} we can derive that
+\begin{align*}
+    e^{iz} &= \sum_{n=0}^{\infty}{\frac{i^nz^n}{n!}} \\
+    &= \sum_{n=0}^{\infty}{(-1)^n\frac{z^{2n+1}i^{2n+1}}{(2n+1)!}} + \sum_{n=0}^{\infty}{(-1)^n\frac{z^{2n}i^{2n}}{(2n)!}} \\
+    &= i\sin{z} + \cos{z} \numberthis \label{eq:7}
+\end{align*}
+
+We may consider $\theta \in \R$ which gives,
+\begin{equation}
+    z = re^{i\theta} = r(\cos{\theta} + i\sin{\theta}) \label{eq:8}
+\end{equation}
+
+\subsection{Roots of unity}
+We seek to solve equations of the form $z^n = 1$ where $n \in \Z$. Since this is a polynomial of degree $n$ we expect to find $n$ solutions. By applying the exponential form we found earlier,
+\begin{align*}
+    z^n = 1 &= \exp(i2 \pi k), \quad k \in \Z \\
+    z &= \exp(i2 \pi \frac{k}{n})
+\end{align*}
+Notice that the roots will repeat after $k = n-1$. Hence the solutions are
+\[
+    z = \exp(i2 \pi \frac{k}{n}), \quad k = 0, 1, 2, \cdots, n-1
+\]
+
+\begin{eg}[$ z^7 = 2$]
+    \[
+        z = 2^{\frac{1}{7}} \exp(i 2\pi \frac{m}{7}), \quad m = 0, 1, 2, \cdots, 6
+    \]
+\end{eg}
+
+An interesting point to note is that for the polynomial $z^n - 1 = 0$, if we arbitrarily choose a root $w = \exp(\frac{2\pi i}{n})$, then all the remaining roots will be
+\[
+    1, w, w^2, w^3, \cdots, w^{n-1}
+\]
+Further, if we note that since the coefficient of $z^{n-1}$ is $0$, that implies that the sum of the roots must be $0$.
+\[
+   1 + w + w^2 + w^3 + \cdots + w^{n-1} = 0
+\]
+
+\subsection{Complex Logarithm and Powers}
+\begin{defi}[Complex Log]
+    The \emph{complex log}, $\log{z}$, is a solution of the following
+    \[
+        e^w = z  
+    \]
+    Hence, $\exp()$ and $\log()$ are inverse functions, i.e;
+    \[
+        e^{\log{z}} = z
+    \]
+    If we write $z = re^{i\theta}$ from \eqref{eq:8} then,
+    \begin{align*}
+        \log{z} = \log{re^{i\theta}} &= \log{r} + \log{e^{i\theta}} \\
+        &= log{\abs{z}} + i\arg{(z)} \numberthis \label{eq:9}
+    \end{align*}
+    It is important to note that this is not a single valued function. In order to define a single valued $\log$ we will insist that
+    \[
+        -\pi < \arg{(z)} \leq \pi
+    \]
+    Hence,
+    \begin{equation}
+        \log{z} = log{\abs{z}} + i\theta, \quad -\pi < \theta \leq \pi \label{eq:10}
+    \end{equation}
+\end{defi}
+
+\begin{eg}
+    \begin{align*}
+        \log{(2i)} &= \log{2e^{i\frac{\pi}{2}}} \\
+        &=\log{2} + i\frac{\pi}{2}
+    \end{align*}
+\end{eg}
+
+\begin{defi}[Complex Power]
+    Since we have defined the complex logarithm we can now define the complex power, $z^\alpha$ for $z, \alpha \in \C$ as
+    \begin{equation}
+        z^\alpha = e^{\alpha \log{z}} \label{eq:11}
+    \end{equation}
+    Again, this function is multivalued. Specifically using \eqref{eq:10},
+    \[
+        z^\alpha = e^{\alpha \log{z}}e^{i \alpha \theta}e^{i \alpha 2\pi n}, \quad n \in \Z
+    \]
+    However, unlike the roots of unity, there is no reason why this series will repeat and terminate. If $\alpha$ is real and rational then will there be finite solutions. Once again, we will make this function single valued by insisting on using the principle value for $\theta$
+    \[
+        -\pi < \arg{(z)} \leq \pi
+    \]
+\end{defi}
+
+\begin{ex}\leavevmode
+    \begin{enumerate}
+        \item \begin{align*}
+            (1 + i)^\frac{1}{2} &= e^{\frac{1}{2}\sqrt{2}}e^\frac{i\pi}{8}e^{in\pi}, \quad n = 0, 1 \\
+            &= 2^\frac{1}{4}e^\frac{i\pi}{8}, 2^\frac{1}{4}e^\frac{i9\pi}{8} \\
+            &= 2^\frac{1}{4}e^\frac{i\pi}{8} \tag{by insiting on the principle value}
+        \end{align*}
+        \item \begin{align*}
+            i^i &= \exp(i \log{(e^\frac{i\pi}{2})}) \tag{from \eqref{eq:11}} \\
+            &= \exp(i \frac{i\pi}{2}) \\
+            &= \exp(-\frac{\pi}{2})
+        \end{align*}
+    \end{enumerate}
+\end{ex}
+
+\subsection{De Moivre's Theorem}
+\begin{thm}[De Moivre's Theorem]
+    \begin{equation}
+        \cos{n\theta} + i\sin{n\theta} = (\cos{\theta} + i\sin{\theta})^n, \quad n \in \Z \label{eq:12}
+    \end{equation}
+\end{thm}
+
+\begin{proof}
+    By induction, we will first consider the case where $n > 0$. Clearly, $n=1$ is true. Assume $n=k$ is true for $k > 1$.
+    \begin{align*}
+        (\cos{\theta} + i\sin{\theta})^{k+1} &= (\cos{k\theta} + i\sin{k\theta})(\cos{\theta} + i\sin{\theta}) \\
+        &= \cos{k\theta}\cos{\theta} - \sin{k\theta}\sin{\theta} + i(\cos{k\theta}\sin{\theta} + \sin{k\theta}\cos{\theta}) \\
+        &= \cos{(k+1)\theta} + i\sin{(k+1)\theta}
+    \end{align*}
+    Now when $n < 0$, we write $m = -n$ such that $m > 0$
+    \begin{align*}
+        (\cos{\theta} + i\sin{\theta})^{-m} &= (\cos{m\theta} + i\sin{m\theta})^{-1} \\
+        &= \cos{m\theta} - i\sin{m\theta} \tag{by ($\star$)}\\
+        &= \cos{(-m\theta)} - i\sin{(-m\theta)}
+    \end{align*}
+    Note $(\star)$:
+    \[
+        z^{-1} = \frac{z^*}{\abs{z}^2}    
+    \]
+\end{proof}
+
+Using De Moivre's theorem we can work out multiple angle formulae by comparing real and imaginary parts:
+\begin{eg}
+    \begin{align*}
+        \cos{5 \theta} + i\sin{5 \theta} &= (\cos{\theta} + i\sin{\theta})^5 \\
+        &\vdots \\
+        \cos{5 \theta} &= 5\cos{\theta} - 20 \cos^3{\theta} + 16\cos^5{\theta}\\
+        \sin{5 \theta} &= 5\cos{\theta} - 20 \cos^3{\theta} + 16\cos^5{\theta}\\
+    \end{align*}
+\end{eg}
+Note that for non-integer powers of $n$ we will have to insist on the principle value \eqref{eq:12}
+
+\subsection{Lines and Circles in $\C$}
+\begin{defi}[Straight Line]
+    A line $l$ through $z_0 \in \C$ parallel to $w \in \C$ can be generally written
+    \[
+        z = z_0 + \lambda w, \quad \lambda \in \R    
+    \]
+    However, it would be better to get rid of the parameterisation. We can use the fact that $\lambda$ must be real and hence its conjugate is equal to itself.
+    \begin{align*}
+        \lambda &= \frac{z - z_0}{w} \in \R\\
+        &\Rightarrow \frac{z - z_0}{w} = \frac{\overline{z} - \overline{z_0}}{\overline{w}} \\
+        &\Leftrightarrow z \overline{w} - \overline{z}w = z_0 \overline{w} - \overline{z_0} w
+    \end{align*}
+\end{defi}
+
+\begin{defi}[Circle]
+    A circle can be defined from its center $c \in \C$ and radius $\rho \in \R$. By definition, if $z$ lies on the circle,
+    \begin{align*}
+        &\abs{z - c} = \rho \\
+        \Rightarrow& (z - c)(\overline{z} - \overline{c}) = \rho^2 \\
+        \Leftrightarrow& z\overline{z} - \overline{c}z - c\overline{z} = \rho^2 - c\overline{c}
+    \end{align*}
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 3: 11/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
