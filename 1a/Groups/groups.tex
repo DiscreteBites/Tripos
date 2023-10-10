@@ -37,5 +37,494 @@
     
 \tableofcontents
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 5/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Examples and Definitions}
+
+There are two ways of looking at groups; an algebraic approach that deals with equations and variables, and a geometric approach that looks at symmerties, tilings. etc. To begin we will consider the symmetries of shapes, and once we have a better idea of what a group can look like we will then begin to prove properties of groups algebraically.
+
+\subsection{Symmetries of an equilateral triangle}
+
+Let's consider the plane symmetries of an equilateral triangle. For clarity sake, we will label each vertex with a number.
+\begin{center}
+    \begin{tikzpicture}[scale=0.8]
+        \coordinate[label=left:$3$]  (A) at (0,0);
+        \coordinate[label=right:$1$] (B) at (4,0);
+        \coordinate[label=above:$2$] (C) at (2,3.464);
+        
+        \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+    \end{tikzpicture}
+\end{center}
+
+Given such a triangle, there are two main transformations we can make -- rotations and reflections. In total there are 6 such symmetries:
+\begin{center}
+    \begin{tabular}{ c c c }
+        % Identity
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+        \end{tikzpicture} 
+        &
+        % Left rotation
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+            
+            % \draw[ultra thick, red, -{>[sep=2pt]}]
+            %     (A) [left] edge [bend right=45] (B)
+            %     (B) edge [bend right=45] (C)
+            %     (C) edge [bend right=45] (A);
+        \end{tikzpicture}
+        &
+        % Right rotation
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+        \end{tikzpicture}
+        \\
+        % Top reflection
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+
+            \draw[red, dashed, line width=1.5pt] (1, 1.9) -- (1, -0.2);
+        \end{tikzpicture}
+        &
+        % Left reflection
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+
+            \draw[red, dashed, line width=1.5pt] (0, 0) -- (1, -0.2);
+        \end{tikzpicture}
+        &
+        % Right reflection
+        \begin{tikzpicture}
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,0);
+            \coordinate (C) at (1,1.732);
+            
+            \draw[line width=1.5pt] (A) -- (B) -- (C) -- cycle;
+
+            \draw[red, dashed, line width=1.5pt] (2, 0) -- (1, -0.2);
+        \end{tikzpicture}
+    \end{tabular}
+\end{center}
+
+For each of these symmetries, we can compose or ``multiply'' them. For instance, we may perform a rotation followed by a reflection.
+
+% Insert an image of three triangles to demonstrate composition
+
+Firstly, notice that the result of two such composition is itself a symmertry. Specifically, it is the symmerty obtained by reflecting the trianlge by an axis that passes through the vertex $2$. There are three important features to note. 
+\begin{enumerate}
+    \item There is an identity (a symmetry that does nothing)
+    \item Every symmetry has an inverse
+    \item Symmerty multiplication is \emph{associative}
+\end{enumerate}
+Furthermore, there is an important non-feature; multiplication may not be commutative. In this case, performing a rotation followed by a reflection does not result in the same result as if the order of transformations were reversed. 
+
+% Insert an image of three triangles to demonstrate non commutativity
+
+\subsection{Algebra}
+
+With the example in mind, we will now define what a group is algebraically. 
+
+\begin{defi}[Binary Operation]
+    A \emph{binary operation} on the set $X$ is a map
+    \begin{align*}
+        \cdot \ X \times X \rightarrow x \\
+        (x, y) \longmapsto x \cdot y
+    \end{align*}
+\end{defi}
+
+\begin{defi}[Group]
+    A \emph{group} is a triple $(G, \cdot, e)$ where
+    \begin{enumerate}
+        \item $G$ is a set
+        \item $\cdot$ is a binary operation
+        \item $e \in G$
+    \end{enumerate}
+
+    Satisfying three Axioms
+    \begin{enumerate}
+        \item (Associativity) $\forall a, b, c \in G, \quad (a \cdot b) \cdot c = a \cdot (b \cdot c)$
+        \item (Identity) $\forall a \in G, \quad a \cdot e = G$
+        \item (Inverse) $\forall a \in G, \exists b \ \text{s.t.} \ a \cdot b = e$
+    \end{enumerate}
+\end{defi}
+
+These axioms generalise the example encountered earlier.
+\begin{eg}
+    Consider the group $(\Z, +, 0)$
+
+    We can show this forms a group as we have
+    \begin{enumerate}
+        \item (Associativity) since addition over the integers is associative
+        \item (Identity) since $0$ acts as an additive identity
+        \item (Inverse) since $\forall a \in \Z, \quad a + (-a) = 0$
+    \end{enumerate}
+\end{eg}
+Now that we have established the axioms of groups we can prove some immediate properties.
+
+\begin{prop}
+    Let $(G, \cdot, e)$ be a group, and $a, b, b^{\prime}, e, e^{\prime} \in G$. Then,
+    \begin{enumerate}
+        \item if $a \cdot b = e$ then $b \cdot a = e$
+        \item $e \cdot a = a$
+        \item if $a \cdot b = e = a \cdot b^{\prime}$ then $b = b^{\prime}$
+        \item if $a \cdot e^{\prime} = a$ then $e = e^{\prime}$
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item We will show that inverses commute
+        \begin{align*}
+            b &= b \cdot e \tag{identity} \\
+            &= b \cdot (a \cdot b) \tag{hypothesis} \\
+            &= (b \cdot a) \cdot b \tag{associativity}
+        \end{align*}
+
+        By inverses, $\exists c \in G$ such that $b \cdot c = e$, so multiplying both sides of the equation on the right gives,
+
+        \begin{align*}
+            b \cdot c &= ((b \cdot a) \cdot b) \cdot c \\
+            &= (b \cdot a) \cdot (b \cdot c) \tag{associativity} \\
+            &= (b \cdot a) \cdot e \tag{identity}
+        \end{align*}
+
+        Hence, $e = b \cdot a$ as required
+        
+        \item We will show that left identity and the right identity are the same. By inverses and by part (i), $\exists b \in G$ such that $a \cdot b = e = b \cdot a$ 
+        \begin{align*}
+            e \cdot a &= (a \cdot b) \cdot A \\
+            &= a \cdot (b \cdot a) \tag{associativity}\\
+            &= a \cdot e \\
+            &= a \tag{identity}
+        \end{align*}
+
+        \item We will show that multiplication is unique 
+        \begin{align*}
+            b^{\prime} &= e \cdot b^{\prime} \tag{ii}\\
+            &= (b \cdot a) \cdot b^{\prime} \tag{i}\\
+            &= b \cdot (a \cdot b^{\prime}) \tag{associativity}\\
+            &= b \cdot e \tag{hypothesis} \\
+            &= b \tag{identity}
+        \end{align*}
+
+        Alternatively, a for a stronger argument. $\exists c \in G$ such that $c \cdot a = e$
+        \begin{align*}
+            a \cdot b &= a \cdot b^{\prime} \\
+            c \cdot (a \cdot b) &= c \cdot (a \cdot b^{\prime}) \\
+            (c \cdot a) \cdot b &= (c \cdot a) \cdot b^{\prime} \tag{associativity} \\
+            e \cdot b &= e \cdot b^{\prime} \\
+            b &= b^{\prime} \tag{ii}
+        \end{align*}
+
+        \item We will show that identity is unique. By inverses and part (i), $\exists b \in G$ such that $b \cdot a = e$.
+        \begin{align*}
+            b \cdot a &= b \cdot (a \cdot e^{\prime}) \tag{hypothesis}\\
+            &= (b \cdot a) \cdot e^{\prime} \tag{hypothesis}\\
+            &= e \cdot e^{\prime} \\
+            &= e^{\prime}
+        \end{align*}
+        
+        Hence $e = e^{\prime}$
+    \end{enumerate}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 2: 7/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+Note that part (iii) says that inverses are \emph{unique}. Therefore, if $a \cdot b = e$. Firstly, we will introduce the superscript ``$-1$'' notation to indicate an inverse of some element. Then we can write
+\begin{align*}
+    b &= a^{-1} \\
+    a \cdot a^{-1} &= e = a^{-1} \cdot a
+\end{align*}
+
+Therefore we have that the inverse of an inverse brings us back to the original element.
+\[
+    (a^{-1})^{-1} = a  
+\]
+
+Using this new notation, we can now define notation to write $\forall a \in G, \forall n \in \N$,
+\begin{center}
+    \begin{itemize}
+        \item $a^0 = e$
+        \item $a^1 = a$
+        \item $a^2 = a \cdot a$
+        \item[$\vdots$]
+        \item $a^n = a^{n-1} \cdot a$
+    \end{itemize}
+\end{center}
+
+We can also define negative exponentials as
+\[
+    a^n = (a^{-1})^{-n} \quad \text{for} \ n = -1, -2, -3, \ldots
+\]
+
+\begin{ex} Show that the following holds
+    \begin{enumerate}
+        \item $a^{m} \cdot a^{n} = a^{m + n}$
+        \item $(a^{m})^{n} = a^{mn}$
+    \end{enumerate}
+\end{ex}
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item
+        \begin{align*}
+            a^m \cdot a^n &= a^m \cdot (a^{n-1} \cdot a) \tag{by definition} \\
+            &= (a^m \cdot a) \cdot a^{n-1} \tag{associativity} \\
+            &= a^{m+1} \cdot a^{n-1}
+        \end{align*}
+
+        Then we may proceed by induction, to arrive at
+        \begin{align*}
+            a^m \cdot a^n &= a^{m+n} \cdot a^{n-n} \\
+            &= a^{m+n} \cdot a^0 \\
+            &= a^{m+n} \cdot e \tag{by definition}\\
+            &= a^{m+n} \tag{identity}
+        \end{align*}
+        
+        \item
+        \begin{align*}
+            (a^m)^n &= (a^m)^{n-1} \cdot a^m \tag{by definition} \\
+            &= ((a^m)^{n-2} \cdot a^m) \cdot a^m \\
+            &= (a^m)^{n-2} \cdot (a^m \cdot a^m) \tag{associativity} \\
+            &= (a^m)^{n-2} \cdot a^{2m} \tag{i} \\
+        \end{align*}
+
+        Then we may proceed by induction, to arrive at
+        \begin{align*}
+            (a^m)^n &= (a^m)^{0} \cdot a^{nm} \\
+            &= e \cdot a^{nm} \tag{by definition} \\
+            &= a^{nm} \tag{identity}
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Recall that $a \cdot b$ is not necessarily $b \cdot a$ is a group $G$. So, we have to be careful when taking inverses after multiplying, the order of multiplication is reversed.
+    \[
+        (a \cdot b)^{-1} = b^{-1} \cdot a^{-1}  
+    \]
+\end{remark}
+
+\begin{defi}[Abelian Group]
+    If $(G, \cdot, e)$ is a group amd further satisfies that $a \cdot b = b \cdot a, \quad \forall a, b \in G$ then $G$ is called \emph{Abelian}
+\end{defi}
+
+\begin{defi}[Order of Group]
+    The order of a group $(G, \cdot, e)$ is the number of elements of $G$, $\abs{G}$. If $\abs{G} < \infty$, then the group is finite
+\end{defi}
+
+\begin{eg}
+    Here are some example and non-examples of groups
+    \begin{enumerate}
+        \item Trivial group. If $G = \{e\}$ and $e \cdot e = e$ then $(G, \cdot, e)$ is called the \emph{Trivial Group}
+    \end{enumerate}
+    Familiar examples from arithmetic
+    \begin{enumerate}[resume]
+        \item $(\Z, +, 0), (\Q, +, 0), (\R, +, 0), (\C, +, 0)$ as all abelian groups. In particular, the inverse of $x$ is $-x$
+        \item $(\N, +, 0)$ is \emph{NOT} a group as there are no inverses
+        \item $(\Q, \times, 1)$ is \emph{NOT} as group (0 does not have an inverse)
+        \item $(\Q \setminus \{0\}, \times, 1), (\R \setminus \{0\}, \times, 1), (\C \setminus \{0\}, \times, 1)$ are abelian groups
+    \end{enumerate}
+    Finite examples
+    \begin{enumerate}[resume]
+        \item $\forall n \in \N, \ \text{let} \ C_n = \{z \in \C \mid z^n = 1\}$. Then $(c_n, \times, 1)$ forms an abelian group of order $n$
+        \item Let $\Z_n = \{a \in \N \cup \{0\} \mid a < n\}$. Then for $a, b \in \Z_n$, let $a +_n b$ be the remainder when $a + b$ is divided by $n$. Then $(\Z_n, +_n, 0)$ form a group.
+    \end{enumerate}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 3: 10/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Matrix Groups}
+\begin{defi}[Matrix Group]
+    Let $GL_2(\R)$ be the set of all $2 \times 2$ matrices
+    \[
+        A = \begin{pmatrix}
+            a & b \\
+            c & d
+        \end{pmatrix} \quad \text{with} \quad a,b,c,d \in \R
+    \]
+    and $A$ is invertible i.e; $A$ has an inverse. $\exists B \in GL_2$ such that
+    \[
+        AB = \begin{pmatrix}
+            1 & 0 \\
+            0 & 1
+        \end{pmatrix}
+    \]
+    Then $(GL_2(\R), \cdot, \begin{pmatrix}
+        1 & 0 \\
+        0 & 1
+    \end{pmatrix})$ form a group
+\end{defi}
+
+From this definition we can see that this group is non-abelian -- as matrix multiplication is non-commutative, and that the group is infinite. For example, consider matrices of the form
+\[
+    \begin{pmatrix}
+        1 & t \\
+        0 & 1
+    \end{pmatrix} \quad \forall t \in \R
+\]
+
+\subsection{Symmetric Groups}
+\begin{defi}[$Sym(X)$]
+    Let $X$ be a set. Then we define $Sym(X)$ to be the set of all bijections from $X \rightarrow X$. Alternatively we can think of this set as being the same as the set of all permutations of $X$.
+\end{defi}
+
+\begin{defi}[$Id_x$]
+    The identity map, $Id_x$ is defined as the map $x \mapsto x$. 
+\end{defi}
+
+\begin{lemma}[Compositive is associative]
+    Consider maps $f, g, h$ of sets $w, x, y, z$
+    \begin{center}
+        \begin{tikzpicture}
+            \graph {
+                w ->["f"] x ->["g"] y ->["h"] z;
+            };
+        \end{tikzpicture}
+    \end{center}
+    Then $(h \circ g) \circ f = h \circ (g \circ f)$
+\end{lemma}
+
+\begin{proof}
+    We will watch what happens to an element over the composed maps. Let $w \in W$
+    \begin{align*}
+        (h \circ g) \circ f (w) &= (h \circ g)(f(w)) \\
+        &= h(g(f(w))) \\
+        &= h(g \circ f(w)) \\
+        &= h \circ (g \circ f)(w)
+    \end{align*}
+\end{proof}
+
+\begin{prop}
+    For any set $X, (Sym(x), \circ, Id_x)$ form a group
+\end{prop}
+
+\begin{proof}[Symmetric Group]
+    To prove that $(Sym(x), \circ, Id_x)$ forms a group we need to show that
+    \begin{enumerate}
+        \item Associativity follows from the Lemma
+        \item $Id_x$ is the identity
+        \item Inverses exist by the definition of bijection
+    \end{enumerate}
+\end{proof}
+
+We are particularly interested in cases where $X$ is finite.
+\begin{defi}[$S_n$]
+    If $x = {1, 2, \cdots, n}$ then $S_n \equiv Sym(X)$
+\end{defi}
+
+\begin{ex}
+    What is the order of $S_n$?
+\end{ex}
+
+\begin{proof}
+    The order of $S_n$ is equal to the number of permutations of $n$ elements and therefore $n!$
+\end{proof}
+
+\begin{remark}
+    Before moving on, let's take note of the notation we are using. Currently, it takes a triple $(G, \cdot, e)$ to define a group. Moving forward, we will simply write $G$ to represent the whole group. However, when dealing with multiple groups, we will use $\cdot_G$ and $e_G$ to specify which binary operation and which identity belongs to the group $G$.
+\end{remark}
+
+\subsection{Subgroups}
+\begin{defi}[Subgroup]
+    Let $(G, \cdot_G, e_G)$ and $(H, \cdot_H, e_H)$ be groups. If
+    \begin{enumerate}
+        \item $H \subset G$
+        \item $e_H = e_G$
+        \item $\forall a, b \in H, \quad a \cdot_H b = a \cdot_G b$
+    \end{enumerate}
+    then $H$ is a \emph{subgroup} of $G$ and we write $H \leq G$
+\end{defi}
+
+\begin{prop}[Subgroup Criterion]
+    Let $G$ be a group and $H \subset G$ be a non-empty subset. If
+    \[
+        \forall a, b \in H, \quad a \cdot_G b^-1 \in H
+    \]
+    then $H \leq G$
+\end{prop}
+
+\begin{proof}
+    Since $H$ is nonempty, let $x \in H$. Therefore assuming the subgroup criterion,
+    \begin{enumerate}
+        \item (Identity) $x \cdot_G x^{-1} \in H \Rightarrow e_G \in H$
+        \item (Inverse) $e_G \cdot_G a^{-1} \in H \Rightarrow a^{-1} \in H \quad \forall a \in H$
+        \item (Closure) \begin{align*}
+            \forall a, b \in H, b^{-1} \in H \tag{by Inverse} &\Rightarrow a \cdot_G (b^{-1})^{-1} \in H \\
+            &\Rightarrow a \cdot_G b \in H
+        \end{align*}
+    \end{enumerate}
+    Finally, if we set $\cdot_H =$ ``restriction of $\cdot_G$'' to $H$ and $e_H = e_G$ then $H \leq G$. 
+\end{proof}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Every group $G$ is a subgroup of itself
+        \item For every group $G$, $I_G = \{e_G\}$ is the Trivial subgroup
+    \end{enumerate}
+    Propper subgroups
+    \begin{enumerate}[resume]
+        \item $\Z \leq \Q \leq \R \leq \C$
+        \item If $H_i \leq G$ for some set of $i$ then
+        \[
+            H = \bigcap_{i}{H_i} \leq G   
+        \]
+        is a subgroup.
+        \item For any subset $X \subset G$, define
+        \[
+            \anglebk{X} = \bigcap_{X \subset H \leq G}{H} \leq G
+        \]
+        This is known as the subgroup \emph{generated} by $X$. In the case that $\anglebk{X} = G$ we say that $X$ \emph{generates} $G$
+    \end{enumerate}
+\end{eg}
+
+\begin{ex}[Intersection of Subgroups]
+    Prove statement (iv) that the intersection of subgroups is itself a subgroup. 
+\end{ex}
+
+\begin{proof}
+    We will proceed by contradiction. Consider two elements $a, b \in H$. Since $H$ is the intersection of all $H_i$, $a, b \in H_i $ for all $i$.
+    
+    Suppose $b^{-1} \notin H$. Then, $\exists i$ such that $b^{-1} \notin H_i$. However, $H_i$ is a subgroup that fulfils the subgroup criterion. This is a contradiction \contradiction.
+
+    Define $c \equiv a \cdot b^{-1}$. Suppose $c \notin H$. Then $\exists i$ such that $c \notin H_i$. However $H_i$ is a subgroup and must contain $c$ since it contains both $a$ and $b$. This is a contradiction \contradiction.
+    
+    Hence, $\forall a,b \in H, \quad a \cdot b^{-1} \in H \Rightarrow H \leq G$
+\end{proof}
+
+\begin{prop}
+    The subgroups of $\Z$ are exactly the subsets
+    \[
+        n\Z = \{nk \in \Z \mid k \in \Z\} \quad \forall n = 0, 1, 2, \ldots
+    \]
+\end{prop}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 4: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
