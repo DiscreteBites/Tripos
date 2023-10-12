@@ -41,8 +41,14 @@
 \newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
 \setlist[enumerate,1]{label={(\roman*)}}
 
+\newcounter{temp_equation_var}
 \SetEnumitemKey{eqn}{
-  before=\usecounter{equation},
+  before={
+    % Work around usecounter behaviour that sets the counter to 0
+    \setcounter{temp_equation_var}{\value{equation}}
+    \usecounter{equation}
+    \setcounter{equation}{\value{temp_equation_var}}
+  },
   label=(\theequation),
   ref={\theequation},
   align=left,
