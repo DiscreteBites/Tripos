@@ -41,6 +41,14 @@
 \newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
 \setlist[enumerate,1]{label={(\roman*)}}
 
+\SetEnumitemKey{eqn}{
+  before=\usecounter{equation},
+  label=(\theequation),
+  ref={\theequation},
+  align=left,
+  leftmargin=\parindent
+}
+
 \newcommand {\pd}[2][ ]{
   \ifx #1 { }
     \frac{\partial}{\partial #2}
@@ -108,7 +116,6 @@
   \end{tikzpicture}
 }
 
-
 \let\U\relax
 \let\C\relax
 \let\G\relax
@@ -159,7 +166,10 @@
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 \newcommand{\normalorder}[1]{\mathop{:}\nolimits\!#1\!\mathop{:}\nolimits}
 \newcommand{\tv}[1]{|#1|}
-\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+
+\newcommand{\pvec}[1]{\overrightarrow{#1}}
+\renewcommand{\vec}[1]{\underline{#1}}
+\newcommand{\uvec}[1]{\hat{\vec{#1}}}
 
 % not-math
 % \newcommand{\bolds}[1]{{\bfseries #1}}
