@@ -49,7 +49,7 @@
 \begin{defi}[Derivative of a function]
     Define the derivative of $f(x)$ w.r.t its argument $x$ as the function
     \[
-        \frac{df}{dx} \equiv \lim_{h \rightarrow 0}{\frac{f(x +h) - f(x)}{h}}
+        \diff{f}{x} \equiv \lim_{h \rightarrow 0}{\frac{f(x +h) - f(x)}{h}}
     \]
 
     % Insert the diagram of the slopy thing.
@@ -73,13 +73,13 @@ Some notational differences. Most often Newton's notation is used to denote diff
     \begin{tabular}{ c|c|c }    
         Leibnitz & Lagrange & Newton \\
         \midrule
-        $\frac{df}{dx}$ & $f^{\prime}(x)$ & $\dot{f}(x)$
+        $\diff{f}{x}$ & $f^{\prime}(x)$ & $\dot{f}(x)$
     \end{tabular}
 \end{center}
 
 For sufficiently smooth functions, we can define higher derivatives. Here are some second derivatives
 \[
-    \frac{d}{dx}\left(\frac{df}{dx}\right) = \frac{d^2f}{dx^2} \quad \text{or} \quad f^{\prime\prime}(x) \quad \text{or} \quad \ddot{f}(x)
+    \diff{}{x}\left(\diff{f}{x}\right) = \diff[2]{f}{x} \quad \text{or} \quad f^{\prime\prime}(x) \quad \text{or} \quad \ddot{f}(x)
 \]
 For $n^{th}$ derivatives we tend to use this notation
 \[
@@ -174,7 +174,7 @@ By comparing this with the definition of the derivative, we can take a limit
 \begin{thm}[Chain Rule]
     Given $f(x) = F(g(x))$,
     \[
-        \frac{df}{dx} = F^{\prime}(g(x)) \cdot \frac{dg}{dx}   = \frac{dF}{dg}\frac{dg}{dx}
+        \diff{f}{x} = F^{\prime}(g(x)) \cdot \diff{g}{x}   = \diff{F}{g}\diff{g}{x}
     \]
     Note that $F^{\prime}(g(x))$ refers to the derivative of the function $F$ with respect to its argument $g$ and then evaluated at $g(x)$
 \end{thm}
@@ -185,19 +185,19 @@ By comparing this with the definition of the derivative, we can take a limit
 
 \begin{eg}
     \[
-        \frac{d}{dx} \sin{(x^2 -x +2)} = \cos{(x^2 -x +2)}[2x - 1]
+        \diff{}{x} \sin{(x^2 -x +2)} = \cos{(x^2 -x +2)}[2x - 1]
     \]
 \end{eg}
 
 \begin{thm}[Product Rule]
     Given $f(x) = u(x)v(x)$,
     \[
-        \frac{df}{dx} = v \frac{du}{dx} + u \frac{dv}{dx}
+        \diff{f}{x} = v \diff{u}{x} + u \frac{dv}{dx}
     \]
     The Quotient rule is a special case of the product rule, when $v \rightarrow \frac{1}{v}$
     \begin{align*}
-        \frac{d}{dx}\left(\frac{u}{v}\right) &= \frac{1}{v}\frac{du}{dx} + u \frac{d}{dx}\left(\frac{1}{v}\right) \\
-        &= \frac{1}{v}\frac{du}{dx} + \frac{u}{v^2} \frac{dv}{dx} \\
+        \diff{}{x}\left(\frac{u}{v}\right) &= \frac{1}{v}\diff{u}{x} + u \diff{}{x}\left(\frac{1}{v}\right) \\
+        &= \frac{1}{v}\diff{u}{x} + \frac{u}{v^2} \frac{dv}{dx} \\
         &= \frac{vu^{\prime} - v^{\prime}u}{v^2}
     \end{align*}
 \end{thm}
@@ -316,4 +316,171 @@ We can generalise, by repeating L'\^opital's Rule, given that the conditions hol
 % Lecture 3: 11/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
+\section{Integration}
+\subsection{Reimann sums}
+We will formalise the idea of taking the area under a function. 
+
+\begin{defi}[Integral]
+    The integral of a suitably well-defined function $f(x)$ is the limit of a sum
+    \begin{align*}
+        \int_{a}^{b}{f(x) \ \diffd x} &\equiv \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{f(x_n)\Delta x}} \\
+        &= \lim_{\Delta x \rightarrow 0}{\sum_{n=0}^{N-1}{f(x_n)\Delta x}}
+    \end{align*}
+    Where $\Delta x = \frac{b - a}{N}$ and $x_n = a + n\Delta x$
+    
+    % Insert diagram of reimann sums
+    Note that the $\lim_{N \rightarrow \infty}$ is independant on how the rectangles are drawn. For instance, we can have $\Delta x$ be non-uniform. (see Analysis I)
+\end{defi}
+
+As we have drawn, it appears that each partial sum will underestimate the limit of the area.
+\begin{prop}
+    We will show that in the limit as the $\Delta x \rightarrow 0$, that the difference between the area and the limit approaches $0$.
+\end{prop}
+\begin{proof}
+    Consider one rectangle for finite $N$. 
+    % insert diagram
+    Using the mean value theorem, there exists a $c$ in the range $x_n \leq c \leq x_{n+1}$ such that the area $A_n$
+    \[
+        A_n = (x_{n+1} - x_n)f(c)  
+    \]
+    If $f(x)$ is differentiable we have from Taylor's theorem that
+    \[
+        f(c) = f(x_n) + O(c - x_n), \quad \text{as} \ c-x_n \rightarrow 0  
+    \]
+    Since $\Delta x$ is larger than $c - x_n$,
+    \[
+        f(c) = f(x_n) + O(\Delta x)
+    \]
+    Thus it follows that
+    \[
+        A_n =  \Delta x f(x_n) + \Delta x O(\Delta x), \quad \text{as} \ \Delta x \rightarrow 0 
+    \]
+    Note that
+    \[
+        \Delta x O(\Delta x) = O(\Delta x^2)
+    \]
+    The total area between $x=a$ and $x=b$ is therefore,
+    \[
+        A = \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{A_n}} = \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{\Delta x f(\Delta x)}} + \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{O(\Delta x^2)}}
+    \]
+    Note that
+    \[
+        \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{\Delta x f(\Delta x)}}
+    \]
+    Is the definition of the reimann sum and therefore the error is given by
+    \begin{align*}
+        \lim_{N \rightarrow \infty}{\sum_{n=0}^{N-1}{O(\Delta x^2)}} &= \lim_{N \rightarrow \infty}{NO \bkt{\bkt{\frac{b-a}{N}}^2}} \\
+        &= \lim_{N \rightarrow \infty}{O\bkt{\frac{(b-a)^2}{N}}} \\
+        &= 0
+    \end{align*}
+\end{proof}
+
+\subsection{Fundamental Theorem of Calculus}
+We will formalise the idea of taking the inverse of differentiation.
+
+\begin{thm}[FTC]
+    Let $F(x)$ be defined as
+    \[
+        F(x) = \int_{a}^{x}{f(t) \ \diffd t}  
+    \]
+    Then,
+    \[
+        \diff{F}{x} = f(x)
+    \]
+\end{thm}
+\begin{proof}
+    \begin{align*}
+        \diff{F}{x} &= \lim_{h \rightarrow 0}\frac{F(x + h) - F(x)}{h} \\
+        &= \lim_{h \rightarrow 0}\frac{1}{n}\sqbkt{\int_{x}^{x+h}{f(t) \ \diffd t}} \\
+        &= \lim_{h \rightarrow 0}\frac{1}{n}\sqbkt{f(x)h + O(h^2)} \tag{from reimann sum definition} \\
+        &= f(x) + \lim_{h \rightarrow 0}O(h^2) \\
+        &= f(x)
+    \end{align*}
+\end{proof}
+
+\begin{remark}
+    $F(x)$ is a solution of the differential equation $\diff{F}{x} = f(x)$ with the added property that $F(a) = 0$
+\end{remark}
+
+\begin{cor}
+\[
+    \diff{}{x}\int_{x}^{b}{f(x) \ \diffd t} = -f(x)
+\]
+and by the chain rule, 
+\[
+    \diff{}{x}\int_{a}^{g(x)}{f(x) \ \diffd t} = f(g(x))g'(x)
+\]
+\end{cor}
+
+\begin{notation}
+    We typically write indefinite integrals as $\int{f(x) \ \diffd x}$. We may also write
+    \[
+        \int^{x}{f(t) \ \diffd t}    
+    \]
+    wich is arguably better as it makes clear that the result is a function of $x$. Further note that the undefined lower limit leaves space for the constant of integration $c$.
+\end{notation}
+
+\subsection{Methods of Integration}
+
+\begin{defi}[Substitution]
+    Substitution is useful if the integrand contains composed functions, or if we can spot the derivative of a function and itself.
+\end{defi}
+\begin{eg}
+    \[
+        I = \int{\frac{1 - 2x}{\sqrt{x - x^2}} \ \diffd x}
+    \]
+    Let $u = x - x^2$, $\diffd u = (1 - 2x) \diffd x$
+    \begin{align*}
+        I &= \int{\frac{1}{\sqrt{u}} \ \diffd u} \\
+        &= 2\sqrt{u} \\
+        &= 2\sqrt{x - x^2} + x
+    \end{align*}
+\end{eg}
+Here are some useful substitution to consider, motivated by the trigonometric and hyperbolic identities
+\begin{center}
+    \begin{tabular}{c | c}
+        Term in integrand & Substitution \\
+        \midrule
+        $1 - x^2$ & $x = \sin{\theta} or \tanh{\theta}$\\
+        $1 + x^2$ & $x = \tan{\theta} or \sinh{\theta}$\\
+        $x^2 - 1$ & $x = \sec{\theta} or \cosh{\theta}$\\
+
+    \end{tabular}
+\end{center}
+
+\begin{eg}
+    \[
+        I = \int{\sqrt{x - x^2} \ \diffd x} = \int{\sqrt{1 - (x - 1)^2} \ \diffd x}    
+    \]
+    Let $x - 1 = \sin{\theta}$, $\diffd x = \cos{\theta} \diffd \theta$
+    \begin{align*}
+        I &= \int{\cos^2{\theta} \ \diffd \theta} \\
+        &= \int{\frac{\cos{2\theta} + 1}{2}} \ diffd \theta \\
+        &= \frac{1}{4}\sin{2\theta} + \frac{1}{2}\theta + c \\
+        &= \frac{1}{2}\sin^{-1}{(x-1)} + \frac{1}{2}(x-1)\sqrt{2x - x^2} + c
+    \end{align*}
+\end{eg}
+
+\begin{defi}[By parts]
+    Integration by parts follows from the product rule. Recall
+    \[
+        (uv)' = uv' + u'v
+    \]
+    We can then rearrange
+    \[
+        uv' = (uv)' - u'v \Rightarrow \int{uv' \diffd x} = uv - \int{u'v \diffd x}
+    \]
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item \begin{align*}
+            I = \int_{0}^{\infty}{xe^{-x} \diffd x} &= \left. -xe^{-x} \right\rvert_{0}^{\infty} + \int_{0}^{\infty}{e^-x} \\
+            &= 0 + 1 = 1
+        \end{align*}
+        \item \[
+            I = \int{\ln{x} \diffd x} = x\ln{x} - x + c    
+        \]
+    \end{enumerate}
+\end{eg}
 \end{document}
