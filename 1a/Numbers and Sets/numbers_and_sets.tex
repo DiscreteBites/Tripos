@@ -274,4 +274,227 @@ We can now apply the induction axiom. We have demonstrated that the definition f
 \]
 Hence we may apply the induction axiom to define $+k$ for all the natural numbers inductively.
 
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 3: 11/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+Similarly, we can define multiplication, exponentiation, etc. Being careful to check that the ``usual'' rules of arithmetic apply. These are:
+\begin{enumerate}[label=(\arabic*)]
+    \item $\forall a, b \in \N, \quad a + b = b + a$ \hspace*{\fill}($+$ is commutative)
+    \item $\forall a, b \in \N, \quad ab = ba$ \hspace*{\fill}($\cdot$ is commutative)
+    \item $\forall a, b, c \in \N, \quad a + (b + c) = (a + b) + c$ \hspace*{\fill}($+$ is associative)
+    \item $\forall a, b, c \in \N, \quad a(bc) = (ab)c$ \hspace*{\fill}($\cdot$ is associative)
+    \item $\forall a, b, c \in \N, \quad a(b + c) = ab + ac$ \hspace*{\fill}($\cdot$ is distributive over $+$)
+\end{enumerate}
+
+We may also define an ordering on the natural numbers
+\begin{defi}
+    \[
+        a < b \Leftrightarrow \exists c \in \N \ \text{s.t.} \ a + c = b  
+    \]
+\end{defi}
+We may further check that
+\begin{enumerate}[resume, label=(\arabic*)]
+    \item $\forall a, b, c \in \N, \quad a < b \Leftarrow a + c < b + c$
+    \item $\forall a, b, c \in \N, \quad a < b \Leftarrow ac < bc$
+    \item $\forall a, b, c \in \N, \quad a < b \wedge b < c \Leftarrow c < c$ \hspace*{\fill}(transitivity)
+    \item $\forall a \in \N, \quad \neg(a < a)$
+\end{enumerate}
+
+\subsection{Strong Principle of Induction}
+Recall from the third peano axiom, the induction axiom that states that.
+\begin{quote}
+    if $p(1)$ is true and $p(n) \Rightarrow p(n+1)$, then $p(n)$ is true for all natrual numbers $n$.
+\end{quote}
+This is also know as the weak principle of induction (WPI).
+
+A more useful form is known as the strong principle of induction (SPI).
+
+\begin{defi}[Strong Principle of Induction]
+    if the following holds:
+    \begin{enumerate}
+        \item $P(1)$ is true
+        \item $\forall n \in \N$, we have $(p(m) \forall m \leq n) \Rightarrow p(n + 1)$
+    \end{enumerate}
+    then $p(n)$ holds $\forall n \in \N$
+\end{defi}
+
+In fact, it can be shown that the two principles are equivalent!
+\begin{prop}[SPI $\Leftrightarrow$ WPI]
+    The equivalence of the two principles can be stated as:
+    \begin{enumerate}
+        \item Any $p(n)$ that is true due to WPI, can also be proven to be true using SPI.
+        \item Any $p(n)$ that is true due to SPI, can also be proven to be true using WPI.
+    \end{enumerate}
+\end{prop}
+
+\begin{proof}\leavevmode
+    In general, if we have two methods of proof $A$ and $B$ which can used to prove some statement $s$, $A \Rightarrow B$ statement that $s$ can be proved using $A$ given the conditions of $B$. 
+    \begin{enumerate}
+        \item (SPI $\Rightarrow$ WPI) Assume the conditions of WPI: 
+            \begin{enumerate}
+                \item $p(1)$ is true
+                \item $\forall n \in \N, \quad p(n) \Rightarrow p(n+1)$
+            \end{enumerate}
+            Consider some $p(n)$, for $n \geq 1$. From the condition of WPI, we have that,
+            \[
+                p(1) \Rightarrow p(2), \quad p(2) \Rightarrow p(3), \quad \ldots, \quad p(n-1) \Rightarrow p(n)  
+            \]
+            Since $p(1)$ is true, we have that
+            \[ 
+                \bigwedge_{\forall m \leq n}{p(m)} \quad \text{is true.}
+            \]
+            Therefore,
+            \[
+                (p(m) \forall m \leq n) \Rightarrow p(n + 1)
+            \]
+            is a trivially true implication and $p(n)$ is true by SPI.
+        \item (WPI $\Rightarrow$ SPI) Assume the conditions of SPI:
+            \begin{enumerate}
+                \item $p(1)$ is true
+                \item $\forall n \in \N, \quad (p(m) \forall m \leq n) \Rightarrow p(n + 1)$
+            \end{enumerate}
+            Consider the statement $Q(n) = $ ``$p(m)$ holds $\forall m \leq n$''. Therefore, using the second assumption of SPI,
+            \[
+                Q(n) = (p(m) \forall m \leq n) \Rightarrow p(n + 1) = (p(m) \forall m \leq n+1) = Q(n + 1)
+            \]
+            Therefore, by WPI, $Q(n)$ is true $\forall n \in \N$, and further $p(n)$ is true $\forall n \in \N$.
+    \end{enumerate}
+\end{proof}
+
+\begin{defi}[Well-Ordering Principle]
+    If $p(n)$ holds for some $n \in \N$, then there is a least $n$ such that $p(n)$ holds. An alternative statement is 
+    \begin{quote}
+        Every non-empty subset of $\N$ has a minimal element
+    \end{quote}
+    To see that this is the case define the set to be the set of elements where $p(n)$ is true.
+\end{defi}
+
+\begin{nthm}[SPI is equivalent to WOP]
+\end{nthm}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item (WOP $\Rightarrow$ SPI). Assuming the conditions (i) and (ii) from SPI, we will show that $p(n)$ holds $\forall n \in \N$ using WOP.
+        Suppose on the contrary, that $p(n)$ is not true $\forall n \in \N$. Then we consider the set
+        \[
+            c = \{n \in \N \mid p(n) \ \text{is false}\}
+        \]
+        Note that since $p(n)$ is not true $\forall n \in \N$ that means that there exists at least one element in $c$ and therefore $c \neq \varnothing$. By WOP, $c$ must have a minimal element $m$. By the minimality of $m$
+        \[
+            \forall  k < m, \quad k \notin c  
+        \]
+        Therefore, $p(k)$ holds $\forall k \leq m$. However, by condition (ii) of SPI, $p(m)$ is true. This contradicts $m \in C$. \contradiction
+        Hence, $p(n)$ must be true $\forall n \in \N$.
+        \item (SPI $\Rightarrow$ WOP). We will proceed by proving the contrapositive ($\neg \text{WOP} \Rightarrow \text{SPI}$).
+        Suppose there is no least natural number $n \in \N$ such that $p(n)$ holds, we will aim to show that $p(n)$ is false $\forall n \in \N$ using SPI. Consider
+        \[
+            Q(n) = \neg p(n)  
+        \]
+        By assuming that there is no least natural number where $p(n)$ is true, that indicates that $p(1)$ is false and by definition $Q(1)$ is true. Given $n \in N$ suppose that $Q(k)$ is true $\forall k < n$.
+        Then $p(k)$ is false $\forall k < n$, and therefore $p(n)$ is false, as otherwise $n$ would be the minimal element (which we assumed cannot exist).
+        Hence, $Q(n)$ is true, and by (ii) of SPI, $Q(n)$ is true $\forall n \in \N$.
+        Therefore, $p(n)$ is false $\forall n \in \N$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    For any proof that we can attempt using induction, we may alternatively use WOP in the following way; we will prove that $p(n)$ is true $\forall n \in N$ by contradiction. Suppose it was not true $\forall n \in \N$. Then, there must be a minimal counter example. By looking at this counter example carefuly try to derive a contradiction.
+\end{remark}
+
+\subsection{The Integers}
+\begin{defi}
+    The integers, written $\Z$, consists of all symbols $n$, $-n$, where $n$ is in the natural numbers, along with $0$.
+\end{defi}
+We can define the operations $+$ and $\cdot$ on $\Z$ from $\N$. We may check that the usual rules (1) - (5) of arithmetic hold. Furthermore, since we have the inclusion of $0$,
+\begin{enumerate}[start=10, label=(\arabic*)]
+    \item $\forall a, b \in \Z, \quad a + 0 = a$ \hspace*{\fill}(identity)
+    \item $\forall a \in \Z, \exists b \in \Z, \quad a + b = 0$ \hspace*{\fill}(inverse)
+\end{enumerate}
+Note that these two properties indicate that $\Z$ forms a group under addition. We may also define a similar ordering
+\begin{defi}
+    $\forall a, b \in \Z, \quad a < b$ if $a + c = b$ for some $c \in \N$
+\end{defi}
+Note that we specified that $c$ is a natural number. We continue does the list of rules and remark that (6), (8) and (9) continue to hold. However, we need to modify (7)
+\begin{enumerate}
+    \item[($\text{7}^{\prime}$)]  $\forall a, b, c \in \Z, \quad (a < b) \wedge (c > 0) \Rightarrow ac < bc$
+\end{enumerate}
+With these we say that addition is \emph{closed}. That is, performing addition over the integers always results in another element within the integers. This is not the same for multiplication as we do not yet always have inverses.
+
+\subsection{The Rationals}
+\begin{defi}
+    The rationals, written $\Q$ consist of all expression $\frac{a}{b}$ where $a, b \in \Z$ and $b \neq 0$.
+\end{defi}
+
+Note that in the sense of rationals that we are used to, we need to encode that the number $\frac{a}{b}$ does not depend on the \emph{representation} that we have chosen. Therefore we will define
+\[
+    \frac{a}{b} = \frac{c}{d} \Leftrightarrow ad = bc
+\]
+
+\begin{defi}
+    \[
+        \frac{a}{b} + \frac{c}{d} = \frac{ad + bc}{bd}
+    \]
+\end{defi}
+
+Before we proceed we will check that this does not depend on the representation that we have chosen.
+\begin{proof}
+    Consider two rational numbers that are equal. That is, 
+    \[
+        \frac{a}{b} \ \text{and} \ \frac{a'}{b'} \quad \text{such that} \ ab' = a'b
+    \]
+    Then we have that, 
+    \begin{align*}
+        \frac{a}{b} + \frac{c}{d} &= \frac{ad + bc}{bd} \\
+        \frac{a'}{b'} + \frac{c}{d} &= \frac{a'd + b'c}{b'd}
+    \end{align*}
+    We need addition over the rationals to be independent of representation. Therefore, these two sums need to be equal. We can check that
+    \begin{align*}
+        &\frac{ad + bc}{bd} = \frac{a'd + b'c}{b'd} \\
+        \Leftrightarrow& \ b'd(ad + bc) = bd(a'd + b'c) \\
+        \Leftrightarrow& \ b'ad^2 + b'dbc = ba'd^2 + bdb'c \\
+        \Leftrightarrow& \ b'ad^2 = ba'd^2 \\
+        \Leftrightarrow& \ b'a = ba' \tag{since $d \neq 0$}
+    \end{align*}
+    Which is true by definition of $a'$ and $b'$
+\end{proof}
+
+Similarly, we can define for multiplication
+\begin{defi}
+    \[
+        \frac{a}{b}\frac{c}{d} = \frac{ac}{bd}
+    \]
+\end{defi}
+\begin{proof}
+    We will reuse the same two equal fractions as with the previous proof. Then we have that, 
+    \begin{align*}
+        \frac{a}{b}\frac{c}{d} &= \frac{ac}{bd} \\
+        \frac{a'}{b'}\frac{c}{d} &= \frac{a'c}{b'd}
+    \end{align*}
+    For these two to be equal
+    \begin{align*}
+        &\frac{ac}{bd} = \frac{a'c}{b'd} \\
+        \Leftrightarrow& \ b'd(ac) = bd(a'c) \\
+        \Leftrightarrow& \ b'ac = ba'c \tag{since $d \neq 0$} \\
+    \end{align*}
+    If we restrict this to cases where $c \neq 0$
+    \[
+        \Leftrightarrow b'a = ba'
+    \]
+    as required. In the case when $c = 0$ this is identical to multiplying by $0$ and all rationals will be mapped to $0$.
+\end{proof}
+
+Similarly, we can define an ordering
+\begin{defi}
+    \[
+        \frac{a}{b} < \frac{c}{d} \Rightarrow ad < bc  \ \text{where} \ b, d > 0
+    \]
+\end{defi}
+
+Now that we have a larger number system we have a new property
+\begin{enumerate}[start=12, label=(\arabic*)]
+    \item $\forall a, b \in \Q,\ a \neq 0 \ \exists b \quad \text{s.t.} \ ab = 1$ \hspace*{\fill}(multiplicative inverse)
+\end{enumerate}
+This turns the rationals into a group under multiplication.
+
 \end{document}
