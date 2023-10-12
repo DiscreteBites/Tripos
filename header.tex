@@ -1,5 +1,6 @@
 \usepackage{alltt}
 \usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{esdiff}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{enumitem}
@@ -150,8 +151,7 @@
 % \renewcommand{\sl}{\mathfrak{sl}}
 
 % Calculus
-\newcommand*\diff{\mathop{}\!\mathrm{d}}
-\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+\newcommand*\diffd{\mathop{}\!\mathrm{d}}
 
 % Special sets
 \newcommand{\C}{\mathbb{C}}
@@ -166,6 +166,8 @@
 \renewcommand{\H}{\mathbb{H}}
 
 % Brackets
+\newcommand{\bkt}[1]{\left( #1 \right)}
+\newcommand{\sqbkt}[1]{\left[ #1 \right]}
 \newcommand{\abs}[1]{\left\lvert #1\right\rvert}
 \newcommand{\anglebk}[1]{\left\langle #1\right\rangle}
 \newcommand{\bket}[1]{\left\lvert #1\right\rangle}
