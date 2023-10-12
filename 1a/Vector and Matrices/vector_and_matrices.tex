@@ -354,4 +354,175 @@ Note that for non-integer powers of $n$ we will have to insist on the principle 
 % Lecture 3: 11/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
+\section{Vectors}
+\subsection{Definition \& basic properties}
+\begin{defi}[Vector]
+    A vector $\vec{x}$ has a positive length and a direction. If,
+    \[
+        \abs{\vec{x}} = 0 \Rightarrow \vec{x} = \vec{0}  
+    \]
+    If $\abs{\vec{x}} = 1$ then we write $\uvec{x}$ as \emph{unit vector}. Note the distinction between scalar $0$ and vector $\vec{0}$.
+\end{defi}
+
+\begin{defi}[Vector Field]
+    A vector field $F = F(\vec{x})$ is a vector function of position and maybe time.
+\end{defi}
+
+\begin{defi}[Vector addition]
+    % insert paralellogram diagram.
+    We can define the addition of vectors using the paralellogram rule,
+    \begin{align*}
+        \vec{a} + \vec{b} &= \vec{c} \\
+        \pvec{OA} + \pvec{OB} &= \pvec{OC}
+    \end{align*}
+    More abstractly, addition will have the following properties
+    \begin{enumerate}[eqn]
+        \item $\vec{a} + \vec{b} = \vec{b} + \vec{a}$ \hspace*{\fill}(commutativity) \label{eq:2-1}
+        \item $\vec{a} + (\vec{b} + \vec{c}) = (\vec{a} + \vec{b}) + \vec{c}$ \hspace*{\fill}(associativity) \label{eq:2-2}
+        \item $\exists \vec{0}, \quad \vec{a} + \vec{0} = \vec{a}$ \hspace*{\fill}(unique zero) \label{eq:2-3}
+        \item $\vec{a} + -\vec{a} = 0$ \hspace*{\fill}(unique additive inverse) \label{eq:2-4}
+    \end{enumerate}
+\end{defi}
+\begin{defi}[Multiplication by a scalar]
+    For $\lambda \in \R$ (we will do complex scalars later in the course), $\lambda\vec{a}$ has magnitutde $\abs{\lambda}\abs{\vec{a}}$ and is parallel/anti-parallel to $\vec{a}$ if $\lambda<0$ \textbackslash $\lambda>0$. 
+    Likewise, we have the following properties
+    \begin{enumerate}[eqn]
+        \item $(\lambda + \mu)\vec{a} = \lambda\vec{a} + \mu\vec{a}$ \label{eq:2-5}
+        \item $\lambda(\vec{a} + \vec{b}) = \lambda\vec{a} + \lambda\vec{b}$ \label{eq:2-6}
+        \item $\lambda(\mu\vec{a}) = (\lambda\mu)\vec{a}$ \label{eq:2-7}
+        \item $1\vec{a} = \vec{a}$ \label{eq:2-8}
+    \end{enumerate}
+\end{defi}
+
+Implicit in the two definitions is that the set of vectors is closed under addition and scalar multiplication.
+
+\begin{defi}[Vector Space]
+    $V$ is a \emph{vector space} if it is a set of vectors which satisfy properties \eqref{eq:2-1} -- \eqref{eq:2-8} inclusive and is closed under addition and multiplication. Note that for now, we will be considering the vector space $V$ over the real numbers $\R$, but we will consider complex fields later. 
+\end{defi}
+
+\begin{eg}[$\R^n$ is a vector space]
+\end{eg}
+\begin{proof}
+    \[
+        \R^n = \{\vec{x} = (x_1, x_2, \ldots, x_n) \mid x_j \in \R, \ 1 \leq j \leq n\}
+    \]
+    Consider $\vec{x} , \vec{y} \in \R$
+    \[
+        \vec{x} + \vec{y} = (x_1 + y_1, x_2 + y_2, \ldots, x_n + y_n,)
+    \]
+    From this we see that property \eqref{eq:2-1} and \eqref{eq:2-2} is satisfied as we can inherit them from the Real numbers.
+
+    \begin{enumerate}
+        \item $\vec{0} = (0, 0, \ldots, 0)$ \hspace*{\fill}\eqref{eq:2-3}
+        \item $-\vec{x} = (-x_1, -x_2, \ldots, -x_n)$ \hspace*{\fill}\eqref{eq:2-4}
+        \item $\lambda\vec{x} = (\lambda x_1, \lambda x_2, \ldots, \lambda x_n)$ \hspace*{\fill}\eqref{eq:2-5} - \eqref{eq:2-8}
+    \end{enumerate}
+\end{proof}
+
+Geometrically, we may interprit $\R^1$ as a line, and $\R^2$ as a plane. However, notice that the converse is not always true. Due to \eqref{eq:2-3} the space has to contain $0$. Therefore, if the line or plane does not go through the origin, it is not a vector space.
+
+\subsection{Scalar Product}
+\begin{defi}[Geometric definition in $\R^2$, $\R^3$]
+    % insert diagram of dot product
+    Given two vectors $\vec{a}, \vec{b}$ we define
+    \[
+        \vec{a} \cdot \vec{b} = \abs{\vec{a}}\abs{\vec{b}}\cos{\theta}  
+    \]
+    where $\theta$ is the angle between the two vectors.
+\end{defi}
+From this, we can see that
+\begin{enumerate}
+    \item $\vec{a} \cdot \vec{b} = \vec{b} \cdot \vec{a}$ 
+    \item $\vec{a} \cdot \vec{a} = 0 \Leftrightarrow \vec{a} = \vec{0}$
+    \item $\vec{a} \cdot \vec{b} = 0 \Leftrightarrow$ $\vec{a}$ and $\vec{b}$ are orthogonal
+    \[\numberthis\]
+\end{enumerate}
+
+\begin{defi}[Projection]
+    % insert diagram of projection
+    $\vec{b}^\perp$ is the projection of $\vec{b}$ onto $\vec{a}$. Specifically, 
+    \begin{equation}
+        \vec{b}^\perp = \abs{\vec{b}}\cos{\theta}\frac{\vec{a}}{\abs{\vec{a}}} = \frac{(\vec{b}\cdot\vec{a})\vec{a}}{(\vec{a}\cdot\vec{a})} = (\uvec{a} \cdot \vec{b})\uvec{a} 
+    \end{equation}
+\end{defi}
+
+We will move to a most abstract defintion of a scalar product
+\begin{defi}[Inner product]
+    We define $\vec{x} \cdot \vec{y} = \braket{\vec{x}}{\vec{y}} \in \R$ as an \emph{inner product}, if it satisfies
+    \begin{enumerate}[eqn]
+        \item $\vec{x} \cdot \vec{y} = \vec{y} \cdot \vec{x}$ \hspace*{\fill}(Symmetry) \label{eq:2-11}
+        \item $\vec{x}, \vec{y}, \vec{z} \in V, \quad, \lambda, \mu \in \R$ \hspace*{\fill}(Linearity in the second argument) \label{eq:2-12}
+        \[
+            \vec{x} \cdot (\lambda\vec{y} + \mu\vec{z}) = \lambda\vec{x}\vec{y} + \mu\vec{x}\vec{z}  
+        \]
+        \item $\vec{x} \cdot \vec{x} \geq 0 $ and $\vec{x} \cdot \vec{x} = 0 \Leftrightarrow \vec{x} = \vec{0}$ \hspace*{\fill}(Positive definite) \label{eq:2-13}
+    \end{enumerate}
+
+    Note that we can use \eqref{eq:2-11} together with \eqref{eq:2-12} to derive linearlity in the first argument,
+    \begin{equation}
+        (\lambda\vec{y} + \mu\vec{z}) \cdot \vec{x} = \lambda\vec{x}\vec{y} + \mu\vec{x}\vec{z} \label{eq:2-15}
+    \end{equation}
+    We will see later in the course that linearity in the first argument does not hold for vector spaces over the complex field.
+
+    We can also define the \emph{norm} of a vector $\vec{a}$ as 
+    \[
+        (\vec{a} \cdot \vec{a})^\frac{1}{2} = \abs{\vec{a}} = \norm{\vec{a}}  
+    \]
+\end{defi}
+
+\begin{remark}
+    Using this abstracted definition of an inner product, we can define an inner product between functions. For example define for function $f$ and $g$
+    \[
+        \braket{f}{g} = \int_{0}^{1}{fg \ \diff x}
+    \]
+    This definition satisfies \eqref{eq:2-11} and \eqref{eq:2-12} and we can check \eqref{eq:2-13}
+    \[
+        \braket{f}{f} = \int_{0}^{1}{f^2 \ \diff x} \geq 0
+    \]
+    and further if 
+    \[
+        \int_{0}^{1}{f^2 \ \diff x} = 0 \Rightarrow f = 0
+    \]
+\end{remark}
+
+\subsection{Cauchy-Schwartz Inequality}
+\begin{thm}[CS Inequality]
+    Given two vectors $\vec{x}$, $\vec{y}$
+    \begin{equation}
+        \vec{x} \cdot \vec{y} \leq \abs{\vec{x}}\abs{\vec{y}} \quad \vec{x}, \vec{y} \in \R^n
+    \end{equation}
+    with equality if and only if $\vec{x} = 0$ or $\vec{y} = 0$ or $\vec{x} = \lambda \vec{y}$ for some $\lambda \in \R$.
+\end{thm}
+\begin{proof}
+    Consider $\abs{\vec{x} - \lambda \vec{y}}^2 \geq 0$
+    \begin{align*}
+        &(\vec{x} - \lambda \vec{y}) \cdot (\vec{x} - \lambda \vec{y}) \geq 0 \\
+        \Rightarrow& \lambda^2 \vec{y} \cdot \vec{y} - 2\lambda\vec{x}\vec{y} + \vec{x} \cdot \vec{x} \geq 0
+    \end{align*}
+    Suppose $\vec{x}, \vec{y} \neq \vec{0}$, we have a quadratic equation in $\lambda$. Therefore since the quadratic is greater than or equal to $0$, the discriminant must be less than or equal to $0$.
+    \begin{align*}
+        \Delta &= [2(\vec{x} \cdot \vec{y})]^2 - 4 (\vec{y} \cdot \vec{y})(\vec{x} \cdot \vec{x}) \leq 0 \\
+        \Rightarrow& [2(\vec{x} \cdot \vec{y})]^2 \leq 4 (\vec{y} \cdot \vec{y})(\vec{x} \cdot \vec{x}) \\
+        \Rightarrow& (\vec{x} \cdot \vec{y})^2 \leq (\vec{y} \cdot \vec{y})(\vec{x} \cdot \vec{x}) \\
+        \Rightarrow& (\vec{x} \cdot \vec{y})^2 \leq \abs{\vec{x}}^2\abs{\vec{y}}^2
+    \end{align*}
+    Furthermore, we have equality when
+    \[
+        \abs{\vec{x} - \lambda \vec{y}}^2 = 0 \Leftrightarrow \vec{x} = \lambda \vec{y}
+    \]
+    Hence the result
+\end{proof}
+
+\begin{eg} $\vec{x} = (\alpha, \beta, \gamma), y = (1, 1, 1)$
+    \begin{align*}
+        \alpha + \beta + \gamma &\leq \sqrt{\alpha^2 + \beta^2 + \gamma^2} \sqrt{3} \tag{\ref{eq:2-15}} \\
+        \alpha^2 + \beta^2 + \gamma^2 &\geq \alpha\beta + \beta\gamma + \gamma\alpha \tag{rearranging}
+    \end{align*}
+\end{eg}
+
+Note that we must not use the geometric definition of the dot product to prove the CS inequality because $\cos{\theta}$ is not defined for higher dimensions. However, we can use CS to define an angle in $\R^n$
+\[
+    \theta = \arccos{\left(\frac{\vec{x}\vec{y}}{\abs{\vec{x}}\abs{\vec{y}}}\right)}    
+\]
+since CS gives us that the fraction is less than or equal to $1$.
 \end{document}
