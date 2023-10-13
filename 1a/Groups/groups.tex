@@ -390,12 +390,12 @@ From this definition we can see that this group is non-abelian -- as matrix mult
 \]
 
 \subsection{Symmetric Groups}
-\begin{defi}[$Sym(X)$]
-    Let $X$ be a set. Then we define $Sym(X)$ to be the set of all bijections from $X \rightarrow X$. Alternatively we can think of this set as being the same as the set of all permutations of $X$.
+\begin{defi}[$\Sym(X)$]
+    Let $X$ be a set. Then we define $\Sym(X)$ to be the set of all bijections from $X \rightarrow X$. Alternatively we can think of this set as being the same as the set of all permutations of $X$.
 \end{defi}
 
-\begin{defi}[$Id_x$]
-    The identity map, $Id_x$ is defined as the map $x \mapsto x$. 
+\begin{defi}[$\Id_x$]
+    The identity map, $\Id_x$ is defined as the map $x \mapsto x$. 
 \end{defi}
 
 \begin{lemma}[Compositive is associative]
@@ -421,21 +421,21 @@ From this definition we can see that this group is non-abelian -- as matrix mult
 \end{proof}
 
 \begin{prop}
-    For any set $X, (Sym(x), \circ, Id_x)$ form a group
+    For any set $X, (\Sym(x), \circ, \Id_x)$ form a group
 \end{prop}
 
 \begin{proof}[Symmetric Group]
-    To prove that $(Sym(x), \circ, Id_x)$ forms a group we need to show that
+    To prove that $(\Sym(x), \circ, \Id_x)$ forms a group we need to show that
     \begin{enumerate}
         \item Associativity follows from the Lemma
-        \item $Id_x$ is the identity
+        \item $\Id_x$ is the identity
         \item Inverses exist by the definition of bijection
     \end{enumerate}
 \end{proof}
 
 We are particularly interested in cases where $X$ is finite.
 \begin{defi}[$S_n$]
-    If $x = {1, 2, \cdots, n}$ then $S_n \equiv Sym(X)$
+    If $x = {1, 2, \cdots, n}$ then $S_n \equiv \Sym(X)$
 \end{defi}
 
 \begin{ex}
@@ -525,6 +525,155 @@ We are particularly interested in cases where $X$ is finite.
 \end{prop}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 4: __/10/2023
+% Lecture 4: 12/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proof}
+    Note that each $n\Z$ is a subgroup of $\Z$. Applying the subgroup criterion, if
+    \[
+        a = nk, \quad b = nl \quad \text{for} \ k, l \in \Z  
+    \]
+    Then,
+    \[
+        a - b = n(k - l) \in n\Z  
+    \]
+    therefore each of $n\Z \leq Z$.
+
+    Now suppose that for some subgroup $H \leq Z$. 
+    If $H = \{0\}$, then $H = 0\Z$ and we have shown $H$ to be of the form $n\Z$.
+    Otherwise, $H \neq \{0\}$ and we may choose some $n \in H \setminus \{0\}$ to be the smallest positive element of $H$. Since $H$ is closed under inverses,
+    \[
+        -n \in H  
+    \]
+    Since $H$ is closed under addition,
+    \begin{align*}
+        n + n = 2n &\in H \\
+        2n + n = 3n &\in H \\
+        &\vdots \\
+        \forall k \in \Z^+, \ kn &\in H 
+    \end{align*}
+    Further,
+    \begin{align*}
+        -n - n = -2n &\in H \\
+        -2n - n = -3n &\in H \\
+        &\vdots \\
+        \forall k \in \Z^-, \ kn &\in H 
+    \end{align*}
+    Therefore
+    \[
+        n\Z \leq H  
+    \]
+    We now want to show that $n\Z = H$. We will proceed by contradiction. Suppose $n\Z \neq H$, then $\exists x \in H$ such that $x \notin n\Z$. Using the division algorithm we can write
+    \[
+        x = nq + r, \quad \text{for} \ q \in \Z, \ 0 < r < n-1  
+    \]
+    Note that $r$ cannot be $0$ if not $x$ would belong in $n\Z$. Therefore
+    \[
+        r = x - qn  
+    \]
+    Note that since $x \in H$ and $qn \in H$, $r \in H$. However, $r$ would also be smaller than $x$. This is a contradiction \contradiction.
+\end{proof}
+
+\subsection{Geometric Examples}
+
+Let $\C$ be the comoplex plane, equipped with the usual notaion of distance.
+
+% insert diagram of complex plane
+
+\begin{defi}[Isometry]
+    For any subset $X \subseteq \C$, an \emph{isometry} of $X$ is an bijecetion $f: X \rightarrow X$ that preserves distance:
+    \[
+        \abs{f(x) - f(y)} = \abs{x - y}, \quad \forall x, y \in X
+    \]
+\end{defi}
+
+\begin{prop}[Isometry Groups in $\C$]
+    Let $X \subseteq \C$. The set of isometries of $X$,
+    \[
+        \Isom(X) = \{f: X \rightarrow X \mid f \ \text{is a bijection \& isometry}\}
+    \]
+    Then $\Isom(X)$ is a group with function composition and the identity map and it is a subgroup of $\Sym(X)$.
+\end{prop}
+
+\begin{proof}
+    Since $\Id_x \in \Isom(X)$, $\Isom(X)$ is non-empty. By the subgroup criterion, it suffices to check that
+    \[
+        f \circ g^{-1} \in \Isom(X), \quad \text{for} \ f, g \in \Isom(X)   
+    \]
+    Let $x, y \in X$. Then,
+    \begin{align*}
+        \abs{f \circ g^{-1}(x) - f \circ g^{-1}(y)} &= \abs{g^{-1}(x) - g^{-1}(y)} \\
+        &= \abs{g \circ g^{-1}(x) - g \circ g^{-1}(y)} \\
+        & = \abs{x - y}
+    \end{align*}
+\end{proof}
+
+\begin{defi}[Dihedral Groups]
+    Let $X_n \subset \C$ be the $n$-gon with vertices written
+    \[
+        X_n = \{e^\frac{2\pi i k}{n} \mid k = 0, 1, \ldots, n-1 \}, \quad \text{for} \ n\geq 3
+    \]
+    Then we define the $n^{th}$ dihedral group as follows: (note the notation of using $2n$)
+    \[
+        \D_{2n} \equiv \Isom(X_n)
+    \]
+\end{defi}
+
+\begin{eg}
+    $\D_6$ is the isometry group of the equilateral triangle, and $\abs{\D_6} = 6$ 
+\end{eg}
+
+\begin{thm}[$\abs{\D_{2n}} = 2n$]
+\end{thm}
+
+We will first prove some lemmas from geometry
+
+\begin{lemma}[Kite lemma]
+    Let $x_1, x_2, y_1, y_2 \in \C$. If
+    \begin{align*}
+        \abs{y_1 - x_1} &= \abs{y_2 - x_1} \\
+        \abs{y_1 - x_2} &= \abs{y_2 - x_2}
+    \end{align*}
+    Then, $x_2 - x_1$ is perpendicular to $y_2 - y_1$
+\end{lemma}
+
+\begin{proof}
+    Excercise!
+\end{proof}
+
+\begin{lemma}[Kite lemma]
+    Let $x \subset \C$ and $f \in \Isom(x)$. If there are three points $x_1, x_2, x_3$ that are not colinear such that
+    \[
+        f(x_1) = x_1, \quad f(x_2) = x_2, \quad f(x_3) = x_3  
+    \]
+    then $f = \Id_x$
+\end{lemma}
+\begin{proof}
+    We will proceed by contradiction. Suppose $\exists y \in X$ such that $f(y) \neq y$. Then,
+    \begin{align*}
+        \abs{f(y) - x_i} &= \abs{f(y) - f(x_i)} \\
+        &= \abs{y - x_i}
+    \end{align*}
+    which will be true for $i = 1, 2, 3$.
+
+    Let $y_1 = y$, and $y_2 = f(y)$. Then by the Kite lemma,
+    \begin{align*}
+        x_2 - x_1 &\perp f(y) - y \neq 0 \\
+        x_3 - x_1 &\perp f(y) - y \neq 0
+    \end{align*}
+    Therefore, $x_1, x_2, x_3$ are colinear which is a contradiciton. \contradiction
+\end{proof}
+
+We will now show a stronger version, of the theorem stated earlier,
+\begin{thm}[$\abs{\D_{2n}} = 2n$]
+    If we define 2 elements in $\D_{2n}$
+    \begin{enumerate}
+        \item $r(z) = e^\frac{2 \pi i}{n} \cdot z$
+        \item $s(z) = \overline{z}$
+    \end{enumerate}
+    Then,
+    \[
+        \D_{2n} = \{e, r, r^2, \ldots, r^{n-1}, s, rs, \ldots, r^{n-1}s\}  
+    \]
+\end{thm}
 \end{document}
