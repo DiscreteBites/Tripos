@@ -473,15 +473,15 @@ We will move to a most abstract defintion of a scalar product
 \begin{remark}
     Using this abstracted definition of an inner product, we can define an inner product between functions. For example define for function $f$ and $g$
     \[
-        \braket{f}{g} = \int_{0}^{1}{fg \ \diff x}
+        \braket{f}{g} = \int_{0}^{1}{fg \ \diffd x}
     \]
     This definition satisfies \eqref{eq:2-11} and \eqref{eq:2-12} and we can check \eqref{eq:2-13}
     \[
-        \braket{f}{f} = \int_{0}^{1}{f^2 \ \diff x} \geq 0
+        \braket{f}{f} = \int_{0}^{1}{f^2 \ \diffd x} \geq 0
     \]
     and further if 
     \[
-        \int_{0}^{1}{f^2 \ \diff x} = 0 \Rightarrow f = 0
+        \int_{0}^{1}{f^2 \ \diffd x} = 0 \Rightarrow f = 0
     \]
 \end{remark}
 
@@ -525,4 +525,208 @@ Note that we must not use the geometric definition of the dot product to prove t
     \theta = \arccos{\left(\frac{\vec{x}\vec{y}}{\abs{\vec{x}}\abs{\vec{y}}}\right)}    
 \]
 since CS gives us that the fraction is less than or equal to $1$.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 4: 13/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+A further consequence of \eqref{eq:2-15} is the triangle inequality \eqref{eq:2}. We will consider the following
+\begin{align*}
+    \abs{\vec{x} + \vec{y}}^2 &= (\vec{x} + \vec{y}) \cdot (\vec{x} + \vec{y}) \\
+    &= \vec{x} \cdot \vec{x} + 2 \vec{y} \cdot \vec{x} + \vec{y} \cdot \vec{y} \tag{collect terms over the reals} \\
+    &= \abs{\vec{x}}^2 + \abs{\vec{y}}^2 + 2 \vec{y} \cdot \vec{x} \\
+    &\leq \abs{\vec{x}}^2 + \abs{\vec{y}}^2 + 2 \abs{\vec{y} \cdot \vec{x}} \\
+    &\leq \abs{\vec{x}}^2 + \abs{\vec{y}^2 + 2\abs{\vec{x}}}\abs{\vec{y}} \tag{By CS}\\
+    &= (\abs{\vec{x}} + \abs{\vec{y}})^2 
+\end{align*}
+We may then take the positive square root on both sides to arive at
+\begin{equation}
+    \abs{\vec{x} + \vec{y}} \leq \abs{\vec{x}} + \abs{\vec{y}}
+\end{equation}
+
+\subsection{Vector Product}
+We will see later in the course that this extends to the wedge product in higher dimensions. For now, we will define the product in $\R^3$.
+\begin{defi}[Vector Product]
+    Consider $\vec{a}, \vec{b} \in \R^3$. Define the vector product
+    \[
+        \vec{a} \times \vec{b} = \abs{\vec{a}}\abs{\vec{b}}\sin{\theta}\uvec{n}
+    \]
+    Where the direction of $\uvec{n}$ is such that $\vec{a}$, $\vec{b}$ and $\uvec{n}$ for a \emph{right handed system}. That is, when I curl my right hand fingers in the direction of $\theta$, the thumb points in the direction of $\uvec{n}$.
+\end{defi}
+
+Here are some properties of the vector product
+\begin{enumerate}
+    \item $\vec{a} \times \vec{b} - = \vec{b} \times \vec{a}$ \hspace*{\fill}(Anti-symmetric)
+    \item $\vec{a} \times \vec{a} = \vec{0}$
+    \item If $\vec{a} \times \vec{b} = \vec{0} \Rightarrow \vec{a} = \mu\vec{b}, \quad \text{for} \mu \in \R$
+    \item $\vec{a} \times (\lambda \vec{b}) = \lambda (\vec{a} \times \vec{b})$
+    \item[] \hspace*{\fill}\ilnumberthis
+\end{enumerate}
+
+\begin{defi}[Vector Area]
+    We define the \emph{vector area} between two vectors $a$ and $b$ to be
+    \[  
+        \text{Vector Area} \equiv \frac{1}{2}(\vec{a} \times \vec{b})
+    \]
+
+    We may consider as an example the regular area of  a triangle, which can be found
+    \begin{align*}
+        \text{A} &= \frac{1}{2}\abs{\pvec{OB}}\abs{\pvec{BN}} \\
+        &=  \frac{1}{2}\abs{\pvec{OB}}\abs{\pvec{OB}}\sin{\theta} \\
+        &= \frac{1}{2}\abs{\vec{a} \times \vec{b}}
+    \end{align*}
+    
+    Note that to turn this into a vector area, we omit the absolute value and use the vector itself to represent the area. An interesting consequence of this is that although the surface area of a sphere is $4\pi r^2$ the it's vector area is $\vec{0}$!
+\end{defi}
+
+\subsection{Scalar Triple Product}
+
+\begin{defi}[Scalar Triple Product]
+    Given three vectors $\vec{a}, \vec{b}, \vec{c} \in \R^3$, the triple product is defined as
+    \begin{equation}
+        \vec{a} \cdot (\vec{b} \times \vec{c}) = (\vec{b} \times \vec{c}) \cdot a = -a \cdot (c \times b)
+    \end{equation}
+    clearly, this is a scalar. Geometrically, we can interprit the triple product as the volume of a parallelopiped formed by $a$, $b$ and $c$, where the three vectors form a right handed system.
+    
+    % insert diagram of parallelopiped
+    \begin{align*}
+        \text{Volume} \ &= \ \text{Base Area} \ \times \perp \text{height} \\
+        &\Rightarrow \abs{\vec{b} \times \vec{c}} \abs{\vec{a}} \sin{\theta} \\
+        &= \abs{\vec{b} \times \vec{a}}\abs{\vec{a}}\cos{\bkt{\frac{\pi}{2} - \theta}} \\
+        &= \abs{(\vec{b} \times \vec{a}) \cdot \vec{a}}
+    \end{align*}
+    Furthermore, since we specified that the vectors form a right handed system,
+    \[
+        \vec{a} \cdot (\vec{b} \times \vec{c}) \geq 0
+    \]
+\end{defi}
+
+\begin{notation}
+    We may instead write the tripple product using square brackets as follows
+    \begin{equation}
+        [\vec{a}, \vec{b}, \vec{c}] = [\vec{b}, \vec{c}, \vec{a}] =  [\vec{c}, \vec{a}, \vec{b}]
+    \end{equation}
+
+    where all even permutations are the equal, (even permutation meaning permutations performing an even number of pariwise swaps)
+    \begin{equation}
+        [\vec{a}, \vec{b}, \vec{c}] = - [\vec{b}, \vec{a}, \vec{c}] = - [\vec{a}, \vec{c}, \vec{b}] = - [\vec{c}, \vec{b}, \vec{a}]
+    \end{equation}
+    and all odd permutations are negative of the triple product.
+\end{notation}
+
+\begin{remark}
+    The triple product can tell us if the three vectors are coplanar. Specifically,
+    \begin{equation}
+        \vec{a}, \vec{b}, \vec{c} \ \text{coplanar} \Leftrightarrow [\vec{a}, \vec{b}, \vec{c}] = 0  
+    \end{equation}
+\end{remark}
+
+\begin{cor}
+    Any triple product where two of the vectors are the same is equal to $0$.
+    \[
+        [\vec{a}, \vec{a}, \vec{c}] = [\vec{a}, \vec{b}, \vec{b}] = \ldots = 0  
+    \]
+\end{cor}
+
+\subsection{Spanning sets \& Basis}
+We will build up from the smaller example of $\R^2$, to $\R^3$, before working in $\R^n$. In general, spanning sets together with linear independance gives us a basis.
+
+\begin{defi}[Spanning sets]
+    Consider $2$ vectors $\vec{a}, \vec{b} \neq 0 \in \R^2$ with $\vec{a} \times \vec{b} \neq 0$ i.e; $\vec{a}$ and $\vec{b}$ are not parallel. Then, any other vector $\vec{r}$ in this plane can be written as 
+    \begin{equation}
+        \vec{r} = \lambda \vec{a} + \mu \vec{b}, \quad \text{for} \lambda, \mu \in \R \label{eq:2-22}
+    \end{equation}
+    Then we say that the set $\{\vec{a}, \vec{b}\}$ spans $\R^2$, and every other vector in the space can be written as a linear combination of $\vec{a}$ and $\vec{b}$.
+\end{defi}
+
+\begin{prop}
+    \eqref{eq:2-22} produces a unique representation.
+\end{prop}
+
+\begin{proof}
+    Suppose 
+    \[
+        r = \lambda \vec{a} + \mu \vec{b} = \lambda' \vec{a} + \mu' \vec{b}    
+    \]
+    a useful trick to employ it to apply cross product with one of the terms, allowing us to remove it. Taking $\times \vec{b}$ to both sides of the equation we get
+    \[
+        (\lambda - \lambda')\vec{a} \times \vec{b} = \vec{0}  
+    \]
+    finally, as we have defined $\vec{a}$ and $\vec{b}$ to be non parallel,
+    \[
+        \therefore \lambda - \lambda' = 0
+    \]
+
+    Similarly, we can multiply $\times \vec{a}$ to arrive at
+    \[
+        \mu - \mu' = 0  
+    \]
+    Hence \eqref{eq:2-22} is unique.
+\end{proof}
+
+\begin{defi}[Linear Independance]
+    Two vectors $\vec{a}, \vec{b}$ are said to be \emph{linearly independant} if, $\forall \alpha, \beta \in \R$
+    \begin{equation}
+        \alpha \vec{a} + \beta \vec{b} = 0 \Rightarrow \alpha = \beta = 0 \label{eq:2-23}
+    \end{equation}
+    Later on, we will see that this is generalised into $\R^n$
+\end{defi}
+
+\begin{remark}
+    $\vec{a}$ and $\vec{b}$ are linearly dependant in $\R^2$ if $\vec{a} \times \vec{b} \neq 0$. To see that it is the case, take
+    \begin{align*}
+        \vec{b} \times \eqref{eq:2-23} &\Rightarrow \alpha (\vec{b} \times \vec{a}) = 0 \\
+        \vec{a} \times \eqref{eq:2-23} &\Rightarrow \beta (\vec{a} \times \vec{b}) = 0 \\
+    \end{align*}
+    In both cases, since $\vec{a} \times \vec{b} \neq 0$, $\alpha = \beta = 0$
+\end{remark}
+
+\begin{defi}[Basis]
+    A set $\{\vec{a}, \vec{b}\}$ is a basis of $\R^n$ if it spans $\R^2$ and it is linearly independant.
+\end{defi}
+
+\begin{remark}
+    Note that the number of dimensions of a space in fact follows from the size of the set of minimal basis vectors.
+\end{remark}
+
+\begin{eg}
+    \begin{enumerate}
+        \item $\{\uvec{i}, \uvec{j}\}$ is a basis of $\R^2$
+        \item $\{\uvec{i}, \uvec{j}, \vec{e}\}$ where $\vec{e} = \uvec{i} + \uvec{j}$ certainly spans $\R^2$, but it does not form a basis since the three vector system is not linearly independant. To see take,
+        \[
+            \uvec{i} + \uvec{j} + \vec{e} = \vec{0}    
+        \]
+    \end{enumerate}
+\end{eg}
+
+\begin{prop}
+    A basis is the smallest spanning set
+\end{prop}
+
+\begin{proof}
+    See Example sheet exercise
+\end{proof}
+
+\begin{defi}[Basis in $\R^3$]
+    If $\vec{a}, \vec{b}, \vec{c}$ are non-coplanar, then $\{\vec{a}, \vec{b}, \vec{c}\}$ is a basis of $\R^3$. We can write any vector $r$ as 
+    \begin{equation}
+        \vec{r} = \lambda \vec{a} + \mu \vec{b} + \nu \vec{c}, \quad \text{for}, \lambda, \mu, \nu \in \R \label{eq:2-24}
+    \end{equation}
+\end{defi}
+\begin{proof}
+    To show that it is uniquely defined, we will proceed by construction of the variables. Using a similar trick, using the tripple product to get rid of terms as repeated vectors in the triple product go to zero. $\eqref{eq:2-24} \cdot (\vec{b} \times \vec{c})$
+    \begin{align*}
+        \vec{r} \cdot (\vec{b} \times \vec{c}) &= \lambda \vec{a} \cdot (\vec{b} \times \vec{c}) \\
+        &\Rightarrow \lambda = \frac{\vec{r} \cdot (\vec{b} \times \vec{c})}{\vec{a} \cdot (\vec{b} \times \vec{c})} = \frac{\vec{r} \cdot (\vec{b} \times \vec{c})}{[\vec{a}, \vec{b}, \vec{c}]}\\
+        \vec{r} \cdot (\vec{c} \times \vec{a}) &= \mu \vec{b} \cdot (\vec{c} \times \vec{a}) \\
+        &\Rightarrow \mu = \frac{\vec{r} \cdot (\vec{c} \times \vec{a})}{\vec{b} \cdot (\vec{c} \times \vec{a})}  = \frac{\vec{r} \cdot (\vec{c} \times \vec{a})}{[\vec{a}, \vec{b}, \vec{c}]} \\
+        \vec{r} \cdot (\vec{a} \times \vec{b}) &= \nu \vec{c} \cdot (\vec{a} \times \vec{b}) \\
+        &\Rightarrow \nu = \frac{\vec{r} \cdot (\vec{a} \times \vec{b})}{\vec{c} \cdot (\vec{a} \times \vec{b})}  = \frac{\vec{r} \cdot (\vec{a} \times \vec{b})}{[\vec{a}, \vec{b}, \vec{c}]} \\
+    \end{align*}
+    Hence, $\lambda, \mu, \nu$ can be determined for any $\vec{r}$ and $\{\vec{a}, \vec{b}, \vec{c}\}$ spans $\R^3$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 5: _/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
