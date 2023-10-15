@@ -483,4 +483,201 @@ Here are some useful substitution to consider, motivated by the trigonometric an
         \]
     \end{enumerate}
 \end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 4: 13/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}
+    We will briefly give an outline of the proof of taylor's theorem
+\end{remark}
+\begin{proof}
+    Using FTC, we can expand
+    \[
+        f(x) = f(0) + \int_{0}^{x}{f'(t) \diffd t}
+    \]
+    Then, we insert a factor of $1 = -\frac{d(x-t)}{dt}$ and integrate by parts,
+    \begin{align*}
+        f(x) &= f(0) + \int_{0}^{x}{f'(t) \diffd t} \\
+        &= f(0) + \int_{0}^{x}{-\frac{d(x-t)}{dt} \times f'(t) \diffd t} \\
+        &= f(0) + \int_{0}^{x}{-\frac{d(x-t)}{dt} \times f'(t) \diffd t} \\
+        &= f(0) - (x-t)f'(t) \Big{|}_{0}^{x} - \int_{0}^{x}{-(x-t) \times f''(t) \diffd t} \\
+        &= f(0) + xf'(0) + \int_{0}^{x}{(x-t) \times f''(t) \diffd t}
+    \end{align*}
+    We can continue this expansion, replacing $(x - t) = -\frac{1}{2}\diff{}{t}(x-t)^2$
+    \begin{align*}
+        f(x) &= f(0) + xf'(0) + \int_{0}^{x}{(x-t) \times f''(t) \diffd t} \\
+        &= f(0) + xf'(0) + \int_{0}^{x}{-\frac{1}{2}\diff{(x-t)^2}{t} \times f''(t) \diffd t} \\
+        &= f(0) + xf'(0) - \frac{1}{2}(x-t)^2 f''(t) \Big{|}_{0}^{x} - \int_{0}^{x}{-\frac{1}{2}(x-t)^2 \times f'''(t) \diffd t} \\
+        &= f(0) + xf'(0) + \frac{1}{2}x^2 f''(0) + \frac{1}{2}\int_{0}^{x}{(x-t)^2 \times f'''(t) \diffd t}
+    \end{align*}
+    In general, we will be replacing terms of the form $(x - t)^n$ with $-\frac{1}{n+1} \diff{}{t}(x - t)^{n+1}$. Doing so with return the first $n$ terms of the taylor expansion,
+    \[
+    f(x) = f(0) + xf'(0) + \frac{x^2}{2} f''(0) + \ldots + \frac{x^n}{n!}f^{(n)}(0) + \frac{1}{n!} \int_{0}^{2}{(x-t)^n f^{(n+1)}(t) \diffd t}
+    \]
+    Therefore, we recover an integral form of the error term
+    \[
+        E_n = \frac{1}{n!} \int_{0}^{2}{(x-t)^n f^{(n+1)}(t) \diffd t}
+    \]
+    Using the mean value theorem, we can find a value $x_n$ in the interval that satisfies the intergral
+    \[
+        E_n = \frac{f^{(n+1)}(x_n)}{n!} \int_{0}^{2}{(x-t)^n \diffd t} = \frac{f^{(n+1)}(x_n)}{(n+1)!} x^{n+1}
+    \]
+    where $0 \leq x_n \leq x$
+\end{proof}
+
+\section{Partial Differentiation}
+\subsection{Functions of serveral variables}
+In this chapter, we will generalise differentiation to function of more than one variable. For instance, we may consider the height of terrain as a function of longitude and latitude, or the density of air as a function of position and time. 
+Consider the first example, in the diagram we plot the contours of the function on the $x-y$ plane (the curves for which the height is constant).
+% insert diagram
+
+Notice that the slop of the function at some point $A$ depends on the direction. Therefore, we will find the slope of the graph along the $x$ and $y$ direction independantly, where we will be able to combine the them to find the slopes in any direction.
+\subsection{Partial derivatives}
+\begin{defi}[Partial derivative]
+    Given a function of several variables, $f(x, y)$ we define the \emph{partial derivative} of $f$ w.r.t. $x$ at fixed $y$ given by
+    \[
+        \diffp{f}{x} \Big{|}_{y} = \lim_{\delta x \rightarrow 0}{\frac{f(x + \delta x, y) - f(x, y)}{\delta x}} 
+    \]
+    This limit therefore find the slope of $f$ when moving in the positive $x$ direction. Similarly, we may define
+    \[
+        \diffp{f}{y} \Big{|}_{x} = \lim_{\delta y \rightarrow 0}{\frac{f(x, y + \delta y) - f(x, y)}{\delta y}} 
+    \]
+\end{defi}
+
+\begin{remark}
+    For suitably smooth functions we can also define higher derivates,
+    \[
+        \diffp{f}{{x^2}} = \diffp{}{x}\bkt{\diffp{f}{x}} \quad \ldots \quad \diffp[n]{f}{x} = \diffp{}{x}\bkt{\diffp[n-1]{f}{x}}
+    \]
+    as well as mixed partial derivatives,
+    \[
+        \diffp{}{y}\bkt{\diffp{f}{x}} = \diffp{f}{{y}{x}}
+    \]
+    where the order of the partial derivatives taken starts from the right.
+\end{remark}
+
+\begin{eg}[$f(x) = x^2 + y^2 + e^{xy^2}$]
+    We can compute first derivatives
+    \[
+        \diffp{f}{x} \Big{|}_{y} = 2x + y^2e^{xy^2} \qquad \diffp{f}{y} \Big{|}_{x} = 2y + 2xye^{xy^2}
+    \]
+    and similarly for second derivatives
+    \[
+        \diffp[2]{f}{x} \Big{|}_{y} = 2 + y^4e^{xy^2} \qquad \diffp[2]{f}{y} \Big{|}_{x} = 2 + 2xe^{xy^2} + (2xy)^2e^{xy^2}
+    \]
+    as well as the mixed partial derivatives
+    \begin{align*}
+        \diffp{}{x}\bkt{\diffp{f}{y} \Big{|}_{x}} \Big{|}_{y} &= 2ye^{xy^2} + 2xy^3e^{xy^2} \\
+        \diffp{}{y}\bkt{\diffp{f}{x} \Big{|}_{y}} \Big{|}_{x} &= 2ye^{xy^2} + 2xy^3e^{xy^2} \\
+    \end{align*}
+    Note that the mixed partial derivates are equaiavalent. In cases where the function has second partial derivatives, mixed second partial derviatives will be the same. This is known as Schwarz's Theorem.
+\end{eg}
+
+\begin{notation}
+    As a useful convension, we will omit the $\Big{|}_{x}$, and work on the assumption that all other variables are held constant. There are also some alternative forms,
+    \[
+        f_x = \diffp{f}{x} \qquad f_{xy} = \diffp{f}{{y}{x}}  
+    \]
+\end{notation}
+\subsection{Multivariate chain rule}
+As we have the chain rule for regular differentiation, we are interested in extending this to partial derivatives. Consider the following question. Suppose I am walking around some terrain. What is the derivative of my height with respect to time.
+
+Given a path $x(t), y(t)$ and some function $f(x(t), y(t))$, what is $\diff{f}{t}$? We consider a change in $f$ when we move from 
+\[
+    (x, y) \mapsto (x + \delta x, y + \delta y)    
+\]
+We can expand out, and include a term that "bridges" the gap
+\begin{align*}
+    \delta f = f(x + \delta x, y + \delta y) & &- f(x, y) \\
+    = f(x + \delta x, y + \delta y) &- f(x + \delta x, y) \\
+    &+f(x + \delta x, y) &- f(x, y)
+\end{align*}
+Applying Taylors expansion we have,
+\[
+    f(x + \delta x, y) - f(x, y) = f_x(x, y)\delta x + \ltlo{\delta x}
+\]
+as well as,
+\[
+    f(x + \delta x, y + \delta y) - f(x + \delta x, y) = f_y(x + \delta x, y)\delta y + \ltlo{\delta y}
+\]
+where we can further expand
+\[
+    f_y(x + \delta x, y) = f_y(x, y) + f_{yx}(x, y)\delta x + \ltlo{\delta x}
+\]
+Together,
+\[
+    \delta f = f_x(x, y)\delta x + \ltlo{\delta x} + \sqbkt{f_y(x, y) + f_{yx}(x, y)\delta x + \ltlo{\delta x}}\delta y + \ltlo{\delta y}
+\]
+Note that taylors theorem allowed us to remove the dependance of $\delta x$ and $\delta y$ from the function. We can now use the differential of $f$.
+
+\begin{defi}[Differential]
+    The \emph{differential} of $f$ is defined to be
+    \[
+        \diffd f = \lim_{\substack{\delta x \rightarrow 0 \\ \delta y \rightarrow 0}} \delta f  
+    \]
+\end{defi}
+Applying this get
+\begin{align*}
+    \diffd f &= \lim_{\substack{\delta x \rightarrow 0 \\ \delta y \rightarrow 0}} f_x(x, y)\delta x + \ltlo{\delta x} + f_y(x, y)\delta y + f_{yx}(x, y)\delta x\delta y + \ltlo{\delta x}\delta y + \ltlo{\delta y} \\
+    &= f_x(x, y) \lim_{\delta x \rightarrow 0} \delta x + f_y(x, y) \lim_{\delta y \rightarrow 0}\delta y \\
+    &= f_x(x, y) \diffd x + f_y(x, y) \diffd y
+\end{align*}
+
+\begin{thm}[Chain rule for partial differentiation]
+    The differential of $f(x, y)$ is related to the differential of its arguments by,
+    \[
+        \diffd f = \diffp{f}{x} \diffd x + \diffp{f}{y} \diffd y
+    \] 
+    and more generally, for a function $f$ whose arguments are $x_1, x_2, \cdots, x_n$,
+    % \[
+    %     \diffd f = \diffp{f}{x_1} \diffd x_1 + \ldots + \diffp{f}{x_n} \diffd x_n
+    % \]
+    \[
+        \diffd f = \diffp{f}{{x_1}} \diffd x_1 + \ldots + \diffp{f}{{x_n}} \diffd x_n
+    \]
+\end{thm}
+
+Hence for the path $x(t), y(t)$
+\[
+    \diff{f}{t} = \diffp{f}{x} \diff{x}{t} + \diffp{f}{y} \diff{y}{t}
+\]
+Furthermore, if the path is parameterised by a coordinate, for instance $y = f(x)$, then we simply have a function in one variable and
+\[
+    \diff{f}{x} = \diffp{f}{x} + \diffp{f}{y} \diff{y}{x}
+\]
+
+\begin{defi}[Integral form]
+    If we define $\Delta f$ as the change in height between the two endpoints we have,
+    \[
+        \Delta f = \int{\diffd f} = \int{\bkt{\diffp{f}{x} \diffd x + \diffp{f}{y} \diffd y}}  
+    \]
+    In the case that $x(t)$ and $y(t)$,
+    \[
+        \Delta f = \int{\diffd f} = \int{\bkt{\diffp{f}{x} \diff{x}{t} + \diffp{f}{y} \diff{y}{t}} \diffd t}  
+    \]
+\end{defi}
+\subsection{Applications of multivariate chain rule}
+
+We can use the multivariate chain rule to help us change variables. For instance consider the map from cartesian coordintes to plane-polar coordinates.
+\[
+    (x, y) \mapsto (r, \theta)
+\]
+
+% insert diagram
+Then we have the relationships
+\[
+    x = r\cos{\theta} \qquad y = r\sin{\theta}
+\]
+and we can reinterprit the function $f(x, y)$ as a function $f(x(r, \theta), y(r, \theta))$ in the plane-polar coordinates. In this case,
+\begin{align*}
+    \diffp{f}{r} \Big{|}_{\theta} &= \diffp{f}{x}\diffp{x}{r}\Big{|}_{\theta} + \diffp{f}{y}\diffp{y}{r}\Big{|}_{\theta} \\
+    &= \diffp{f}{x}\cos{\theta} + \diffp{f}{y}\sin{\theta}
+\end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 5: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+
 \end{document}
