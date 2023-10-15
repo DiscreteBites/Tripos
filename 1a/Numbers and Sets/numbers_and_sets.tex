@@ -568,7 +568,7 @@ This turns the rationals into a group under multiplication.
 
 Can a number have more than one representation as a product of primes? proposition \ref{prop:2-2} does not give us uniqueness. However, from experience it is what we expect.
 
-\begin{nprop}
+\begin{nprop}\label{prop:2-4}
     If $p$ is a prime and $p \mid ab$ then $p \mid a$ or $p \mid b$ or both.
 \end{nprop}
 
@@ -674,4 +674,168 @@ Note that this will happen in at most $b$ steps. In each step, the remainder is 
     The output of Euclids Algorithm with input $(a, b)$ is the $\gcd{(a, b)}$
 \end{nthm}
 
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item Since $r_{n+1} = 0$, we have that $r_n | r_{n-1}$. Hence, $r_{n} | r_{n-2}$. 
+        Therefore, by induction $r_n | r_i \quad \forall i=1, 2, \ldots, n-1$. Hence, $r_n | b$ and $r_n | a$.
+        \item Given a divisor $d$ such that $d|a$ and $d|b$, by the first step we know that $d|r_1$, and therefore $d|r_2$ by the second step. Proceeding inductively, $d|r_i \quad \forall i = 1, 2, \ldots, n$
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    It's much faster to use euclids algorithm than to do the typical approach of prime factorisation and then comparison. Also, Euclids algorithm shows us a way to write the gcd as a linear combination of $a$ and $b$.
+\end{remark}
+
+\begin{eg}[$\gcd(87, 52)$]
+    \begin{align*}
+        87 &= 1 \cdot 52 + 35 \\
+        52 &= 1 \cdot 35 + 17 \\
+        35 &= 2 \cdot 17 + 1 \\
+        17 &= 17 \cdot 1
+    \end{align*}
+    Since $1$ was the last non zero remainder, 
+    \[
+        \therefore \gcd(87, 52) = 1
+    \]
+\end{eg}
+
+\begin{defi}[Coprime]
+    When $\gcd(a, b) = 1$ we say that $a$ and $b$ are \emph{coprime}.
+\end{defi}
+
+\begin{remark}
+    We can reverse the process of Euclids algorithm, 
+    \begin{align*}
+        1 &= 35 - 2 \cdot 17 \\
+        &= 35 - 2 \cdot (52 - 35) \\
+        &= 3 \cdot 35 - 2 \cdot 52 \\
+        &= 3 \cdot (87 - 52) - 2 \cdot 52 \\
+        &= 3 \cdot 87 - 5 \cdot 52
+    \end{align*}
+    Notice that in this process, we did not need to do any calculations again, we simply expanded the coefficients we had found earlier.
+\end{remark}
+
+\begin{nthm}\label{th:2-7}
+    The greatest common divisor is the smallest possible linear combination of $a$ and $b$. 
+    That is the smallest solution to $\forall a, b \in \N, \quad \exists x, y \in \Z$
+    \[
+        ax + by = \gcd(a, b)  
+    \]
+\end{nthm}
+
+\begin{proof}[Proof 1]
+    We will run Euclids algorithm with $a$ and $b$ as inputs to obtian $r_n$. At step $n$,
+    \[
+        r_n = x r_{n-1} + y r_{n-2} \quad \text{for some} \ x, y \in \Z   
+    \]
+    At step $n-1$,
+    \[
+        r_{n-1} = x r_{n-2} + y r_{n-3} \quad \text{for some} \ x, y \in \Z   
+    \]
+    Whence, $r_n = x r_{n-2} + y r_{n-3} \quad \text{for some} \ x, y \in \Z$
+    Proceeding inductively, we have for all $i = 2, \ldots, n-1$
+    \[
+        r_n = xr_i + yr_{i-1}    
+    \]
+    Therefore $r_n = xa + yb$ for some $x, y \in \Z$ by steps $1$ and $2$.
+\end{proof}
+
+\begin{remark}
+    Euclid's algorithm is fast! and it not only proves the existence of $x, y \in \Z$ but also computes it for us.
+\end{remark}
+
+\begin{proof}[Proof 2]
+    Let $h$ be the least positive linear combination of $a$ and $b$. (Recall from lecture 1 that this needs justification) By the WOP, since the linear combinations of $a$ and $b$ form a subset of the positive integers, such a least positive $h$ exists.
+    We shall show that
+    \[
+        h = ax + by = \gcd(a, b)  
+    \]
+    \begin{enumerate}[cases]
+        \item To see (ii) that is all other factors $d$ divides $h$, take any $d$ such that $d | a$ and $d | b$. Clearly, $d | ax + by, \quad \forall x, y \in \Z$. In particular $d | h$.
+        \item To see (i), we will proceed by contradiction. Suppose that $h \nmid a$. Then we may write
+        \[
+            a = qh + r \quad \text{for} \ q, r \in \Z  
+        \]
+        where $0 < r < h$. Hence, $r = a - qh = a - q(ax + by)$, which is also a linear combination of $a$ and $b$, and is strictly smaller than $h$. This contradicts the minimality of $h$. \contradiction
+        Therefore $h \mid a$ and likewise by the same argument for $b$, $h \mid b$.
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    This proof does not give us a way to compute neither the hcf nor the values of $x$ and $y$.
+\end{remark}
+
+\begin{question}
+    Is there a solution in $x, y \in \Z$ to
+    \[
+        87x + 52y = 33  
+    \]
+    yes!, we have that $x'87 + y'52 = 1$. Therefore,
+    \begin{align*}
+        x = 33x' \\
+        y = 33y'
+    \end{align*}
+\end{question}
+
+\begin{nthm}[B\'ezout's theorem]
+    Let $a, b \in \N$. Then, the equation $ax + by = c$ has a solution in $x, y \in \Z$ if and only if\
+    \[
+        \gcd(a, b) \mid c  
+    \]
+\end{nthm}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item[($\Rightarrow$)] Let $h = \gcd(a, b)$. Suppose $\exists x, y \in \Z$ such that $ax + by = c$. Then since $h \mid a$ and $h \mid b$, we have that $h \mid c$ 
+        \item[($\Leftarrow$)] Suppose $h \mid c$. Theorem \ref{th:2-7} implies that $\exists x, y$ such that
+        \[
+            h = ax + by
+        \]
+        by observing $c = \frac{c}{h} \cdot h$ we have that
+        \[
+            c = \frac{c}{h} \cdot (ax + by) = a \frac{xc}{h} + b \frac{yc}{h} 
+        \]
+        note that $\frac{c}{h} \in \Z$ since $h \mid c$.
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}[recall \ref{prop:2-4}]
+    If $p$ is a prime and $p \mid a$, then $p \mid a$ or $p \mid b$.
+\end{prop}
+
+\begin{proof}
+    Suppose $p \mid ab$ but $p \nmid a$. We will show that $p$ must divide $b$. 
+    Since $p$ is prime and $p \nmid a$, $\gcd(a, p) = 1$. By theorem \ref{th:2-7}, $\exists x, y \in \Z$ such that $xp + ya = 1$.
+    It follows that $xbp + yab = b$. Now we find that $b$ is a multiple of $p$, since $xbp$ is a multiple of $p$ and $yab$ is a multiple of $p$.
+\end{proof}
+
+\begin{remark}
+    \begin{enumerate}
+        \item Similarly, if $p \mid a_1a_2\cdots a_n \Rightarrow \exists i \quad p \mid a_i$. By prop \ref{prop:2-4}, if $p \mid a_1a_2\cdots a_n$ then $p \mid a_1$ or $p \mid a_2\cdots a_n$, so we may conclude by induction on the number of terms in the product.
+        \item We do need $p$ to be prime as it gives us that $\forall a, \quad \gcd(a, p) = 1$
+    \end{enumerate}
+\end{remark}
+
+\begin{nthm}[Fundamental theorem of arithmetic]
+    Every natural number is expressible as a product of primes uniquely (up to a reordering).
+\end{nthm}
+
+\begin{proof}
+    The existence of such a factorisation follows from prop \ref{prop:2-2}. To see uniqueness we will proceed by induction on $n$.
+    Certainly it is true for $n=2$. Given $n > 2$ suppose $n = p_1p_2\cdots p_k = q_1q_2\cdots q_l$ where $p_i$ and $q_j$ are prime. We want to show that $k = l$ and after reordering $p_i = q_i$.
+    We have that $p_1 \mid n$ and therefore $p_1 \mid q_1q_2\cdots q_l$. By proposition \ref{prop:2-4}, $p_1$ must divide $q_i$ for some $i$. Relabelling, these $q_i$, we may assume that
+    \[
+        p_1 \mid q_1 
+    \]
+    Since $p_1$ is a prime, $p_1 = q_1$, and so 
+    \[
+        \frac{n}{p_1} = p_2\cdots p_k = q_2\cdots q_l < n  
+    \]
+    By the induction hypothesis, $k = l$ and after reordering $p_i = q_i \quad \forall i$
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 5: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+    
 \end{document}
