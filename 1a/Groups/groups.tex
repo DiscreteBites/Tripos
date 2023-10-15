@@ -676,4 +676,188 @@ We will now show a stronger version, of the theorem stated earlier,
         \D_{2n} = \{e, r, r^2, \ldots, r^{n-1}, s, rs, \ldots, r^{n-1}s\}  
     \]
 \end{thm}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 5: 14/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proof}
+    First, we check that $r, s \in \D_{2n}$. Indeed, $\forall x, y \in \C$
+    \begin{align*}
+        \abs{r(x) - r(y)} &= \abs{e^\frac{2\pi i}{n}x - e^\frac{2\pi i}{n}y} \\
+        &= \abs{e^\frac{2\pi i}{n}}\abs{x - y} \\
+        &= \abs{x - y}
+    \end{align*}
+    Hence $r$ is an isometry. Furthermore,
+    \[
+        r(e^\frac{2\pi i k}{n}) =  e^\frac{2\pi i (k+1)}{n}
+    \]
+    Therefore $r$ preserves the polygon $X_n$. Similarly, $\forall x, y \in \C$
+    \begin{align*}
+        \abs{s(x) - s(y)} &= \abs{\overline{x} - \overline{y}} \\
+        &= \abs{\overline{x - y}} \\
+        &= \abs{x - y}
+    \end{align*}
+    Hence $s$ is an isometry. Furthermore,
+    \[
+        s(e^\frac{2\pi i k}{n}) =  e^{\frac{2\pi i}{n}(n - k)}
+    \]
+    Therefore $s$ preserves the polygon $X_n$, and hence $r, s \in \D_{2n}$.
+
+    Now that we know that $r$ and $s$ are elements of $\D_{2n}$ we can get other element of $\D_{2n}$ by multiplying and taking inverses. This gives,
+    \[
+        \{e, r, r^2, \ldots, r^{n-1}, s, rs, \ldots, r^{n-1}s\} \subseteq \D_{2n}    
+    \]
+    To see that these are all the elements of $\D_{2n}$, let $f \in \D_{2n}$ be an arbitrary member. We will consider the action of $f$ on three points
+    \[
+        x = 1, \quad y = e^\frac{2\pi i}{n}, \quad z = e^\frac{-2\pi i k}{n}
+    \]
+    % insert diagram
+    Note that we have $n \geq 3$ since these are the number of vertecies of a polygon. Therefore $x, y, z$ are non colinear. Since $f \in \D_{2n}$ it sends vertecies to vertecies, 
+    \[
+        f(z) = e^\frac{2\pi i k}{n} \quad \text{for some} k = 0, \cdots, n-1
+    \]
+    Therefore,
+    \[
+        r^{-k}\circ f(x) = 1 = x  
+    \]
+    Since $r^{-k}\circ f(z) \in \D_{2n}$,
+    \begin{align*}
+        r^{-k}\circ f(y) \in \{y, z\} \\
+        r^{-k}\circ f(z) \in \{y, z\}
+    \end{align*}
+    Since these are mutually exclusive cases, we have two cases to consider
+    \begin{enumerate}[cases]
+        \item $r^{-k}\circ f(y) = y$ and $r^{-k}\circ f(z) = z$, therefore $r^{-k}\circ f$ fixes $x, y, z$ and by the three point lemma $ r^{-k}\circ f = \Id_x$, and by inverses $f = r^k$.
+        \item $r^{-k}\circ f(y) = z$ and $r^{-k}\circ f(z) = y$ this is identical to
+        \[
+            x \mapsto x \quad y \mapsto s(y) \quad z \mapsto s(z)    
+        \]
+        therefore, by the three point lemma, $r^{-k}\circ f = s$ and therefore $s^{-1}r^{-k}\circ f = e$ fixes $x, y, z$. Therefore by inverses,
+        \[
+            f = r^ks  
+        \]
+    \end{enumerate}
+    Therefore, all the elements in $\D_{2n}$ are of the form listed above. However, we have yet to show that all of the elements are distinct and $\abs{\D_{2n}} = 2n$. To do so we will consider the different cases,
+    \begin{enumerate}[cases]
+        \item if $0 \leq k, l < n$, $r^k = r^l$
+        \begin{align*}
+            r^k = e^\frac{2\pi i k}{n}(1) = e^\frac{2\pi i l}{n}(1) = r^l \\
+            \Rightarrow k = l
+        \end{align*}
+
+        \item if $r^k = s$ then
+        \begin{align*}
+            e^\frac{2\pi i k}{n} = r^k(1) = s(1) = 1 \\
+            \Rightarrow k = 0 \ \text{and} \ s = r^0 = e \quad \contradiction \\
+            \therefore s \neq r^k \forall k
+        \end{align*}
+
+        \item if $r^k = r^ls$ then $s = r^{k-l}$ contradicting case 2
+        \item if $0 \leq k, l < n$, $r^ks = r^ls$ then
+        \begin{align*}
+            \Rightarrow r^k = r^l \tag{multiply by $s^{-1}$} \\
+            \Rightarrow k = l
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+In order to understand how to multiply elements in $\D_{2n}$ we look at the Dihedral relation
+\begin{lemma}[Dihedral Relations]
+    For $r,s \in \D_{2n}$
+    \[
+        sr = r^{-1}s  
+    \]
+\end{lemma}
+
+\begin{proof}
+    To DO! using the three point lemma and the same set of ${x, y, z}$.
+\end{proof}
+
+\begin{eg}
+    Lets do some algebra,
+    \begin{itemize}
+        \item $r^k \cdot r^l = r^{k + 1}$
+        \item  $r^k \cdot r^ls = r^{k + 1}s$
+        \item $(r^k \cdot s) r^l = r^{k - l}s$
+        \item $r^k \cdot s \cdot r^l \cdot s= r^{k - l}ss = r^{k - l}$
+    \end{itemize}
+\end{eg}
+
+All of the proofs that we have covered are not specific to $\C$, we could have done these in $\R^3$ similarly using a four point lemma.
+
+\subsection{Homomorphisms}
+\begin{defi}[Homomorphism]
+    A map between groups $\phi: G \rightarrow H$ is called a homomorphism if $\forall g, g' \in G$
+    \[
+        \phi(g \cdot g') = \phi(g) \cdot \phi(g')  
+    \]
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item For any groups $G$ and $H$ the map 
+        \begin{align*}
+            \phi: &G \rightarrow H \\
+            &g \mapsto e_H
+        \end{align*}
+        is the Trivial homomorphism
+
+        \item if $H \leq G$ then the map
+        \begin{align*}
+            \phi: &H \rightarrow G \\
+            &h \mapsto h
+        \end{align*}
+        is the Inclusion homomorphism
+
+        \item Recall
+        \[
+            C_n = \{z_n \in \C \mid z^n = 1\}  
+        \]
+        if $n \mid m$ then
+        \begin{align*}
+            \phi: &C_m \rightarrow C_n \\
+            &z \mapsto z^\frac{m}{n}
+        \end{align*}
+        is a homomorphism
+
+        \item Since $\det(AB) = \det(A)\det(B)$ the map
+        \begin{align*}
+            \phi: &GL_2(\R) \rightarrow (\R \setminus \{0\}, \times, 1) \\
+            &A \mapsto \det(A)
+        \end{align*}
+        is a homomorphism
+    \end{enumerate}
+\end{eg}
+
+\begin{lemma}
+    If $\phi: G \rightarrow H$ is a homomorphism
+    \begin{enumerate}
+        \item $\phi(e_G) = e_G$
+        \item $\phi(g^{-1}) = \phi(g)^{-1}$ 
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item \begin{align*}
+            e_H &= \phi(e_G)^{-1} \cdot \phi(e_G) \\
+            &= \phi(e_G)^{-1} \cdot (\phi(e_G) \cdot \phi(e_G)) \tag{homomorphism property}\\
+            &= (\phi(e_G)^{-1} \cdot \phi(e_G)) \cdot \phi(e_G) \\
+            &= e_H \cdot \phi(e_G)
+            &= \phi(e_G)
+        \end{align*}
+        \item \begin{align*}
+            \phi(g) \cdot \phi(g^{-1}) &= \phi(g \cdot g^-1) \tag{homomorphism property} \\
+            &= \phi(e_G) \\
+            &= e_H \\
+            \Rightarrow \phi(g^{-1}) &= \phi(g)^{-1}
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 6: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
