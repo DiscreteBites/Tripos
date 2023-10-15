@@ -38,6 +38,7 @@
 \title{Part \npart\ --- \ncourse}
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\newcommand\ilnumberthis{\addtocounter{equation}{1}(\theequation)}
 
 \newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
 \setlist[enumerate,1]{label={(\roman*)}}
@@ -54,14 +55,6 @@
   ref={\theequation},
   align=left,
   leftmargin=\parindent
-}
-
-\newcommand {\pd}[2][ ]{
-  \ifx #1 { }
-    \frac{\partial}{\partial #2}
-  \else
-    \frac{\partial^{#1}}{\partial #2^{#1}}
-  \fi
 }
 
 % Theorems
@@ -111,7 +104,6 @@
 % Strike through
 \def\st{\bgroup \ULdepth=-.55ex \ULset}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Maths Symbols %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -152,6 +144,7 @@
 
 % Calculus
 \newcommand*\diffd{\mathop{}\!\mathrm{d}}
+\newcommand{\ltlo}[1]{\underline{o}\bkt{#1}}
 
 % Special sets
 \newcommand{\C}{\mathbb{C}}
