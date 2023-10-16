@@ -631,6 +631,7 @@ Here are some properties of the vector product
 \subsection{Spanning sets \& Basis}
 We will build up from the smaller example of $\R^2$, to $\R^3$, before working in $\R^n$. In general, spanning sets together with linear independance gives us a basis.
 
+\subsubsection*{Working in $\R^2$}
 \begin{defi}[Spanning sets]
     Consider $2$ vectors $\vec{a}, \vec{b} \neq 0 \in \R^2$ with $\vec{a} \times \vec{b} \neq 0$ i.e; $\vec{a}$ and $\vec{b}$ are not parallel. Then, any other vector $\vec{r}$ in this plane can be written as 
     \begin{equation}
@@ -707,6 +708,7 @@ We will build up from the smaller example of $\R^2$, to $\R^3$, before working i
     See Example sheet exercise
 \end{proof}
 
+\subsubsection*{Working in $\R^3$}
 \begin{defi}[Basis in $\R^3$]
     If $\vec{a}, \vec{b}, \vec{c}$ are non-coplanar, then $\{\vec{a}, \vec{b}, \vec{c}\}$ is a basis of $\R^3$. We can write any vector $r$ as 
     \begin{equation}
@@ -724,9 +726,200 @@ We will build up from the smaller example of $\R^2$, to $\R^3$, before working i
         &\Rightarrow \nu = \frac{\vec{r} \cdot (\vec{a} \times \vec{b})}{\vec{c} \cdot (\vec{a} \times \vec{b})}  = \frac{\vec{r} \cdot (\vec{a} \times \vec{b})}{[\vec{a}, \vec{b}, \vec{c}]} \\
     \end{align*}
     Hence, $\lambda, \mu, \nu$ can be determined for any $\vec{r}$ and $\{\vec{a}, \vec{b}, \vec{c}\}$ spans $\R^3$.
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 5: 16/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+    Further to show linear independance, let 
+    \[
+        \vec{r} = \alpha \vec{a} + \beta \vec{b} + \gamma \vec{c} \quad \text{for} \ [\vec{a}, \vec{b}, \vec{c}] \neq 0
+    \]
+    We apply the same trick, using the triple product
+    \begin{align*}
+        \vec{r} \cdot (\vec{b} \times \vec{c}) &\Rightarrow \alpha [\vec{a}, \vec{b}, \vec{c}] = 0 \\
+        &\Rightarrow \alpha = 0 \\
+        \vec{r} \cdot (\vec{c} \times \vec{a}) &\Rightarrow \beta [\vec{a}, \vec{b}, \vec{c}] = 0 \\
+        &\Rightarrow \beta = 0 \\
+        \vec{r} \cdot (\vec{a} \times \vec{b}) &\Rightarrow \gamma [\vec{a}, \vec{b}, \vec{c}] = 0 \\
+        &\Rightarrow \gamma = 0
+    \end{align*}
+    Hence, $\{\vec{a}, \vec{b}, \vec{c}\}$ form a basis of $\R^3$
 \end{proof}
 
+\begin{remark}
+    Note that $\vec{a}, \vec{b}, \vec{c}$ need not be unique! As a standard basis in $\R^3$ we use,
+    \[
+        \{\uvec{i}, \uvec{j}, \uvec{k}\}
+    \]
+    Where they are
+    \begin{enumerate}
+        \item \[
+            \uvec{i} \cdot \uvec{j} = \uvec{j} \cdot \uvec{k} = \uvec{k} \cdot \uvec{i} = 0  
+        \] \hspace*{\fill}(orthogonal)
+        \item \[
+            \uvec{i} \cdot \uvec{i} = \uvec{j} \cdot \uvec{j} = \uvec{k} \cdot \uvec{k} = 1 
+        \] \hspace*{\fill}(unit vectors)
+    \end{enumerate}
+    Together, we say that these form an \emph{orthonormal} basis.
+
+    Another important point to keep in mind is that the choice of axis is highly arbitrary. Therefore, when we apply vectors to physical laws, we should expect the laws to be invariant with respect to changes of axis. We will cover more about this later in the course when we discuss tensors.
+\end{remark}
+
+\subsubsection*{Working in $\R^n$}
+\begin{defi}[Linear independance in $\R^n$]
+    A set of vectors $\{\vec{v_1}, \vec{v_2}, \cdots, \vec{v_n}\}$ where $v_i \in \R^n$ is \emph{linearly independant} if for scalars $\lambda_i \in \R$
+    \begin{equation}\label{eq:2-25}
+        \sum_{j=1}^{m}{\lambda_j \vec{v_j}} = \vec{0} \Leftrightarrow \lambda_j = 0 \quad \forall j = 1, 2, \cdots, n
+    \end{equation}
+\end{defi}
+
+\begin{defi}[Spanning sets in $\R^n$]
+    A set of vectors $\{\vec{u_1}, \vec{u_2}, \cdots, \vec{u_m}\}$ where $u_i \in \R^n$ is a \emph{spanning set} if for any $\vec{x} \in \R^n, \quad \exists \lambda_j$ such that,
+    \begin{equation}\label{eq:2-26}
+        \vec{x} = \sum_{j=1}^{m}{\lambda_j \vec{u_j}}
+    \end{equation}
+\end{defi}
+
+\begin{remark}
+    Note that we cannot span $\R^n$ if $m < n$.
+\end{remark}
+
+\begin{defi}[Basis in $\R^n$]
+    A linearly independant set of vectors which spans $\R^n$ is a \emph{basis} of $\R^n$. A standard basis that we use
+    \[
+        \{\vec{e_1}, \vec{e_2}, \cdots, \vec{e_n}\}
+    \]
+    where
+    \[
+        e_i = \{00 \cdots 1 \cdots 00\}    
+    \]
+    where $1$ is in the $i^{th}$ position.
+\end{defi}
+
+\begin{defi}[Dimension]
+    The \emph{dimension} of a vector space is the number of vectors in the basis.
+\end{defi}
+
+\begin{remark}
+    We can prove that adding a vector to a basis does not result in a basis, and that if 2 basis exist, then they have the same number of elements. Therefore the dimension of a vector space is well defined.
+\end{remark}
+
+We can also define an inner product on this space, for two vectors $\vec{x}, \vec{y} \in \R^n$,
+\begin{align*}
+    \vec{x} = (x_1, \cdots, x_n) = \sum_{j=1}^{n}{x_i \vec{e_i}} \\
+    \vec{y} = (y_1, \cdots, y_n) = \sum_{j=1}^{n}{y_i \vec{e_i}}
+\end{align*}
+Then the inner product of these two vectors is
+\begin{equation}
+    \vec{x} \cdot \vec{y} = \braket{x}{y} = \sum_{j=1}^{n}{x_iy_i}
+\end{equation}
+
+Note that for this we use the fact that $e_j$ form an orthonormal basis, such that
+\[
+    e_i \cdot e_j = \begin{cases}
+        1 & \text{if} \ i = j \\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+
+\subsubsection*{Working in $\C^n$}
+
+We define the vector space $\C^n$
+\[
+    \C^n = \{(z_1, z_2, \cdots, z_n) \mid z_i \in \C\}  
+\]
+as well as a standard basis, which are still
+\[
+    (1, 0, 0, 0, \cdots), \quad (0, 1, 0, 0, \cdots), \quad (0, 0, 1, 0, \cdots)
+\]
+
+\begin{defi}[Scalar product in $\C^n$]
+    In $\C^n$ the scalar product is defined, for $\vec{u}, \vec{v} \in \C^n$,
+    \[
+        \vec{u} \cdot \vec{v} = \braket{u}{v} = \sum_{i=1}^{n}\overline{u_i}v_i \in \C 
+    \]
+    Note the conjugation of the first argument. We have the following properties
+    \begin{enumerate}[eqn]
+        \item $\vec{u} \cdot \vec{v} = \overline{\vec{v} \cdot \vec{u}}$ \hspace*{\fill}(Conjugte symmetry)
+        \item $\vec{u} \cdot (\lambda \vec{v} + \mu \vec{w}) = \lambda \vec{u} \cdot \vec{v} + \mu \vec{u} \cdot \vec{w}$ \label{eq:2-29}\hspace*{\fill}(Linearity in the $2^{nd}$ argument)
+        \item $\vec{u} \cdot \vec{u} = 0 \Leftrightarrow \vec{u} = 0$
+    \end{enumerate}
+
+    To solve for the linearity of the first argument we consider
+    \begin{align*}
+        (\lambda \vec{u} + \mu \vec{v}) \cdot \vec{w} &= \overline{\vec{w} \cdot (\lambda \vec{u} + \mu \vec{v})} \\
+        &= \overline{\sqbkt{\lambda \vec{w} \cdot \vec{u} + \mu \vec{w}\vec{v}}} \\
+        &= \overline{\lambda} \overline{\vec{w} \cdot \vec{u}} + \overline{\mu} \overline{\vec{w} \cdot \vec{v}} \\
+        &= \overline{\lambda} \vec{u} \cdot \vec{w} + \overline{\mu} \vec{v} \cdot \vec{w} \numberthis \label{eq:2-31}
+    \end{align*}
+\end{defi}
+
+\begin{eg}
+    To practice this we will try and expand for $\vec{x}, \vec{y} \in \C^n$   
+    \begin{align*}
+        &\sum_{k=1}^{4}{(-i)^k \abs{\vec{x} + i^k \vec{y}}} \\
+        &= \sum_{k=1}^{4}{(-i)^k \braket{\vec{x} + i^k \vec{y}}{\vec{x} + i^k \vec{y}}} \\
+        &= \sum_{k=1}^{4}{(-i)^k \crbkt{\braket{\vec{x} + i^k \vec{y}}{\vec{x}} + i^k\braket{\vec{x} + i^k \vec{y}}{\vec{y}}}} \tag{\ref{eq:2-29}}\\
+        &= \sum_{k=1}^{4}{(-i)^k \crbkt{\braket{\vec{x}}{\vec{x}} + \overline{i^k}\braket{\vec{y}}{\vec{x}} + i^k\braket{\vec{x}}{\vec{y}} + i^k \overline{i^k}\braket{\vec{y}}{\vec{y}}}} \tag{\ref{eq:2-31}}\\
+        &= \braket{\vec{x}}{\vec{x}}\sum_{k=1}^{4}{(-i)^k}  + \braket{\vec{y}}{\vec{x}}\sum_{k=1}^{4}{(-i)^k\overline{i^k}} + \braket{\vec{x}}{\vec{y}}\sum_{k=1}^{4}{(-i)^ki^k} + \braket{\vec{y}}{\vec{y}}\sum_{k=1}^{4}{(-i)^k i^k \overline{i^k}} \\
+        &= \braket{\vec{x}}{\vec{x}}\sum_{k=1}^{4}{(-i)^k}  + \braket{\vec{y}}{\vec{x}}\sum_{k=1}^{4}{(-1)^k} + \braket{\vec{x}}{\vec{y}}\sum_{k=1}^{4}{(1)^k} + \braket{\vec{y}}{\vec{y}}\sum_{k=1}^{4}{(-i)^k}\\
+        &= 4\braket{\vec{x}}{\vec{y}}
+    \end{align*}
+\end{eg}
+
+\subsection{Vector subspaces}
+\begin{defi}[Vector subspace]
+    A non-empty subset $u$ of vectors of a vector space $V$ is a subspace of $V$ if $u$ is itself a vector space under the same operations as $V$.
+\end{defi}
+
+\begin{remark}
+    Note that a subspace always includes the additive identity $0$. For instance, a plane is a subspace of 3D space only if it contains the origin.
+\end{remark}
+
+\begin{eg}[Trivial examples]
+    $V$ and $\{0\}$ are subsapces of $V$. All others are called propper subspaces.
+\end{eg}
+
+\begin{thm}
+    A subset $u$ of a vector space $V$ is a subspace of $V$ if and only if under the same operations as $V$,
+    \begin{enumerate}
+        \item $\vec{x}, \vec{y} \in u \Rightarrow \vec{x} + \vec{y} \in u$ \hspace*{\fill}(Closed under addition)
+        \item $\vec{x} \in u \Rightarrow \lambda\vec{x}\in u$ for scalar $\lambda$ \hspace*{\fill}(Closed under scalar multiplication)
+        \item $\vec{0} \in u$
+    \end{enumerate}
+    We can condense these three conditions into a single statement. $u$ is a subspace if and only if
+    \begin{equation}\label{eq:2-32}
+        \lambda \vec{x} + \mu \vec{y} \in u \quad \forall \vec{x}, \vec{y} \in u  
+    \end{equation}
+    To verify (i) we set $\lambda = \mu = 1$, to verify (ii) we set $\mu = 0$, to verify (iii) we set $\lambda = \mu = 0$
+\end{thm}
+
+\begin{eg}
+    Given $\{\vec{a}, \vec{b}, \vec{c}\}$ as a basis of a 3D space, $\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$ is a basis of a 2D space.
+    Suppose, $\vec{x}, \vec{y} \in \spn\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$. Then,
+    \begin{align*}
+        \vec{x} = \alpha_1 (\vec{a} + \vec{c}) + \beta_1 (\vec{b} + \vec{c}) \\
+        \vec{y} = \alpha_2 (\vec{a} + \vec{c}) + \beta_2 (\vec{b} + \vec{c})
+    \end{align*}
+    Using \eqref{eq:2-32} we get,
+    \begin{align*}
+        \lambda\vec{x} + \mu \vec{y} =& \lambda\alpha_1 (\vec{a} + \vec{c}) + \lambda\beta_1 (\vec{b} + \vec{c}) \\
+        &+ \mu\alpha_2 (\vec{a} + \vec{c}) + \mu\beta_2 (\vec{b} + \vec{c}) \\
+        =& (\lambda\alpha_1 + \mu\alpha_2)(\vec{a} + \vec{c}) + (\lambda\beta_1 + \mu\beta_2)(\vec{b} + \vec{c}) \\
+        & \in \spn\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\} \quad \therefore \text{subspace}
+    \end{align*}
+    To show linear independance,
+    \begin{align*}
+        \alpha (\vec{a} + \vec{c}) + \beta (\vec{b} + \vec{c}) &= 0 \\
+        \Rightarrow \alpha\vec{a} + \beta \vec{b} + (\alpha + \beta)\vec{c} &= 0
+    \end{align*}
+    However since we chose $\{\vec{a}, \vec{b}, \vec{c} \}$ to be a 3D basis, we have linear independance of those vectors,
+    \[
+        \Rightarrow \alpha = \beta = \alpha + \beta = 0  
+    \]
+\end{eg}
+
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 5: _/10/2023
+% Lecture 6: __/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
