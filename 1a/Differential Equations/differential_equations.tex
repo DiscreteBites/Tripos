@@ -676,8 +676,186 @@ and we can reinterprit the function $f(x, y)$ as a function $f(x(r, \theta), y(r
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 5: __/10/2023
+% Lecture 5: 16/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
+\begin{defi}[Implicit differentiation]
+    Consider $f(x, y, z) = c$ where $c$ is a constant. $f$ defines a surface in 3D space, implicityly defining
+    \[
+        x = x(y, z) \quad y = y(x, z) \quad z = z(x, y)  
+    \]
+    By implicit we mean that it may not be possible to write out these relationships explicitly. We can still evaluate their partial derivatives. Generally,
+    \[
+        \diffd f = \diffp{f}x{x}\Big{|}_{y,z} \diffd x + \diffp{f}x{y}\Big{|}_{x,z} \diffd y + \diffp{f}x{z}\Big{|}_{x,y} \diffd z
+    \]
+\end{defi}
+
+\begin{eg}
+    \[
+        f: xy + y^2z + z^5 = 1  
+    \]
+    Notice that we may be able to write out forms for $x(y, z)$ and $y(x, z)$ but it will not be possible to do so for $z$ as we have a qunitic! Take the derivative with respect to $x$ while holding $y$ fixed.
+    \begin{align*}
+        y + y^2 \diffp{z}{x}\Big{|}_{y} + 5z \diffp{z}{x}\Big{|}_{y} = 0
+        \Rightarrow \diffp{z}{x}\Big{|}_{y} = \frac{-y}{y^2 + 5z^4}
+    \end{align*}
+\end{eg}
+
+\begin{remark}
+    Note that for any surface when $f$ is constant, we have the contraint that
+    \[
+        \diffd f = 0  
+    \]
+    and therefore we cannot independantly vary $x$, $y$ and $z$ without leaving the surface.
+\end{remark}
+
+\begin{cor}[Euler's chain rule/cyclic rule]
+    We may find the rate of change of $z$ with respect to $x$ at fixed $y$
+    \begin{align*}
+        0 &= \diffp{f}x{x}\Big{|}_{y,z} \diffp{x}{x}\Big{|}_{y} + \diffp{f}x{y}\Big{|}_{x,z} \diffp{y}{x}\Big{|}_{y} + \diffp{f}x{z}\Big{|}_{x,y} \diffp{z}{x}\Big{|}_{y} \\
+        &= \diffp{f}x{x}\Big{|}_{y,z} + \diffp{f}x{z}\Big{|}_{x,y} \diffp{z}{x}\Big{|}_{y} \\
+        \Rightarrow& \diffp{z}{x}\Big{|}_{y} = \frac{-\diffp{f}{x}\Big{|}_{y,z}}{\diffp{f}{z}\Big{|}_{x,y}}
+    \end{align*}
+    and similarly,
+    \[
+        \diffp{x}{y}\Big{|}_{z} = \frac{-\diffp{f}{y}\Big{|}_{x,z}}{\diffp{f}{x}\Big{|}_{y, z}} \qquad \diffp{y}{z}\Big{|}_{x} = \frac{-\diffp{f}{z}\Big{|}_{x,y}}{\diffp{f}{y}\Big{|}_{x,z}}
+    \]
+    if we multiply these three, we get pairwise cancellation and arrive at for 3 indepdnant variables,
+    \[
+        \diffp{x}{y}\Big{|}_{z} \times \diffp{y}{z}\Big{|}_{x} \times \diffp{z}{x}\Big{|}_{y} = -1
+    \]
+    Note to self: judging by the construction it will be $(-1)^n$ where $n$ is the number of variables.
+\end{cor}
+
+\begin{defi}[Reciprocal Rule]
+    We may similarly find
+    \[
+        \diffp{x}{z}\Big{|}_{y} = \frac{-\diffp{f}{z}\Big{|}_{x,y}}{\diffp{f}{x}\Big{|}_{y,z}}
+    \]
+    Which gives us
+    \[
+        \diffp{z}{x}\Big{|}_{y} = \frac{1}{\diffp{x}{z}\Big{|}_{y}}
+    \]
+\end{defi}
+
+\begin{thm}[Differentiating an integral w.r.t. a parameter]
+    Given an integral parametersed by some $\alpha$ whose end points may be dependant upon $\alpha$
+    \[
+        I(\alpha) = \int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha) \diffd x}
+    \]
+    We may differentiate with respect to $\alpha$ to get
+    \[
+        \diff{I}{\alpha} = \int_{a(\alpha)}^{b(\alpha)}{\diffp{f(x ; \alpha)}{\alpha} \diffd x} + f(b(\alpha); \alpha) \diff{b}{\alpha} - f(a(\alpha); \alpha) \diff{a}{\alpha}
+    \]
+    which may be thought of as partial differentiation under the intergral followed by evaluating the bounds while using the chain rule. 
+\end{thm}
+
+\begin{proof}
+    \begin{align*}
+        \diff{I}{\alpha} =& \lim_{\delta \alpha \rightarrow 0} \frac{1}{\delta \alpha} \left[\int_{a(\alpha + \delta \alpha)}^{b(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} - \int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha) \diffd x}\right] \\
+        =&\lim_{\delta \alpha \rightarrow 0} \frac{1}{\delta \alpha} \left[\int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} +\right. \int_{b(\alpha)}^{b(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} \\ 
+        &\left. - \int_{a(\alpha)}^{a(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} \right] - \int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha) \diffd x} \\
+        =&\lim_{\delta \alpha \rightarrow 0} \frac{1}{\delta \alpha} \left[ \int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha + \delta \alpha) - f(x ; \alpha) \diffd x} + \int_{b(\alpha)}^{b(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x}\right.\\
+        &-  \left.\int_{a(\alpha)}^{a(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} \right]
+    \end{align*}
+    The first integral is equivalent to partial differentiation of $f$
+    \[
+        \lim_{\delta \alpha \rightarrow 0} \frac{1}{\delta \alpha} \int_{a(\alpha)}^{b(\alpha)}{f(x ; \alpha + \delta \alpha) - f(x ; \alpha) \diffd x} = \int_{a(\alpha)}^{b(\alpha)}{\diffp{f(x ; \alpha)}{\alpha} \diffd x}
+    \]
+    For the second integral we use the mean value theorem. Using MVT, we find that $\exists \overline{x} \quad b(\alpha) \leq \overline{x} \leq b(\alpha + \delta \alpha)$ such that,
+    \[
+        \int_{b(\alpha)}^{b(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} = [b(\alpha + \delta \alpha) - b(\alpha)]f(\overline{x} ; \alpha + \delta \alpha)
+    \]
+    taking the limit we get
+    \begin{align*}
+        \lim_{\delta \alpha \rightarrow 0} \int_{b(\alpha)}^{b(\alpha + \delta \alpha)}{f(x ; \alpha + \delta \alpha) \diffd x} =& \lim_{\delta \alpha \rightarrow 0} \frac{b(\alpha + \delta \alpha) - b(\alpha)}{\delta \alpha}f(\overline{x} ; \alpha + \delta \alpha) \\
+        &= \diff{b}{\alpha}f(b(\alpha); \alpha)
+    \end{align*}
+    since in the limit, $\overline{x} \rightarrow b(\alpha)$, and similarly for the third integral.
+\end{proof}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item $I(\lambda) = \int_{0}^{\lambda}{e^{-\lambda x^2} \diffd x}$
+        \[
+            \diff{I}{\lambda} = \int_{0}^{\lambda}{-x^2e^{-\lambda x^2} \diffd x} + \diff{\lambda}{\lambda}e^{-\lambda^3} - 0
+        \]
+        \item $\int_{0}^{\infty}{x^ne^{-x} \diffd x}$. We can sneak in a paramter
+        \begin{align*}
+            \text{Let} &\ I(\lambda) = \int_{0}^{\infty}{e^-\lambda x \diffd x} = \frac{1}{\lambda} \\
+            &\Rightarrow \diff[n]{I}{\lambda} = \int_{0}^{\infty}{(-1)^n x^n e^{-\lambda x} \diffd x} = \frac{(-1)^n n!}{\lambda^{n+1}} \tag{By differentiating $\frac{1}{\lambda}$} \\
+            &\Rightarrow \int_{0}^{\infty}{x^ne^-x \diffd x} = n! \tag{Set $\lambda = 1$}
+        \end{align*}
+    \end{enumerate}
+\end{eg}
+
+\section{First-Order Linear Differential Equations}
+In general there are two flavours of Differential Equations,
+\begin{enumerate}
+    \item Ordinary: Involving functions of one variable
+    \item Partial: Involving functions of many variables
+\end{enumerate}
+in this course, we will focus on ordinary differential equations and maybe do abit of partial differential equations at the end.
+\subsection{Exponential Function}
+
+\begin{defi}[Exponential Function]
+    Exponential functions play a key role in solutions to linear ODEs. We define it as the infinite series.
+    \begin{align*}
+        \exp(x) &\equiv 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots + \frac{x^n}{n!} + \cdots \\
+        &= \sum_{i=0}^{\infty}{\frac{x^n}{n!}}
+    \end{align*}
+    It can also be written as a limit of the form
+    \[
+        \exp(x) = \lim_{k \rightarrow \infty} \bkt{1 + \frac{x}{k}}^k  
+    \]
+\end{defi}
+
+\begin{proof}
+    To show that the two forms are equivalent we can use the binomail theorem.\
+    \begin{align*}
+        \lim_{k \rightarrow \infty} \bkt{1 + \frac{x}{k}}^k = \lim_{k \rightarrow \infty} \bkt{1 + k \frac{x}{k} + \frac{k(k-1)}{2!}\bkt{\frac{x}{k}}^2 + \cdots} 
+    \end{align*}
+    Where in the limit,
+    \begin{align*}
+        \lim_{k \rightarrow \infty} \binom{k}{n} \bkt{\frac{x}{k}}^n &= \frac{k! x^n}{n!(k - n)! k^n} \\
+        &= \frac{x^n}{n!} \lim_{k \rightarrow \infty} \frac{k!}{(k - n)! k^n} \\
+        &= \frac{x^n}{n!} \lim_{k \rightarrow \infty} \frac{k}{k} \frac{k-1}{k} \frac{k-2}{k} \cdots \frac{k-(n -1)}{k} \\
+        &= \frac{x^n}{n!}
+    \end{align*}
+\end{proof}
+
+We may also differentiate the series to find,
+\begin{align*}
+    \diff{}{x}\exp(x) &= 1 + \frac{2x}{2!} + \frac{3x^2}{3!} + \cdots \\
+    &= 1 + x + \frac{x^2}{2!} + \cdots \\
+    &= \exp(x)
+\end{align*}
+Which is an important property that we will use to solve ODEs with. As $\exp(0) = 1$, we can think if $\exp(x)$ as a solution of the ODE,
+\[
+    \diff{f}{x} = f \quad \text{and} \quad f(0) = 1  
+\]
+
+Another key property of $\exp(x)$ is:
+\[
+    \exp(x_1)\exp(x_2) = \exp(x_1 + x_2)
+\]
+We have seen a proof of this via the vectors and matrices course, however, let's do it another way using the limit definition.
+\begin{align*}
+    \exp(x_1)\exp(x_2) =& \lim_{k \rightarrow \infty} \bkt{1 + \frac{x_1}{k}}^k \lim_{k \rightarrow \infty} \bkt{1 + \frac{x_2}{k}}^k \\
+    =& \lim_{k \rightarrow \infty} \sqbkt{\bkt{1 + \frac{x_1}{k}} \bkt{1 + \frac{x_2}{k}}}^k \\
+    =& \lim_{k \rightarrow \infty} \sqbkt{1 + \bkt{\frac{x_1 + x_2}{k} + \frac{x_1x_2}{k}}}^k \\
+    =& \lim_{k \rightarrow \infty} \left[1 + k\bkt{\frac{x_1 + x_2}{k} + \frac{x_1x_2}{k^2}}\right. \tag{binomial theorem}\\
+    &+ \frac{k(k-1)}{2}\bkt{\frac{x_1 + x_2}{k} + \frac{x_1x_2}{k^2}}^2 + \cdots
+\end{align*}
+
+In the limit, all the terms that have a factor of $\frac{1}{k^2}$ will go to $0$,
+\[
+    = 1 + (x_1 + x_2) + \frac{1}{2}(x_1 + x_2)^2 + \cdots
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 6: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
+
