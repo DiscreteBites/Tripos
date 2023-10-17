@@ -485,7 +485,7 @@ We are particularly interested in cases where $X$ is finite.
 \begin{eg}\leavevmode
     \begin{enumerate}
         \item Every group $G$ is a subgroup of itself
-        \item For every group $G$, $I_G = \{e_G\}$ is the Trivial subgroup
+        \item For every group $G$, $1_G = \{e_G\}$ is the Trivial subgroup
     \end{enumerate}
     Propper subgroups
     \begin{enumerate}[resume]
@@ -798,15 +798,15 @@ All of the proofs that we have covered are not specific to $\C$, we could have d
     \begin{enumerate}
         \item For any groups $G$ and $H$ the map 
         \begin{align*}
-            \phi: &G \rightarrow H \\
-            &g \mapsto e_H
+            \phi: G &\rightarrow H \\
+            g &\mapsto e_H
         \end{align*}
         is the Trivial homomorphism
 
         \item if $H \leq G$ then the map
         \begin{align*}
-            \phi: &H \rightarrow G \\
-            &h \mapsto h
+            \phi: H &\rightarrow G \\
+            h &\mapsto h
         \end{align*}
         is the Inclusion homomorphism
 
@@ -816,15 +816,15 @@ All of the proofs that we have covered are not specific to $\C$, we could have d
         \]
         if $n \mid m$ then
         \begin{align*}
-            \phi: &C_m \rightarrow C_n \\
-            &z \mapsto z^\frac{m}{n}
+            \phi: C_m &\rightarrow C_n \\
+            z &\mapsto z^\frac{m}{n}
         \end{align*}
         is a homomorphism
 
         \item Since $\det(AB) = \det(A)\det(B)$ the map
         \begin{align*}
-            \phi: &GL_2(\R) \rightarrow (\R \setminus \{0\}, \times, 1) \\
-            &A \mapsto \det(A)
+            \phi: GL_2(\R) &\rightarrow (\R \setminus \{0\}, \times, 1) \\
+            A &\mapsto \det(A)
         \end{align*}
         is a homomorphism
     \end{enumerate}
@@ -833,7 +833,7 @@ All of the proofs that we have covered are not specific to $\C$, we could have d
 \begin{lemma}
     If $\phi: G \rightarrow H$ is a homomorphism
     \begin{enumerate}
-        \item $\phi(e_G) = e_G$
+        \item $\phi(e_G) = e_H$
         \item $\phi(g^{-1}) = \phi(g)^{-1}$ 
     \end{enumerate}
 \end{lemma}
@@ -857,7 +857,263 @@ All of the proofs that we have covered are not specific to $\C$, we could have d
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 6: __/10/2023
+% Lecture 6: 17/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{defi}[Isomorphism]
+    If a homomorphism $\phi : G \rightarrow H$ is also a bijection, we say that $\phi$ is a \emph{Isomorphism} and we write
+    \[
+        G \cong H
+    \]
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Recall $C_n = \{z \in C \mid Z^n = 1\}$ and $\Z_n = \{0, 1, 2, \cdots, n-1\}$. Then
+        \begin{align*}
+            \phi : \ \Z_n &\rightarrow C_n \\
+            k &\mapsto e^\frac{2 \pi i k}{n}
+        \end{align*}
+        is a bijection. Let's check the homomorphism property. Recall the addition modulo $n$ operator
+        \[
+            k + l = pn + (k +_n l)  
+        \]
+        for some $p \in \Z$.
+        \begin{align*}
+            \phi(k +_n l) &= e^{\frac{2 \pi i}{n}(k +_n l)} \\
+            &= e^{\frac{2 \pi i}{n}(pn)} \times e^{\frac{2 \pi i}{n}(k +_n l)} \\
+            &= e^{\frac{2 \pi i}{n}(k + l)} \\
+            &= e^{\frac{2 \pi i k}{n}} e^{\frac{2 \pi i l}{n}} \\
+            &= \phi(k)\phi(l)
+        \end{align*}
+        
+        \item Take the exponential function
+        \begin{align*}
+            \exp : \ (\R, +, 0) &\rightarrow (\R, \times, 1)\\
+            x &\mapsto e^x
+        \end{align*}
+        is a homomorphism since $\exp(x + y) = \exp(x)\exp(y)$. Furthermore, since the inverse function exists, we have a bijection. Therefore $\exp$ is an isomorphism.
+    \end{enumerate}
+\end{eg}
+
+\begin{lemma}\leavevmode
+    \begin{enumerate}
+        \item If $\phi : G \rightarrow H$ is an isomorphism, so is $\phi^{-1}$
+        \item If $G \xrightarrow{\phi} H \xrightarrow{\psi} K$ are homomorphism, then so is $\psi \circ \phi$
+        \item $\cong$ is an equivalence relation. That is
+        \begin{itemize}
+            \item $G \cong G$
+            \item $G \cong H \Rightarrow H \cong G$
+            \item $G \cong H \wedge H \cong K \Rightarrow G \cong K$
+        \end{itemize}
+    \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+    exercise for me
+\end{proof}
+
+\begin{defi}[Image \& Kernel]
+    Let $\phi : G \rightarrow H$ be a homomorphism
+    \begin{enumerate}
+        \item The \emph{Image} of $\phi$ is
+        \[
+            \im(\phi) = \{h \in H \mid h = \phi(g) \ \forall g \in G\}
+        \]
+        we think of the image as the subset of $H$ that $\phi$ maps to.
+        \item The \emph{Kernel} of $\phi$ is
+        \[
+            \ker(\phi) = \{g \in G \mid \phi(g) = e_H\}
+        \]
+        we think of the kernel as the set of objects in $G$ that are mapped to the identity.
+    \end{enumerate}
+\end{defi}
+
+\begin{prop}
+    If $\phi : G \rightarrow H$ is a homomorphism then
+    \[
+        \im(\phi) \leq H \ \text{and} \ \ker(\phi) \leq G
+    \]
+\end{prop}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item Since $e_H = \phi(e_G) \ \therefore \im(\phi)$ is not empty. Given
+        \[
+            h_1 \equiv \phi(g_1), \quad h_2 \equiv \phi(g_2) \in \im(\phi)
+        \]
+        we proceed by using the subgroup criterion, 
+        \begin{align*}
+            h_1h_2^{-1} &= \phi(g_1)\phi(g_2)^{-1} \\
+            &= \phi(g_1)\phi(g_2^{-1}) = \phi(g_1g_2^{-1}) \in \im(\phi)
+        \end{align*}
+        
+        \item $\phi(e_G) = e_H \ \therefore \ker(\phi)$ is not empty. Also for $g_1, g_2 \in \ker(\phi)$
+        \[
+            \phi(g_1 g_2^{-1}) =  \phi(g_1) \phi(g_2^{-1})= e_H \cdot e_H^{-1} = e_H
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Image and Kernel are useful tools for helping us determine if a homomorphism is isomorphic. In general, a map of set
+    \[
+        F : A \rightarrow B  
+    \]
+    is said to be
+    \begin{enumerate}
+        \item Injective if whenever $F(a_1) = F(a_2) \Leftrightarrow a_1 = a_2$. In otherwords, the map does not map two elements to the same place.
+        \item Surjective if $\forall b \in B, \exists a \in A$ such that $F(a) = b$. In otherwords, the map covers the entire output space $B$.
+    \end{enumerate}
+    If a map is both injective and surjective the map is Bijective.
+\end{remark}
+
+\begin{prop}
+    Let $\phi : G \rightarrow H$ be a homomorphism. Then,
+    \begin{enumerate}
+        \item $\phi$ is sujective if and only if
+        \[
+            \im(\phi) = H    
+        \]
+        \item $\phi$ is injective if and only If
+        \[
+            \ker(\phi) = 1_G = \{e_G\}
+        \]
+    \end{enumerate}
+\end{prop}
+
+Proof of (i) follows from the definition of surjectivity. Below we will prove (ii)
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item[($\Rightarrow$)] Indeed, if $\phi$ is injective, then
+        \[
+            \ker(\phi) = \phi^{-1}(\{e_H\})
+        \]
+        which will have $0$ or $1$ elements. However, we already know that $e_G \in \ker(\phi)$ therefore
+        \[
+            \therefore \ \ker(\phi) = 1_G
+        \]
+
+        \item Suppose $\ker(\phi) = 1_G$. If $\phi(g_1) = \phi(g_2)$, Then
+        \begin{align*}
+            \phi(g_1g_2^{-1}) = \phi(g_1)\phi(g_2)^{-1} = e_H \\
+            \Rightarrow g_1g_2^{-1} \in \ker(\phi) = 1_G \\
+            \therefore g_1g_2^{-1} = e_G \\
+            \Rightarrow g_1 = g_2
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+\begin{prop}
+    Therefore, $\phi: G \rightarrow H$ is an isomorphism if and only if
+    \[
+        \im(\phi) = H \ \text{and} \ \ker(\phi) = 1_G  
+    \]
+\end{prop}
+
+\subsection{Cyclic Groups}
+
+The group we mentioned previously, $C_n \cong \Z_n$ have a special property.
+
+\begin{defi}[Cyclic group]
+    A group $g$ is cyclic if $\exists g \in G$ such that
+    \[
+        G = \{g^k \mid k \in \Z\}  
+    \]
+    The element $g$ is called the \emph{generator} of $G$.
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item $C_n \cong \Z_n$
+        \item $\Z$ is cyclic with generator $1$
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}
+    If $G$ is cyclic, then either $G \cong C_n$ for some n or $G \cong \Z$
+\end{thm}
+
+\begin{proof}
+    Let $G$ be a cyclic group with generator $g$. Let the set $S$ be
+    \[
+        S = \{k \in \N_{>0} \mid g^k = e_G\}  
+    \]
+    where $S$ keeps track of the values of $k$ that bring the generator to the identity. Further, let
+    \[
+        n = \begin{cases}
+            \min S & S \ \text{non empty} \\
+            \infty & \text{otherwise}
+        \end{cases}  
+    \]
+
+    \begin{enumerate}[cases]
+        \item ($n = \infty$) We define the map
+        \begin{align*}
+            \phi : \Z &\rightarrow G \\
+            k &\mapsto g^k
+        \end{align*}
+        we will show that $\phi$ is an isomorphism. Firstly, the map obeys the homomorphism principle,
+        \[
+            \phi(k + l) = g^{k + l} = \phi(g)\phi(l)   
+        \]
+        and secondly, $\phi$ is surjective because $G$ is cyclic. To show injectivity, suppose $\ker(\phi) \neq 1_\Z$ and let there be some element $k \in \ker(\phi)$ where $k \neq 0$.
+        Since $\ker(\phi) \leq \Z$ we replace $k$ by $-k$ if neccesary and assume $k > 0$. But now, $k \in S$ so $S$ is non empty, which is a contradiction. \contradiction
+        
+        Therefore, $\ker(\phi) = 1_\Z$ so $\phi$ is bijective $\Z \cong G$.
+
+        Note the step where we said to replace $k$ by $-k$. We can do so, because $\ker(\phi)$ is a subgroup, meaning that if $k$ exists in the kernel do does its inverse $-k$.
+
+        \item ($n < \infty$) We define the map
+        \begin{align*}
+            \phi : \Z_n &\rightarrow G \\
+            k &\mapsto g^k
+        \end{align*}
+        We check that $\phi$ is a homomorphism (homework)
+        To prove surjectivity, consider $g^k \in G$ for some $k \in \Z$. Using the division algorithm we can write
+        \[
+            k = nq + r \quad \text{for} r \in \Z_n, q \in \Z
+        \]
+        where we recall than $n$ is the minimum element in $S$ such that $g^n = e_G$, therefore,
+        \begin{align*}
+            g^k &= g^nq \cdot g^r \\
+            &= (g^n)^q \cdot g^r \\
+            &= e_G \cdot g^r = g^r = \phi(r)
+        \end{align*}
+        
+        To prove injectivity, suppose $\phi(k) = e_G$ since $n$ was minimal and greater than $0$, it follows that $k = 0$. Furthermore, in $\Z_n, n \equiv 0$ and therefore
+        \[
+            \ker(\phi) = \{0\} = 1_{\Z_n}  
+        \]
+        Therefore $\phi$ is injective and is an isomorphism.
+        \[
+            G \cong Z_n \cong C_n  
+        \]
+    \end{enumerate}
+\end{proof}
+
+\begin{remark}
+    Because of this isomorphism, we will write $C_n$ for any cyclic group of order $n$, and $C_\infty \cong \Z$ 
+\end{remark}
+
+\begin{defi}
+    For any group $G$ and element $g \in G$, let
+    \[
+        \anglebk{g} = \{g^k \mid k \in \Z\} \leq G  
+    \]
+    Note that $\anglebk{g}$ is cyclic, so
+    \[
+        \anglebk{g} \cong C_n    
+    \]
+    for some $n \in \N_{>0} \cup \{\infty\}$. This is called the order of $g$, written as
+    \[
+        o(g) \quad \text{or} \quad \abs{g}  
+    \]
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 7: __/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
