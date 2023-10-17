@@ -820,7 +820,7 @@ Note that this will happen in at most $b$ steps. In each step, the remainder is 
     \end{enumerate}
 \end{remark}
 
-\begin{nthm}[Fundamental theorem of arithmetic]
+\begin{nthm}[Fundamental theorem of arithmetic]\label{th:2-29}
     Every natural number is expressible as a product of primes uniquely (up to a reordering).
 \end{nthm}
 
@@ -839,7 +839,139 @@ Note that this will happen in at most $b$ steps. In each step, the remainder is 
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 6: __/10/2023
+% Lecture 6: 17/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}
+    There are arithmetical systems (those permitting addition and multiplication) in which factorisation is not unique. 
+    For example, consider the number system $\Z[\sqrt{-3}]$, which we call the integers adjoin $\sqrt{-3}$. These are the set of all complex numbers of the form
+    \[
+        x + y\sqrt{-3} \quad \text{for} \ x, y \in \Z 
+    \]
+    We can multiply and add two elements of $\Z[\sqrt{-3}]$ to get another element. For intance,
+    \begin{align*}
+        (1 + \sqrt{-3}) + (1 - \sqrt{-3}) = 2 \\
+        (1 + \sqrt{-3})(1 - \sqrt{-3}) = 4
+    \end{align*}
+    Note that we can similarly define what it means to be "prime" in $\Z[\sqrt{-3}]$ and both $(1 + \sqrt{-3})$ and $(1 - \sqrt{-3})$ happen to be prime. 
+    But, we can also write $4 = 2 \times 2$, and we see that factorisation is not unique in this system. 
+\end{remark}
     
+Lets look at some applications of theorem \ref{th:2-29}
+\begin{enumerate}[label=(\arabic*)]
+    \item What are the factors of $n = 2^3 \cdot 3^7 \cdot 11$?
+    
+    They all all numbers of the form $2^a3^b11^c$ where
+    \begin{align*}
+        0 \leq &a \leq 3 \\
+        0 \leq &b \leq 7 \\
+        0 \leq &c \leq 1
+    \end{align*}
+    How can we be sure that there are no other factors? Consider that if, for example $7 \mid n$, then we could have a factorisation including $7$ which contradicts uniqueness.
+
+    Generally, $n = p_1^{a_1}p_2^{a_2}\cdot p_k^{a_k}$ has factors of the form
+    \[
+        p_1^{b_1}p_2^{b_2}\cdot p_k^{b_k} \quad \text{for} \ 0 \leq b_i \leq a_i \ \forall i = 1, 2, \cdots, k
+    \]
+
+    \item What are the common factors of $2^3 \cdot 3^7 \cdot 5 \cdot 11^3$ and $2^4 \cdot 3^2 \cdot 11 \cdot 13$?
+    
+    They all all numbers of the form $2^a3^b11^c$ where
+    \begin{align*}
+        0 \leq &a \leq 3 \\
+        0 \leq &b \leq 2 \\
+        0 \leq &c \leq 1
+    \end{align*}
+    Thus, we can read off the highest common factor as $2^3\cdot3^2\cdot11$. In general, the highest common factor of $p_1^{a_1}p_2^{a_2}\cdot p_k^{a_k}$ and $p_1^{b_1}p_2^{b_2}\cdot p_k^{b_k}$ is
+    \[
+        p_1^{\min{\{a_1, b_1\}}}p_2^{\min{\{a_2, b_2\}}}\cdots p_k^{\min{\{a_k, b_k\}}}  
+    \]
+
+    \item What are the common multiples of the two numbers in (2).
+    
+    They are all numbers of the form $2^a\cdot3^b\cdot5^c\cdot11^d \times q$. Where $a\geq4, b\geq7, c\geq1, d\geq3, e\geq1$, and $q \in \Z$.
+    Hence, $2^4\cdot3^5\cdot5\cdot11^3\cdot13$ is a common multiple, and every other common multiple is a multiple of it. 
+    We call it the least common multiple (LCM) of the two numbers. In general, the LCM of $p_1^{a_1}p_2^{a_2}\cdot p_k^{a_k}$ and $p_1^{b_1}p_2^{b_2}\cdot p_k^{b_k}$ is
+    \[
+        p_1^{\max{\{a_1, b_1\}}}p_2^{\max{\{a_2, b_2\}}}\cdots p_k^{\max{\{a_k, b_k\}}}   
+    \]
+    Furthermore, since
+    \begin{align*}
+        \min{\{a_i, b_i\}} + \max{\{a_i, b_i\}} = a_i + b_i \\
+        \Rightarrow \gcd(x,y) \cdot lcm(x,y) = xy
+    \end{align*}
+
+    \item Another proof for the existence of infinitely many primes! (Erdos 1930).
+    
+    Let $p_1, p_2, \cdots, p_k$ be all the primes. Any number which is a product of just these primes is of the form
+    \[
+        p_1^{j_1}p_2^{j_2}\cdot p_k^{j_k} = m^2 p_1^{i_1}p_2^{i_2}\cdot p_k^{i_k} \tag{$\star$}
+    \]
+    Where we have factorised all even powers out such that $i_l$ is either $0$ or $1$.
+
+    Let $M \in \N$, if a number $\leq M$ is of the form ($\star$) then
+    \[
+        m \leq \sqrt{M}  
+    \]
+    so there are at most $\sqrt{m} \cdot 2^k$ numbers of the form ($\star$) that are $\leq M$.
+
+    If $M > \sqrt{m} \cdot 2^k$ for example, $M > 4^k$, then there must be a number that is $\leq M$ that is not of the form ($\star$).
+    But this number must have a prime factor not amongst $p_1 \ldots p_k$. \contradiction
+\end{enumerate}
+
+\begin{remark}
+    With regards to (4), Erdos proof that there are infinitely many primes, we see that by employing a "counting argument" we are able to get some sense of how many primes there are.
+    Euclid's proof tells us that the $k^{th}$ prime is $<2^{2^k}$, which this proof gives a significantly stronger bound of $<4^k$. In fact, we know that the $k^{th}$ prime is in fact $\approx k \log{k}$ (prime number theorem).
+\end{remark}
+
+\subsection{Modular arithmetic}
+
+Let $n \geq 2$ be a natural number. Then the integers "modulo $n$" written $\Z_n$ or $\Z/n\Z$, consists of the integers, with two being regarded as the same if they differ by a multiple of $n$.
+
+\begin{eg}[$\Z_7$]
+    In $\Z_7$, $2$ is the same as $16$.
+\end{eg}
+
+\begin{defi}
+    If $x$ and $y$ are the same in $\Z_n$ we write
+    \[
+        x \equiv y \mod n
+    \]
+    Alternative notation may be
+    \[
+        x \equiv y \quad (n) \quad \text{or} \quad x = y \ \text{in} \ \Z_n 
+    \]
+    Thus, we have the relationship
+    \[
+        x \equiv y \mod n \Leftrightarrow n \mid x - y \Leftrightarrow x = y + kn \ k \in \Z
+    \]
+\end{defi}
+
+We can view $\Z_n$ as counting in a circle.
+% insert diagram
+Note that we cannot take addition and multiplication in this number system for granted. Notice how even and odd does not continue to make sense in $\Z_7$, for instance, $2 \equiv 9$ in  this number system. We will have to check that addition and multiplication are well defined.
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item (addition). If $a = a'$ and $b = b'$, we check that
+        \begin{align*}
+            n \mid (a - a') + (b - b') \\
+            n \mid (a + b) - (a' + b') \\
+            \therefore a + b \equiv a' + b' \mod n
+        \end{align*}
+        
+        \item (multiplication) Similarly,
+        \begin{align*}
+            n \mid& (a - a')\cdot b + a' \cdot(b - b') \\
+            &= a \cdot b - a' \cdot b + a' \cdot b + a' \cdot b' \\
+            &= a \cdot b - a' \cdot b' \\
+            \therefore& \quad a + b \equiv a' + b' \mod n
+        \end{align*}
+    \end{enumerate}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 7: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
 \end{document}
