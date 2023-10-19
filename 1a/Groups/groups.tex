@@ -1113,7 +1113,159 @@ The group we mentioned previously, $C_n \cong \Z_n$ have a special property.
 \end{defi}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 7: __/10/2023
+% Lecture 7: 19/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Group Actions}
+
+\begin{defi}
+    An action of a group $G$ on a set $X$ is a map
+    \begin{align*}
+        G \times X &\rightarrow X \\
+        (g, x) &\mapsto gx \ \text{or} \ g(x)
+    \end{align*}
+    Such that:
+    \begin{enumerate}
+        \item $ex = x \quad \forall x \in X$
+        \item $(gh)x = g(hx) \quad \forall g, h \in g, x \in X$ \hspace*{\fill}(Associativity)
+    \end{enumerate}
+    We write $G \gact X$ to indicate that $G$ acts on $X$.
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item For any group $G$ and set $X$,
+        \[
+            gx = x \qquad \forall g \in G, x \in X
+        \]
+        defines the trivial action
+
+        \item The symmetric group $\Sym(X)$ acts on $X$ via
+        \[
+            fx = f(x)  
+        \]
+
+        \item For any $X \subseteq \C$
+        \[
+            \Isom(X) \leq \Sym(X)   
+        \]
+        acts on X
+
+        \item In particular, $\D_{2n}$ acts on the regular $n$-gon $X_n$. It also acts on the set of verticies.
+        \[
+            \{z \in \C \mid z^n = 1\}    
+        \]
+
+        \item Most interestingly, every group $G$ acts on itself via, $g \in G, \gamma \in G$
+        \[
+            g\gamma = g \cdot \gamma  
+        \]
+        This is the Regular Action.
+    \end{enumerate}
+\end{eg}
+
+\begin{thm}
+    An action of a group $g$ on a set $X$ is the ``same thing'' as a homomorphism.
+    \[
+        \phi: G \rightarrow \Sym(X)
+    \]
+\end{thm}
+
+\begin{proof}
+    Suppose $G \gact X$. For any $g \in G$, Consider the map from $X$ to itself,
+    \begin{align*}
+        t_g : X &\rightarrow X \\
+        x &\mapsto gx
+    \end{align*}
+    Now, we can check for an inverse map
+    \[
+        t_{g^{-1}}(t_g(x)) = t_{g^{-1}}(gx) = g^{-1}(gx) = (g^{-1}g)x = x
+    \]
+    Therefore, we have an inverse for the map,
+    \[
+        t_{g^{-1}} = (t_g)^{-1}
+    \]
+    and $t_g$ is a Bijection! We may now define a homomorphism
+    \begin{align*}
+        \phi : G &\rightarrow \Sym(x) \\
+        g &\rightarrow t_g
+    \end{align*}
+    We will show that it is a homomorphism, lets check for any $g, h \in G, x \in X$,
+    \begin{align*}
+        (t_g \circ t_h)(x) &= t_g(hx) \\
+        &= g(hx) \\
+        &= (gh)x \\
+        &= t_{gh}(x)
+    \end{align*}
+    Therefore, $t_g \circ t_h = t_{gh}$, and we have the homomorphism property
+    \[
+        \phi(g)\phi(h) = t_g \circ t_h = t_{gh} = \phi(gh)  
+    \]
+
+    Conversely, given a homomorphism $\phi: G \rightarrow \Sym(X)$, we may define an action $G \gact X$ as follows:
+    \[
+        gx = \phi(g)(x)  
+    \]
+    We will show that it is indeed an action, checking properties
+    \begin{enumerate}
+        \item $ex = \phi(e)x = \Id_x(x) = x$
+        \item $(gh)x = \phi(gh)x = \phi(g)\phi(h)(x) = \phi(\phi(h)(x)) = g(hx)$
+    \end{enumerate}
+\end{proof}
+
+\begin{thm}[Cayley's Theorem]
+    Every group $G$ is isomorphic to a subgroup of some symmetric group $\Sym(X)$. Furthermore, if $\abs{G} < \infty$ then $X$ can be taken to be finite.
+\end{thm}
+
+\begin{proof}
+    Let $X = G$. Consider the Regular action, that is the action of $G$ on itself, $G \gact X$ where $X = G$. By the previous theorem, this gives a homomorphism
+    \[
+        \phi: G \rightarrow \Sym(X)  
+    \]
+    Let $H = \im(\phi)$. We proved that $H \leq \Sym(X)$, so we can create a surjective homomorphism, $\psi$
+    \[
+        \psi: G \rightarrow H  
+    \]
+    Now I claim that the $\ker(\psi) = 1_G$. Indeed take a $g \in \ker(\psi)$, then $\psi(g) = \Id_G$
+    \begin{align*}
+        \Rightarrow g \gamma = g \quad \forall \gamma \in G \\
+        \Rightarrow g e_G = e_G \\
+        \Rightarrow g = e_G
+    \end{align*}
+    Note that this works because $G$ is acting on itself! Therefore, we know that $\psi$ is a isomorphism, as required. Further since, $G = X$ if $\abs{G} < \infty$ then $X$ is also finite.
+\end{proof}
+
+\begin{defi}[Orbit \& Stabiliser]
+    Let $G \gact X$ and let $x \in X$
+    \begin{enumerate}
+        \item The orbit of $x$ is the set
+        \[
+            Gx = \{y \in X \mid y = gx \ \text{for some} g \in G\}  
+        \]
+        \item The stabiliser of $x$ is
+        \[
+            \stab_G(x) = \{g \in G \mid gx = x\}
+        \]
+    \end{enumerate}    
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item If $Gx = X$, that is if the orbit is the whole set, then this is called Transitive.
+        \item If every element $g \in G$ apart from $e_G$ has $x \in X$ such that $gx \neq x$, then $G \gact X$ is called Faithful. 
+    \end{enumerate}
+\end{remark}
+
+\begin{prop}[Properties of Orbits \& Stabilisers]
+    Suppose $G \gact X$
+    \begin{enumerate}
+        \item $\stab_G(x) \leq G$
+        \item The orbits $\{Gy \mid y \in X\}$ form a partition of $X$.
+    \end{enumerate}
+\end{prop}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 8: __/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
