@@ -893,8 +893,9 @@ as well as a standard basis, which are still
     To verify (i) we set $\lambda = \mu = 1$, to verify (ii) we set $\mu = 0$, to verify (iii) we set $\lambda = \mu = 0$
 \end{thm}
 
-\begin{eg}
-    Given $\{\vec{a}, \vec{b}, \vec{c}\}$ as a basis of a 3D space, $\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$ is a basis of a 2D space.
+\begin{eg}\leavevmode
+    \begin{enumerate}
+    \item Given $\{\vec{a}, \vec{b}, \vec{c}\}$ as a basis of a 3D space, $\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$ is a basis of a 2D space.
     Suppose, $\vec{x}, \vec{y} \in \spn\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$. Then,
     \begin{align*}
         \vec{x} = \alpha_1 (\vec{a} + \vec{c}) + \beta_1 (\vec{b} + \vec{c}) \\
@@ -916,10 +917,168 @@ as well as a standard basis, which are still
     \[
         \Rightarrow \alpha = \beta = \alpha + \beta = 0  
     \]
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 6: 18/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+    \item $u = \{ \vec{x} \in \R^n \mid \sum_{i=1}^{n}{\alpha_ix_i} = 0, \ \alpha_i \in \R\}$ forms a subspace in $\R^n$.
+    Consider $\vec{x}, \vec{y} \in u$.
+    \begin{align*}
+        \lambda \vec{x} + \mu \vec{y} &= \sum_{i=1}^{n}{\alpha_i(\lambda x_i + \mu y_i)} \\
+        &= \lambda\sum_{i=1}^{n}{\alpha_ix_i} + \mu\sum_{i=1}^{n}{y_i} \\
+        &= 0
+    \end{align*}
+    Therefore, $\lambda \vec{x} + \mu \vec{y} \in u$ and $u$ forms a subsapce of $\R^n$. We can think of this subspace as being $n-1$ dimensional. 
+    If we think about the restriction imposed by the sum, we are able to freely choose $n-1$ variables before the $n^{th}$ variable is fixed by the sum condition.
+    Also if we consider $\alpha = (1, 0, 0, 0, \cdots) = \vec{e_1}$. Then the equation for $u$ is $x_1 = 0$ after which we are free to change all other variables.
+    Therefore a basis for this subspace could be $\{\vec{e_2}, \vec{e_3}, \cdots, \vec{e_n}\}$
+
+    \item $w = \{ \vec{x} \in \R^n \mid \sum_{i=1}^{n}{\alpha_ix_i} = 1\}$ is \emph{NOT} a subspace.
+    consdier the same linear combination,
+    \begin{align*}
+        \lambda \vec{x} + \mu \vec{y} &= \sum_{i=1}^{n}{\alpha_i(\lambda x_i + \mu y_i)} \\
+        &= \lambda\sum_{i=1}^{n}{\alpha_ix_i} + \mu\sum_{i=1}^{n}{y_i} \\
+        &= \lambda + \mu \\
+        &\neq 1 \quad \forall \lambda, \mu \in \R
+    \end{align*}
+    This plane does not pass through the origin, and therefore is not a subspace.
+    \end{enumerate}
 \end{eg}
 
-%%%%%%%%%%%%%%%%%%%%%%
-% Lecture 6: __/10/2023
-%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Einstein Suffix Notation}
+
+Consider a vector $\vec{v} \in \R^3$, we can write
+\[
+    \vec{v} = v_1\vec{e_1} + v_2\vec{e_2} + v_3\vec{e_3} = (v_1, v_2, v_3)
+\]
+In such notation, we write the $i^{th}$ component of $\vec{v}$ as $v_i$. Using Einstein notation, we will aim to write out vector equations in terms of these suffixes alone. For instance,
+\begin{align*}
+    \vec{a} = \vec{c} &\longrightarrow a_i = b_i \\
+    \vec{c} = \alpha \vec{a} + \beta \vec{b} &\longrightarrow c_i = \alpha a_i + \beta b_i
+\end{align*}
+for the scalar product we may write
+\[
+    \vec{x} \cdot \vec{y} = \sum_{i=1}^{3}{x_iy_i} \longrightarrow x_iy_i
+\]
+In this case, the presence of a repeated \emph{free} suffix $i$ indicates that we sum over it.
+
+\begin{defi}[Summation Convention]
+    When we are writing sums, summation over free suffixes is understood.
+    \[
+        \vec{x} \cdot \vec{y} = x_iy_i
+    \]
+    Here $i$ is repeated and called a \emph{dummy} suffix. Since we are summing over it, it matters not what the dummy suffix is called.
+\end{defi}
+
+Here are the rules for using Einstein suffix notation.
+\begin{enumerate}
+    \item If the suffix appears once on the same term: it is a free suffix
+    \item If the suffix appears twice in the same term: it is a dummy suffix and we sum over it
+    \item If the suffix appears more than twice: this is wrong!
+\end{enumerate}
+
+\begin{eg}
+    \begin{align*}
+        [(\vec{a} \cdot \vec{b})\vec{c} - (\vec{a}\cdot\vec{c}\vec{b})]_i \tag{Note the single free suffix $i$}\\
+        =(\vec{a} \cdot \vec{b})\vec{c_i} - (\vec{a}\cdot\vec{c})\vec{b_i} \\
+        =a_kb_kc_i - a_kc_kb_i \tag{Note the use of dummy $k$}
+    \end{align*}
+    Note that for any equation the free suffixes must balance on the left and right. Here we see that we have one free $i$ on the left and right.
+\end{eg}
+
+\begin{defi}[Kronecker Delta]
+    \[
+        \delta_{ij} = \begin{cases}
+            1 & \text{if} \ i = j \\
+            0 & \text{otherwise}
+        \end{cases}
+    \]
+    It is a symmetric symbol
+    \[
+        \delta_{ij} = \delta_{ji}
+    \]
+\end{defi}
+
+\begin{remark}
+    Here are some results from using the Kronecker Delta, 
+    \begin{align*}
+        a_i\delta_{i1} = a_1
+    \end{align*}
+    In this example we are summing over dummy $i$, however, all terms will be $0$ except for when $i = 1$. In this case the Kronecker delta, pulled out $1$ from the sum. In general,
+    \begin{equation}\label{eq:2-33}
+        a_i\delta_{ij} = a_j 
+    \end{equation}
+    We also have
+    \begin{equation}\label{eq:2-34}
+        \delta_{ij}\delta_{jk} = \delta_{ik}
+    \end{equation}
+    Where in this example, we have summed the product over all $j$. Note that this sum is only $1$ if $k = i$
+    We can also sum over the Kronecker Delta itself,
+    \begin{equation}
+        \delta_{ii} = 3  
+    \end{equation}
+
+    We may compute an example,
+    \[
+        a_p \delta_{pq} b_q = a \cdot b
+    \]
+\end{remark}
+
+\begin{defi}[Levi - Cevita (Alternating) Symbol]
+    Consider the arrangements of $\{1, 2, 3\}$. We can classify them into two groups
+    \[
+        \{1, 2, 3\} \quad \{2, 3, 1\} \quad \{3, 1, 2\}
+    \]
+    where we perform an even number of swaps, and 
+    \[
+        \{2, 1, 3\} \quad \{1, 3, 2\} \quad \{3, 2, 1\}
+    \]
+    where we perform an odd number of swaps. These are known as even and odd permutations respectively. The Levi-Cevita symbol is:
+    \[
+        \varepsilon_{ijk} = \begin{cases}
+            +1 & \text{if} \ i, j, k \ \text{is an even permutation of} \ 1, 2, 3 \\
+            -1 & \text{if} \ i, j, k \ \text{is an odd permutation of} \ 1, 2, 3 \\
+            0 & \text{otherwise}
+        \end{cases}
+    \]
+
+    We note that $\varepsilon_{ijk}$ has three fixed suffixes.
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item $\varepsilon_{ijk}\delta_{jk} = 0$ since the Kronecker delta is forcing two of the suffixes to be the same, in which case the Levi-Cevita symbol will be $0$.
+        \item If $a_{jk} = a_{kj}$ then we say that $a_{jk}$ is symmetric. We can show that
+        \[
+            \varepsilon_{ijk}a_{jk} = \varepsilon_{ijk}a_{kj} = - \varepsilon_{ikj}a_{kj}
+        \]
+        Note that we first used the fact that $a_{jk}$ is symmetric, then the fact that when we swap the suffices of $\varepsilon$ once, we move from and even permutation to an odd and vice versa. Lastly, we recall that the names of dummy variables don't matter! Therefore, we get that
+        \[
+            \varepsilon_{ijk}a_{jk} = 0
+        \]
+        \item Recall the vector product, 
+        \begin{align*}
+            \vec{a} \times \vec{b} &= (a_1\uvec{i} + a_2\uvec{j} + a_1\uvec{k}) \times (b_1\uvec{i} + b_2\uvec{j} + b_1\uvec{k}) \\
+            &= (a_2b_3 - a_3b_2)\uvec{i} + \cdots \\
+            &= \begin{vmatrix}
+                \uvec{i} & \uvec{j} & \uvec{k} \\
+                a_1 & a_2 & a_3 \\
+                b_1 & b_2 & b_3
+            \end{vmatrix}
+        \end{align*}
+        We consider
+        \[
+            \varepsilon_{1jk}a_jb_k = \sum_{j=1}^{3}\sum_{k=1}^{3} \varepsilon_{1jk}a_jb_k 
+        \]
+        In this sum, the only non-zero terms are $j=2, k=3$ or $j=3, k=2$. Therefore we get,
+        \begin{align*}
+            = \varepsilon_{123}a_2b_3 + \varepsilon_{132}a_3b_2 \\
+            = a_2b_3 - a_3b_2
+        \end{align*}
+        In general,
+        \begin{equation}
+            (\vec{a} \times \vec{b})_i = \varepsilon_{ijk}a_jb_k
+        \end{equation}
+    \end{enumerate}
+\end{remark}
 
 \end{document}
