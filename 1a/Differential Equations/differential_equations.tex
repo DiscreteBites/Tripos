@@ -854,8 +854,130 @@ In the limit, all the terms that have a factor of $\frac{1}{k^2}$ will go to $0$
 \]
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 6: __/10/2023
+% Lecture 6: 18/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
-\end{document}
+The exponential property allows us to write
+\[
+    \exp(x) = e^x
+\]
+where $e = \exp(1) = \lim_{k \rightarrow \infty}(1+\frac{1}{k})^k = 2.71828\ldots$ Note that this definition allows us to extend the idea of exponentiation beyond the integers and rationals. 
+For instance, we define $e^\pi$ as the $\exp(\pi)$. We also have the inverse function of the exponentials, $\ln(x)$ whereby
+\[
+  \exp(\ln(x)) = x  
+\]
+It follows from this that
+\[
+    a^x = e^{x \ln a} = \exp(x \ln a) 
+\]
+This allows us to differentiate,
+\[
+    \diff{}{x}a^x = a^x \ln a
+\]
+We discuss the exponential function in this context as we can think of it as an eigen function to the differential operator.
 
+\begin{defi}[Eigen Function]
+    An \emph{Eigen Function} of the derivative operator is a function that is unchanged, up to a multiplicative scaling (\emph{eigen value}) under the action of the differential operator. If $f$ is an eigen function,
+    \[
+        \diff{f}{x} = \lambda f(x)  
+    \]
+    The eigen functions of $\diff{}{x}$ are $e^\lambda x$ with eigen value $\lambda$.
+\end{defi}
+
+\subsection{Homogeneous first order linear ODEs}
+We will begin by looking at very specific cases of ODEs, let's define some of the terms in the title
+\begin{itemize}
+    \item Linear: the dependant variable ($y$) and its derivative only appear linearly
+    \item First order: the highest derivative that appears in the first derivative
+    \item Homogeneous: an ODE in which all terms involves the dependant variable or its derivatives. For all of these $y=0$ is a trivial solution
+\end{itemize}
+Furthermore, we will further specialise to the simple case of constant coefficients,\
+\begin{itemize}
+    \item Constant coefficients: the indepdnant variable ($x$) does not appear explicitly.
+\end{itemize}
+
+\begin{eg}
+    \[
+        5 \diff{y}{x} - 3y = 0  
+    \]
+    We will try $y = Ae^{\lambda x}$, we have $\diff{y}{x} = \lambda A e^{\lambda x}$. This gives
+    \begin{align*}
+        5\lambda A e^{\lambda x} - 3Ae^{\lambda x} = 0 \\
+        \Rightarrow 5\lambda - 3 = 0
+    \end{align*}
+    We call this the characteristic equation. Solving this gives,
+    \[
+        \lambda = \frac{3}{5} \Rightarrow y = Ae^{\frac{3}{5} x}   
+    \]
+    Since this equation is linear and homogenenous, this solution holds for all $A$.
+\end{eg}
+
+\begin{remark}\leavevmode
+    \begin{itemize}
+        \item Generally, for any linear homogenenous ODE any constant multiple of a solution is also a solution.
+        \item An $n^{th}$ order linear ODE will have exactl $n$ indepdnant solutions
+    \end{itemize}
+    In the example above, $y = Ae^{\frac{3}{5} x}$ is the general solution. To specify a unique solution, requires giving suitable boundary conditions; eg. $y(0)$, and in general $n$ conditions will be required for $n^{th}$ order ODEs.
+\end{remark}
+
+\subsubsection*{Discrete Equations}
+
+Consider the same equation from above,
+\[
+    5 \diff{y}{x} - 3y = 0 \quad \text{with} y(0) = y_0
+\]
+We can try to solve it neumerically. We will approximate the equation by using the discrete form of it over the point $\{x_n\}$ where $x_n = nh$. For some step $h$, we approximate the derivative to be
+\[
+    \diff{y}{x}\Big{|}_{x_n} \approx \frac{y_{n+1} - y_n}{h}    
+\]
+This is known as the ``forward Euler scheme'', which in practice is not that great of an approximation. Applying the approximation we get
+\begin{align*}
+    \frac{5}{h}(y_{n+1} - y_n) - 3y_n = 0 \\
+    \Rightarrow y_{n+1} = (1 + \frac{3h}{5})y_{n} \\
+    \therefore y_n = (1 + \frac{3h}{5})^ny_0 = (1 + \frac{3x_n}{5n})^ny_0 \tag{$x_n = nh$}
+\end{align*}
+
+We would like to check that this approximation agrees with what we solved for earlier. If we take $x_n = x$ and take $n$ steps between $x=0$ and $x$, considering the limit as $n \rightarrow \infty$,
+\[
+    \lim_{n \rightarrow \infty}y_n = \lim_{n \rightarrow \infty} (1 + \frac{3x_n}{5n})^ny_0 = e^{\frac{3x}{5}}y_0
+\]
+
+In general, difference equations of this form tend to be related to first order ODEs where the solution ends up being some exponential form.
+
+\subsubsection*{Series Solutions}
+
+We can also try to look for solutions as power series of the form:
+\[
+    y(x) = \sum_{n=0}^{\infty}{a_nx^n}    
+\]
+where we will try to determine the coefficients $a_n$ by substituting into the ODE. Many, but not all ODEs have solutions of this form.
+
+We will consider the same equation from above,
+\[
+    5 \diff{y}{x} - 3y = 0
+\]
+Using $y$ of the from above, we have
+\begin{align*}
+    \diff{y}{x} = \sum_{n=0}^{\infty}{na_nx^{n-1}} \\
+    \Rightarrow x\diff{y}{x} = \sum_{n=1}^{\infty}{na_nx^{n}}
+\end{align*}
+Also we can come with an expression for $xy$
+\[
+    xy = \sum_{n=0}^{\infty}{a_nx^{n+1}} = \sum_{n=1}^{\infty}{a_{n-1}x^{n}}
+\]
+we have done all this manipulation to get the sum indices to line up nicely. Substituting into the equation we get
+\[
+    \sum_{n=1}^{\infty}(5na_n - 3a_{n-1})x^n = 0
+\]
+In order for the sum to be $0$ for all $x$, we need $(5na_n - 3a_{n-1}) = 0$
+\[
+    \Rightarrow a_n = \frac{3}{5n}a_{n-1} \quad (n \geq 1)
+\]
+It follows that,
+\begin{align*}
+    a_n = \bkt{\frac{3}{5n}}\bkt{\frac{3}{5(n-1)}}\bkt{\frac{3}{5(n-2)}}\cdots = \bkt{\frac{3}{5}}^n\frac{1}{n!}a_0 \\
+    \therefore y(x) = a_0 \sum_{n=0}^{\infty}\bkt{\frac{3x}{5}}^n\frac{1}{n!} \\
+    = a_o e^\frac{3x}{5}
+\end{align*}
+
+\end{document}
