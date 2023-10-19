@@ -971,7 +971,168 @@ Note that we cannot take addition and multiplication in this number system for g
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 7: __/10/2023
+% Lecture 7: 19/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+
+We are able to inherit the usual rules of arithmetic in $\Z$.
+
+\begin{eg}
+    Does the equation $2a^2 + 3b^3 = 1$ have a solution in integers $a, b \in \Z$?. 
+
+    Note that if there is a solution, then $2a^2 \equiv 1 \mod 3$. However, if we check all cases,
+    \begin{align*}
+        a \equiv 0, 1, 2 \\
+        a^2 \equiv 0, 1, 1 \\
+        2a^2 \equiv 0, 2, 2
+    \end{align*}
+    Therefore there are no solutions in the integers.
+\end{eg}
+
+\subsubsection*{Solving Congruences}
+
+In particular, lets look at linear congruences, where the variables appear as they are, and not squared, cubed, etc. For example, solve
+\[
+    7x \equiv 2 \mod 10
+\]
+We note that $3 \cdot 7 \equiv 1 \mod 10$, and so we may multiply the equation by $3$ throughout,
+\begin{align*}
+    3 \cdot 7x &\equiv 3 \cdot 2 \mod 10 \\
+    x &\equiv 6 \mod 10
+\end{align*}
+
+\begin{defi}
+    We say that $b$ is an inverse of $a$ modulo $n$ if
+    \[
+        a \cdot b \equiv 1 \mod n
+    \]
+    We say that $a$ is invertable modulo $n$, of that $a$ is a unit modulo $n$, if it has an inverse.
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{itemize}
+        \item in $\Z_{10}$ we say that $3$ is an inverse of $7$, and both $3$ and $7$ are units in $\Z_{10}$
+        \item $4$ is \emph{not} a unit in $\Z_{10}$ since there are no solutions to $4x \equiv 1 \mod 10 \ \forall x \in \Z$
+    \end{itemize}
+\end{eg}
+
+\begin{remark}
+    If $a$ is a unit modulo $n$ then,
+    \begin{enumerate}
+        \item It's inverse in unique. Suppose $\exists b, b'$ such that $ab = ab' = 1 \mod n$. Then,
+        \[
+            b \equiv bab' \equiv b' \mod n     
+        \]
+        \item Since the inverse is unique we can write $a^{-1}$ for the unique inverse of $a$.
+        \item If $ab \equiv ac \mod n$ then $b \equiv c \mod n$, since we can "cancel" units by multiplying by the inverse. Note that it is not true in general, and only the case for units. 
+    \end{enumerate}
+\end{remark}
+
+\begin{nprop}\label{prop:2-10}
+    Let $p$ be prime. Then every $a \neq 0 \mod p$ is a unit modulo $p$. 
+\end{nprop}
+
+\begin{proof}
+    We have that $(a, p) = 1$ Therefore, there exists $x, y \in \Z$ such that,
+    \begin{align*}
+        ax + yp = 1 &\Leftrightarrow ax = 1 - py \\
+        &\Leftrightarrow ax \equiv 1 \mod p
+    \end{align*}
+\end{proof}
+
+\begin{prop}[\ref{prop:2-10} continued...]
+    Let $n \geq 2 \in \N$, then $a$ is a unit modulo $n$ if and only if $(a, n) = 1$    
+\end{prop}
+
+\begin{proof}
+    The proof is the same as above,
+    \[
+        (a, n) = 1 \Leftrightarrow ax + ny = 1 \Leftrightarrow ax \equiv 1 \mod n
+    \]
+\end{proof}
+
+\begin{ncor}\label{prop:2-11}
+    If $(a, n) = 1$ then the congruence $ax \equiv b \mod n$ has a unique solution. In particular, if $(a, n) = 1$ and $b = 1$ then we get back that $a$ has a unique inverse modulo $n$. 
+\end{ncor}
+
+What about cases where the greatest common factor is not $1$, i.e; $(a, n) = d > 1$. Since we know that
+$n \mid ax - b$ and $d \mid n$ and $d \mid a$, then we can deduce that $d \mid b$. Conversely, if $d \mid b$ then we may write
+\[
+    n = d \cdot n' \quad  a = d \cdot a' \quad  b = d \cdot b'
+\]
+We may then simply the congruences
+\begin{align*}
+    ax \equiv b \mod n &\Leftrightarrow ax - b = kn \ \exists k \in \Z \\
+    &\Leftrightarrow da'x - db' = kdn' \\
+    &\Leftrightarrow a'x - b' = kn' \\
+    &\Leftrightarrow a'x \equiv b' \mod n' 
+\end{align*}
+Because we know that $d$ is the highest common factor of $a$ and $n$ we know that $a'$ and $n'$ are coprime. Therefore, by prop \ref{prop:2-11} the reduced congruence has a unique solution.
+Therefore, if $(a,n)=d>1$ then the congruence $ax \equiv b \mod n$ has no solution unless $d \mid b$, in which case the solutions are exactly those of
+\[
+    \frac{a}{d}x \equiv \frac{b}{d} \mod \frac{n}{d}  
+\]
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Solve $7x \equiv 4 \mod 30$. 
+        We have that $(7, 30) = 1$, so by Euclid, we can solve for $13 \cdot 7 - 3 \cdot 30 = 1$. Hence, $13$ is the inverse of $7$ which gives
+        \begin{align*}
+            13 \cdot 7x \equiv 13 \cdot 4 \equiv 22 \mod 30 \\
+            \therefore x \equiv 22 \mod 30
+        \end{align*}
+        Suppose we have that $x'$ is also a solution to $7x' \equiv 4 \mod 30$, then, 
+        \[
+            7x' \equiv 7x \mod 30  
+        \]
+        since $7$ is a unit, we can ``cancel'' to arrive at
+        \[
+            x' \equiv x \mod 30    
+        \]
+        and we have shown that the solution is unique. In short, we could have written
+        \begin{align*}
+            7x \equiv 4 \mod 30 &\Leftrightarrow 13 \cdot 7x \equiv 13 \cdot 4 \mod 30 \\
+            &\Leftrightarrow x \equiv 22 \mod 30 
+        \end{align*}
+        Note that in the first equivalance, we are allowed to do the reverse direction because $13$ is a unit modulo $30$.
+
+        \item Solve $10x \equiv 12 \mod 34$
+        \begin{align*}
+            10x \equiv 12 \mod 34 &\Leftrightarrow 10x = 12 + k34 \\
+            &\Leftrightarrow 5x \equiv 6 + k17 \\
+            &\Leftrightarrow 5x \equiv 6 \mod 17
+        \end{align*}
+        So we are back in the situation where $(a, n) = 1$ and we can solve as before,
+        \[
+            5\cdot7 - 2\cdot 17 = 1 \Rightarrow 7 \cdot 5x \equiv 7 \cdot 6 \mod 17 \Rightarrow x \equiv 8 \mod 17  
+        \]
+    \end{enumerate}
+\end{eg}
+
+\subsubsection*{Solving Simultaneous Congruences}
+Note that,
+\[
+    x \equiv 5 \mod 12 \Rightarrow \begin{cases}
+        x \equiv 2 \mod 3 \\
+        x \equiv 1 \mod 4
+    \end{cases}
+\]
+However, is the converse true? In this case, we can inspect modulo 12,
+\begin{align*}
+    x \equiv 1 \mod 4 \Rightarrow x \equiv 1, &5, 9 \mod 12 \\
+    x \equiv 2 \mod 3 \Rightarrow x \equiv 2, &5, 8, 11 \mod 12
+\end{align*}
+and we see that the converse is true for this case. However, this is not always the case. For instance, $x \equiv 1 \mod 4, \quad x \equiv 2 \mod 6$ does not work! (since $4$ and $6$ are coprime)
+
+\begin{nthm}[Chinese Remainder Theorem]
+    Let $m, n$ be coprime, let $a, b \in \Z$. Then there is a unique solution modulo $mn$ to the simultaneous congruence
+    \[
+        x \equiv a \mod m \quad \text{and} \quad x \equiv b \mod n  
+    \]
+\end{nthm}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 8: __/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
 
 \end{document}
