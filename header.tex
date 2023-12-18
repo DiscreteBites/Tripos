@@ -17,6 +17,7 @@
 \usepackage{slashed}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{tikz-cd}
 \usetikzlibrary{graphs}
 \usepackage{tkz-euclide}
 \usepackage[normalem]{ulem}
@@ -57,6 +58,20 @@
   leftmargin=\parindent
 }
 
+\SetEnumitemKey{cases}{
+  label=\underline{Case~\arabic*:},
+  ref={\arabic*},
+  align=left,
+  leftmargin=\parindent
+}
+
+\SetEnumitemKey{steps}{
+  label=\underline{Step~\arabic*:},
+  ref={\arabic*},
+  align=left,
+  leftmargin=\parindent
+}
+
 % Theorems
 \theoremstyle{definition}
 \newtheorem*{aim}{Aim}
@@ -87,13 +102,6 @@
 \newtheorem{nprop}[nthm]{Proposition}
 \newtheorem{ncor}[nthm]{Corollary}
 
-\SetEnumitemKey{cases}{
-  label=\underline{Case~\arabic*:},
-  ref={\arabic*},
-  align=left,
-  leftmargin=\parindent
-}
-
 % \renewcommand{\labelitemi}{--}
 % \renewcommand{\labelitemii}{$\circ$}
 % \renewcommand{\labelenumi}{(\roman{*})}
@@ -120,19 +128,19 @@
 \let\G\relax
 
 % Matrix groups
-% \newcommand{\GL}{\mathrm{GL}}
-% \newcommand{\Or}{\mathrm{O}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Or}{\mathrm{O}}
 % \newcommand{\PGL}{\mathrm{PGL}}
-% \newcommand{\PSL}{\mathrm{PSL}}
-% \newcommand{\PSO}{\mathrm{PSO}}
+\newcommand{\PSL}{\mathrm{PSL}}
+\newcommand{\PSO}{\mathrm{PSO}}
 % \newcommand{\PSU}{\mathrm{PSU}}
-% \newcommand{\SL}{\mathrm{SL}}
-% \newcommand{\SO}{\mathrm{SO}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\SO}{\mathrm{SO}}
 % \newcommand{\Spin}{\mathrm{Spin}}
 % \newcommand{\Sp}{\mathrm{Sp}}
-% \newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SU}{\mathrm{SU}}
 \newcommand{\U}{\mathrm{U}}
-% \newcommand{\Mat}{\mathrm{Mat}}
+\newcommand{\Mat}{\mathrm{Mat}}
 
 % Matrix algebras
 % \newcommand{\gl}{\mathfrak{gl}}
@@ -148,6 +156,7 @@
 
 % Special sets
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\EC}{\mathbb{C}_\infty}
 \newcommand{\CP}{\mathbb{CP}}
 \newcommand{\GG}{\mathbb{G}}
 \newcommand{\N}{\mathbb{N}}
@@ -157,6 +166,7 @@
 \newcommand{\T}{\mathbb{T}}
 \newcommand{\Z}{\mathbb{Z}}
 \renewcommand{\H}{\mathbb{H}}
+\newcommand{\M}{\mathcal{M}}
 
 % Brackets
 \newcommand{\bkt}[1]{\left( #1 \right)}
@@ -210,11 +220,11 @@
 % \DeclareMathOperator{\Char}{char}
 % \DeclareMathOperator{\disc}{disc}
 % \DeclareMathOperator{\dom}{dom}
-% \DeclareMathOperator{\fix}{fix}
-% \DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Fix}{Fix}
+\DeclareMathOperator{\id}{id}
 % \DeclareMathOperator{\re}{re}
-% \DeclareMathOperator{\tr}{tr}
-% \DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Tr}{Tr}
 % \newcommand{\Bilin}{\mathrm{Bilin}}
 % \newcommand{\Frob}{\mathrm{Frob}}
 
@@ -255,7 +265,7 @@
 
 % \DeclareMathOperator{\area}{area}
 % \DeclareMathOperator{\card}{card}
-% \DeclareMathOperator{\ccl}{ccl}
+\DeclareMathOperator{\ccl}{ccl}
 % \DeclareMathOperator{\ch}{ch}
 % \DeclareMathOperator{\cl}{cl}
 % \DeclareMathOperator{\cls}{\overline{\mathrm{span}}}
@@ -283,7 +293,7 @@
 % \DeclareMathOperator{\Ind}{Ind}
 % \DeclareMathOperator{\Int}{Int}
 \DeclareMathOperator{\Isom}{Isom}
-% \DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\lcm}{lcm}
 % \DeclareMathOperator{\length}{length}
 % \DeclareMathOperator{\Lie}{Lie}
 % \DeclareMathOperator{\like}{like}
@@ -304,7 +314,7 @@
 % \DeclareMathOperator{\Rees}{Rees}
 % \DeclareMathOperator{\Root}{Root}
 % \DeclareMathOperator{\sech}{sech}
-% \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\sign}{sign}
 % \DeclareMathOperator{\snd}{snd}
 % \DeclareMathOperator{\Spec}{Spec}
 \DeclareMathOperator{\spn}{span}
