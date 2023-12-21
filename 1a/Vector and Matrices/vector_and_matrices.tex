@@ -896,7 +896,7 @@ as well as a standard basis, which are still
 \begin{eg}\leavevmode
     \begin{enumerate}
     \item Given $\{\vec{a}, \vec{b}, \vec{c}\}$ as a basis of a 3D space, $\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$ is a basis of a 2D space.
-    Suppose, $\vec{x}, \vec{y} \in \spn\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\}$. Then,
+    Suppose, $\vec{x}, \vec{y} \in \spnset{\vec{a} + \vec{c}, \vec{b} + \vec{c}}$. Then,
     \begin{align*}
         \vec{x} = \alpha_1 (\vec{a} + \vec{c}) + \beta_1 (\vec{b} + \vec{c}) \\
         \vec{y} = \alpha_2 (\vec{a} + \vec{c}) + \beta_2 (\vec{b} + \vec{c})
@@ -906,7 +906,7 @@ as well as a standard basis, which are still
         \lambda\vec{x} + \mu \vec{y} =& \lambda\alpha_1 (\vec{a} + \vec{c}) + \lambda\beta_1 (\vec{b} + \vec{c}) \\
         &+ \mu\alpha_2 (\vec{a} + \vec{c}) + \mu\beta_2 (\vec{b} + \vec{c}) \\
         =& (\lambda\alpha_1 + \mu\alpha_2)(\vec{a} + \vec{c}) + (\lambda\beta_1 + \mu\beta_2)(\vec{b} + \vec{c}) \\
-        & \in \spn\{\vec{a} + \vec{c}, \vec{b} + \vec{c}\} \quad \therefore \text{subspace}
+        & \in \spnset{\vec{a} + \vec{c}, \vec{b} + \vec{c}} \quad \therefore \text{subspace}
     \end{align*}
     To show linear independance,
     \begin{align*}
@@ -1080,5 +1080,3190 @@ Here are the rules for using Einstein suffix notation.
         \end{equation}
     \end{enumerate}
 \end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 7: 20/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{remark}[Important Identity]
+    \begin{equation}
+        \varepsilon_{ijk} \varepsilon_{ipq} = \delta_{jp} \delta_{kq} - \delta_{jq} \delta_{kp}   
+    \end{equation}
+    We can remember this as first pair, second pair, then mix.
+\end{remark}
+
+\begin{proof}
+    We will proceed by exhaustion. On the right hand side,
+    \[
+    = \begin{cases} 
+    +1 & \text{if} \ j = p \ \text{and} \ k = q \\
+    -1 & \text{if} \ j = q \ \text{and} \ k = p \\
+    0 & \text{otherwise}
+    \end{cases}    
+    \]
+    On the left hand side, summing over $i$ the only non-zero times are when $j, k \neq i$ and $p, q \neq i$. So for $i = 1, 2, 3$
+    \begin{align*}
+        \text{if} \ j = p \ \text{and} \ k = q, & \ \text{LHS} \ = (-1)^2 \ \text{or} \ (1)^2 = 1 \\
+        \text{if} \ j = q \ \text{and} \ k = p, & \ \text{LHS} \ = -1 \times 1 \ \text{or} \ 1 \times -1 = -1 \\
+        \text{otherwise}, \qquad & \ \text{LHS} \ = 0
+    \end{align*}
+    Equally, 
+    \begin{align*}
+        \varepsilon_{ijk} \varepsilon_{pqk} &= \delta_{ip} \delta_{jq} - \delta_{iq} \delta_{jp} \\
+        \varepsilon_{ijk} \varepsilon_{pjq} &= \delta_{ip} \delta_{kq} - \delta_{iq} \delta_{kp}   
+    \end{align*}
+\end{proof}
+
+Using this notation we can now simply the scalar triple product,
+\[
+    [\vec{a}, \vec{b}, \vec{c}] = a_i \cdot (\vec{b} \times \vec{c})_i = \varepsilon_{ijk}a_ib_jc_k
+\]
+As well as the vector triple product
+\begin{align*}
+    [\vec{a} \times (\vec{b} \times \vec{c})] &= \varepsilon_{ijk}a_j(\vec{b} \times \vec{c})_k \\
+    &= \varepsilon_{ijk}a_j \varepsilon_{kpq}b_pc_q \\
+    &= \varepsilon_{ijk}\varepsilon_{pqk}a_j b_pc_q \\
+    &= [\delta_{ip} \delta_{jq} - \delta_{iq} \delta_{jp}]a_j b_pc_q \\
+    &= a_jb_ic_j - a_jb_jc_i \\
+    &= (\vec{a} \cdot \vec{c})b_i - (\vec{a} \cdot \vec{b}) c_i
+\end{align*}
+Therefore we have
+\begin{equation}
+    \vec{a} \times (\vec{b} \times \vec{c}) = (\vec{a} \cdot \vec{c})\vec{b} - (\vec{a} \cdot \vec{b})\vec{c}
+\end{equation}
+and 
+\begin{equation}
+    \vec{a} \times (\vec{b} \times \vec{c}) \neq (\vec{a} \times \vec{b}) \times \vec{c}
+\end{equation}
+
+\begin{eg}[Past Tripos question - Spherical Triangle]\leavevmode
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that 
+        \begin{equation}
+            (a \times b) \cdot (a \times c) = (a \cdot a)(b \cdot c) - (a \cdot b)(a \cdot c)
+        \end{equation}
+        \begin{align*}
+            \varepsilon_{ijk}a_jb_k \varepsilon{ipq}a_pc_q &= \varepsilon_{ijk}\varepsilon{ipq}a_jb_ka_pc_q \\
+            &= (\delta_{jp} \delta_{kq} - \delta_{jq} \delta(kp))a_jb_ka_pc_q \\
+            &= a_p b_q a_p c_q  - a_q b_p a_p c_q \\
+            &= (a \cdot a)(b \cdot c) - (a \cdot c)(b \cdot a)
+        \end{align*}
+        \item Consider the unit sphere with center $O$, points $\vec{a}, \vec{b}, \vec{c}$ on the surface.
+        Therefore $\abs{a} = \abs{b} = \abs{c} = 1$.
+        Consider the greate circle containing $O$, $A$ and $B$.
+        Let the arc length be $\delta(A, B)$
+        \[
+            \therefore a \cdot b = \cos(\delta(A, B))
+        \]
+        Now, the angle $\alpha$ in the spherical triangle is the angle between the planes containing $OAB$ and $OAC$.
+        Therefore
+        \begin{align*}
+            \cos \alpha = \frac{a \times b}{\abs{a \times b}} \times \frac{a \times c}{\abs{a \times c}} \\
+            \Rightarrow & \cos \alpha = \frac{(a \cdot a)(b \cdot c) - (a \cdot b)(a \cdot c)}{\abs{a \times b} \abs{a \times c}}
+        \end{align*}
+        Solving,
+        \begin{align*}
+            \abs{a \times c} = \abs{a} \abs{c} \sin(\delta(A, C)) \\
+            \abs{a \times b} = \abs{a} \abs{b} \sin(\delta(A, B))
+        \end{align*}
+        \begin{align*}
+            \Rightarrow \cos \alpha &= \frac{(b \cdot c) - (a \cdot b)(a \cdot c)}{\sin(\delta(A, C)) \sin(\delta(A, B))} \\
+            &= \frac{\cos(\delta(B, C)) - \cos(\delta(A, B))\cos(\delta(A, C))}{\sin(\delta(A, C)) \sin(\delta(A, B))}
+        \end{align*}
+        \item Now consider equilateral spherical triangles, with side length $\delta$ and angle $\alpha$.
+        \begin{align*}
+            \cos \alpha \sin^2 \delta &= cos \delta - cos^2 \delta \\
+            \cos \alpha &= \frac{cos \delta - cos^2 \delta}{\sin^2 \delta} \\
+            &= \frac{cos \delta - cos^2 \delta}{1 - \cos^2 \delta} \\
+            &= \frac{cos \delta}{1 + \cos \delta} \\
+            &= 1 - \frac{1}{1 + \cos \delta}
+        \end{align*}
+        We have that $\cos \delta \leq 1$
+        \[
+            \Rightarrow \cos \alpha \leq \frac{1}{2} \Rightarrow \alpha \geq \frac{\pi}{3} 
+        \]
+        with equlity in the trivial case $\delta = 0$. Therefore for a non trivial equilateral triangle,
+        \[
+            \alpha \geq \frac{\pi}{3}  
+        \]
+    \end{enumerate}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 8: 23/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Geometry}
+\subsubsection{Lines}
+A line $L$ through a point $A$ parallel to $\vec t$. For a general point $\vec x$ on $L$ is
+\begin{subequations}
+    \begin{equation}\label{eq:2-41a}
+        \vec x = \vec a + \lambda \vec t \qquad \lambda \in \R
+    \end{equation}
+    If we take cross products we arrive at the alternative form
+    \begin{equation}\label{eq:2-41b}
+        (\vec x - \vec a) \times \vec t = \vec 0 
+    \end{equation}
+\end{subequations}
+\subsubsection{Plane}
+A plane with normal vector $\vec n$ containing the point $\vec b$. For a general point $\vec x$,
+$\vec x - \vec b$ must lie in the plane. Therefore, $(\vec x - \vec b) \perp \vec n$.
+\begin{subequations}
+    \begin{equation}\label{eq:2-42a}
+        (\vec x - \vec b) \cdot \vec n = 0 \Rightarrow \vec x \cdot \vec n = \vec b - \vec n
+    \end{equation}\label{eq:2-42b}
+    If $\abs{n} = 1$, $\vec b \cdot \uvec n$ is the perpendicular distance $p$ from the origin to the plane. Hence
+    \begin{equation}
+        \vec x \cdot \uvec n = p
+    \end{equation}
+\end{subequations}
+
+Alternatively, if $\vec a, \vec b, \vec c$ lie on the plane, then (Sheet 3 Question 3)
+\[
+    (\vec x - \vec a) \cdot [(\vec b - \vec a) \times (\vec c - \vec a)] = 0
+\]
+
+\begin{eg}
+    \begin{enumerate}[label=(\alph*)]
+        \item Point of intersection of line $(\vec x - \vec a) \times \vec t = 0$ and plane $\vec x \cdot \vec n = \vec b \cdot \vec n$.
+        Take $\times \vec n$ of \eqref{eq:2-41b}
+        \begin{align*}
+            &(\vec x \times \vec t) = (\vec a \times \vec t) \tag{$\times \vec n$} \\
+            \Rightarrow& (\vec x \cdot \vec n)\vec t - (\vec t \cdot \vec n)\vec x = (\vec a \times \vec t) \times \vec n
+        \end{align*}
+        Eliminate $\vec x \cdot \vec n$ using \eqref{eq:2-42a}
+        \[
+            (\vec t \cdot \vec n)\vec x = (\vec b \cdot \vec n)\vec t - (\vec a \times \vec t)\times \vec n  
+        \]
+        We need to be careful that $\vec t \cdot \vec n \neq 0$ before dividing by it. 
+        If $\vec t \cdot \vec n \neq 0$ then the line and the plane are not parallel,
+        \[
+            \therefore \vec x = \frac{\vec b \cdot \vec n}{\vec t \cdot \vec n} \vec t - \frac{(\vec a \times \vec t)\times \vec n}{\vec t \cdot \vec n}
+        \]
+        If $\vec t \cdot \vec n = 0$ then the line and the plane are parallel. There are two cases
+        \begin{itemize}
+            \item Disjoint and no solutions
+            \item Coincident and all points on the line are solutions
+        \end{itemize}
+        In general, if we plug in values and arrive at a contradiction then there are no solutions, otherwise line and plane are coincident.
+
+        \item Shortest distance between lines.
+        \begin{align*}
+            L_1 : (\vec x - \vec a_1) \times \vec t = 0 \\
+            L_2 : (\vec x - \vec a_1) \times \vec t = 0
+        \end{align*}
+        The distance of closet approach will be along the line perpendicular to both lines, therefore the line will be $\parallel$ to $t_1 \times t_2$.
+        % Insert diagram
+        \begin{align*}
+            S = \abs{a_1 - a_2} \cos \theta \\
+            \Leftrightarrow S = \abs{\frac{(a_1 - a_2) \cdot (t_1 \times t_2)}{\abs{t_1 \times t_2}}}
+        \end{align*}
+        If $t_1$ and $t_2$ were parallel, then we would be dividing by $0$. Hence a necessary but not sufficient condition for lines to intersect
+       \[
+            (a_1 - a_2) \cdot (t_1 \times t_2) = 0
+        \]
+        The lines could be parallel and never intersect.
+    \end{enumerate}
+\end{eg}
+
+\subsection{Vector Equations}
+\begin{eg}
+    Solve for $\vec x$: 
+    \begin{equation}
+        \vec x - (\vec x \times \vec a) \times \vec b = \vec c
+    \end{equation}
+    Our strategy is to take appropriate dot and cross products with suitable vectors.
+    \[
+        \vec x - (\vec x \cdot \vec b)\vec a + (\vec a \cdot \vec b) \vec x = \vec c \tag{$\star$}
+    \]
+    Take ($\star$) and dot with $\vec b$
+    \begin{align*}
+        (\vec x \cdot \vec b) - (\vec x \cdot \vec b)(\vec a \cdot \vec b) + (\vec x \cdot \vec b)(\vec a \cdot \vec b) = \vec c \cdot \vec b \\
+        \Rightarrow \vec x \cdot \vec b = \vec c \cdot \vec b
+    \end{align*}
+    Then sub this back into ($\star$)
+    \begin{align*}
+        \vec x - (\vec c \cdot \vec b)\vec a + (\vec a \cdot \vec b) \vec x = \vec c \\
+        \Rightarrow \vec x (1 + \vec a \cdot \vec b) = c + (\vec c \cdot \vec b)\vec a
+    \end{align*}
+    If $1 + \vec a \cdot \vec b \neq 0$ the
+    \[
+        \vec x = \frac{c + (\vec c \cdot \vec b)\vec a}{1 + \vec a \cdot \vec b} 
+    \]
+    otherwise, 
+    \[
+        1 + \vec a \cdot \vec b = 0 \Rightarrow c + (\vec c \cdot \vec b)\vec a = 0
+    \]
+    So if that does not hold, then there is a contradiction and there are no solutions. Otherwise
+    \[
+        c = - (\vec c \cdot \vec b)\vec a
+    \]
+    Then looking above, we have that
+    \[
+        \vec x \cdot \vec b = \vec c \cdot \vec b
+    \]
+    and we have a plane of solutions.
+\end{eg}
+
+\section{Matrices and Linear Maps}
+\subsection{Examples}
+\subsubsection{Rotation in $3$D}
+Let the map $R: \R^3 \rightarrow \R^3$ represent a rotation of $\theta$ about the $z$-axis, such that $\vec x' = R(\vec x)$ is the rotated vector.
+\begin{align*}
+    \vec x &= (r \cos \phi, r \sin \phi, z) \\
+    \vec x' &= (r \cos (\phi + \theta), r \sin (\phi + \theta), z) \\
+    &= (x \cos \theta - y \sin \theta, x \sin \theta + y \cos \theta, z) 
+\end{align*}
+In suffix notation,
+\[
+    x'_i = R_{ij}x_j  
+\]
+where
+\begin{equation}\label{eq:3-1}
+    R = \begin{pmatrix}
+        \cos \theta & -\sin \theta & 0 \\
+        \sin \theta & \cos \theta & 0 \\
+        0 & 0 & 1
+    \end{pmatrix}
+\end{equation}
+
+\begin{remark}[Non-examinable]
+    We will consider a rotation by $\theta$ about an arbitrary unit vector $\uvec n$.
+    % Insert both diagrams
+
+    Let's get $\vec x'$ in terms of $\vec x$. 
+    \[
+        \vec x' = \pvec OB + \pvec BC + \pvec CA'
+    \]
+    We have that
+    \begin{align*}
+        \pvec OB &= (\vec x \cdot \uvec n) \uvec n \\
+        \pvec BC &= \pvec BA \cos \theta \\
+        &= (\pvec BO + \pvec OA) \cos \theta \\
+        &= (\vec x - (\vec x \cdot \uvec n)\uvec n) \cos \theta \\
+        \abs{\pvec CA'} &= \abs{\pvec BA'} \sin \theta = \abs{\uvec n \times \vec x} \sin \theta \\
+        \therefore \pvec CA' &= (\uvec n \times \vec x) \sin \theta \\
+    \end{align*}
+    Therefore,
+    \[
+        \vec x' = x \cos \theta + (1 - \cos \theta)(\uvec n \cdot \vec x)\uvec n + (\uvec n \times \vec x) \sin \theta 
+    \]
+    in suffix notation,
+    \begin{align*}
+        \vec x'_i &= x_i \cos \theta + (1 - \cos \theta)n_jx_jn_i - \varepsilon_{ijk} x_jn_k \sin \theta \\
+        &= R_{ij}x_j
+    \end{align*}
+    where
+    \begin{equation}\label{eq:3-2}
+        R_{ij} = \delta_{ij}\cos \theta + (1 - \cos \theta)n_jn_i - \varepsilon_{ijk} n_k \sin \theta
+    \end{equation}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 9: 25/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Reflecetions in $\R^3$}
+We reflect on a plane with normal $\uvec n$ through the origin .
+\begin{align*}
+    \vec x' &= \vec x - 2 (\vec x \cdot \uvec n) \uvec n \\
+    \vec x'_i &= \vec x_i - 2 \vec x_j \vec n_j \vec n_i \\
+    &= R_{ij}x_j \\
+\end{align*}
+where
+\begin{equation}\label{eq:3-3}
+    R_{ij} = \delta_{ij} - 2 n_i n_j
+\end{equation}
+We also have the projection of $\vec x$ onto the plane
+\begin{equation}\label{eq:3-4}
+    \vec x' = \vec x - (\vec x \cdot \uvec n) \uvec n
+\end{equation}
+
+\subsection{Linear Maps}
+Consider sets $A$, $B$ an a map $T: A \rightarrow B$ such that $\vec x \in A$ is mapped to a unique $\vec x' = T(\vec x) \in B$. 
+We say that
+\begin{itemize}
+    \item $A$ is the domain of $T$
+    \item $B$ is the codomain of $T$
+\end{itemize}
+\begin{remark}[Image]
+    $T(A)$ is the \emph{image} - the set of points of form $T(\vec x) \quad \forall \vec x \in A$.
+    \[
+        T(A) \subset B  
+    \]
+    but not necessarily the entire of $B$.
+\end{remark}
+
+
+\begin{defi}[Linear Map]
+    Typically,
+    \[
+        T: R^n \rightarrow R^m \text{ or } T: \C^n \rightarrow \C^m
+    \]
+    Let $V, W$ be the real (complex) vector spaces and $T: V \rightarrow W$. 
+    Then, $T$ is a \emph{Linear Map} if
+    \begin{enumerate}
+        \item $T(\vec a + \vec b) = T(\vec a) + T(\vec b) \quad \forall \vec a, \vec b \in V$
+        \item $T(\lambda \vec a) = \lambda T(\vec a) \quad \forall \lambda \in \R \text{ or } (\C)$
+    \end{enumerate}
+    Or equivalently,
+    \begin{equation}\label{eq:3-5}
+        T(\lambda \vec a + \mu \vec b) = \lambda T(\vec a) + \mu T(\vec b)
+    \end{equation}
+\end{defi}
+\begin{eg}
+    \begin{enumerate}
+        \item Translation
+        \begin{align*}
+            T: \R^3 &\rightarrow \R^3 \\
+            \vec x &\mapsto \vec x + \vec a
+        \end{align*}
+        This is not a linear map since,
+        \begin{align*}
+            T(\lambda \vec x + \mu \vec y) &= \lambda \vec x + \mu \vec y + \vec a \\
+            \lambda T(\vec x) + \mu T(\vec y) &= \lambda \vec x + \mu \vec y + (\lambda + \mu) \vec a \\
+            \therefore&  T(\lambda \vec x + \mu \vec y) \neq \lambda T(\vec x) + \mu T(\vec y)
+        \end{align*}
+        \item We can check that reflections and rotations are linear maps.
+        \item Define a map
+        \begin{align*}
+            S: \R^3 &\rightarrow \R^2 \\
+                (x, y, z) &\mapsto (x + y, 2x - z)
+        \end{align*}
+        We can check that the map is linear
+        \begin{align*}
+            S(\lambda \vec x + \mu \vec y) &= (\lambda x_1 + \mu y_1 + \lambda x_2 + \mu y_2,  2(\lambda x_1 + \mu y_1) - (\lambda x_3 + \mu y_3)) \\
+            &= \lambda (x_1 + x_2, 2x_1 - x_3) + \mu (y_1 + y_2, 2y_1 - y_3) \\
+            &= \lambda S(\vec{x}) + \mu S(\vec y)
+        \end{align*}
+        Therefore the map is linear.
+    \end{enumerate}
+\end{eg}
+\begin{remark}[Image and Kernel]
+    Let's consider the effect of $S$ on the standard basis vectors in $\R^3$.
+    \begin{align*}
+        S(1, 0, 0) = (1, 2) \\
+        S(0, 1, 0) = (1, 0) \\
+        S(0, 0, 1) = (0, -1) \\
+    \end{align*}
+    These $3$ vectors are not linearly independant, but they certainly span $\R^2$.
+    \[
+        \therefore S(\R^3) = \R^2  
+    \]
+    and we say that the image of $\R^3$ under $S$ in $\R^2$.
+
+    What if $S(x, y, z) = \vec 0$?
+    \begin{align*}
+        x + y = 0 \\
+        2x - z = 0 \\
+        \Rightarrow \vec x = (t, -t, 2t)
+    \end{align*}
+    Therefore any vector parallel to $(1, -1, 2)$
+    The set of all $x \in \R^3$ which map to $\vec 0 \in \R^2$ is the \emph{Kernel} of $S$.
+\end{remark}
+\begin{defi}[Image \& Kernel]
+    In general, for a map $f: U \rightarrow V$. 
+    \begin{itemize}
+        \item The \emph{image} of $f$ is the subset of $V$
+        \[
+            \im(f) = \crbkt{f(\vec u) \mid \forall \vec u \in U}  
+        \]
+        \item The \emph{kernel} of $f$ is the subset of $U$
+        \[
+            \ker(f) = \crbkt{\vec u \in U \mid f(\vec u) = \vec 0}  
+        \]
+    \end{itemize}
+\end{defi}
+We can see geometrically, that
+\begin{enumerate}
+    \item The image of the rotation map is the whole of $\R^3$ and the kernel is $\crbkt{0}$
+    \item For the projection \eqref{eq:3-4}, the image is the plane through $\vec 0$ with normal $\vec n$, and the kernel is the line $\parallel$ to $\vec n$ through $\vec 0$, i.e;
+    \[
+        \spnset{\vec n}  
+    \]
+\end{enumerate}
+
+\begin{thm}[Image \& Kernel are subspaces.]
+    Consider a linear map $f: U \rightarrow V$ where $U, V$ are vector spaces.
+    Then $\im (f)$ is a subspace of $V$ and $\ker (f)$ is a subspace of $U$.
+\end{thm}
+\begin{proof}
+    \begin{subequations}
+        By \eqref{eq:2-32}, if
+        \[
+            \vec x, \vec y \in \im(f) \Rightarrow (\exists \vec a, \vec b \in U \mid \vec x = f(\vec a) \text{ and } \vec y = f(\vec b))
+        \]
+        then,
+        \begin{align*}
+            \lambda \vec x + \mu \vec y &= \lambda f(\vec a) + \mu f(\vec b) \\
+            &= f(\lambda \vec a + \mu \vec b) \tag{$f$ is linear}
+        \end{align*}
+        Since $U$ is a vector space, $\lambda \vec a + \mu \vec b \in U$ and  
+        \begin{equation}
+            \therefore \quad f(\lambda \vec x + \mu \vec y) \in \im (f)
+        \end{equation}
+        Therefore the image is a subspace of $V$.
+    
+        If $\vec x, \vec y \in \ker(f)$
+        \begin{align*}
+            f(\lambda \vec x + \mu \vec y) &= \lambda f(\vec x) + \mu f(\vec y) \\
+            &= \vec 0 \in \ker(f)
+        \end{align*}
+        Therefore the linear combination lies in the kernel,
+        \begin{equation}
+            \lambda \vec x + \mu \vec y \in \ker(f)
+        \end{equation}
+        Therefore the kernel is a subspace of $U$.
+    \end{subequations}
+\end{proof}
+
+\subsection{Rank and Nulity}
+Let $f$ be a linear map $f: U \rightarrow V$. 
+
+\begin{defi}[Rank and Nullity]
+    The \emph{rank} of $f$ is denoted
+    \begin{equation}\label{eq:3-7}
+        r(f) = \dimset{f(U)}
+    \end{equation}
+
+    The \emph{nullity} of $f$ is denoted
+    \begin{equation}\label{eq:3-8}
+        n(f) = \dimset{\ker(f)}
+    \end{equation}
+\end{defi}
+\begin{eg}
+    For the projection \eqref{eq:3-4}
+    \begin{itemize}
+        \item Image is a plane $\therefore r(f) = 2$
+        \item Kernel is the vector perpendicular to the plane $\therefore n(f) = 1$
+    \end{itemize}
+\end{eg}
+
+\begin{thm}[Rank-Nullity]
+    For a linear map $f: U \rightarrow V$ where $U, V$ are vector spaces,
+    \begin{equation}\label{eq:3-9}
+        r(f) + n(f) = \dim U
+    \end{equation}
+\end{thm}
+\begin{proof}
+    Write $\dim U = N$ and $n(f) = m$ with $m < N$. 
+    If $m = N$, everything is mapped to $\vec 0$ and hence $f$ is the zero map.
+
+    Suppose $(e_1, e_2, \cdots, e_m)$ is a basis for the $\ker(f)$. 
+    We extend this basis to the whole of $U$, 
+    \[
+        \crbkt{e_1, e_2, \cdots, e_m, e_{m+1}, e_{m+2}, \cdots, e_{N}}  
+    \]
+    To prove the rank nullity theorem, we will show that
+    \[
+        \crbkt{f(e_{m+1}), f(e_{m+2}), \cdots, f(e_{N})}
+    \]
+    is a basis for $\im(f)$
+    \begin{description}
+        \item[Spanning]. The basis spans $\im(f)$.
+        Take $y \in \im(f)$ this means that $\exists \vec x \in U$ such that
+        \begin{align*}
+            \vec y &= f(\vec x) \\
+            &= f(\alpha_1 x_1 + \cdots \alpha_N e_N) \\
+            &= \alpha_1f(x_1) + \cdots \alpha_N f(e_N) \\
+            &= \alpha_{m+1}f(e_{m+1}) + \alpha_{m+2}f(e_{m+2}) + \cdots + \alpha_Nf(e_{N})
+        \end{align*}
+        Therefore
+        \[
+            \crbkt{f(e_{m+1}), f(e_{m+2}), \cdots, f(e_{N})}
+        \]
+        spans the image of $f$.
+        \item[Linear indedpendance] Suppose
+        \[
+            \alpha_{m+1}f(e_{m+1}) + \alpha_{m+2}f(e_{m+2}) +\cdots, \alpha_Nf(e_{N}) = 0 \tag{$\star$}
+        \]
+        \begin{align*}
+            \Rightarrow f(\alpha_{m+1}f(e_{m+1}), \alpha_{m+2}f(e_{m+2}), \cdots, \alpha_Nf(e_{N})) = 0 \\
+            \therefore \alpha_{m+1}f(e_{m+1}), \alpha_{m+2}f(e_{m+2}), \cdots, \alpha_Nf(e_{N}) \in \ker(f) \\
+            \Rightarrow \alpha_1 x_1 + \cdots + \alpha_N e_m = \alpha_{m+1}e_{m+1} + \cdots + \alpha_{N}e_{N}
+        \end{align*}
+        However, $e_1, e_2, \cdots, e_n$ is a basis for $U$ and are therefore linearly independant. 
+        Therefore the only solution to this is
+        \[
+            \alpha_1 = \cdots = \alpha_m = \alpha_{m+1} = \cdots = \alpha_N = 0  
+        \]
+        Now back to ($\star$), since all $\alpha$'s are $0$, 
+        \[
+            \crbkt{f(e_{m+1}), f(e_{m+2}), \cdots, f(e_{N})}    
+        \]
+        are linearly independant.
+    \end{description}
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 10: 27/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}
+    Calculate the kernel and the image of the map
+    \begin{align*}
+        f: \R^3 &\rightarrow R^3 \\
+        (x, y, z) &\mapsto (x + y + z, 2x - y, x + 2z)
+    \end{align*}
+
+    \begin{enumerate}[steps]
+        \item Find the kernel,
+        \begin{equation*}
+            \begin{aligned}
+                x + y + z = 0 \\
+                2x - y = 0 \\
+                x + 2z = 0 \\
+                \hline
+                \Rightarrow x + 2z = 0
+            \end{aligned}
+        \end{equation*}
+        Therefore, kernel is of the form $(-2z, z, z)$
+        \[
+            \ker(f) = \spnset{(-2, 1, 1)} \Rightarrow n(f) = 1  
+        \]
+        \item Extend basis of kernel to basis of the whole space
+        \[
+            \R^3 = \spnset{(-2, ,1, 1), (0, 1, 0), (0, 0, 1)}  
+        \]
+        \item Apply $f$ to this basis.
+        \begin{align*}
+            f(-2, ,1, 1) = \vec 0 \\
+            f(0, 1, 0) = (1, -1, 0) \\
+            f(0, 0, 1) = (1, 5, 2)
+        \end{align*}
+        \item Find a basis for $\im(f)$
+        \[
+            \im(f) = \spnset{(1, -1, 0), (1, 5, 2)} \therefore r(f) = 2
+        \]
+    \end{enumerate}
+
+    Note that $r(f) + n(f) = 2 + 1 = 3$ agrees with the rank nullity theorem.
+    Let's get the image as a plane.
+    The plane contains $(1, -1, 0)$ and $(1, 5, 2)$. 
+    \begin{align*}
+        \vec n &= (1, -1, 0) \times (1, 5, 2) \\
+        &= (1, 1, -3)\lambda
+    \end{align*}
+    We also know that $\im(f)$ contains the origin. Therefore the plane must pass through the origin,
+    \begin{align*}
+        \vec r \cdot (1, 1, -3) &= 0 \\
+       \Rightarrow x + y - 3z &= 0
+    \end{align*}
+\end{eg}
+
+\subsection{Matrices}
+Consider a linear map (applies to $\C$) as well.
+\begin{align*}
+    \alpha: R^n &\rightarrow \R^m \\
+    \vec x &\mapsto \vec x'
+\end{align*}
+
+For a basis of $\R^n$, $(e_1, e_2, \cdots, e_n)$, write
+\begin{align*}
+    \vec x &= \sum_{j=1}^{n}{x_je_j} \\
+    \vec x' &= \alpha(\sum_{j=1}^{n}{x_je_j}) = \sum_{j=1}^{n}{x_j\alpha(e_j)} \tag{by \ref{eq:3-5}}\\
+    x'_i &= \sum_{j=1}^{n}{x_j [\alpha(e_j)]_i} \qquad i = 1, 2, \cdots, m
+\end{align*}
+In suffix notation $A_{ij} = [\alpha(e_j)]_i$, 
+\begin{equation}\label{eq:3-10}
+    x'_j = A_{ij}x_j
+\end{equation}
+Where
+\[
+    A = \crbkt{A_{ij}} = \begin{pmatrix}
+        A_{11} & \cdots & \cdots & \cdots & A_{1n} \\
+        \vdots &        &        &        & \vdots \\
+        \vdots &        & A_{ij} &        & \vdots \\
+        \vdots &        &        &        & \vdots \\
+        A_{m1} & \cdots & \cdots & \cdots & A_{mn} \\
+    \end{pmatrix}_{m \times n}
+\]
+And $\vec x' = A \vec x$
+\[
+    \Rightarrow (\vec x')_{m \times 1} = (A)_{m \times n}(\vec x)_{n \times 1}    
+\]
+Each linear map $\alpha$ has an associated matric $A$ which is \underline{basis dependant}.
+
+\subsubsection{Examples}
+\begin{enumerate}[label=\arabic*.]
+    \item Rotation of $\theta$ about $z$-axis \eqref{eq:3-1}
+    \item Reflection in the plane \eqref{eq:3-3}
+    \item Dilation 
+    \begin{align*}
+        \alpha: \R^3 &\rightarrow \R^3 \\
+        (x, y, z) &\mapsto (\lambda x, \mu y, \gamma z)
+    \end{align*}
+    Has a dilation matrix
+    \[
+        \begin{pmatrix}
+            \lambda & 0 & 0 \\
+            0 & \mu & 0 \\
+            0 & 0 & \gamma
+        \end{pmatrix}
+    \]
+    \item Sheer in the $x$-axis
+    \begin{align*}
+        S: \R^3 &\rightarrow \R^3 \\
+        (x, y, z) &\mapsto (x + \lambda y, y, z)
+    \end{align*}
+    Has a sheer matrix
+    \[
+        \begin{pmatrix} 
+        x' \\ y' \\ z'
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            1 & \lambda & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+            x \\ y \\ z
+        \end{pmatrix}
+    \]
+\end{enumerate}
+
+\subsubsection{Matrix Algebra}
+\begin{enumdescript}
+    \item[Addition] Consider $2$ maps $\alpha, \beta: \R^n \rightarrow \R^m$.
+    The sum of these maps 
+    \[
+        (\alpha + \beta)(\vec x) \equiv \alpha(\vec x) + \beta(\vec x)  
+    \]
+    We can check that the associated matrices do the same,
+    \[
+        (A+ B)_{ij}x_j = A_{ij}x_j + B_{ij}x_j
+    \]
+    \begin{equation}\label{eq:3-11}
+        \Rightarrow (A + B)_{ij} = A_{ij} + B_{ij}
+    \end{equation}
+    \item[Scalar Multiplication] For $\lambda$ a scalar,
+    \[
+        (\lambda \alpha)\vec x = \lambda \alpha(\vec x)
+    \]
+    \begin{equation}\label{eq:3-12}
+        \therefore (\lambda A)_{ij} = \lambda A_{ij}
+    \end{equation}
+    \item[Matrix Multiplication] Consider $2$ maps
+    \begin{align*}
+        \alpha: \R^l \rightarrow \R^n \\
+        \beta: \R^n \rightarrow \R^m
+    \end{align*}
+    Where the associated matrices are
+    \[
+        A_{n \times l} = \crbkt{A_{ij}} \text{ and } B_{m \times n} = \crbkt{B_{ij}}
+    \]
+    The composition map, where we perform $\alpha$ followed by $\beta$ is
+    \[
+        \beta\alpha: \R^l \rightarrow \R^m  
+    \]
+    We will see that the definition for matrix multiplication comes natrually from the composition of maps.
+    Take $\vec x \in \R^l \mapsto \vec x'' \in \R^m$
+    \begin{align*}
+        \vec x'' &= BA(\vec x) \\
+        &= B\vec x'
+    \end{align*}
+    Where $\vec x' = A\vec x$. Then
+    \begin{align*}
+        x''_i = (B\vec x')_i &= B_{ik}x'_k \\
+        &= B_{ik}A_{kj}x_j \\
+        &= (BA)_{ij}x_j
+    \end{align*}
+    \begin{equation}\label{eq:3-13}
+        (BA)_{ij} = B_{ik}A_{kj}
+    \end{equation}
+    \begin{remark}\leavevmode
+        \begin{enumerate}
+            \item Column number of $B$ $=$ row number of $A$. 
+            If $l = m$ then we can form $BA$ and $AB$, but 
+            \item $AB \neq BA$ not commutative in general
+            \item $A(BC) = (AB)C$ only associative
+        \end{enumerate}
+    \end{remark}
+    \item[Transposition] Let $A$ be an $m \times n$ matrix. Then $A^T$ is an $n \times m$ matrix defined by
+    \[
+        (A^T)_{ij} = A_{ji}  
+    \]
+    Clearly, $(A^T)^T = A$. We also have for column vectors,
+    \[
+        \vec x = \begin{pmatrix}
+                x_1 \\ \vdots \\ x_n
+        \end{pmatrix}
+        \Rightarrow 
+        \vec x^T = \begin{pmatrix}
+            x_1 & \cdots & x_n
+        \end{pmatrix}
+    \]
+    \begin{prop}
+        \begin{equation}\label{eq:3-14}
+            (AB)^T = B^TA^T
+        \end{equation}
+    \end{prop}
+    \begin{proof}
+        \begin{align*}
+            (AB)^T_{ij} = (AB)_{ji} &= A_{jk}B_{ki} \tag{from \eqref{eq:3-13}} \\
+            &= B_{ki}A_{jk} \\
+            &= (B^T)_{ik}(A^T)_{kj} \\
+            &= (B^TA^T)_{ij}
+        \end{align*}
+    \end{proof}
+
+    \begin{defi}[Hermition Conjugate]
+        \begin{equation}\label{eq:3-15}
+            A^\dagger = (A^T)^* = (A^*)^T
+        \end{equation}
+        i.e; take the complex conjugate and then transpose.
+    \end{defi}
+    
+    %%%%%%%%%%%%%%%%%%%%%%
+    % Lecture 11: 30/10/2023
+    %%%%%%%%%%%%%%%%%%%%%%
+    \begin{defi}[Symmetric Matrix]
+        A \emph{symmetric} matrix is such that 
+        \[
+            A^T = A
+        \]
+        We see that $A$ is neccesarily square.
+    \end{defi}
+    
+    \begin{defi}[Hermition Matrix]
+        A \emph{hermition} matrix is such that
+        \[
+            A^\dagger = A
+        \]
+        We see that the diagonal elements of $A$ are neccesarily real.
+    \end{defi}
+    
+    \begin{defi}[Anti-Symmetric Matrix]
+        A \emph{anti-symmetric} matrix is such That        
+        \[
+            A^T = -A
+        \]
+        We see that its diagonal elements are neccesarily $0$.
+    \end{defi}
+    
+    \begin{defi}[Skew-Hermition Matrix]
+        A \emph{skew-hermition} matrix is such that
+        \[
+            A^\dagger = -A
+        \]
+        We see that the diagonal elements of $A$ are neccesarily purely imaginary.
+    \end{defi}
+
+    \item[Trace] The trace of a matrix $A$ is the sum of its diagonal elements. 
+    This turns out to be invariant with respect to changing basis.
+    \[
+        \tr(A) = A_{ii}
+    \]
+    \begin{eg}
+        \[
+            R_{ij} = \delta_{ij} - 2n_in_j \Rightarrow \tr(R) = R_{ii} = 3 -2 = 1  
+        \]
+    \end{eg}
+    It has the commutative property
+    \begin{equation}\label{eq:3-16}
+        \tr(BC) = \tr(CB)
+    \end{equation}
+    \begin{proof}
+        \begin{align*}
+            \tr(BC) = (BC)_{ii} &= B_{ik}C_{ki} \tag{by \eqref{eq:3-13}}\\
+            &= C_{ki}B_{ik} \\
+            &= (CB)_{kk} = \tr(CB)\\
+        \end{align*}
+    \end{proof}
+
+    \item[Identity Matrix]
+    \[
+        I_{ij} = \delta_{ij} = \begin{cases}
+            1 & \text{ if } i = j \\
+            0 & \text{ otherwise}
+        \end{cases}
+    \]
+
+    \item[Interpretation of columns of a matrix]. Consider $\alpha: \R^n \rightarrow \R^n$, and use the standard basis.
+    \[
+        A \begin{pmatrix}
+            1 \\ 0 \\ \vdots \\ 0
+        \end{pmatrix} 
+        =
+        \begin{pmatrix}
+            A_{11} \\ A_{21} \\ \vdots \\ A_{n1}
+        \end{pmatrix}
+    \]
+    and in general, for the standard basis vector $e_i$
+    \[
+        A \begin{pmatrix}
+            0 \\ \vdots \\ 1 \\ \vdots \\ 0
+        \end{pmatrix} 
+        =
+        \begin{pmatrix}
+            A_{1i} \\ A_{2i} \\ \vdots \\ A_{ni}
+        \end{pmatrix}
+    \]
+    Therefore, the columns of the matrix are interpreted as the images of the basis vectors under $\alpha$.
+    \begin{eg}
+        Reflection in $\R^2$ on the line at an angle $\theta$ to $x$-axis.
+        \begin{align*}
+            \uvec i &\mapsto \uvec i' = \cos(2 \theta)\uvec i + \sin(2 \theta)\uvec j \\
+            \uvec j &\mapsto \uvec j' = \sin(2 \theta)\uvec i - \cos(2 \theta)\uvec j
+        \end{align*}
+        Therefore, the matrix representing this map is given by
+        \[
+            A = \begin{pmatrix}
+                \cos(2 \theta) & \sin(2 \theta) \\
+                \sin(2 \theta) & -\cos(2 \theta)
+            \end{pmatrix}  
+        \]
+    \end{eg}
+\end{enumdescript}
+
+\subsubsection{Decomposition of an $n \times n$ matrix}
+Any $n \times n$ matrix can be written as a sum of symmetric and anti-symmetric parts. Write
+\[
+    B_{ij} = \frac{1}{2}(B_{ij} + B_{ji}) + \frac{1}{2}(B_{ij} - B_{ji})
+\]
+Where
+\[
+    S_{ij} = \frac{1}{2}(B_{ij} + B_{ji}) = S_{ji}
+\]
+and is symmetric, and
+\[
+    A_{ij} = \frac{1}{2}(B_{ij} - B_{ji}) = -A_{ji}
+\]
+is anti-symmetric. Therefore,
+\begin{equation}\label{eq:3-17}
+    B = \frac{1}{2}(B + B^T) + \frac{1}{2}(B - B^T)
+\end{equation}
+Furhermore, we can decompose $S$ into an Isotropic part $+$ Traceless part. Write
+\[
+    S_{ij} = \frac{1}{n}\tr(S)\delta_{ij} + (S_{ij} - \frac{1}{n}\tr(S)\delta_{ij})
+\]
+Where the first part is isotropic (a scalar multiple of $\delta_{ij}$) and the second half is traceless since
+\begin{align*}
+    T_{ij} = S_{ij} - \frac{1}{n}\tr(S)\delta_{ij} \\
+    \Rightarrow T_{ii} = S_{ii} - \frac{1}{n}\tr(S)\delta_{ii} \\
+    =\tr(s) - \frac{1}{n}\tr(s) \times n \\
+    = 0
+\end{align*}
+
+Putting these all together
+\begin{equation}\label{eq:3-18}
+    B = \frac{1}{n}\tr(B)I + \crbkt{\frac{B + B^T}{2} - \frac{1}{n}\tr(B)I} + \frac{1}{2}(B - B^T)
+\end{equation}
+
+In three dimensions (only), the anti-symmetric part can be written in terms of a single vector. 
+A general anti-symmetric matrix has the form
+\[
+    A = \begin{pmatrix}
+    0 & a & b \\
+    -a & 0 & c \\
+    -b & -c & 0
+    \end{pmatrix}
+\]
+Now consider
+\[
+    \varepsilon_{ijk}w_k = \begin{pmatrix}
+        0 & w_3 & -w_2 \\
+        -w_3 & 0 & w_1 \\
+        w_2 & -w_1 & 0
+    \end{pmatrix}
+\]
+Therefore, if we choose $w$ appropriately
+\[
+    w = \begin{pmatrix}
+    c \\ -b \\ a
+    \end{pmatrix}
+    \Rightarrow A_{ij} = \varepsilon_{ijk}w_k
+\]
+\subsubsection{Matrix Inverse}
+Consider an $m \times n$ matrix $A$, $n \times m$ matrix $B$ and $n \times m$ matrix $C$.
+\begin{itemize}
+    \item If $BA = I_{n \times n}$ then $B$ is the left inverse of $A$
+    \item If $AC = I_{m \times m}$ then $C$ is the right inverse of $A$
+    \item If $A$ is square ($n \times n$) matrix, then
+    \[
+        B = B(AC) = (BA)C = C  
+    \]
+    Therefore the left and right inverses are the same, and we can write $A^{-1}$
+    \begin{equation}\label{eq:3-19}
+        \Rightarrow AA^{-1} = A^{-1}A = I
+    \end{equation}
+\end{itemize}
+\begin{remark}
+    \begin{equation}\label{eq:3-20}
+        (AB)^{-1} = B^{-1}A^{-1}
+    \end{equation}
+    \begin{proof}
+        \[
+            (B^{-1}A^{-1})(AB) = B^{-1}(A^{-1}A)B = I
+        \]
+    \end{proof}
+\end{remark}
+
+\begin{defi}[Orthogonal]
+    A real $n \times n$ matrix is \emph{orthogonal} if
+    \[
+        A^TA = AA^T = I \Rightarrow A^T = A^{-1}  
+    \]
+\end{defi}
+
+\begin{defi}[Unitary]
+    A complex $n \times n$ matrix is \emph{unitary} if
+    \[
+        A^\dagger A = AA^\dagger = I \Rightarrow A^\dagger = A^{-1}  
+    \]
+\end{defi}
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item Let $A$ be an orthogonal matrix.
+        \begin{align*}
+            A_{ik}(A_{kj})^T = \delta_{ij} \\
+            \Rightarrow A_{ik}A_{jk} = \delta_{ij}
+        \end{align*}
+        Which is the scalar product of row $i$ and row $j$.
+        Therefore, we see that the rows of an orthogonal matrix from an orthonormal set.
+        Similarly for $A^T$, the columns of an orthonormal matrix also form an orthonormal set.
+        
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 12: 01/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+        \item Similar result for unitary matrix $U$, but now
+        \begin{align*}
+            (U_{ik})(\overline{U_{kj}})^T = \delta_{ij} \\
+            \Rightarrow  \overline{U_{jk}} U_{ik} = \delta_{ij}
+        \end{align*}
+        i.e; the rows are orthogonal.
+    \end{enumerate}
+\end{remark}
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Reflection matrix ($3 \times 3$) is orthogonal. $R_{ij} = \delta_{ij} - 2 n_i n_j$
+        \begin{align*}
+            (RR^T)_{ij} &= R_{ik}R_{kj}^T \\
+            &= R_{ik}R_{kj} = (\delta_{ik} - 2 n_i n_k)(\delta_{kj} - 2 n_k n_j) \\
+            &= \delta_{ik}\delta_{kj} - 2\delta_{jk}n_in_k - 2\delta_{kj}n_kn_j + 4n_in_jn_kn_k \\
+            &= \delta_{ij} - 2 n_in_j -2 n_in_j + 4 n_in_j \\
+            &= \delta_{ij}
+        \end{align*}
+        \item Rotation matrix \eqref{eq:3-2} is orthogonal.
+        \begin{ex}
+            Express using monster expression for $R_{ij}$ and solve.
+        \end{ex}
+        Alternatively, denote rotation by $\theta$ about $\uvec n$ as $R(\theta, \uvec n)$. 
+        Clearly,
+        \[
+            R(\theta, \uvec n)^{-1} = R(-\theta, \uvec n)    
+        \]
+        We check in \eqref{eq:3-2} that
+        \[
+            R(-\theta, \uvec n)_{ij} = R(\theta, \uvec n)_{ji}
+        \]
+        Hence
+        \[
+            R(-\theta, \uvec n) = R^T(\theta, \uvec n) \Rightarrow R^{-1} = R^T
+        \]
+        Therefore $R$ is an orthogonal matrix.
+    \end{enumerate}
+\end{eg}
+\subsection{Determinants}
+\begin{defi}[Determinants in $\R^3$]
+    Consider a linear map $\alpha: \R^3 \rightarrow \R^3$ with standard basis $\vec e_1, \vec e_2, \vec e_3$, where
+    \[
+        \alpha(\vec e_1) = \vec e'_1 \text{ , } \alpha(\vec e_2) = \vec e'_2 \text{ , } \alpha(\vec e_3) = \vec e'_3
+    \]
+    or in general,
+    \[
+        \vec e'_i = A\vec e_i \text{ for } i = 1, 2, 3
+    \]
+    The unit cube is mapped by $\alpha$ to a parallelopiped with volume 
+    \begin{align*}
+        [\vec e'_1, \vec e'_2, \vec e'_3] &= \varepsilon_{ijk}(\vec e'_1)_i(\vec e'_2)_j(\vec e'_3)_k \\
+        &= \varepsilon_{ijk} A_{il}(\vec e'_1)_l A_{jm}(\vec e'_2)_m A_{kn}(\vec e'_3)_n \\
+        &= \varepsilon_{ijk} A_{il}\delta_{1l} A_{jm}\delta_{2m} A_{kn}\delta_{3n} \\
+        &= \varepsilon_{ijk} A_{i1}A_{j2}A_{k3}
+    \end{align*}
+    This is the \emph{determinant} of $A$.
+    \begin{align*}
+        \det (A) &= \varepsilon_{ijk} A_{i1}A_{j2}A_{k3} \\
+        &= \begin{vmatrix}
+            A_{11} & A_{12} & A_{13} \\
+            A_{21} & A_{22} & A_{23} \\
+            A_{31} & A_{32} & A_{33} \\
+        \end{vmatrix} \numberthis\label{eq:3-21}
+    \end{align*}
+\end{defi}
+
+Let's extend this to $\R^n$!
+
+\subsubsection{Permutations}
+Consider the set $S_n$ of all permutations of numbers.
+\[
+    1, 2, \cdots, n
+\]
+which contains $n!$ elements. Consider $\rho \in S_n$ with $i \mapsto \rho(i)$, using the following notation
+\begin{align*}
+    \rho = \begin{pmatrix}
+        1 & 2 & 3 & \cdots & n \\
+        \rho(1) & \rho(2) & \rho(3) & \cdots & \rho(n)
+    \end{pmatrix} \\[10pt]
+    \rho^{-1} = \begin{pmatrix}
+        \rho(1) & \rho(2) & \rho(3) & \cdots & \rho(n) \\
+        1 & 2 & 3 & \cdots & n
+    \end{pmatrix} \\
+\end{align*}
+
+\begin{defi}[Fixed Point]
+    A \emph{fixed point} of $\rho$ is $k$ such that $\rho(k) = k$.
+    \begin{eg}
+        \[
+            \rho = \begin{pmatrix}
+                1 & 2 & 3 & 4 \\
+                4 & 1 & 3 & 2
+            \end{pmatrix}
+        \]
+        has a fixed point $3 \mapsto 3$. By convention, we omit the fixed points.
+        \[
+            \Rightarrow \rho = \begin{pmatrix}
+                1 & 2 & 4 \\
+                4 & 1 & 2
+            \end{pmatrix}
+        \]
+    \end{eg}
+\end{defi}
+
+\begin{defi}[Disjoint]
+    Two permutations are are \emph{disjoint} if numbers moved by one permutation are fixed by the other \& vice versa.
+\end{defi}
+\begin{eg}
+    \[
+        \begin{pmatrix}
+            1 & 2 & 4 & 5 & 6 \\
+            5 & 6 & 1 & 4 & 2
+        \end{pmatrix} 
+        = 
+        \begin{pmatrix}
+            2 & 6 \\
+            6 & 2
+        \end{pmatrix}
+        \begin{pmatrix}
+            1 & 4 & 5 \\
+            5 & 1 & 4
+        \end{pmatrix}
+    \]
+\end{eg}
+\begin{remark}[Disjoint permutations commute]
+    Disjoint permutations \emph{commute}, but in general, permutations do not.
+\end{remark}
+
+\begin{defi}[Cycles]
+    $\begin{pmatrix}
+        2 & 6 \\
+        6 & 2
+    \end{pmatrix}$ is a $2$-cycle, also called a \emph{transposition}. We write this as
+    \[
+        (2\ 6)  
+    \]
+    $\begin{pmatrix}
+        1 & 4 & 5 \\
+        5 & 1 & 4
+    \end{pmatrix}$ is a $3$-cycle, we write
+    \[
+        (1\ 5\ 4)  
+    \]
+    For more details, refer to IA Groups Permutation Groups.
+\end{defi}
+
+\begin{defi}[Permutation Sign]
+    We can write any $q$-cycle as a product of $2$-cycles. For example, 
+    \begin{equation}\label{eq:3-22}
+        (a_1\ a_2\ \cdots\ a_q) = (a_1\ a_2)(a_2\ a_3)\cdots(a_{q-1}\ a_q)  
+    \end{equation}
+    For a $q$ cycle, there are $q-1$ transpositions and we apply the maps from right to left.
+
+    The \emph{sign} of a permutation $\epsilon(p)$ is defined to be
+    \begin{equation}\label{eq:3-23}
+        \epsilon(p) = (-1)^r
+    \end{equation}
+    where $r$ is the number of transpositions
+    \[
+        \epsilon(p) = \begin{cases}
+            +1 & \text{even perm} \\
+            -1 & \text{odd perm}
+        \end{cases}
+    \]
+    Note that
+    \begin{align*}
+        \epsilon(\rho \sigma) = \epsilon(\rho) \epsilon(\sigma) \\
+        \epsilon(\rho^{-1}) = \epsilon(\rho) \numberthis\label{eq:3-24}
+    \end{align*}
+\end{defi}
+
+\begin{defi}[$n$-dimensional Levi-Cevita]
+    Define the $n$-dimensional Levi-Cevita symbol by 
+    \[
+        \varepsilon_{J_1, J_2, \cdots, J_n} = \begin{cases}
+            +1 & \text{ if } J_1, J_2, \cdots, J_n \text{ is an even perm} \\
+            -1 & \text{ if } J_1, J_2, \cdots, J_n \text{ is an odd perm} \\
+            0 & \text{ otherwise}
+        \end{cases}
+    \]
+    This is the generalisation of $\varepsilon_{ijk}$. Can see from \eqref{eq:2-23} that $\rho \in S_n$
+    \[
+        \varepsilon_{\rho(1), \rho(2), \cdots, \rho(n)} = \epsilon(p)
+    \]
+\end{defi}
+
+\begin{defi}[Determinants in $\R^n$]
+    Now define the determinant of an $n \times n$ matrix $A$ as either
+    \begin{subequations}
+        \begin{equation}\label{eq:3-25}
+            \det(A) = \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)1}A_{\sigma(2)2} \cdots A_{\sigma(n)n}
+        \end{equation}
+        Or equivalently,
+        \begin{equation}\label{eq:3-25a}
+            \det(A) = \varepsilon_{J_1, J_2, \cdots, J_n} A_{J_11}A_{J_22} \cdots A_{J_nn}
+        \end{equation}
+        Here the suffix notation summing over $J_1, J_2, \cdots, J_n$ and there are $n^n$ terms, most of which have repeated indices and are therefore $0$.
+    \end{subequations}
+\end{defi}
+
+\subsubsection{Properties of Determinants}
+    \begin{enumerate}
+        \item \begin{equation}\label{eq:3-26}
+            \det A = \det A^T
+        \end{equation}
+        Consider a single term in \eqref{eq:3-25} and $\rho$ some other perm in $S_n$. 
+        \[
+            A_{\sigma(1)1}A_{\sigma(2)2} \cdots A_{\sigma(n)n} = A_{\rho(\sigma(1))\rho(1)}A_{\rho(\sigma(2))\rho(2)} \cdots A_{\rho(\sigma(n))\rho(n)}
+        \]
+        Applying $\rho$ to each term results in the same terms in a different order.
+        Now, choose $\rho = \sigma^{-1}$ and note that from \eqref{eq:3-24},
+        \[
+            \epsilon(\rho) = \epsilon(\rho^{-1}) \Rightarrow \epsilon(\sigma) = \epsilon(\rho)
+        \]
+        \eqref{eq:3-25} gives 
+        \begin{align*}
+            \det(A) &= \sum_{\rho \in \S_n} \epsilon(\rho) A_{\rho(1)1}A_{\rho(2)2} \cdots A_{\rho(n)n} \\
+            &= \det(A^T)
+        \end{align*}
+
+        \item If $B$ is formed by multiplying every element in a single row or column of $A$ by a scalar $\lambda$, then
+        \begin{equation}\label{eq:3-27}
+            \det (B) = \lambda \det (A)
+        \end{equation}
+        It follows that 
+        \begin{equation}\label{eq:3-28}
+            \det(\lambda B) = \lambda^n \det(A)
+        \end{equation}
+        This follows since, each term in \eqref{eq:3-25} is multiplied by $\lambda$ once to give \eqref{eq:3-27}.
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 13: 03/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+        \item If $2$ rows or $2$ columns of $A$ are identicle then
+        \begin{equation}\label{eq:3-29}
+            \det (A) = 0
+        \end{equation}
+        \begin{proof}
+            Suppose $A$ has columns $1$ and $2$ the same. In \eqref{eq:3-25} write
+            \[
+                \sigma = \rho(1\ 2)  
+            \]
+            From \eqref{eq:3-24}
+            \[
+                \epsilon{\sigma} = -\epsilon{\rho}  
+            \]
+            Applying the maps,
+            \[
+                A_{\sigma(1)1} = A_{\rho(2)1} \text{ and } A_{\sigma(2)1} = A_{\rho(1)2}
+            \]
+            while $A_{\sigma(i)i} = A_{\rho(i)i}$ for $i > 2$.
+            \[
+                \therefore \det(A) = \sum_{\rho \in S_n} - \epsilon(\rho) A_{\rho(2)1}A_{\rho(1)2} \cdots A_{\rho(n)n}
+            \]
+            Furthermore, since columns $1$ and $2$ are the same, therefore $A_{\rho(2)1} = A_{\rho(2)2}$ and $A_{\rho(1)2} = A_{\rho(1)1}$
+            \begin{align*}
+                \Rightarrow \det(A) = - \det(A) \\
+                \therefore \det(A) = 0
+            \end{align*}
+        \end{proof}
+
+        \item If $2$ rows or $2$ columns are linearly dependant then 
+        \begin{equation}\label{eq:3-30}
+            \det(A) = 0
+        \end{equation}
+        \begin{proof}
+            Suppose $c_r + \lambda c_s = 0$ define
+            \[
+                B_{ij} = \begin{cases}
+                    A_{ij} & j \neq r \\
+                    A_{ij} + \lambda A_{is} & j = r
+                \end{cases}  
+            \]
+            Then, 
+            \begin{align*}
+                \det(B) &= \sum_{\sigma \in S_n} \epsilon(\sigma) B_{\sigma(1)1} \cdots B_{\sigma(r)r} \cdots B_{\sigma(n)n} \\
+                &= \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)1} \cdots A_{\sigma(r)r} \cdots A_{\sigma(n)n} \\
+                &= \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)1} \cdots [A_{\sigma(r)r} + \lambda A_{\sigma(r)s}] \cdots A_{\sigma(n)n} \\
+                &= \det(A) + \lambda \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)1} \cdots A_{\sigma(r)s} \cdots A_{\sigma(n)n} \\
+                &= \det(A) + \det(\text{matrix where columns } r = s) \\
+                &= \det(A) + 0 \tag{by \eqref{eq:3-29}}
+            \end{align*}
+            But note that column $r$ of matrix $B$ is all zeros. Therefore
+            \[
+                \det(B) = 0 \Rightarrow \det(A) = 0
+            \]
+        \end{proof}
+
+        Note that eeven if $2$ columns are not linearly dependant, we still have the first result where
+        \[
+            \det(B) = \det(A)  
+        \]
+        Therefore, we can add a linear multiple of one column (row) onto another column (row) without changing the determinant.
+
+        \item Determinant of a product
+        \begin{equation}\label{eq:3-31}
+            \det(AB) = \det(A) \det(B)
+        \end{equation}
+        \begin{proof}
+            First, note that for $\rho \in S_n$
+            \begin{equation}\label{eq:3-32}
+                \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)\rho(1)} \cdots A_{\sigma(n)\rho(n)} = \epsilon(\rho) \det(A) 
+            \end{equation}
+            That is, swapping columns or rows an even or odd number of times, gives an extra factor of $\pm 1$ respectively. To see this, write
+            \[
+                \sigma = \mu \rho  
+            \]
+            then,
+            \begin{align*}
+                \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)\rho(1)} \cdots A_{\sigma(n)\rho(n)} &= \sum_{\mu \in S_n} \epsilon(\mu \rho) A_{\mu \rho(1)\rho(1)} \cdots A_{\mu \rho(n)\rho(n)} \\
+                &= \epsilon(\rho) \sum_{\mu \in S_n} \epsilon(\mu) A_{\mu \rho(1)\rho(1)} \cdots A_{\mu \rho(n)\rho(n)} \\
+                &= \epsilon(\rho) \det(A)
+            \end{align*}
+            Now, 
+            \begin{align*}
+                \det(AB) &= \sum_{\sigma \in S_n} \epsilon(\sigma) (AB)_{\sigma(1)1} \cdots (AB)_{\sigma(n)n} \\
+                &= \sum_{\sigma \in S_n} \epsilon(\sigma) \sum_{k_1, \cdots, k_n} A_{\sigma(1)k_1}B_{k_11} \cdots A_{\sigma(n)k_n}B_{k_nn} \\
+                &= \sum_{k_1, \cdots, k_n} B_{k_11} \cdots B_{k_nn} \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)k_1} \cdots A_{\sigma(n)k_n}
+            \end{align*}
+            In the latter sum, if $2$ terms in $k_1, \cdots, k_n$ are equal, then we have a determinant where two columns are equal and is therefore $0$.
+            Therefore, the remaining terms are tuples of distinct $k_1, \cdots, k_n$ which is a re-arrangement of $1, 2, \cdots, n$.
+            Hence, we can define a permutation $\rho$ such that $k_i = \rho(i)$. Hence, 
+            \begin{align*}
+                \det(AB) &= \sum_{\rho \in S_n} B_{\rho(1)1} \cdots B_{\rho(n)n} \sum_{\sigma \in S_n} \epsilon(\sigma) A_{\sigma(1)\rho(1)} \cdots A_{\sigma(n)\rho(n)} \\
+                &= \sum_{\rho \in S_n} B_{\rho(1)1} \cdots B_{\rho(n)n} \epsilon(\rho) \det(A) \tag{by \ref{eq:3-32}} \\
+                &= \det(B)\det(A)
+            \end{align*}
+        \end{proof}
+        \begin{remark}
+            From \eqref{eq:3-31} if $A$ is orthogonal
+            \[
+                \det(A \cdot A^T) = \det(A) \det(A^T)  
+            \]
+            By \eqref{eq:3-26} 
+            \begin{align*}
+                \det(A) = \det(A^T) &\Rightarrow \det(A)^2 = 1 \\
+                &\therefore \det(A) = \pm 1 \numberthis\label{eq:3-33}
+            \end{align*}
+
+            If $U$ is unitary, 
+            \begin{align*}
+                \det(U) \cdot \det(U^\dagger ) = 1 \\
+                \det(U^\dagger ) = (\det(U^T))^* = \det(U)^* \\
+                \Rightarrow \det(U) \cdot \det(U)^* = 1 \\
+                \Rightarrow \abs{\det(U)} = 1 \numberthis\label{eq:3-34}
+            \end{align*}
+            Hence, $\det(U)$ lies on the unit circle. 
+            
+            As we've seen before, in $\R^3$ orthogonal matrices represent a rotation ($\det = \pm 1$) or a reflection ($\det = -1$).
+        \end{remark}
+    \end{enumerate}
+
+\subsubsection{Minors \& Cofactors}
+For an $n \times n$ matrix $A$. 
+Define $A^{ij}$ to be the $(n - 1) \times (n - 1)$ matrix in which row $i$ and column $j$ are removed.
+
+\begin{defi}[Minor]
+    The \emph{minor} of the $ij^{th}$ element of $A$ denoted $M_{ij}$ is
+    \begin{equation}\label{eq:3-35}
+        M_{ij} = \det(A^{ij})
+    \end{equation}
+\end{defi}
+
+\begin{defi}[Cofactor]
+    The \emph{cofactor} of the $ij^{th}$ element of $A$, denoted
+    \begin{equation}\label{eq:3-36}
+       \bigtriangleup_{ij} = (-1)^{i - j} M_{ij} 
+    \end{equation}
+\end{defi}
+
+Now, we will determine an alternative expression for $\det A$ in terms of the cofactors.
+Firstly, introduce more notation. Use $\overline{\cdot}$ to denote a symbol which is missing in a natural sequence.
+\begin{eg}
+    $(1, 2, 3, 5)$ is $(1, 2, 3, \overline{4}, 5)$
+\end{eg}
+
+For a fixed column $I$ equation \eqref{eq:3-25a} without suffix notation becomes,
+\begin{equation}\label{eq:3-37}
+    \det A = \sum_{J_I = 1}^{n} A_{J_II} \sum_{J_1, \cdots, \overline{J_I}, \cdots, J_n} \varepsilon_{J_1, \cdots, J_n} A_{J_11}A_{J_22} \cdots \overline{A_{J_II}} \cdots A_{J_nn}
+\end{equation}
+where we are expanding the determinant formula along the $I^{th}$ column. For instance,
+\begin{itemize}
+    \item $J_I = 1$ sums over all permutations that contain the first element of the $I^{th}$ row.
+    \item $J_I = 2$ sums over all permutations that contain the second element of the $I^{th}$ row.
+    \item etc.
+\end{itemize}
+
+Let $\sigma \in S_n$ be the permutation which moves $J_I$ to the $I^{th}$ position and leaves the remaining numbers in their natural order
+\[
+    \sigma = \begin{cases}
+        \begin{pmatrix}
+            1 & \cdots & I & I + 1 & \cdots & J_I - 1 & J_I & \cdots & n \\
+            1 & \cdots & J_I & I & \cdots & J_I - 2 & J_I -1 & \cdots & n
+        \end{pmatrix} & \text{ if } I < J_I \\[15pt]
+        \begin{pmatrix}
+            1 & \cdots & J_I & J_I + 1 & \cdots & I - 1 & I & \cdots & n \\
+            1 & \cdots & J_I + 1 & J_I + 2 & \cdots & I & J_I & \cdots & n
+        \end{pmatrix} & \text{ if } I > J_I \\[15pt]
+        \text{ identity permutation } & \text{ if } I = J_I
+    \end{cases}
+\]
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Take for $I = 2$, $J_I = 4$ i.e, $4$ to the $2^{nd}$ position
+        \[
+            \begin{pmatrix}
+                1 & 2 & 3 & 4 & 5 & 6 \\
+                1 & 4 & 2 & 3 & 5 & 6
+            \end{pmatrix}
+        \]
+        \item $I = 5$, $J_I = 2$ i.e. $2$ to the $5^{th}$ position
+        \[
+            \begin{pmatrix}
+                1 & 2 & 3 & 4 & 5 & 6 \\
+                1 & 3 & 4 & 5 & 2 & 6
+            \end{pmatrix}
+        \]
+    \end{enumerate}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 14: 06/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+In all of the $3$ cases, $J_I < I$, $J_I > I$, $J_I = I$, $\sigma$ is a product of $\abs{J_I - I}$ such transpositions.
+So from \eqref{eq:3-23}
+\[
+    \epsilon(\sigma) = (-1)^{I - J_I}
+\]
+Now consider another permutation $\rho \in S_n$ on the $n-1$ elements,
+\[
+    \rho = \begin{pmatrix}
+        1 & \cdots & \cdots & \overline{J_I} & \cdots & n \\
+        J_1 & \cdots & \overline{J_I} & \cdots & \cdots & J_n
+    \end{pmatrix}
+\]
+We have written out $\sigma$ and $\rho$ such that the combination $\rho \sigma$ reorders.
+\[
+    (1, 2, \cdots, n) \mapsto (J_1, J_2, \cdots, J_n)
+\]
+To see that this is the case, we can expand $\rho$ into
+\[
+    \rho = \begin{cases}
+        \begin{pmatrix}
+            1 & \cdots & I-1 & I & \cdots & J_I -1 & J_I +1 & \cdots & n \\
+            J_1 & \cdots & J_{I-1} & J_{I+1} & \cdots & J_{(J_I)} & J_{(J_I +1)} & \cdots & J_n
+        \end{pmatrix} & \text{ if } I < J_I \\[15pt]
+        \begin{pmatrix}
+            1 & \cdots & J_I -1 & J_I +1 & \cdots & I & I + 1 & \cdots & n \\
+            J_1 & \cdots & J_{(J_I -1)} & J_{(J_I)} & \cdots & J_{I-1} & J_{I+1} & \cdots & J_n
+        \end{pmatrix} & \text{ if } I > J_I \\[15pt]
+        \text{ identity permutation} & \text{ if } I = J_I
+    \end{cases}
+\]
+Furthermore, we see that
+\[
+    \epsilon(\rho) = \varepsilon_{J_1, \cdots, \overline{J_I}, \cdots, J_n}
+\]
+and we can decompose
+\begin{align*}
+    \epsilon(\rho \sigma) = \varepsilon_{J_1, \cdots, J_n} &= \epsilon(\rho)\epsilon(\sigma) \\
+    &= \varepsilon_{J_1, \cdots, \overline{J_I}, \cdots, J_n} \times (-1)^{I - J^I}
+\end{align*}
+Hence, \eqref{eq:3-37} becomes
+\begin{align*}
+    \det (A) &= \sum_{J_I = 1}^{n} A_{J_II} \sum_{J_1, \cdots, \overline{J_I}, \cdots, J_n} \varepsilon_{J_1, \cdots, \overline{J_I}, \cdots, J_n} (-1)^{I - J^I} A_{J_11} \cdots \overline{A_{J_II}} \cdots A_{J_nn} \\
+    &= \sum_{J_I = 1}^{n} A_{J_II} (-1)^{I - J^I} \sum_{J_1, \cdots, \overline{J_I}, \cdots, J_n} \varepsilon_{J_1, \cdots, \overline{J_I}, \cdots, J_n} A_{J_11} \cdots \overline{A_{J_II}} \cdots A_{J_nn} \\
+    &= \sum_{J_I = 1}^{n} A_{J_II} (-1)^{I - J^I} M_{J_II} \\
+    &= \sum_{J_I = 1}^{n} A_{J_II} \bigtriangleup_{J_II} \numberthis\label{eq:3-38}
+\end{align*}
+Using \eqref{eq:3-26} we can do the same to $A^T$ to see that
+\begin{equation}\label{eq:3-39}
+    \det (A) = \sum_{J_I = 1}^{n} A_{IJ_I} \bigtriangleup_{IJ_I}
+\end{equation}
+These are the Laplace expansion formulae, and they allow us to expand along any column or row.
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item $2 \times 2$ determinant. We use \eqref{eq:3-25}
+        \[
+            \det (A) = \sum_{\sigma \in S_2} \epsilon(\sigma)A_{\sigma(1)1}A_{\sigma(2)2}  
+        \]
+        where the elements of $S_2$ are
+        \begin{align*}
+            S_2 = \crbkt{e, (1\ 2)} \\
+            \epsilon(e) = 1 \\
+            \epsilon(1\ 2) = -1
+        \end{align*}
+        Therefore,
+        \begin{align*}
+            \det (A) &=  \epsilon(e)A_{11}A_{22} + \epsilon(1\ 2)A_{21}A_{12} \\
+            &= A_{11}A_{22} - A_{21}A_{12} \numberthis\label{eq:3-40}
+        \end{align*}
+
+        \item $3 \times 3$ determinant.
+        \[
+            A = \begin{vmatrix}
+                2 & 4 & 1 \\
+                3 & 2 & 1 \\
+                2 & 0 & 1
+            \end{vmatrix}  
+        \]
+        Use \eqref{eq:3-29} and choose $I = 1$ (First row)
+        \begin{align*}
+            \det(A) = 2 \begin{vmatrix}
+                2 & 1 \\
+                0 & 1
+            \end{vmatrix} 
+            -4 \begin{vmatrix}
+                3 & 1 \\
+                2 & 1
+            \end{vmatrix}
+            + 2 \begin{vmatrix}
+                3 & 2 \\
+                2 & 0
+            \end{vmatrix} \\
+            = 2 \times 2 - 4 \times 1 + 2 \times -4 = -8
+        \end{align*}
+        Or use \eqref{eq:3-38} and choose $I = 2$ (Second Column)
+        \[
+            \det(A) = -4 \begin{vmatrix}
+                3 & 1 \\
+                2 & 1
+            \end{vmatrix} 
+            2 \begin{vmatrix}
+                2 & 2 \\
+                2 & 1
+            \end{vmatrix}
+            + (-1) \cdot 0 = -8 
+        \]
+        In practical terms, we use combinations of properties of matrices together with appropriate choices of $I$ to evaluate $\det(A)$
+
+        \item
+        \begin{align*}
+            \det(A) &= \begin{vmatrix}
+                1 & a & a^2 \\
+                1 & b & b^2 \\
+                1 & c & c^2
+            \end{vmatrix} \\[15pt]
+            &= \begin{vmatrix}
+                0 & a - b & a^2 - b^2\\
+                1 & b & b^2 \\
+                1 & c & c^2
+            \end{vmatrix} \tag{row $1$ $\rightarrow$ row $1$ - row $2$} \\[15pt]
+            &= (a - b)\begin{vmatrix}
+                0 & 1 & a + b \\
+                1 & b & b^2 \\
+                1 & c & c^2
+            \end{vmatrix} \tag{factor}\\[15pt]
+            &= (a - b)\begin{vmatrix}
+                0 & 1 & a + b \\
+                0 & b - c & b^2 - c^2 \\
+                1 & c & c^2
+            \end{vmatrix} \tag{row $2$ $\rightarrow$ row $2$ - row $3$} \\[15pt]
+            &= (a - b)(b - c)\begin{vmatrix}
+                0 & 1 & a + b \\
+                0 & 1 & b + c \\
+                1 & c & c^2
+            \end{vmatrix} \tag{factor}\\[15pt]
+            &= (a - b)(b - c)\begin{vmatrix}
+                0 & 0 & a - c \\
+                0 & 1 & b + c \\
+                1 & c & c^2
+            \end{vmatrix} \tag{row $1$ $\rightarrow$ row $1$ - row $2$} \\[15pt]
+            &= (a - b)(b - c)(a - c)\begin{vmatrix}
+                0 & 0 & 1 \\
+                0 & 1 & b + c \\
+                1 & c & c^2
+            \end{vmatrix} \tag{factor}
+        \end{align*}
+        Then we choose $I = 1$ and expand along the first row.
+        \[
+            \det(A) = (a - b)(b - c)(a - c) \begin{vmatrix}
+                0 & 1 \\
+                1 & c
+            \end{vmatrix} = (a - b)(b - c)(c - a)
+        \]
+    \end{enumerate}
+\end{eg}
+
+\section{Matrices and Linear Equations}
+\subsection{Simple Example $2 \times 2$ matrix}
+\begin{align}
+    A_{11}x_1 + A_{12}x_2 = d_1 \label{eq:4-1} \\
+    A_{21}x_1 + A_{22}x_2 = d_2 \label{eq:4-2}
+\end{align}
+Solve $A \vec x = \vec d$ where $A$ is a $2 \times 2$ matrix. \eqref{eq:4-1} $\times A_{22} -$ \eqref{eq:4-2} $\times A_{11}$ gives, 
+\begin{align*}
+    (A_{11}A_{22} - A_{12}A_{21}) x_1 &= A_{22}d_1 - A_{12}d_2 \\
+    (A_{11}A_{22} - A_{12}A_{21}) x_2 &= A_{11}d_2 - A_{21}d_1
+\end{align*}
+Where $A_{11}A_{22} - A_{12}A_{21} = \det A$ \eqref{eq:3-40}.
+If $\det(A) \neq 0$
+\[
+    \begin{pmatrix}
+        x_1 \\ x_2
+    \end{pmatrix}
+    = \frac{1}{\det(A)}
+    \begin{pmatrix}
+        A_{22} & -A_{12} \\
+        -A_{21} & A_{11}
+    \end{pmatrix}
+    \begin{pmatrix}
+        d_1 \\ d_2
+    \end{pmatrix}
+\]
+Also, $A \vec x = \vec d$, so if $A^{-1}$ exists then $\vec x = A^{-1} \vec d$.
+Hence we have constructed $A^{-1}$ in the $2 \times 2$ case.
+\begin{equation}
+    A^{-1} = \frac{1}{\det(A)}
+    \begin{pmatrix}
+        A_{22} & -A_{12} \\
+        -A_{21} & A_{11}
+    \end{pmatrix}
+\end{equation}
+Therefore we see that $A^{-1}$ exists if and only if $\det(A) \neq 0$
+\subsection{Inverse of $n \times n$ matrix}
+Consider a matrix $B$ which is identical to $A$ except that the $I^{th}$ row of $A$ is replaced with $i^{th}$ row of $A$ where $i \neq I$.
+That is, $B$ is a copy of $A$ that has two identical rows - $i^{th}$ row and $I^{th}$ row.
+\[
+    \therefore \bigtriangleup_{Ij} \text{ of } B = \bigtriangleup_{Ij} \text{ of } A
+\]
+Since two rows of $B$ are the same, 
+\begin{align*}
+    \det(B) &= 0 \\
+    &= \sum_{k=1}^{n} B_{Ik} \bigtriangleup_{Ik} \tag{from \eqref{eq:3-39}} \\
+    &= \sum_{k=1}^{n} A_{ik} \bigtriangleup_{Ik} \numberthis\label{eq:4-4}
+\end{align*}
+For $i \neq I$. Similarly, consider matrix $C$ in which we take $A$ and replace the $J^{th}$ column with the $j^{th}$ column where $j \neq J$.
+\begin{equation}\label{eq:4-5}
+    \det(C) = 0 = \sum_{k=1}^{n} A_{kj} \bigtriangleup_{kJ}
+\end{equation}
+For $j \neq J$.
+\begin{subequations}
+    Together, \eqref{eq:3-39} and \eqref{eq:4-4} implies (with summation notation)
+    \begin{align*}
+        \Rightarrow A_{ik} \bigtriangleup_{jk} &= \begin{cases}
+            0 & \text{ if } i \neq j \\
+            \det(A) & \text{ otherwise}
+        \end{cases} \\
+        &= (\det(A)) \delta_{ij} \numberthis\label{eq:4-6}
+    \end{align*}
+    \eqref{eq:3-38} and \eqref{eq:4-5} implies
+    \begin{align*}
+        \Rightarrow A_{ki} \bigtriangleup_{kj} &= \begin{cases}
+            0 & \text{ if } i \neq j \\
+            \det(A) & \text{ otherwise}
+        \end{cases} \\
+        &= (\det(A)) \delta_{ij} \numberthis\label{eq:4-6a}
+    \end{align*}
+\end{subequations}
+
+\begin{thm}
+    If $\det A \neq 0$ then $A^{-1}$ exists and is given by 
+    \begin{equation}\label{eq:4-7}
+        (A^{-1})_{ij} = \frac{\bigtriangleup_{ji}}{\det(A)}
+    \end{equation}
+\end{thm}
+\begin{proof}
+    \begin{align*}
+        (A^{-1})_{ik} A_{kj} = \frac{\bigtriangleup_{ki}}{\det(A)} \cdot A_{kj} &= \frac{\delta_{ij} \det(A)}{\det(A)} \tag{by \eqref{eq:4-6a}} \\
+        &= \delta_{ij}
+    \end{align*}
+\end{proof}
+
+\begin{eg}
+    Shear matrix 
+    \[
+        S_\lambda = \begin{pmatrix}
+            1 & \lambda & 0 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+        \end{pmatrix}  
+    \]
+    Using \eqref{eq:4-7} we can show that $S_\lambda^{-1} = S_{-\lambda}$
+\end{eg}
+
+\begin{remark}[Computational Complexity]
+    How many arithmetic operations are involved in inverting and $n \times n$ matrix using \eqref{eq:4-7}?
+
+    To simplify lets' just count the multiplications.
+    \begin{enumerate}
+        \item $\det A$, say takes $f_n$ operations, which involves calculating $n$ determinants of $(n-1) \times (n-1)$ matrices and then $n$ more multiplications to combine them.
+        \begin{align*}
+            &f_n = n f_{n-1} + n \\
+            \Rightarrow& f_n = n! + n + n(n-1) + n(n-1)(n-2) + \cdots \\
+            \Rightarrow& \frac{f_n}{n!} = 1 + \frac{1}{(n-1)!} + \frac{1}{(n-2)!} + \cdots + \frac{1}{(2)! + 1}
+        \end{align*}
+        Therefore as $n \rightarrow \infty \Rightarrow f_n \sim (e+ 1)n!$
+
+        \item To populate matrix in \eqref{eq:4-7}, we need $n^2$ elements. We already have $n$ cofactors from (i) so $n(n-1)$ more cofactors needed.
+    \end{enumerate}
+    Therefore (i) + (ii) $= O(n \times n!)$
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 15: 08/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Homogenous and Inhomogenenous Equations}
+Consider
+\begin{equation}\label{eq:4-8}
+    A \vec x = \vec b
+\end{equation}
+for $A$ an $n \times n$ matrix, $\vec x$ and $\vec b$ are $n \times 1$ columns.
+If $\vec b = \vec 0$ the system is homogeneou, if $\vec b \neq \vec 0$ then we say it is Inhomogenenous.
+
+Suppose $\det(A) \neq 0$ then by \eqref{eq:4-7} $A^{-1}$ exists and \eqref{eq:4-8} has a unique solution
+\[
+    \vec x =  A^{-1} \vec b
+\]
+where $\vec x = \vec 0$ if $\vec b = \vec 0$. 
+Note that $\det A \neq 0$ implies that the columns of $A$ are linearly independant \eqref{eq:3-29}. 
+The columns of $A$ are the images of the standard basis $\vec e'_i = A\vec e_i$.
+
+Hence, $\det A \neq 0 \Longrightarrow$ $e'_i$ are linearly independant and there are $n$ of them
+$\Longrightarrow$ they form a basis of $\R^n$ (or $\C^n$), $\therefore r(A) = n$.
+By \eqref{eq:3-9}, $n(A) = 0$, $\therefore$ kernel of linear map is $\crbkt{\vec 0}$.
+
+\subsubsection{Gaussian Elimination}
+Consider
+\begin{align*}
+    A_{11}x_1 + A_{12}x_2 + \cdots + A_{1n}x_n &= d_1 \\
+    A_{21}x_1 + A_{22}x_2 + \cdots + A_{2n}x_n &= d_1 \\
+    \vdots & \\
+    A_{m1}x_1 + A_{m2}x_2 + \cdots + A_{mn}x_n &= d_m \numberthis\label{eq:4-9}
+\end{align*}
+i.e; $m$ equations in $n$ unknowns. Assume $A_{11} \neq 0$ (otherwise reorder equations), then we may reduce the above to
+\[
+    \begin{array}{ccccccccccc}
+        A_{11}x_1 & + & A_{12}x_2      & +      & \cdots          & \cdots & + & A_{1n}x_n       & = & d_1 \\
+        0         & + & A^{(2)}_{22}x_2& +      & \cdots          & \cdots & + & A^{(2)}_{2n}x_n & = & d^{(2)}_2 \\
+                  &   &                & \ddots &                 &        &   &                 &   & \vdots \\
+                  &   &                &        & A^{(r)}_{rr}x_r & \cdots & + & A^{(r)}_{rn}x_n & = & d^{(r)}_{r} \\
+                  &   &                &        &                 &        &   & 0               & = & d^{(r)}_{r + 1} \\
+                  &   &                &        &                 &        &   & \vdots          &   & \vdots \\
+                  &   &                &        &                 &        &   & 0               & = & d^{(r)}_{m}    
+    \end{array}
+\]
+Here $A^{(i)}_{ii} \neq 0$ and the superfix refers to the version number of the coefficients. 
+For instance, $A^{(2)}_{22}$ is the second version of $A_{22}$ after $x_1$ has been eliminated.
+There are the following possibilities.
+\begin{enumerate}
+    \item $r \leq m$ and at least one of the $d^{(r)}_{r + 1}, \cdots, d^{(r)}_{m} \neq 0$ then the equations \eqref{eq:4-9} are inconsistent and there is no solution.
+    We say that the system is \emph{overdetermined}.
+    \begin{eg}
+        \begin{align*}
+            \begin{array}{ccccccc}
+                3x_1 & + & 2x_2 & + & x_3 & = & 3 \\
+                6x_1 & + & 3x_2 & + & 3x_3 & = & 0 \\
+                6x_1 & + & 2x_2 & + & 4x_3 & = & 6 
+            \end{array}\\[15pt]
+            \Rightarrow \begin{array}{ccccccc}
+                3x_1 & + & 2x_2 & + & x_3 & = & 3 \\
+                0    & - &  x_2 & + & x_3 & = & -6 \\
+                0    & - & 2x_2 & + & 2x_3 & = & 0 
+            \end{array}\\[15pt]
+            \Rightarrow \begin{array}{ccccccc}
+                3x_1 & + & 2x_2 & + & x_3 & = & 3 \\
+                     & - &  x_2 & + & x_3 & = & -6 \\
+                     &   & 0    & + & 0   & = & 12  
+            \end{array}
+        \end{align*}
+        Hence, no solutions.
+    \end{eg}
+
+    \item $r = n \leq m$ and $d^{(r)}_{i} = 0$ for $i = r + 1, \cdots, m$. 
+    We have a unique solution for $x_n$ and can determine all $x_i$ by back substitution.
+    We say that the system is \emph{determined}
+    \begin{eg}
+        \begin{align*}
+            \begin{array}{ccccc}
+                2x_1 & + & 5x_2 & = & 2 \\
+                4x_1 & + & 3x_2 & = & 11
+            \end{array}\\[15pt]
+            \Rightarrow \begin{array}{ccccc}
+                2x_1 & + & x_2 & = & 2 \\
+                0    & - & 7x_2 & = & 7
+            \end{array}\\[15pt]
+            \Rightarrow x_2 = -1, \quad x_1 = \frac{7}{2}
+        \end{align*}
+    \end{eg}
+
+    \item $r \leq n$ and $d^{(r)}_{i} = 0$ for $i = r + 1, \cdots, m$. 
+    This implies that $x_{r + 1}, \cdots x_{n}$ can be chosen freely and therefore there are infinitely many solutions.
+    We say that the system is \emph{underdetermined}
+    \[
+        \begin{array}{ccccc}
+            x_1 & + & x_2 & = & 1 \\
+            2x_1& + & 2x_2 & = & 1
+        \end{array}
+        \Rightarrow x_1 + x_2 = 1
+    \]
+    Hence, $x_2$ can be anything and $x_1 = 1 - x_2$
+\end{enumerate}
+
+\begin{remark}
+    In the case that $n=m$, there are $O(n^3)$ operations required which is much faster than \eqref{eq:4-7} for solving \eqref{eq:4-8}.
+\end{remark}
+
+\subsubsection{Relation to Determinant}.
+When $m = n$, $A$ is square,
+\begin{equation}\label{eq:4-10}
+    \det A = (-1)^k \abs{\begin{array}{cccccc}
+        A_{11} & A_{12}                  & \cdots & \cdots       & \cdots & A_{1n} \\
+        0      & A^{(2)}_{22}            & \cdots & \cdots       & \cdots & A^{2}_{2n} \\
+               &                         & \ddots &              &        & \vdots      \\
+               &                         &        & A^{(r)}_{rr} & \cdots & A^{(r)}_{rn} \\
+               &                         &        &      0       & \cdots & 0      \\
+               & \smash{\scalebox{4}{0}} &        &              & \ddots & \vdots \\
+               &                         &        &              &        & 0 \\              
+    \end{array}}
+\end{equation}
+where $k$ comes from the number of times we have reordered equations and $A^{(\alpha)}_{\alpha \alpha} \neq 0$
+
+This is an upper triangular matrix. 
+The determinant of an upper triangular matrix is the product of its diagonal elements (directly from \eqref{eq:3-25}),
+the only $\sigma \in S_n$ such that $\sigma(i) \geq i \quad \forall i$ is the identity permutation.
+
+Hence, if $r < n \Rightarrow \det A = 0$, if $r = n \Rightarrow \det A = (-1)^kA_{11}A^{(2)}_{22} \cdots A^{(n)}_{nn}$
+
+\subsection{Matrix Rank}
+Consider a linear map $\alpha: \R^n \rightarrow \R^n$ (works for $\C^n$ as well). 
+Recall that the rank $r(\alpha)$ is the dimension of the image.
+If $A$ is the associated matrix for $\alpha$, call rank $r(A)$.
+
+Recall that if $\vec e_1, \cdots, \vec e_n$ are the standard basis of $\R^n$, 
+then $A\vec e_1, \cdots, A\vec e_n$ span the image. (Not necessarily linearly independant, depends on the rank)!
+
+Furthermore $A\vec e_1, \cdots, A\vec e_n$ are the columns of $A$. Hence
+\begin{equation}\label{eq:4-11}
+    r(A) = \text{\# of linearly independant columns}
+\end{equation}
+
+\begin{defi}[Column and row rank]\leavevmode
+    \begin{itemize}
+        \item Column rank of $A$ $=$ max number of linearly independant columns
+        \item Row rank of $A$ $=$ max number of linearly independnat row
+    \end{itemize}
+\end{defi}
+
+\begin{thm}[Column and row rank]
+    Row rank $=$ Column rank for $m \times n$ matrix
+\end{thm}
+\begin{proof}
+    For an $m \times n$ matrix, there are
+    \begin{itemize}
+        \item $m$ rows, each of which has $n$ elements
+        \item $n$ columns, each of which has $m$ elements
+    \end{itemize}
+
+    Let $r$ be the row rank of $A$ and write the biggest set of linearly independant rows as
+    \[
+        \vec V_1^T, \vec V_2^T, \cdots, \vec V_r^T,   
+    \]
+    where $V_i$ are $n \times 1$ column vectors, or in component form,
+    \[
+        \vec V_k^T = (V_{k1}, V_{k2}, \cdots, V_{kn}) \quad \text{ for } k = 1, 2, \cdots, r
+    \]
+    Now, denote the $i^{th}$ row of $A$ as
+    \[
+        r_i^T = (A_{i1}, A_{i2}, \cdots, A_{in}) \quad \text{ for } i = 1, 2, \cdots, m
+    \]
+    Since every row of $A$ can be written as a linear combination of the $\vec V$'s,
+    \[
+        r_i^T = \sum_{k=1}^{r} C_{ik} V^T_k \quad \text{ for } i = 1, 2, \cdots, m
+    \]
+    Now the elements of $A$ are
+    \[
+        A_{ij} = (r_i^T)_j = \sum_{k=1}^{r} C_{ik} (V^T_k)_j  \quad \text{ for } j = 1, 2, \cdots, n
+    \]
+    Or, 
+    \[
+        \begin{pmatrix}
+            A_{1j} \\ A_{2j} \\ \vdots \\ A_{mj}
+        \end{pmatrix}
+        =
+        \sum_{k=1}^{r} (V^T_k)_j \begin{pmatrix}
+            C_{1k} \\ C_{2k} \\ \vdots \\ C_{mk}
+        \end{pmatrix}
+    \]
+    Therefore, any column of $A$ can be expressed as a linear combination of the $r$ ``coefficient'' column vectors.
+    Hence, the column rank of $A$ $\leq$ row rank of $A$. 
+    We apply the same argument to $A^T$ to show the converse that row rank of $A$ $\leq$ column rank of $A$.
+    Therefore, 
+    \[
+        \text{row rank of } A = \text{ column rank of } A = r(A) 
+    \]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 16: 10/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Homogeneous problems}
+We will restrict our attention to $A$ an $n \times n$ matrix, and consider
+\[
+    A \vec x = \vec 0  
+\]
+If $\det A \neq 0$ then we have a unique solution
+\[
+    \vec x = A^{-1} \vec 0 = \vec 0   
+\]
+Hence. 
+\[
+    A \vec x = \vec 0 \text{ and } x \neq 0 \Rightarrow \det A = 0
+\]
+
+\subsubsection{Geometrical Interpretation for the $3 \times 3$ case}
+\[
+    A = \begin{pmatrix}
+        \vec r_1^T \\[10pt]
+        \vec r_2^T \\[10pt]
+        \vec r_3^T
+    \end{pmatrix} 
+    \Rightarrow \vec r_i \cdot x = 0 \quad \text{ for } i = 1, 2, 3
+\]
+The solution of $A \vec x = \vec 0$ corresponds to the intersection of $3$ planes through the origin.
+There are 3 possibilities:
+\begin{enumerate}
+    \item intersect only at $\vec 0$
+    \item intersect in a common line through $\vec 0$
+    \item planes coincide
+\end{enumerate}
+
+\begin{description}
+    \item[(i)] $\det(A) \neq \vec 0 \Rightarrow [\vec r_1, \vec r_2, \vec r_3] \neq \vec 0$
+    \begin{align*}
+        \Rightarrow \spnset{\vec r_1, \vec r_2, \vec r_3} = \R^3 \\
+        \therefore r(A) = 3 \Rightarrow n(A) = 0
+    \end{align*}
+    Therefore the kernel is $\crbkt{\vec 0}$ and the image in $\R^3$.
+
+    \item[(i), (ii)] $\det(A) = 0 \Rightarrow \dim(\spnset{\vec r_1, \vec r_2, \vec r_3}) = 1 \text{ or } 2$.
+    \begin{itemize}
+        \item If rank $=2$, take $\vec r_1, \vec r_2$ linearly independant. 
+        Then $\vec x$ lies on the intersection of $\vec x \cdot \vec r_1 = 0$ and $\vec x \cdot \vec r_2 = 0$, which is the line
+        \[
+            \vec x \in \R^3 \mid \vec x = \lambda \vec t, \quad \lambda \in \R, \quad \vec t = \vec r_1 \times \vec r_2
+        \]
+        and all points on this line satisfy $\vec x \cdot \vec r_3 = 0$, since $\vec r_3$ is a linear combination of $\vec r_1$ and $\vec r_2$.
+        Therefore, the kernel is a line,
+        \[
+            n(A) = 1 \text{ and } r(A) = 2  
+        \]
+
+        \item If rank $=1$, then $\vec r_1, \vec r_2, \vec r_3$ are parallel, So
+        \[
+            \vec x \cdot \vec r_1 = 0 \Rightarrow \vec x \cdot \vec r_2 = 0 \text{ and } \vec x \cdot \vec r_3 = 0   
+        \]
+        therefore the kernel is a plane,
+        \[
+            n(A) = 2 \text{ and } r(A) = 1
+        \]
+
+        \item If rank $=0$ we have $A_{ij} = 0$, therefore the $0$ map.
+    \end{itemize}
+\end{description}
+
+\subsubsection{Linear mapping view of $A \vec x = \vec 0$}
+Consider a linear map 
+\begin{align*}
+    \alpha: \R^n &\rightarrow \R^n \\
+    \vec x &\mapsto \vec x' = A\vec x 
+\end{align*}
+The kernel of $\alpha$ is the solution space of $A \vec x = \vec 0$.
+\begin{enumerate}
+    \item If $n(A) = 0 \Rightarrow A(e_1), A(e_2), \cdots, A(e_n)$ form a linearly independant set of $n$ elements and $r(A) = n$
+    \item If $n(A) > 0$, Let
+    \[
+        \crbkt{\vec u_i} \text{ for } i = 1, 2, \cdots, n(A)  
+    \]
+    be a basis for the kernel $\kappa (A)$. Hence, any solution of $A \vec x = \vec 0$ is 
+    \[
+        \vec x = \sum_{i=1}^{n(A)}\lambda_i \vec u_i  
+    \]
+    We can extend this to a basis of $\R^n$ by introducing new vectors
+    \[
+        \crbkt{\vec u_i} \text{ for } i = n(A)+1, n(A)+2, \cdots, n
+    \]
+    The vectors $A\vec u_i$ for $i = n(A)+1, \cdots, n$ are then a basis of the image of $\alpha$.
+\end{enumerate}
+
+\subsection{General solution of $A\vec x = \vec d$}
+\begin{enumerate}
+    \item $\det A \neq 0 \Rightarrow (A) = 0, r(A) = n$ and $A(\R^n) = \R^n$.
+    So for any $\vec d \in \R^n$ $\exists \vec x$ such that
+    \[
+        \vec x \mapsto \vec d \Leftrightarrow \vec x = A^{-1} \vec d 
+    \]
+    
+    \item $\det A = 0 \Rightarrow n(A) > 0, r(A) < n$, The image $I(A)$ is a proper subspace of $\R^n$.
+    \begin{enumerate}
+        \item If $\vec d \notin I(A)$, there are no solutions
+        \item If $\vec d \in I(A)$ at least one solution exists.
+    \end{enumerate}
+
+    If $\vec d \in I(A)$ the general solution can be written as
+    \[
+        \vec x = \vec x_0 + \vec y  
+    \]
+    where $\vec x_0$ is a particular solution, i.e $A \vec x_0 = \vec d$ and $\vec y$ is any vector from the kernel,
+    \[
+        \vec y \in \ker (A) \Leftrightarrow A \vec y = \vec 0  
+    \]
+    \begin{enumerate}
+        \item If $n(A) = 0 \Rightarrow \vec y = \vec 0$ and we have a unique solution
+        \item If $n(A) > 0$ then let $u_1 \cdots, u_{n(A)}$ be a basis of the kernel,
+        \[
+            \vec y = \sum_{j=1}^{n(A)} \lambda_j u_j  
+        \]
+    \end{enumerate}
+    and the most general solution is given by
+    \[
+        \vec x = \vec x_0 + \sum_{j=1}^{n(A)} \lambda_j u_j
+    \]
+\end{enumerate}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item $\begin{pmatrix}
+            1 & 1 \\
+            a & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+            x_1 \\ x_2
+        \end{pmatrix}=
+        \begin{pmatrix}
+            1 \\ b
+        \end{pmatrix}$
+
+        We solve for the determinant
+        \[
+            \det A = 1 - a
+        \]
+        Therefore if $a \neq 1$, $A^{-1}$ exists and is
+        \[
+            A^{-1} = \frac{1}{1-a} \begin{pmatrix}
+                1 & -1 \\
+                -a & 1 
+            \end{pmatrix}
+        \]
+        Then we have a unique solution
+        \[
+            \vec x = \frac{1}{1-a} \begin{pmatrix}
+                1- b \\
+                -a + b 
+            \end{pmatrix}
+        \]
+        If $a = 1$, then,
+        \[
+            A \vec x = \begin{pmatrix}
+                x_1 + x_2 \\
+                x_1 + x_2
+            \end{pmatrix} = (x_1 + x_2) \begin{pmatrix}
+                1 \\ 1
+            \end{pmatrix}
+        \]
+        Hence,
+        \begin{align*}
+            \im(A) = \spnset{\begin{pmatrix}
+                1 \\ 1
+            \end{pmatrix}}, \quad r(A) = 1 \\
+            \ker(A) = \spnset{\begin{pmatrix}
+                1 \\ -1
+            \end{pmatrix}}, \quad n(A) = 1
+        \end{align*}
+
+        Hence, if $b \neq 1$ then $\begin{pmatrix}
+            1 \\ b
+        \end{pmatrix} \notin \im(A)$ therefore no solutions.
+        Otherwise, $b = 1$ and $\begin{pmatrix}
+            1 \\ 1
+        \end{pmatrix} \in \im(A)$ and we can find a patricular solution $\begin{pmatrix}
+            x_1 \\ x_2
+        \end{pmatrix} = \begin{pmatrix}
+            1 \\ 0
+        \end{pmatrix} = \vec x_0$
+        Therefore we can find a general solution
+        \[
+            \vec x = \begin{pmatrix}
+                1 \\ 0
+            \end{pmatrix} + \mu \begin{pmatrix}
+                1 \\ -1
+            \end{pmatrix}  
+        \]
+
+        \item Find the general solution of
+        \[
+            \begin{pmatrix}
+                a & a & b \\
+                b & a & a \\
+                a & b & a
+            \end{pmatrix}
+            \begin{pmatrix}
+                x \\ y \\ z
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1 \\ c \\ 1
+            \end{pmatrix}
+        \]
+        We solve for the determinant
+        \[
+            \det A = (a - b)^2 (2a + b)
+        \]
+        So if $a \neq b$ and $2a \neq -b$ then $A^{-1}$ exists and we can find a unique solution
+        \[
+            \vec x = A^{-1} \begin{pmatrix}
+                1 \\ c \\ 1
+            \end{pmatrix}
+        \]
+        \begin{enumerate}
+            \item $a = b$ and $a \neq \frac{-b}{2} \Rightarrow a \neq 0$.
+            The kernel is $x + y + z = 0$ which is a plane, kernel is
+            \[
+                \spnset{
+                    \begin{pmatrix} 
+                        -1 \\ 1 \\ 0
+                    \end{pmatrix},
+                    \begin{pmatrix} 
+                        -1 \\ 0 \\ 1
+                    \end{pmatrix}
+                }
+            \]
+            Extend this to a basis of $\R^3$
+            \[
+                \spnset{
+                    \begin{pmatrix} 
+                        -1 \\ 1 \\ 0
+                    \end{pmatrix},
+                    \begin{pmatrix} 
+                        -1 \\ 0 \\ 1
+                    \end{pmatrix},
+                    \begin{pmatrix}
+                        1 \\ 0 \\ 0
+                    \end{pmatrix}
+                }   
+            \]
+            Then we haev that the image,
+            \[
+                \im(A) = \spnset{\begin{pmatrix}
+                    a \\ a \\ a
+                \end{pmatrix}}
+            \]
+            Hence if $c \neq 1$ then $\begin{pmatrix}
+                1 \\ c \\ 1
+            \end{pmatrix} \notin \im(A)$ and we have no solutions.
+            If $c = 1$ a particular solution is $\begin{pmatrix}
+                \frac{1}{a} \\ 0 \\ 0
+            \end{pmatrix}$ and a general solution is
+            \[
+                \begin{pmatrix}
+                    \frac{1}{a} \\ 0 \\ 0
+                \end{pmatrix} 
+                + \lambda \begin{pmatrix}
+                    -1 \\ 1 \\ 0
+                \end{pmatrix}
+                + \mu \begin{pmatrix}
+                    -1 \\ 0 \\ 1
+                \end{pmatrix}
+            \]
+
+            \item $a \neq b$, $b = -2a \Rightarrow a \neq 0$. Kenerl is $x = y = z$.
+            \[
+                \ker(A) = \spnset{\begin{pmatrix}
+                    1 \\ 1 \\ 1
+                \end{pmatrix}}
+            \]
+            We extend to a basis of $\R^3$
+            \begin{align*}
+                \R^3 = \spnset{
+                    \begin{pmatrix}
+                        1 \\ 1 \\ 1
+                    \end{pmatrix},
+                    \begin{pmatrix}
+                        1 \\ 0 \\ 0
+                    \end{pmatrix},
+                    \begin{pmatrix}
+                        0 \\ 0 \\ 1
+                    \end{pmatrix}
+                } \\
+                \therefore \im(A) = \spnset{
+                    \begin{pmatrix}
+                        1 \\ -2 \\ 1
+                    \end{pmatrix},
+                    \begin{pmatrix}
+                        -2 \\ 1 \\ 1
+                    \end{pmatrix}
+                }
+            \end{align*}
+            Is $\begin{pmatrix}
+                1 \\ c \\ 1
+            \end{pmatrix} \in \im(A)$ ? 
+            \begin{align*}
+                \begin{pmatrix}
+                    1 \\ c \\ 1
+                \end{pmatrix}
+                = \lambda \begin{pmatrix}
+                    1 \\ -2 \\ 1
+                \end{pmatrix}
+                + \mu \begin{pmatrix}
+                    -2 \\ 1 \\ 1
+                \end{pmatrix} \\
+                \Rightarrow \mu = 0, \lambda =1 \\
+                \Rightarrow c = -2
+            \end{align*}
+
+            Hence if $c \neq 2$ there are no solutions. 
+            If $c = -2$ a particular solution is $\begin{pmatrix}
+                \frac{1}{a} \\ 0 \\ 0
+            \end{pmatrix}$. Therefore a general solution is
+            \[
+                \begin{pmatrix}
+                    \frac{1}{a} \\ 0 \\ 0
+                \end{pmatrix}
+                + \lambda \begin{pmatrix}
+                    1 \\ 1 \\ 1
+                \end{pmatrix}  
+            \]
+
+            \item If $a = b$ and $b = -2a \Rightarrow a = b = 0$ and $A$ is a zero matrix.
+            Hence $\ker(A) = \R^3$ and there are no solutions for any $c$.
+        \end{enumerate}
+    \end{enumerate}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 17: 13/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Eigenvalues and Eigenvectors}
+
+\subsection{Preliminaries}
+\begin{thm}[Fundamental Theorem of Algebra]
+    Consider a polynomail $p(z)$ of degree $m \geq 1$.
+    \[
+        p(z) = \sum_{r = 0}^{m} c_j z^J, \quad \text{ for } c_j \in \C, \text{ and } c_m \neq 0
+    \]
+    Then $p(z) = 0$ has precisely $m$ roots in $\C$ counting multiplicity.
+    The root $z = w$ has multiplicity $k$ if $(z - w)^k$ is a factor of $p(z)$ but $(z - w)^{k + 1}$ is not a factor.
+\end{thm}
+\begin{eg}
+    \begin{align*}
+        p(z) = z^3 - z^2 - z + 1 = (z - 1)^2(z + 1) \\
+        p(z) = 0 \Rightarrow z = 1, 1, -1
+    \end{align*}
+    Where $z = 1$ has multiplicity $2$.
+\end{eg}
+
+\begin{defi}[Eigenvectors and Eigenvalues]
+    Consider a linear map $\alpha: \C^n \rightarrow \C^n$ with associate $n \times n$ matrix $A$.
+    Then $\vec x \neq 0$ is an \emph{eigenvector} of $A$ and $\lambda$ is the associated \emph{eigenvalue} if
+    \begin{equation}\label{eq:5-1}
+        A \vec x = \lambda \vec x 
+    \end{equation}
+\end{defi}
+
+\begin{defi}[Characteristic Equation and Polynomial]
+    We think of the eigenvectors as the directions which are preserved by the linear map.
+    \[
+        \text{\eqref{eq:5-1}} \Rightarrow (A - \lambda I) \vec x = \vec 0
+    \]
+    Therefore, $\vec x \neq 0$ lies in the kernel of $A - \lambda I$.
+    \begin{equation}\label{eq:5-2}
+        \Rightarrow \det(A - \lambda I) = 0
+    \end{equation}
+    This it the \emph{characteristic equation} of $A$. Similarly,
+    \[
+        \mathcal{P}_A(\lambda) \equiv  \det(A - \lambda I)
+    \]
+    is the \emph{characteristic polynomail} of $A$.
+
+    From \eqref{eq:3-25a},
+    \begin{align*}
+        P_A(\lambda) &= \det(A - \lambda I) \\
+        &= \varepsilon_{J_1, \cdots, J_n}(A_{J_11} - \lambda I_{J_11})\cdots(A_{J_nn} - \lambda I_{J_nn})
+    \end{align*}
+    Therefore $P_A(\lambda)$ is a polynomial of order $n$.
+    \begin{equation}\label{eq:5-3}
+        P_A(\lambda) = C_0 + C_1 \lambda + \cdots + C_{n}\lambda^{n}
+    \end{equation}
+\end{defi}
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item \eqref{eq:5-3} and the fundamental theorem of algebra implies that an $n \times n$ matrix has $n$ eigenvalues counting for multiplicity.
+        \item If $A$ is a real matrix then $c_i \in \R \Rightarrow \lambda \in \R$ or in complex conjugate pairs.
+        \item In \eqref{eq:5-3}
+        \begin{align*}
+            C_n &= (-1)^n \\
+            C_{n-1} &= (-1)^{n-1} (A_{11} + A_{22} + \cdots + A_{nn}) \\
+            &= (-1)^{n-1} \tr(A) \\
+            \text{also, } \frac{C_{n-1}}{C_n} &= -(\lambda_1 + \cdots + \lambda_n) \tag{by sum \& product of roots} \\
+            \therefore & \tr(A) = \text{ sum of eigenvalues} \numberthis\label{eq:5-4}
+        \end{align*}
+
+        \item In \eqref{eq:5-3}
+        \begin{align*}
+            C_0 &= P_A(0) = \det(A) \\
+            \text{and, } C_0 &= \lambda_1 \lambda_2 \cdots \lambda_n \\
+            \therefore \det A = \text{ product of eigenvalues} \numberthis\label{eq:5-5}
+        \end{align*}
+    \end{enumerate}
+\end{remark}
+
+\begin{defi}[Eigenspace]
+    The kernel of the matrix $A - \lambda I$ is the set 
+    \[
+        \crbkt{\vec 0} \cup \crbkt{\vec x \neq 0 \mid A \vec x = \lambda \vec x}  
+    \]
+    is a subspace denoted by $E_\lambda$ and is called the \emph{eigenspace} to eigenvalue $\lambda$.
+\end{defi}
+
+When we take all the eigenspaces together does it span the entire space? If so, the the matrix can be diagonalised.
+
+\begin{defi}[Algebraic Multiplicity]
+    The \emph{algebraic multiplicity} $M_\lambda$ is the multiplicity of $\lambda$ as a root of $P_A(\lambda) = 0$.
+    Clearly, 
+    \[
+        \sum_{\lambda} M_\lambda = n  
+    \]
+    If $M_\lambda > 1$ the eigenvalue is said to be degenerate.
+\end{defi}
+\begin{defi}[Geometric Multiplicity]
+    The \emph{geometric multiplicity} $m_\lambda$ is the maximum number of linearly independant eigenvectors corresponding to eigenvalue $\lambda$.
+    \[
+        m_\lambda = \dim(E_\lambda)  
+    \]
+\end{defi}
+\begin{defi}[Defect]
+    The \emph{defect} $\bigtriangleup_\lambda$ is 
+    \[
+        \bigtriangleup_\lambda = M_\lambda - m_\lambda  
+    \]
+\end{defi}
+\begin{proof}
+    Can be done! Try when you have time.
+\end{proof}
+\subsection{Linearly independant Eigenvectors}
+\begin{thm}
+    Suppose $n \times n$ matrix $A$ has $n$ distinct eigenvalues $\lambda_1, \cdots, \lambda_n$.
+    Then, the corresponding eigenvectors
+    \begin{equation}\label{eq:5-6}
+        \vec x_1, \vec x_2, \cdots, \vec x_n
+    \end{equation}
+    are linearly independant.
+    (w.r.t eigenvector basis, A is diagonal!)
+\end{thm}
+\begin{proof}
+    We will proceed by contradiction. Suppose $\vec x_1, \cdots, \vec x_n$ are linearly dependant.
+    Then we can find $d_i$, $i = 1, 2, \cdots, r \leq n$ not all zero such that
+    \[
+        d_1 \vec x_1 + \cdots + d_n \vec x_n = 0  
+    \]
+    is the shortest non trivial combination of linearly dependant vectors.
+    Now, apply $A - \lambda_1 I$,
+    \begin{align*}
+        (A - \lambda_1 I)(d_1 \vec x_1 + d_2 \vec x_2 + \cdots + d_n \vec x_n = 0) \\
+        \Rightarrow d_1 (\lambda_1 - \lambda_ 1) \vec x_1 + d_2 (\lambda_2 - \lambda_1) \vec x_2 + \cdots + d_r (\lambda_r - \lambda_1) \vec x_r = 0
+    \end{align*}
+    But $d_1 (\lambda_1 - \lambda_ 1) \vec x_1 = 0$, so we have constructed a shorter combination of linearly independant vectors $\vec x_2 \cdots \vec x_r$, therefore contradiction $\contradiction$. 
+\end{proof}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item $A = \begin{pmatrix}
+            0 & 1 \\
+            -1 & 0
+        \end{pmatrix}$
+        we can calculate the characteristic polynomial
+        \begin{align*}
+            \mathcal{P} _A(\lambda) = \lambda^2 + 1 = 0 \Rightarrow \lambda = i, -i  \\
+            (A - \lambda_1 I)\vec x = \vec 0 \Rightarrow \begin{pmatrix}
+                -i & 1 \\
+                -1 & -i
+            \end{pmatrix}
+            \begin{pmatrix}
+                x_1 \\ x_2
+            \end{pmatrix}
+            = \begin{pmatrix}
+                0 \\ 0
+            \end{pmatrix}
+        \end{align*}
+        One particular solution is $\begin{pmatrix}
+            x_1 \\ x_2
+        \end{pmatrix}=\begin{pmatrix}
+            1 \\ i
+        \end{pmatrix}$. Therefore
+        \[
+            E_{i} = \spnset{\begin{pmatrix}
+                1 \\ i
+            \end{pmatrix}} \Rightarrow m_i = M_i = 1
+        \]
+        Similarly,
+        \begin{align*}
+            (A - \lambda_2 I)\vec x = \vec 0 \Rightarrow \begin{pmatrix}
+                i & 1 \\
+                -1 & i
+            \end{pmatrix}
+            \begin{pmatrix}
+                x_1 \\ x_2
+            \end{pmatrix}
+            = \begin{pmatrix}
+                0 \\ 0
+            \end{pmatrix} \\
+            \Rightarrow \begin{pmatrix}
+                x_1 \\ x_2
+            \end{pmatrix}
+            = \begin{pmatrix}
+                1 \\ -i
+            \end{pmatrix} \\
+            \therefore E_{-i} = \spnset{\begin{pmatrix}
+                1 \\ -i
+            \end{pmatrix}} \Rightarrow m_{-i} = M_{-i} = 1
+        \end{align*}
+
+        Note that $\begin{pmatrix}
+            1 \\ i
+        \end{pmatrix}$ and $\begin{pmatrix}
+            1 \\ -i
+        \end{pmatrix}$ are linearly indeoendant and form a basis of $\C^2$
+
+        \item $A = \begin{pmatrix}
+            -2 & 2 & -3 \\
+            2 & 1 & -6 \\
+            -1 & -2 & 0
+        \end{pmatrix}$ similarly, calculate the characteristic polynomail
+        \begin{align*}
+            \det(A - \lambda I) = 0 &\Rightarrow 45 + 21\lambda - \lambda^2 - \lambda^3 = 0 \\
+            &\Rightarrow \lambda_1 = 5, \lambda_2 = \lambda_3 = -3
+        \end{align*}
+
+        \begin{description}
+            \item[Case: $\lambda_1 = 5$] We have an eigenvector $\begin{pmatrix}
+                1 \\ 2 \\ -1
+            \end{pmatrix}$ 
+
+            \item[Case: $\lambda_2 = \lambda_3 = -3$]
+            \begin{align*}
+                (A + 3I)\vec x = \begin{pmatrix}
+                    1 & 2 & -3 \\
+                    2 & 4 & -6 \\
+                    -1 & -2 & 3
+                \end{pmatrix}
+                \begin{pmatrix}
+                    x_1 \\ x_2 \\ x_3
+                \end{pmatrix} 
+                = \vec 0
+            \end{align*}
+            Solve to find $\vec x$
+            \[
+                \vec x = \begin{pmatrix}
+                    -2x_2 + 3x_3 \\
+                    x_2 \\
+                    x_3
+                \end{pmatrix}  
+            \]
+            Therefore we have $2$ linearly independant eigenvectors say
+            \[
+                \vec x_2 = \begin{pmatrix}
+                    -2 \\ 1 \\ 0
+                \end{pmatrix}
+                \text{ and }
+                \vec x_3 = \begin{pmatrix}
+                    3 \\ 0 \\ 1
+                \end{pmatrix} 
+            \]
+        \end{description}
+        Hence,
+        \begin{align*}
+            M_5 = 1, m_5 = 1, \bigtriangleup_{5} = 0 \\
+            M_{-3} = 2, m_{-3} = 2, \bigtriangleup_{-3} = 0
+        \end{align*}
+
+        \item $A = \begin{pmatrix}
+            -3 & -1 & -1 \\
+            -1 & -3 & 1 \\
+            -2 & -2 & 0
+        \end{pmatrix}$ solving the characteristic polynomail,
+        \begin{align*}
+            \mathcal{P} _A(\lambda) = 0 &\Rightarrow - (\lambda + 2)^3 = 0 \\
+            &\Rightarrow \lambda = -2, -2, -2
+        \end{align*}
+        Solving for the eigenvectors
+        \begin{align*}
+            (A + 2I)\vec x = \vec 0 &\Rightarrow \begin{pmatrix}
+                -1 & -1 & 1 \\
+                -1 & -1 & 1 \\
+                -2 & -2 & 1
+            \end{pmatrix}
+            \begin{pmatrix}
+                x_1 \\ x_2 \\ x_3
+            \end{pmatrix} = \vec 0 \\
+            &\Rightarrow x_1 + x_2 + x_3 = 0
+        \end{align*}
+        We have a general solution $\vec x = \begin{pmatrix}
+            -x_2 + x_3 \\
+            x_2 \\
+            x_3
+        \end{pmatrix}$
+        So, 
+        \[
+            E_{-2} = \spnset{
+                \begin{pmatrix}
+                    -1 \\ 1 \\ 0
+                \end{pmatrix},                
+                \begin{pmatrix}
+                    1 \\ 0 \\ 1
+                \end{pmatrix}
+            }  
+        \]
+        Hence,
+        \[
+            M_{-2} = 3, m_{-2} = 2 \Rightarrow \bigtriangleup_{-2} = 1
+        \]
+        Note that the eigenspaces do not span $\C^3$ and the eigenvectors therefore do not form a basis.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 18: 13/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+        
+        \item Reflection matrix \eqref{eq:3-3} - reflection in the plane with normal $\uvec n$.
+        \[
+            R\vec n = - \vec n
+        \]
+        Therefore we have eigenvalue $-1$ and eigenspace
+        \[
+            E_{-1} = \spnset{\vec n}
+        \]
+        If $\vec p$ lies in the plane, $R\vec p = \vec p$ and hence eigenvalue $1$,
+        and the eigenspace is the plane with normal $\vec n$ through $\vec 0$.
+        \[
+            M_{1} = m_{1} = 2
+        \]
+        Therefore eigenvectors span whole $\R^3$
+
+        \item Rotation by $\theta$ about $n$ \eqref{eq:3-2}, we have $R \vec n = \vec n$ with eigenvalue $+1$.
+        No other real eigenvalues are possible. Turns out that the other eigenvalues are $e^{\pm i \theta}$.
+        By theorem \eqref{eq:5-6}, eigenvectors form a basis. (of $\C^3$!)
+
+        \item Shear $A = \begin{pmatrix}
+            1 & \mu \\
+            0 & 1
+        \end{pmatrix}$
+        Since this is an upper triangular matrix, we can apply cofactor decompositon to see that the eigenvalues are the diagonal elements.
+        Therefore, eigenvalues $\lambda = 1, 1 \Rightarrow M_1 = 2$, with eigenvector $\begin{pmatrix}
+            1 // 0
+        \end{pmatrix} \rightarrow m_1 = 1$.
+        Hence, eigenvectors do not span $\C^2$.
+    \end{enumerate}
+\end{eg}
+
+\subsubsection{Eigenvector Basis}
+If $n \times n$ matrix $A$ has $n$ distinct eigenvalues, then by \eqref{eq:5-6} we have $n$ linearly independant eigenvectors
+\[
+    \vec v_1, \vec v_2, \cdots, \vec v_n
+\]
+with respect to this basis, $A$ is diagonal
+\[
+    A \vec v_i = \lambda_i \vec v_i
+\]
+i.e the image of $\vec v_i$ is $\lambda_i \times \vec v_i$ and the columns of $A$ are the images of the basis vectors
+\begin{equation}\label{eq:5-7}
+    \bkt{\begin{array}{ccccc}
+        \lambda_1              & 0         & \cdots    & \cdots &  \\
+        0                      & \lambda_2 &           &        &\smash{\scalebox{3}{0}} \\
+        \vdots                 &           & \lambda_3 &        & \vdots \\
+                               &           &           & \ddots & \vdots  \\
+        \smash{\scalebox{3}{0}}& \cdots    & \cdots    & \cdots & \lambda_n
+    \end{array}} = \diag(\lambda_1, \lambda_2, \cdots, \lambda_n)
+\end{equation}
+Note that,
+\begin{align*}
+    \det(A) &= \lambda_1 \lambda_2 \cdots \lambda_n \\
+    \tr(A) &= \lambda_1 + \lambda_2 + \cdots + \lambda_n
+\end{align*}
+and these are invariant with respect to basis
+
+\subsection{Transformation Matrices}
+We wish to consider how the components of a vector and a matrix change when when the basis change.
+Let $\crbkt{\vec e_1, \vec e_2, \cdots, \vec e_n}$ and $\crbkt{\tilde{\vec{e_1}}, \vec{\tilde{e_2}}, \cdots, \vec{\tilde{e_n}}}$
+be two different basis on $\R^n$ or $\C^n$. Then we can write
+\begin{equation}\label{eq:5-8}
+    \vec{\tilde{e_j}} = \sum_{i=1}^{n}P_{ij} \vec e_i \quad \text{ for } j = 1, \cdots, n
+\end{equation}
+where $P_{ij}$ is the $i^{th}$ component of $\vec{\tilde{e_j}}$ with respect to the basis $\crbkt{\vec e_1, \vec e_2, \cdots, \vec e_n}$.
+So matrix $P$ has as it's columns, the vectors $\vec{\tilde{e_j}}$ relative to $\crbkt{\vec e_1, \vec e_2, \cdots, \vec e_n}$.
+\[
+    P = \begin{pmatrix}
+        \uparrow & \uparrow & & \uparrow \\
+        \vec{\tilde{e_1}} & \vec{\tilde{e_2}} & \cdots & \vec{\tilde{e_n}} \\
+        \downarrow & \downarrow & & \downarrow
+    \end{pmatrix}
+\]
+i.e; the columns of $P$ are the images of the mapping 
+\[
+    P(\vec e_i) = \vec{\tilde{e_i}}
+\]
+Note that this is only true if $P$ has basis $\vec e_1, \vec e_2, \cdots, \vec e_n$. 
+Similarly, we can write
+\begin{equation}\label{eq:5-9}
+    \vec{e_i} = \sum_{k=1}^{n}Q_{ki} \vec{\tilde{e_k}} \quad \text{ for } i = 1, \cdots, n
+\end{equation}
+with matrix $Q$ such that $Q(\vec{\tilde{e_i}}) = \vec e_i$,
+\[
+    Q = \begin{pmatrix}
+        \uparrow & \uparrow & & \uparrow \\
+        \vec{e_1} & \vec{e_2} & \cdots & \vec{e_n} \\
+        \downarrow & \downarrow & & \downarrow
+    \end{pmatrix}
+\]
+Placing \eqref{eq:5-9} into \eqref{eq:5-8},
+\begin{align*}
+    \Rightarrow \vec{\tilde{e_j}} &= \sum_{i=1}^{n}P_{ij}\bkt{\sum_{k=1}^{n}Q_{ki} \vec{\tilde{e_k}}} \\
+    &=  \sum_{k=1}^{n} \vec{\tilde{e_k}} \bkt{\sum_{i=1}^{n}P_{ij}Q_{ki}}
+\end{align*}
+But since $\vec{\tilde{e_j}}$ form a basis,
+\begin{align*}
+    \Rightarrow \sum_{i=1}^{n}P_{ij}Q_{ki} = \delta_{kj} &\Rightarrow QP = I \\
+    &\Rightarrow Q = P^{-1} \numberthis\label{eq:5-10}
+\end{align*}
+we can also see this from how $P$ and $Q$ map the basis vectors. 
+
+\subsubsection{Transformation Law for Vectors}
+With respect to the basis $\vec e_1, \vec e_2, \cdots, \vec e_n$, 
+\begin{equation}\label{eq:5-11}
+    \vec u = \sum_{i=1}^{n} u_i \vec e_i
+\end{equation}
+and with respect to another basis $\tilde{\vec{e_1}}, \vec{\tilde{e_2}}, \cdots, \vec{\tilde{e_n}}$
+\begin{equation}\label{eq:5-12}
+    \vec u = \sum_{i=1}^{n} \tilde{u_i} \tvec e_i
+\end{equation}
+these are two differnet representations of the same vector, with respect to the different bases.
+Use \eqref{eq:5-8} in \eqref{eq:5-12}
+\begin{align*}
+    \vec u &= \sum_{j=1}^{n} \tilde{u_j} \bkt{\sum_{i=1}^{n}P_{ij} \vec e_i} \\
+    &= \sum_{i=1}^{n} \bkt{\sum_{j=1}^{n}P_{ij}\tilde{u_j}} \vec e_i
+\end{align*}
+Comparing to \eqref{eq:5-11}
+\[
+    u_i = \sum_{j=1}^{n}P_{ij}\tilde{u_j}
+\]
+Now, denote $\vec u$ as the vector with respect to $\vec e_1, \cdots, \vec e_n$,
+and $\tvec u$ as the same vector with respect to $\tvec e_1, \cdots, \tvec e_n$ then,
+\begin{equation}\label{eq:5-13}
+    \vec u = P \tvec u \implies \tvec u = P^{-1} \vec u 
+\end{equation}
+\begin{remark}
+    \[
+        \tvec e_i = P_{ij} \vec e_j  
+    \]
+    BUT!
+    \[
+        \vec u_i = P_{ij} \tvec u_j
+    \]
+    Basis vectors and coordinates are the ``opposite way round''. 
+    This is because in the former case $P$ moves one basis vector to the other in the vector space.
+    Therefore, simply applying $P$ to $\vec u$ would move $\vec u$ from where it was in the old basis,
+    to it's analagous position in the new basis. We can see this by writing $P \vec u$ in the $\tvec e_i$ basis.
+    \[
+       \text{($\vec e_i$ basis) } P \vec u \mapsto P^{-1} P \vec u = \vec u  \text{ ($\tvec e_i$ basis)}
+    \]
+    However, that is not what we want!
+    Vectors exist in a vector space independant of the basis. 
+    We want to leave the vector unchanged and find it's coordinates in the new basis.
+    To do so, we write $\vec u$ in the new basis (simply by changing what the coordinates mean),
+    and then apply the inverse map $P^{-1}$ to map back to the original vector.
+\end{remark}
+\begin{eg}
+    Let
+    \begin{align*}
+        \vec e_1 = \begin{pmatrix} 
+            1 \\ 0
+        \end{pmatrix} & \qquad
+        \tvec e_1 = \begin{pmatrix}
+            1 \\ 1
+        \end{pmatrix} \\
+        \vec e_2 = \begin{pmatrix}
+            0 \\ 1
+        \end{pmatrix} & \qquad
+        \tvec e_1 = \begin{pmatrix}
+            -1 \\ 1
+        \end{pmatrix}
+    \end{align*}
+    Therefore, the new basis vectors in terms of the old,
+    \[
+        \Rightarrow \tvec e_1 = \vec e_1 + \vec e_2 \quad \text{ and } \quad \tvec e_2 = - \vec e_1 + \vec e_2
+    \]
+    By \eqref{eq:5-8}, $P = \begin{pmatrix}
+        1 & -1 \\
+        1 & 1
+    \end{pmatrix}$, take an arbitrary vector $\vec u$, then
+    \[
+        \tvec u = P^{-1} \vec u = \frac{1}{2}\begin{pmatrix}
+            1 & 1 \\
+            -1 & 1
+        \end{pmatrix}
+        \begin{pmatrix}
+            u_1 \\ u_2
+        \end{pmatrix}
+        = \frac{1}{2} \begin{pmatrix}
+            u_1 + u_2 \\
+            -u_1 + u_2
+        \end{pmatrix}
+    \]
+    
+    Alternatively, by more elementary means,
+    \begin{align*}
+        \vec u &= u_1 \vec e_1 + u_2 \vec e_2 \\
+        &= u_1 \frac{\tvec e_1 - \tvec e_2}{2} + u_2 \frac{\tvec e_1 + \tvec e_2}{2} \\
+        &= \frac{1}{2}(u_1 + u_2) \tvec e_1 + \frac{1}{2}(-u_1 + u_2) \tvec e_2
+    \end{align*}
+\end{eg}
+
+\subsubsection{Transformation Law for Matrices}
+Consider a linear map $\alpha: \C^n \rightarrow \C^n$ and the corresponding $n \times n$ matrix $A$ such that
+\[
+    \vec u' = \alpha(\vec u) \Rightarrow \vec u' = A \vec u
+\]
+Denote $\vec u$ and $\vec u'$ as being expressed with respect to the basis $\vec e_1, \cdots, \vec e_n$ (same basis in both spaces),
+and $\tvec u$ and $\tvec u'$ as being expressed with respect to $\tvec e_1, \cdots \tvec e_n$.
+Using \eqref{eq:5-13}
+\begin{align*}
+    \vec u' = A \vec u &\Rightarrow P \tvec u' = A P \tvec u \\
+    &\Rightarrow \tvec u' = P^{-1} A P \tvec u \\
+    &\Rightarrow \tvec u' = \tilde{A} \tvec u
+\end{align*}
+Hence, with respect to the $\tvec e_1, \cdots \tvec e_n$ basis the matrix becomes
+\begin{equation}\label{eq:5-14}
+    \tilde{A} = P^{-1} A P
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 19: 17/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}
+    Shear $S_\lambda = \begin{pmatrix}
+        1 & \lambda & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+    \end{pmatrix}$ with respect to $\vec e_1, \cdots, \vec e_n$. 
+    Then choose a new rotated basis such that
+    \begin{align*}
+        \tvec e_1 &= \vec e_1 \cos \theta + \vec e_2 \sin \theta \\
+        \tvec e_2 &= - \vec e_1 \sin \theta + \vec e_2 \cos \theta \\
+        \tvec e_2 &= \vec e_3
+    \end{align*}
+    \[
+        \Rightarrow P = \begin{pmatrix}
+            \cos \theta & -\sin \theta & 0 \\
+            \sin \theta & \cos \theta & 0 \\
+            0 & 0 & 1
+        \end{pmatrix}
+        \Rightarrow P^{-1} = \begin{pmatrix}
+            \cos \theta & \sin \theta & 0 \\
+            -\sin \theta & \cos \theta & 0 \\
+            0 & 0 & 1
+        \end{pmatrix}
+    \]
+    Now use \eqref{eq:5-14}
+    \[
+        \tilde{S_\lambda} = \begin{pmatrix}
+            1 + \lambda \sin \theta \cos \theta & \lambda \cos^2 \theta & 0 \\
+            -\lambda \sin^2 \theta & 1 - \lambda \sin \theta \cos \theta & 0 \\
+            0 & 0 & 1
+        \end{pmatrix}
+    \]
+\end{eg}
+
+\subsubsection*{General case}
+More generally, consider a map
+\begin{align*}
+    \alpha : \C^m &\rightarrow \C^n \\
+    \vec x &\mapsto \vec x' = A\vec x
+\end{align*}
+Hence $\vec x \in \C^m$ and $\vec x' \in \C^n$ and $A$ is an $n \times m$ matrix.
+Say our basis in $\C^m$ is $\vec e_1, \cdots, \vec e_m$ and the basis in $\C^n$ is $\vec f_1, \cdots, \vec f_n$.
+Now we change basis to  $\tvec e_1, \cdots, \tvec e_m$ and $\tvec f_1, \cdots, \tvec f_n$.
+From \eqref{eq:5-13},
+\begin{align*}
+    \vec x = P \tvec x \qquad \text{ for } P \text{ a } m \times m \text{ matrix} \\
+    \vec x' = R \tvec x' \qquad \text{ for } R \text{ a } n \times n \text{ matrix}
+\end{align*}
+Then,
+\begin{align*}
+    \vec x' = A \vec x &\Rightarrow R \tvec x' = AP \tvec x \\
+    &\Rightarrow \tvec x' = R^{-1}AP \tvec x
+\end{align*}
+\begin{equation}\label{eq:5-15}
+    \therefore \tilde{A} = R^{-1}AP
+\end{equation}
+
+\begin{eg}
+    Consider $\alpha: R^3 \rightarrow R^2$, with respect to standard basis vectors in both spaces,
+    \[
+        A = \begin{pmatrix}
+            2 & 3 & 4 \\
+            1 & 6 & 3
+        \end{pmatrix}  
+    \]
+    use a new basis $\begin{pmatrix}
+        2 \\ 1
+    \end{pmatrix}$, $\begin{pmatrix}
+        1 \\ 5
+    \end{pmatrix}$ in $\R^2$ but keep the basis in $\R^3$. 
+    Matrix $P$ relates basis in $\R^3$ so $P = I$ since it is unchanged.
+    Matrix $R$ relates basis in $\R^2$ so $P$ so from \eqref{eq:5-8},
+    \[
+        R = \begin{pmatrix}
+            2 & 1 \\
+            1 & 5
+        \end{pmatrix}
+        \Rightarrow R^{-1} = \frac{1}{9}\begin{pmatrix}
+            5 & -1 \\
+            -1 & 2
+        \end{pmatrix}
+    \]
+    \begin{align*}
+        \Rightarrow \tilde{A} &= \frac{1}{9}\begin{pmatrix}
+            5 & -1 \\
+            -1 & 2
+        \end{pmatrix}\begin{pmatrix}
+            2 & 3 & 4 \\
+            1 & 6 & 3
+        \end{pmatrix} \\
+        &= \begin{pmatrix}
+            1 & 1 & \frac{17}{9} \\[10pt]
+            0 & 1 & \frac{2}{9}
+        \end{pmatrix}
+    \end{align*}
+
+    We may once again check by elementary methods, 
+    if we write $\tvec f_1 = \begin{pmatrix}
+        2 \\ 1
+    \end{pmatrix}$, $\tvec f_2 = \begin{pmatrix}
+        1 \\ 5
+    \end{pmatrix}$, then
+    \begin{alignat*}{2}
+        \vec e_1 = \tvec e_1 & \longmapsto && \quad 2 \vec f_1 + \vec f_2 = 1 \tvec f_1 + 0 \tvec f_2 \\
+        \vec e_2 = \tvec e_2 & \longmapsto && \quad 3 \vec f_1 + 6 \vec f_2 = 1 \tvec f_1 + 1 \tvec f_2 \\
+        \vec e_3 = \tvec e_3 & \longmapsto && \quad 4 \vec f_1 + 3 \vec f_2 = \cdots = \frac{17}{9} \tvec f_1 + \frac{2}{9} \tvec f_2
+    \end{alignat*}
+\end{eg}
+
+\subsection{Similar Matrices}
+\begin{defi}
+    Two $n \times n$ matrices $A$ and $B$ are similar if there exists an invertible matrix $P$ such that
+    \begin{equation}\label{eq:5-16}
+        B = P^{-1}AP
+    \end{equation}
+    In essence, these two matrices describe the same linear map but with different basis.
+    From \eqref{eq:5-14}, matrices representing the same map with respect to different basis are similar.
+\end{defi}
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item Similar matrices have the same determinant.
+        \[
+            \det(B) = \det(P^{-1}AP) = \det(P^{-1}) \det(A) \det(P) = \det(A)
+        \]
+        by \eqref{eq:3-31}.
+        
+        \item Also have the same trace
+        \begin{align*}
+            \tr(B) = B_{ii} &= P^{-1}_{ij}A_{jk}P_{ki} \\
+            &= P_{ki}P^{-1}_{ij}A_{jk} \\
+            &= \delta_{kj}A_{jk} \\
+            &= A_{kk} = \tr(A)
+        \end{align*}
+
+        \item Similar matrices have the same characteristic equation.
+        \begin{align*}
+            P_B(\lambda) = \det(B - \lambda I) &= \det(P^{-1}AP - \lambda I) \\
+            &= \det(P^{-1}) \det(AP - \lambda P) \\
+            &= \det(P^{-1}) \det(P) \det(A - \lambda I) \\
+            &= \det(A - \lambda I) = P_A(\lambda)
+        \end{align*}
+        Also, note that this implies (i) and (ii) by \eqref{eq:5-4} and \eqref{eq:5-5}
+    \end{enumerate}
+\end{remark}
+\subsection{Diagonalisable Matrices}
+A matrix $A$ ($n \times n$) is diagonalise if it is similar to a diagonal matrix. 
+From \eqref{eq:5-7} this is equivalent to saying that the eigenvectors form a basis.
+The condition that $A$ has $n$ distinct eigenvalues is sufficient but not necessary for $A$ to be diagonalisable.
+
+\begin{eg} Section 5.2 example 2
+    \[
+        A = \begin{pmatrix}
+            -2 & 2 & -3 \\
+            2 & 1 & -6 \\
+            -1 & 2 & 0
+        \end{pmatrix}, 
+        \Rightarrow \lambda = 5, -3, -3
+    \]
+    has three independant eigenvectors.
+    \[
+        \begin{pmatrix}
+            1 \\ 2 \\ -1
+        \end{pmatrix},
+        \begin{pmatrix}
+            -2 \\ 1 \\ 0
+        \end{pmatrix},
+        \begin{pmatrix}
+            3 \\ 0 \\ 1
+        \end{pmatrix}
+        \Rightarrow P = \begin{pmatrix}
+            1 & -1 & 3 \\
+            2 & 1 & 0 \\
+            -1 & 0 & 1
+        \end{pmatrix}
+    \]
+    We find $P^{-1} = \frac{1}{8} \begin{pmatrix}
+        1 & 2 & -3 \\
+        -2 & 4 & 6 \\
+        1 & 2 & 5
+    \end{pmatrix}$ Hence, $\tilde{A} = P^{-1} A P$
+    \begin{align*}
+        \Rightarrow \frac{1}{8} \begin{pmatrix}
+            1 & 2 & -3 \\
+            -2 & 4 & 6 \\
+            1 & 2 & 5
+        \end{pmatrix}\begin{pmatrix}
+            -2 & 2 & -3 \\
+            2 & 1 & -6 \\
+            -1 & 2 & 0
+        \end{pmatrix}\begin{pmatrix}
+            1 & -1 & 3 \\
+            2 & 1 & 0 \\
+            -1 & 0 & 1
+        \end{pmatrix}\\
+        = \begin{pmatrix}
+            5 & 0 & 0 \\
+            0 & -3 & 0 \\
+            0 & 0 & -3
+        \end{pmatrix}
+    \end{align*}
+    and $A$ is diagonalisable.
+\end{eg}
+
+\begin{thm}
+    Let $\lambda_1, \cdots, \lambda_r$ with $r \leq n$ be the distinct eigenvalues of $A$,
+    and $B_1, B_2, \cdots, B_r$ be the basis of the corresponding eigenspaces, $E_{\lambda_1}, E_{\lambda_2}, \cdots, E_{\lambda_r}$.
+    Then the set 
+    \begin{equation}\label{eq:5-17}
+        B = \bigcup_{i=1}^{r}B_i
+    \end{equation}
+    is linearly independant.
+\end{thm}
+\begin{proof}
+    Write $B_1 = \crbkt{\vec x_1^1, \vec x_2^1, \cdots, \vec x^1_{m_{\lambda_1}}}$, where $m_{\lambda_1}$ is the $\dim(E_{\lambda_1})$ etc.
+    Consider a general linear combination of all elements of $B$.
+    \begin{equation}\label{eq:5-18}
+        \sum_{i=1}^{r} \sum_{j=1}^{m_{\lambda_i}} \alpha_{ij} \vec x^i_j = \vec 0
+    \end{equation}
+    for some coefficients $\alpha_{ij}$. Here we the first sum sums over each eigen space and the inner sum sums over all basis vectors in $B_i$.
+    Now apply the matrix
+    \[
+        \prod_{k = 1, \cdots, \overline{t}, \cdots, r} (A - \lambda_kI) \quad \text{ for some } t
+    \]
+    to \eqref{eq:5-18}
+    \[
+        \Rightarrow \sum_{j=1}^{m_{\lambda_t}} \alpha_{tj} \prod_{k = 1, \cdots, \overline{t}, \cdots, r} (\lambda_t - \lambda_k) \vec x^t_j = 0
+    \]
+    We select only the $t^{th}$ eigenspace, since all other terms will contain a factor of $\lambda_i - \lambda_i$ in the product.
+    The $\vec x_j^t$ are linearly independant themsleves since $B_t$ is a basis.
+    Therefore $\alpha_{tj} = 0$ for all $j$.
+    Repeat this for all other values of $t$ to get that all $\alpha_{ij} = 0$.
+    Therefore $B$ is linearly independant.
+\end{proof}
+
+\subsubsection*{Test for Diagonalisability}
+\begin{enumerate}
+    \item Solve for $P_A(\lambda) = 0$ for distinct $\lambda_1, \cdots, \lambda_r$
+    \item Find the basis $B_i$ for each eigenspace $E_{\lambda_i}$
+    \item Calculate the size of $B$ by summing over all $B_i$
+    \[
+        \abs{B} = \sum_{i = 1}^{r} m_{\lambda_i}  
+    \]
+\end{enumerate}
+If $\abs{B}$ = n then $A$ is diagonalisable. Otherwise $A$ is not diagonalisable. 
+For instance, in section 5.2 example 3
+\[
+    \sum_{i=1}^{3} m_{\lambda_i} = m_{-3} = 2 < 3  
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 20: 20/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cannonical form of $2 \times 2$ matrices}
+Any $2 \times 2$ matrix $A$ is similar to one of
+\begin{equation}\label{eq:5-19}
+    \begin{array}{ccc}
+        \text{(i)} \begin{pmatrix}
+        \lambda_1 & 0 \\
+        0 & \lambda_2
+        \end{pmatrix}
+        &
+        \text{(ii)} \begin{pmatrix}
+        \lambda & 0 \\
+        0 & \lambda
+        \end{pmatrix}
+        &
+        \text{(iii)} \begin{pmatrix}
+        \lambda & 1 \\
+        0 & \lambda
+        \end{pmatrix}
+    \end{array}
+\end{equation}
+
+\begin{proof}\leavevmode
+    \begin{enumerate}
+        \item If $A$ has distinct eigenvalues then the eigenvectors are linearly independant by \eqref{eq:5-6}.
+        Use \eqref{eq:5-16} with $P$ formed from the eigenvectors as columns.
+        
+        \item If $\lambda_1 = \lambda_2 = \lambda$ and $\dim(E_\lambda) = 2$ then write $E_\lambda = \spnset{\vec u, \vec v}$.
+        use $\vec u$ and $\vec v$ as a basis of $\C^2$ and change to this basis.
+        \[
+            \text{\eqref{eq:5-14}} \Rightarrow \tilde{A} = P^{-1} A P = \begin{pmatrix}
+                \lambda & 0 \\
+                0 & \lambda
+            \end{pmatrix} = \lambda I
+        \]
+        Therefore $A = \lambda I$ with respect to any basis. (Isotropic)
+        
+        \item If $\lambda_1 = \lambda_2 = \lambda$ and $\dim(E_\lambda) = 1$. Write $E_\lambda = \spnset{\vec v}$. 
+        Now, extend to a basis of $\C^2 = \spnset{\vec v, \vec w}$ where $\vec w \in \C^2 \setminus E_\lambda$.
+        \[
+            A \vec w = \vec w' \in \C^2 \Rightarrow \vec w' = \alpha \vec v + \beta \vec w
+        \]
+        Hence, change to a basis $\crbkt{\vec v, \vec w}$
+        \[
+            \tilde{A} = P^{-1} A P = \begin{pmatrix}
+                \lambda \alpha \\
+                0 & \beta
+            \end{pmatrix}
+        \]
+        However, since $A$ and hence $\tilde{A}$ have eigenvalue $\lambda$ with multiplicity $2$ and $\tilde{A}$ is upper triangular
+        \[
+            \Rightarrow \beta = \lambda
+        \]
+        Further, introduce $\vec u = (\tilde{A} - \lambda I)\vec w$, $\vec u \neq 0$ because $\vec w \notin E_\lambda$.
+        \begin{align*}
+            (\tilde{A} - \lambda I)\vec u = (\tilde{A} - \lambda I)^2\vec w = \begin{pmatrix}
+                0 & \alpha \\
+                0 & 0
+            \end{pmatrix}\begin{pmatrix}
+                0 & \alpha \\
+                0 & 0
+            \end{pmatrix} \vec w = 0_{2 \times 2} \vec w = \vec 0
+        \end{align*}
+        Therefore $\vec u$ is an eigenvector of $\tilde{A}$ with eigenvalue $\lambda$. Expanding
+        \[
+            \vec u = \tilde{A}\vec w - \lambda \vec w \Rightarrow \tilde{A}\vec w = \vec u + \lambda \vec w
+        \]
+        Now we use basis $\crbkt{\vec u, \vec w}$ and with respect to this basis the matrix becomes
+        \[
+            \begin{pmatrix}
+                \lambda & 1 \\
+                0 & \lambda
+            \end{pmatrix}  
+        \]
+        Therefore this is a $2$-step process. P sends the basis to $\crbkt{\vec v, \vec w}$ and $Q$ sends the basis to $\crbkt{\vec u, \vec w}$.
+        So the similarity transform is
+        \[
+            Q^{-1}(P^{-1}AP)Q = (PQ)^{-1}A(PQ) = \begin{pmatrix}
+                \lambda & 1 \\
+                0 & \lambda
+            \end{pmatrix}  
+        \]
+    \end{enumerate}
+\end{proof}
+
+\subsubsection*{$n \times n$ case:}
+The cannonical or \emph{Jordan normal} form exists for any complex $n \times n$ matrix, and is $\tilde{A} = P^{-1}AP$
+where $\tilde{A}_{\alpha \alpha} = \lambda_\alpha$ and $\tilde{A}_{\alpha \alpha + 1} = 0 \text{ or } 1$, $\tilde{A}_{ij} = 0$ otherwise.
+\[
+    \bkt{\begin{array}{ccccc}
+        \lambda_1              & (0,1)     & \cdots    & \cdots    &  \\
+        0                      & \lambda_2 & (0,1)     &           &\smash{\scalebox{3}{0}} \\
+        \vdots                 &           & \lambda_3 & (0,1)     & \vdots \\
+                               &           &           & \ddots    & (0,1)  \\
+        \smash{\scalebox{3}{0}}& \cdots    & \cdots    & \cdots    & \lambda_n
+    \end{array}}    
+\]
+We see that there is a basis where a matrix takes it's cleanest form! All the information lives on the diagonal and its super diagonal.
+\begin{eg}
+    Section 5.2 example 3
+    \[
+        A = \begin{pmatrix}
+            -3 & -1 & 1 \\
+            -1 & -3 & 1 \\
+            2 & -2 & 0
+        \end{pmatrix} \Rightarrow \lambda = -2, -2, -2
+    \]
+    We have eigenvectors
+    \[
+        \begin{pmatrix}
+            -1 \\ 1 \\ 0
+        \end{pmatrix}, 
+        \begin{pmatrix}
+            1 \\ 0 \\ 1
+        \end{pmatrix}
+    \]
+    Take $\vec w = \begin{pmatrix}
+        1 \\ 0 \\ 0
+    \end{pmatrix}$ for $\vec w \notin E_\lambda$. Find $\vec u$
+    \[
+        \vec u = (A + 2I)\vec w = \cdots = \begin{pmatrix}
+            -1 \\ -1 \\ -2
+        \end{pmatrix}
+    \]
+    Note that $A \vec u = -2 \vec u$ and $A \vec w = \vec u - 2 \vec w$
+    Take as a basis, $\vec u, \vec w, \vec v$ where $\vec v$ is an eigenvector which is linearly independant of $\vec u$.
+    For example, $\vec v = \begin{pmatrix}
+        1 \\ 0 \\ 1
+    \end{pmatrix}$
+    \[
+        \Rightarrow P = \begin{pmatrix}
+            -1 & 1 & 1 \\
+            -1 & 0 & 0 \\
+            -2 & 0 & 1
+        \end{pmatrix}  
+    \]
+    then the Jordan normal form is $\tilde{A} = P^{-1} A P$
+    \[
+        \tilde{A} = \begin{pmatrix}
+            -2 & 1 & 0 \\
+            0 & -2 & 0 \\
+            0 & 0 & -2
+        \end{pmatrix}  
+    \]
+\end{eg}
+\subsection{Cayley-Hamilton Theorem}
+\begin{thm}[Cayler-Hamilton Theorem]
+    Every $n \times n$ matrix satisfies its own characteristic equation.
+    \begin{equation}\label{eq:5-20}
+        \mathcal{P}_A(A) = 0
+    \end{equation}
+\end{thm}
+\begin{proof}
+    We will only cover the case for diagonalisable matrices. Hence, there exists $P$ such that
+    \[
+        D = \diag(\lambda_1, \lambda_2, \cdots, \lambda_n) = P^{-1}AP
+    \]
+    Note that
+    \[
+        D^i = P^{-1}AP \cdots P^{-1}AP = P^{-1}A^iP
+    \]
+    Hence,
+    \[
+        \mathcal{P}_D(D) = \mathcal{P}_D(P^{-1}AP) = P^{-1}\mathcal{P}_D(A)P  
+    \]
+    But similar matrices have the same characteristic polynomial, $\mathcal{P}_D(\lambda) = \mathcal{P}_A(\lambda)$.
+    \[
+        \therefore \mathcal{P}_A(D) = P^{-1}\mathcal{P}_A(A)P  
+    \]
+    Also, $D^i = \diag(\lambda_1^i, \lambda_2^i, \cdots, \lambda_n^i)$
+    \begin{align*}
+        \Rightarrow \mathcal{P}_A(D) &= \diag(\mathcal{P}_A(\lambda_1), \mathcal{P}_A(\lambda_2), \cdots, \mathcal{P}_A(\lambda_n)) \\
+        &= \diag(0, 0, \cdots, 0) \\
+        \therefore \quad& P^{-1}\mathcal{P}_A(A)P = 0_{n \times n} \\
+        \Rightarrow \quad& \mathcal{P}_A(A) = 0
+    \end{align*}
+\end{proof}
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item For $2 \times 2$ matrices which are similar to $B = \begin{pmatrix}
+            \lambda & 1 \\
+            0 & \lambda
+        \end{pmatrix}$ see that
+        \[
+            \mathcal{P}_B(z) = \det(B - zI) = (\lambda - z)^2
+        \]
+        then,
+        \[
+            \mathcal{P}_B(B) = (\lambda I - B)^2 = \begin{pmatrix}
+                0 & -1 \\
+                0 & 0
+            \end{pmatrix}\begin{pmatrix}
+                0 & -1 \\
+                0 & 0
+            \end{pmatrix} = 0
+        \]
+        Hence, all $2 \times 2$ matrices satisfy Cayley-Hamilton.
+        
+        \item Any function that can be expressed as a power series can take a matrix as an input.
+        For example, let $A$ be an $n \times n$ matrix,
+        \[
+            \exp(A) = I + A + \frac{A^2}{2} + \frac{A^3}{3!} + \cdots + \frac{A^n}{n!} + \cdots
+        \]
+        which converges for all matrices! If $A$ is diagonalisable $D = P^{-1}AP$ then
+        \begin{align*}
+            P^{-1} \exp(A) P &= P^{-1}IP + P^{-1}AP + \cdots + \frac{P^{-1}A^nP}{n!} + \cdots \\
+            &= I + D + \cdots + \frac{D^n}{n!} + \cdots \\
+            &= \diag(e^{\lambda_1}, e^{\lambda_2}, \cdots, e^{\lambda_n})
+        \end{align*}
+        \[
+            \therefore \quad \exp(A) = P \diag(e^{\lambda_1}, e^{\lambda_2}, \cdots, e^{\lambda_n}) P^{-1}
+        \]
+        Solution of $\diff{\vec x}{t} = A \vec x \Longrightarrow \vec x(t) = \exp(At)\vec x_0$.
+        Likewise, 
+        \[
+            \log (I - A) = - A - \frac{A^2}{2} - \frac{A^3}{3} - \cdots  
+        \]
+        where we have a ``spectral radius'' which is similar to the radius of convergence.
+
+        \item If $A^{-1}$ exists
+        \begin{align*}
+            A^{-1}\mathcal{P}_A(A) &= A^{-1}(c_0 I + c_1 A + \cdots + c_n A^n) \\
+            &= 0
+        \end{align*}
+        Since $\det A \neq 0 \Longrightarrow c_0 \neq 0$
+        \[
+            \Rightarrow A^{-1} = \frac{-1}{c_0}(c_1 I + c_2 A + \cdots + c_n A^{n-1})
+        \]
+    \end{enumerate}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 21: 20/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Eigenvalues and Eigenvectors of a hermition matrix}
+
+\subsubsection{Gram-Schmidt Orthogonalisation}
+\subsubsection{Unitary Transformation}
+\subsubsection{Diagonalisation of $n \times n$ Hermition Matrix}
+\subsubsection{Normal Matrices}
+
+\subsection{Gerchgorin Circle Theorem}
+
+\section{Quadratic forms \& Conics}
+\subsection{Quadratics and Conics}
+
+\section{Transformation Groups}
+\subsection{Groups of orthogonal matrices}
+\subsection{Length preserving matrices}
+\subsection{Lorentz Transformation}
+
 
 \end{document}

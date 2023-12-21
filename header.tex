@@ -37,6 +37,8 @@
 \author{Based on lectures by \nlecturer \\\small Notes taken by \nauthor}
 \date{\nterm\ \nyear}
 \title{Part \npart\ --- \ncourse}
+\setcounter{tocdepth}{2}
+
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \newcommand\ilnumberthis{\addtocounter{equation}{1}(\theequation)}
@@ -56,6 +58,14 @@
   ref={\theequation},
   align=left,
   leftmargin=\parindent
+}
+
+\newcounter{descriptcount}
+\newlist{enumdescript}{description}{1}
+\setlist[enumdescript,1]{%
+  before={\setcounter{descriptcount}{0}%
+          \renewcommand*\thedescriptcount{\arabic{descriptcount}}},
+  font=\bfseries\stepcounter{descriptcount}(\thedescriptcount)~
 }
 
 \SetEnumitemKey{cases}{
@@ -186,6 +196,7 @@
 \newcommand{\pvec}[1]{\overrightarrow{#1}}
 \renewcommand{\vec}[1]{\underline{#1}}
 \newcommand{\uvec}[1]{\hat{\vec{#1}}}
+\newcommand{\tvec}[1]{\tilde{\vec{#1}}}
 
 % not-math
 % \newcommand{\bolds}[1]{{\bfseries #1}}
@@ -274,7 +285,7 @@
 % \DeclareMathOperator{\cosec}{cosec}
 % \DeclareMathOperator{\cosech}{cosech}
 % \DeclareMathOperator{\covol}{covol}
-% \DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\diag}{diag}
 % \DeclareMathOperator{\diam}{diam}
 % \DeclareMathOperator{\End}{End}
 % \DeclareMathOperator{\energy}{energy}
@@ -324,3 +335,7 @@
 % \DeclareMathOperator{\Syl}{Syl}
 \DeclareMathOperator{\Sym}{Sym}
 % \DeclareMathOperator{\vol}{vol}
+
+% Composities
+\newcommand{\spnset}[1]{\spn \crbkt{#1}}
+\newcommand{\dimset}[1]{\dim \crbkt{#1}}
