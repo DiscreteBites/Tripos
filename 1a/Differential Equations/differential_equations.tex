@@ -6,6 +6,7 @@
 \def\nlecturer {Prof A.\ D.\ Challinor}
 \def\ncourse {Differential Equations}
 
+\setcounter{tocdepth}{3}
 \input{../../header.tex}
 
 \begin{document}
@@ -44,6 +45,7 @@
 %%%%%%%%%%%%%%%%%%%%%%
 % Lecture 1: 6/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
+
 \section{Basic Calculus}
 \subsection{Differentiation}
 \begin{defi}[Derivative of a function]
@@ -86,7 +88,7 @@ For $n^{th}$ derivatives we tend to use this notation
     f^{(n)}(x)
 \]
 
-\subsection{Big $O$ and little $\underline{o}$ notation}.
+\subsubsection{Big $O$ and little $\underline{o}$ notation}.
 These are known as order parameters and are very useful when comparing the behaviour of 2 functions sufficiently close to some point $x_o$ or as $x$ tends to infinity. They are particular useful in deal with approximations where the remainder depends upon a parameter.
 
 \begin{defi}[$O$ and $\underline{o}$]\leavevmode
@@ -170,7 +172,7 @@ By comparing this with the definition of the derivative, we can take a limit
 % Lecture 2: 8/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Rules for differentiation}
+\subsubsection{Rules for differentiation}
 \begin{thm}[Chain Rule]
     Given $f(x) = F(g(x))$,
     \[
@@ -225,7 +227,7 @@ By comparing this with the definition of the derivative, we can take a limit
     
 \end{proof}
 
-\subsection{Taylor Series}
+\subsubsection{Taylor Series}
 A taylor series is an infinite series that tries to approximate a function in the vincity of some point. It is constructed to match the first $n$ differentials of a function.
 
 \begin{defi}[Taylor Series]
@@ -267,7 +269,7 @@ This is due to Lagrange. Note that $E_n = O(h^{n+1})$ is stronger than $\underli
     then the Taylor Polynomial converges to $f(x)$
 \end{defi}
 
-\subsection{L'H\^opital's Rule}
+\subsubsection{L'H\^opital's Rule}
 This theorem allows us to deal with limits of \emph{indeterminant forms}. For example $\lim_{x \rightarrow x_0}{\frac{f(x)}{g(x)}}$ where $\lim_{x \rightarrow x_0}{f(x)} = \lim_{x \rightarrow x_0}{g(x)} = 0$.
 
 \begin{thm}[L'H\^opital's Rule]
@@ -316,8 +318,8 @@ We can generalise, by repeating L'\^opital's Rule, given that the conditions hol
 % Lecture 3: 11/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
-\section{Integration}
-\subsection{Reimann sums}
+\subsection{Integration}
+\subsubsection{Reimann sums}
 We will formalise the idea of taking the area under a function. 
 
 \begin{defi}[Integral]
@@ -375,7 +377,7 @@ As we have drawn, it appears that each partial sum will underestimate the limit 
     \end{align*}
 \end{proof}
 
-\subsection{Fundamental Theorem of Calculus}
+\subsubsection{Fundamental Theorem of Calculus}
 We will formalise the idea of taking the inverse of differentiation.
 
 \begin{thm}[FTC]
@@ -420,7 +422,7 @@ and by the chain rule,
     wich is arguably better as it makes clear that the result is a function of $x$. Further note that the undefined lower limit leaves space for the constant of integration $c$.
 \end{notation}
 
-\subsection{Methods of Integration}
+\subsubsection{Methods of Integration}
 
 \begin{defi}[Substitution]
     Substitution is useful if the integrand contains composed functions, or if we can spot the derivative of a function and itself.
@@ -526,14 +528,13 @@ Here are some useful substitution to consider, motivated by the trigonometric an
     where $0 \leq x_n \leq x$
 \end{proof}
 
-\section{Partial Differentiation}
-\subsection{Functions of serveral variables}
+\subsection{Partial Differentiation}
+\subsubsection{Partial derivatives}
 In this chapter, we will generalise differentiation to function of more than one variable. For instance, we may consider the height of terrain as a function of longitude and latitude, or the density of air as a function of position and time. 
 Consider the first example, in the diagram we plot the contours of the function on the $x-y$ plane (the curves for which the height is constant).
 % insert diagram
 
 Notice that the slop of the function at some point $A$ depends on the direction. Therefore, we will find the slope of the graph along the $x$ and $y$ direction independantly, where we will be able to combine the them to find the slopes in any direction.
-\subsection{Partial derivatives}
 \begin{defi}[Partial derivative]
     Given a function of several variables, $f(x, y)$ we define the \emph{partial derivative} of $f$ w.r.t. $x$ at fixed $y$ given by
     \[
@@ -580,7 +581,7 @@ Notice that the slop of the function at some point $A$ depends on the direction.
         f_x = \diffp{f}{x} \qquad f_{xy} = \diffp{f}{{y}{x}}  
     \]
 \end{notation}
-\subsection{Multivariate chain rule}
+\subsubsection{Multivariate chain rule}
 As we have the chain rule for regular differentiation, we are interested in extending this to partial derivatives. Consider the following question. Suppose I am walking around some terrain. What is the derivative of my height with respect to time.
 
 Given a path $x(t), y(t)$ and some function $f(x(t), y(t))$, what is $\diff{f}{t}$? We consider a change in $f$ when we move from 
@@ -657,7 +658,7 @@ Furthermore, if the path is parameterised by a coordinate, for instance $y = f(x
         \Delta f = \int{\diffd f} = \int{\bkt{\diffp{f}{x} \diff{x}{t} + \diffp{f}{y} \diff{y}{t}} \diffd t}  
     \]
 \end{defi}
-\subsection{Applications of multivariate chain rule}
+\subsubsection{Applications of multivariate chain rule}
 
 We can use the multivariate chain rule to help us change variables. For instance consider the map from cartesian coordintes to plane-polar coordinates.
 \[
@@ -884,7 +885,8 @@ We discuss the exponential function in this context as we can think of it as an 
     The eigen functions of $\diff{}{x}$ are $e^\lambda x$ with eigen value $\lambda$.
 \end{defi}
 
-\subsection{Homogeneous first order linear ODEs}
+\subsection{First-order linear ODE}
+\subsubsection{Homogeneous first order linear ODEs}
 We will begin by looking at very specific cases of ODEs, let's define some of the terms in the title
 \begin{itemize}
     \item Linear: the dependant variable ($y$) and its derivative only appear linearly
@@ -920,7 +922,7 @@ Furthermore, we will further specialise to the simple case of constant coefficie
     In the example above, $y = Ae^{\frac{3}{5} x}$ is the general solution. To specify a unique solution, requires giving suitable boundary conditions; eg. $y(0)$, and in general $n$ conditions will be required for $n^{th}$ order ODEs.
 \end{remark}
 
-\subsubsection*{Discrete Equations}
+\subsubsection{Discrete Equations}
 
 Consider the same equation from above,
 \[
@@ -944,7 +946,7 @@ We would like to check that this approximation agrees with what we solved for ea
 
 In general, difference equations of this form tend to be related to first order ODEs where the solution ends up being some exponential form.
 
-\subsubsection*{Series Solutions}
+\subsubsection{Series Solutions}
 
 We can also try to look for solutions as power series of the form:
 \[
@@ -979,5 +981,11 @@ It follows that,
     \therefore y(x) = a_0 \sum_{n=0}^{\infty}\bkt{\frac{3x}{5}}^n\frac{1}{n!} \\
     = a_o e^\frac{3x}{5}
 \end{align*}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 7: 20/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Forced (inhomogeneous) ODEs}
 
 \end{document}

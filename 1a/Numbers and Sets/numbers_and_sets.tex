@@ -6,6 +6,8 @@
 \def\nlecturer {Prof J.\ Wolf}
 \def\ncourse {Numbers and Sets}
 
+\setcounter{tocdepth}{2}
+
 \input{../../header.tex}
 
 \begin{document}
@@ -1123,7 +1125,7 @@ However, is the converse true? In this case, we can inspect modulo 12,
 \end{align*}
 and we see that the converse is true for this case. However, this is not always the case. For instance, $x \equiv 1 \mod 4, \quad x \equiv 2 \mod 6$ does not work! (since $4$ and $6$ are coprime)
 
-\begin{nthm}[Chinese Remainder Theorem]
+\begin{nthm}[Chinese Remainder Theorem]\label{th:2-12}
     Let $m, n$ be coprime, let $a, b \in \Z$. Then there is a unique solution modulo $mn$ to the simultaneous congruence
     \[
         x \equiv a \mod m \quad \text{and} \quad x \equiv b \mod n  
@@ -1131,8 +1133,55 @@ and we see that the converse is true for this case. However, this is not always 
 \end{nthm}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 8: __/10/2023
+% Lecture 8: 21/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
+\begin{proof}\leavevmode
+    \begin{description}
+        \item [(Existence)] Since $(m,n) = 1$, $\exists s, t \in \Z$ such that
+        \[
+            sm + tn = 1    
+        \]
+        Note that 
+        \begin{align*}
+            sm \equiv 1 \mod n \quad&\quad tn \equiv 1 \mod m\\
+            sm \equiv 0 \mod m \quad&\quad tn \equiv 0 \mod n\\
+        \end{align*}
+        Hence, we can use these equations to pick out the congruences we want.
+        \[
+            x = a(tn) + b(sm) \equiv a \mod m \equiv b \mod n  
+        \]
+        \item [(Uniqueness)] Suppose $y$ is also a solution, that is $y \equiv a \mod m, y \equiv b \mod n$. Then,
+        \begin{align*}
+            &\Leftrightarrow y \equiv x \mod m \quad\wedge\quad y \equiv x \mod n \\
+            &\Leftrightarrow m \mid y - x \quad\wedge\quad n \mid y - x \\
+            &\Leftrightarrow mn \mid y - x \tag{Since $(m,n) = 1$} \\
+            &\Leftrightarrow mn \mid y - x \mod mn \\
+            &\Leftrightarrow y \equiv x \mod mn 
+        \end{align*}
+    \end{description}
+\end{proof}
+
+\begin{remark}
+    Theorem \ref{th:2-12} can be extended by induction, to more than two moduli. If $m_1, m_2, \cdots, m_k$ are pariwise coprime, then $\forall a_1, a_2, \cdots a_k \in \Z, \exists x \in \Z$ such that
+    \begin{align*}
+        x \equiv a_1 &\mod m_1 \\
+        x \equiv a_2 &\mod m_2 \\ 
+        &\vdots \\
+        x \equiv a_n &\mod m_n
+    \end{align*}
+\end{remark}
+
+\begin{defi}[Euler Totient]
+    We denote $\varphi(m)$ to be the number of integers $a$ with $1 \leq a \leq m$ such that $(a, m) = 1$, that is $\varphi(m)$ is the number of units modulo $m$.
+    $\varphi$ is known as the Euler totient function.
+\end{defi}
+
+\begin{eg}
+    $\varphi(p) = p - 1$ for prime $p$ and $\varphi(pq) = pq - p - q + 1$ when $p, q$ are distinct primes. In this case out of all $pq$ numbers there are $p$ many multiples of $q$ and $q$ many multiples of $p$ to be removed. We add $1$ to account for $pq$ occuring in both counts. We see that
+    \[
+        \varphi(pq) = pq - p - q + 1 = \varphi()
+    \]
+\end{eg}
 
 \end{document}
