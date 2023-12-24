@@ -721,7 +721,7 @@ and we can reinterprit the function $f(x, y)$ as a function $f(x(r, \theta), y(r
     \[
         \diffp{x}{y}\Big{|}_{z} = \frac{-\diffp{f}{y}\Big{|}_{x,z}}{\diffp{f}{x}\Big{|}_{y, z}} \qquad \diffp{y}{z}\Big{|}_{x} = \frac{-\diffp{f}{z}\Big{|}_{x,y}}{\diffp{f}{y}\Big{|}_{x,z}}
     \]
-    if we multiply these three, we get pairwise cancellation and arrive at for 3 indepdnant variables,
+    if we multiply these three, we get pairwise cancellation and arrive at for 3 independant variables,
     \[
         \diffp{x}{y}\Big{|}_{z} \times \diffp{y}{z}\Big{|}_{x} \times \diffp{z}{x}\Big{|}_{y} = -1
     \]
@@ -895,7 +895,7 @@ We will begin by looking at very specific cases of ODEs, let's define some of th
 \end{itemize}
 Furthermore, we will further specialise to the simple case of constant coefficients,\
 \begin{itemize}
-    \item Constant coefficients: the indepdnant variable ($x$) does not appear explicitly.
+    \item Constant coefficients: the independant variable ($x$) does not appear explicitly.
 \end{itemize}
 
 \begin{eg}
@@ -911,18 +911,18 @@ Furthermore, we will further specialise to the simple case of constant coefficie
     \[
         \lambda = \frac{3}{5} \Rightarrow y = Ae^{\frac{3}{5} x}   
     \]
-    Since this equation is linear and homogenenous, this solution holds for all $A$.
+    Since this equation is linear and homogeneous, this solution holds for all $A$.
 \end{eg}
 
 \begin{remark}\leavevmode
     \begin{itemize}
-        \item Generally, for any linear homogenenous ODE any constant multiple of a solution is also a solution.
-        \item An $n^{th}$ order linear ODE will have exactl $n$ indepdnant solutions
+        \item Generally, for any linear homogeneous ODE any constant multiple of a solution is also a solution.
+        \item An $n^{th}$ order linear ODE will have exactl $n$ independant solutions
     \end{itemize}
     In the example above, $y = Ae^{\frac{3}{5} x}$ is the general solution. To specify a unique solution, requires giving suitable boundary conditions; eg. $y(0)$, and in general $n$ conditions will be required for $n^{th}$ order ODEs.
 \end{remark}
 
-\subsubsection{Discrete Equations}
+\subsubsection*{Discrete Equations}
 
 Consider the same equation from above,
 \[
@@ -946,7 +946,7 @@ We would like to check that this approximation agrees with what we solved for ea
 
 In general, difference equations of this form tend to be related to first order ODEs where the solution ends up being some exponential form.
 
-\subsubsection{Series Solutions}
+\subsubsection*{Series Solutions}
 
 We can also try to look for solutions as power series of the form:
 \[
@@ -985,7 +985,1533 @@ It follows that,
 %%%%%%%%%%%%%%%%%%%%%%
 % Lecture 7: 20/10/2023
 %%%%%%%%%%%%%%%%%%%%%%
-
 \subsubsection{Forced (inhomogeneous) ODEs}
+Include terms involving only the independant variable. Therefore $y = 0$ is no longer a solution.
+
+\subsubsection*{Contant Forcing}
+\begin{eg}
+    \[
+        5 \diff{y}{x} - 3y = 10
+    \]
+    The general method is as follows
+    \begin{enumerate}
+        \item Find any solution of the forced equation. This is known as the ``particular solution''. Here
+        \[
+            y_p = \frac{-10}{3}  
+        \]
+        is an example.
+        \item Write general solution of the differential equation as
+        \[
+            y(x) = y_p(x) + y_c(x)  
+        \]
+        where $y_c$ is a complimentary function that satisfies the homogeneous case. Here,
+        \[
+            5 \diff{}{x} y_c - 3 y_c = 10  
+        \]
+
+        \item Combine $y_p$ and $y_c$ to get full general solution
+        \[
+            y(x) = Ae^\frac{3x}{5} - \frac{10}{3}  
+        \]
+    \end{enumerate}
+    This works because of the linearity of the LHS. Therefore this is general for linear forced equations.
+\end{eg}
+\subsubsection*{Eigenfunction Forcing}
+This is the case when the forcing term is an eigenfunction of the underlying differential operator.
+\begin{eg}[Radioactive Decay]
+    Consider a system where substance $A$ decays into $B$ and then into $C$.
+    % insert diagram
+    \[
+        \diff{a}{t} = - k_a a \text{ and } \diff{b}{t} = k_a a - k_b b   
+    \]
+    We may solve,
+    \begin{align*}
+        a(t) = A_0 e^{-k_a t} &\Rightarrow \diff{b}{t} = A_0 e^{-k_a t} - k_b b \\
+        &\Rightarrow \diff{b}{t} +  k_b b = A_0 e^{-k_a t} \tag{$\star$}
+    \end{align*}
+    Here we see that the forcing term is an eigenfunction. 
+    We try a particular integral
+    \[
+        b_p(t) = C e^{-k_a t}  
+    \]
+    \begin{align*}
+        \text{($\star$)} &\Rightarrow -k_a Ce^{-k_a t} + k_b C e^{-k_a t} = k_a A_0 e^{-k_a t} \\
+        &\Rightarrow C(k_b - k_a) e^{-k_a t} = k_a A_o e^{-k_a t} \\
+        \therefore & \quad C = \frac{k_a A_0}{k_b - k_a} \tag{$k_b \neq k_a$}
+    \end{align*}
+    Our general solution will be the sum of the complimentary function and the particular integral,
+    \begin{align*}
+        \diff{b}{t} +  k_b b = 0 \Rightarrow b_c(t) = D e^{-k_b t} \\
+        \therefore b(t) = D e^{-k_b t} +  \frac{k_a A_0}{k_b - k_a} e^{-k_a t}  
+    \end{align*}
+    We apply the initial condition that $B = 0$ at $t = 0$ to give,
+    \[
+        D = \frac{k_a A_0}{k_a - k_b} \Rightarrow b(t) = \frac{k_a A_0}{k_b - k_a}\bkt{e^{-k_a t} - e^{-k_b t}}
+    \]
+    % insert graph!
+    Note that if $k_a = k_b$ we will need a different particular integral.
+\end{eg}
+\subsubsection{Non-Constant Coefficients}
+Consider a general $1^{st}$ order linear ODE:
+\[
+    a(x) \diff{y}{x} + b(x)y = c(x)
+\]
+We may turn it into ``standard form''
+\[
+    \Rightarrow \diff{y}{x} + p(x)y = f(x) \tag{$\star$}
+\]
+where we call $f(x)$ in this form the ``driving term''
+\subsubsection*{Solve using intergrating factor}
+The idea is to multiply by a well chosen function $\mu(x)$ so that
+\[
+    \mu \diff{y}{x} + \mu p y = \diff{}{x}(\mu y)
+\]
+Expanding, we see that we need
+\begin{align*}
+    \mu' = \mu p &\Rightarrow \int{\frac{1}{\mu} \diffd \mu} = \int{p \diffd x} \\
+    &\Rightarrow \ln(\mu) = \int{p \diffd x} \\
+    &\Rightarrow \mu = e^{\int{p \diffd x}}
+\end{align*}
+Applying this to ($\star$)
+\begin{align*}
+    \Rightarrow \diff{}{x} \mu y &= \mu f(x) \\
+    &\Rightarrow \mu(x)y(x) = \int^{x}{\mu(t) f(t) \diffd t}
+\end{align*}
+\begin{eg}
+    \begin{align}
+        x \diff{y}{x} + (1 - x)y = 1 \\
+        \Rightarrow \diff{y}{x} + \frac{1-x}{x} y = \frac{1}{x}.
+    \end{align}
+    Hence, the integrating factor 
+    \[
+        e^{\int^{x}{\frac{1}{t} - 1 \diffd t}} = e^{\ln x - x} = xe^{-x}
+    \]
+    Hence
+    \begin{align*}
+        \diff{}{x}\bkt{x e^{-x} y} = \frac{1}{x} x e^{-x} \\
+        \Rightarrow x e^{-x} y = - e^{-x} + c \\
+        \therefore y = \frac{-1}{x} + \frac{c}{x e^{-x}} = \frac{c}{x} e^{x} - \frac{1}{x}
+    \end{align*}
+    Note that if we can $y$ to be finite at $x = 0$ we need to choose $c = 1$
+\end{eg}
+\subsubsection*{Radioactive Decay Revisited}
+Recall
+\[
+    \diff b t = k_b b = k_a A_0 e^{-k_a t}
+\]
+We compute the integrating factor
+\[
+    \exp(\int^{t}{k_b \diffd t}) = e^{k_b t}
+\]
+Therefore,
+\[
+    \diff{}{t} \bkt{e^{k_b t}b} = k_a A_0 e^{(k_b - k_a) t} \tag{$\dagger$}
+\]
+There are two cases
+\begin{enumerate}
+    \item $k_b \neq k_a$, then RHS is a function of times
+    \begin{align*}
+        e^{k_b t}b(t) &= \frac{k_a A_0}{k_b - k_a} e^{(k_b - k_a) t} + D \\
+        b(t) &= \frac{k_a A_0}{k_b - k_a} e^{-k_a t} + De^{-k_b t}
+    \end{align*}
+    as before.
+    \item $k_b = k_a = k$ then RHS is a constant
+    \begin{align*}
+        e^{k t}b(t) &= k A_0 t + D \\
+        b(t) &= k_a A_0 t e^{-kt} + De^{-kt}
+    \end{align*}
+    Note that in these "degenerate" or "resonant" situations, we havae to modify the P.I. to be proportionate to $t e^{kt}$ as opposed to just $e^{kt}$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 8: 23/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{First-Order Nonlinear Differential Equations}
+We will look at ODEs with the general form:
+\[
+    Q(x, y) \diff yx + P(x, y) = 0 \tag{$\star$}
+\]
+\subsection{Seperable Equations}
+\begin{defi}[Seperable Equation]
+    A first order ODE is \emph{seperable} if it can be written as
+    \[
+        q(y) \diffd y = p(x) \diffd x
+    \]
+    which we can solve by direct integration
+    \[
+        \int{q(y) \diffd y} = \int{p(x) \diffd x}
+    \]
+\end{defi}
+\begin{eg}
+    \begin{align*}
+        &(x^y - 3y) \diff yx - 2xy^2 = 4x \\
+        \Rightarrow& y(x^2 - 3) \diff yx = 2x(x+ y^2) \\
+        \Rightarrow& \int{\frac{y}{2 + y^2} \diffd y} = \int{\frac{2x}{x^2 - 3} \diffd x} \\
+        \Rightarrow& \frac 12 \ln(2 + y^2) = \ln(x^2 - 3) +c \\
+        \Rightarrow& \sqrt{2 + y^2} = A(x^2 - 3)
+    \end{align*}
+\end{eg}
+
+\subsection{Exact Equation}
+\begin{defi}[Exact Equation]
+    An ODE ($\star$) is exact if
+    \[
+        P(x, y)  \diffd x + Q(x, y) \diffd y
+    \]
+    is an exact differential. i.e, $\exists f(x, y)$ such that
+    \[
+        \diffd f = P(x, y)  \diffd x + Q(x, y) \diffd y
+    \]
+\end{defi}
+If ($\star$) is exact, then $\diffd f = 0 \Rightarrow f(x, y) = c$ for a constant $c$ is a solution.
+We can use the multivariate chain rule
+\[
+    \diffd f = \diffp fx \eval{y}{} \diffd x + \diffp fy \eval{x}{} \diffd y
+\]
+So, $\exists f(x, y)$ such that
+\[
+    \diffp fx = P(x, y) \text{ and } \diffp fy = Q(x, y)
+\]
+We can solve these equations to determine $f$. 
+We know that partial derivatives commute so
+\[
+    \diffp fx = P(x, y) \text{ and } \diffp fy = Q(x, y) \Rightarrow \diffp Py = \diffp Qx = \diffp{f}{{x}{y}} = \diffp{f}{{y}{x}}
+\]
+This is a neccesary condition (but not sufficient) for exactness:
+\[
+    \text{ODE is exact} \Rightarrow \diffp Py = \diffp Qx
+\]
+
+\begin{thm}
+    If $\diffp Py = \diffp Qx$ throughout a simply-connected domain $\mathcal{D}$, then
+    \[
+        P \diffd x + Q \diffd y  
+    \]
+    is an exact differential of some single valued $f(x, y) \in \mathcal{D}$
+\end{thm}
+
+\begin{defi}[Simply Connected]
+    A domain is simply connected if it is
+    \begin{enumerate}
+        \item Path Connected: every pair of points can be conneceted by a path / curve
+        \item Any closed curve can be continuously shrunk to a point in $\mathcal{D}$ wihtout the curve leaving $\mathcal{D}$.
+    \end{enumerate}
+\end{defi}
+
+\begin{eg}
+    \begin{align*}
+        6y(y - x) \diffd yx + 2x - 3y^2 = 0 \\
+        (2x - 3y^2) \diffd x + 6y(y-x) \diffd y = 0
+    \end{align*}
+    So we have $P = (2x - 3y^2)$ and $Q = 6y(y-x)$. Lets test,
+    \begin{align*}
+        \diffp Py = -6y &\text{ and } \diffp Qx = -6y \\
+        &\Rightarrow f = x^2 - 3y^2x + 2y^3 \\
+        \diffd f = 0 &\Rightarrow \diffd \bkt{x^2 - 3y^2x + 2y^3} = 0 \\
+        \therefore \quad & x^2 - 3y^2x + 2y^3 = c
+    \end{align*}
+    Where we systematically found $f$ by repeated integrations,
+    \begin{align*}
+        P &= \diffp fx \eval{}{y} = 2x - 3y^2 \\
+        &\Rightarrow f(x, y) = x^2 - 3y^2x + h(y) \\
+        Q &= \diffp fy \eval{}{x} = 6y^2 - 6xy \\
+        &\Rightarrow f(x, y) = 2y^3 - 3xy^2 + g(x)
+    \end{align*}
+\end{eg}
+
+\subsection{Solution Curves \& Isoclines}
+Nonlinear ODEs are often impossible to solve in simple closed forms. 
+We can still analyse the behaviour of solutions with various graphical methods. 
+
+\subsubsection{Solution Curves}
+Consider 
+\[
+    \diff yt = f(t, y)
+\]. 
+Each initial condition generates a distinct \emph{solution curve} or trajectory.
+% insert graph
+\begin{eg}
+    \[
+        \diff yt = t(1 - y^2) \tag{$\star$}
+    \]
+    We can solve this, but it will allow us to illustrate the main ideas.
+    It is seperable so solving,
+    \begin{align*}
+        \int{\frac{\diffd y}{1 - y^2}} = \int{t \diffd t} \\
+        \Rightarrow \frac{1}{2} \int{\frac{1}{1+y} - \frac{1}{1-y} \diffd y} = \frac{t^2}{2} + c \\
+        \Rightarrow \frac{1}{2} \ln \abs{\frac{1 + y}{1 - y}} = \frac{t^2}{2} + c
+    \end{align*}
+    We have to be careful to use the modulus sign.
+    Therefore,
+    \[
+        y = \frac{A - e^{-t^2}}{A + e^{-t^2}} \quad \text{ where } A = \begin{cases}
+            e^{2c} & \text{ if } \abs{y} < 1 \\
+            -e^{2c} & \text{ if } \abs{y} \geq 1
+        \end{cases}
+    \]
+    We can also sketch the family of solution curves parameterised by A, and compare.
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 9: 25/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{remark}
+    What information can be get if we can't directly solve ($\star$)?
+    \begin{enumerate}
+        \item $y' = 0$ $\forall t$ if $\abs{y} = 1$
+        \item $y' = 0$ at $t = 0$ $\forall y$
+    \end{enumerate}
+\end{remark}
+
+\subsubsection{Slope field and isoclines}
+The differential equation ($\star$)
+\[
+    \diff yt = t(1 - y^2)
+\]
+gives us the gradient of a solution curve through any point $(t, y)$
+
+\begin{defi}[Slope Field]
+    The \emph{slope field} represents the gradient field by short ``sticks'', one at each point in $(t, y)$ space.
+\end{defi}
+\begin{eg}
+    For ($\star$), when $t > 0$,
+    \begin{itemize}
+        \item $y' > 0$ for $\abs{y} < 1$
+        \item $y' < 0$ for $\abs{y} > 1$
+    \end{itemize} 
+\end{eg}
+
+\begin{defi}[Isoclines]
+    \emph{Isoclines} are curves along which the gradient $y'$ is constant.
+    For the example ($\star$), 
+    \begin{align*}
+        t(1-y^2) = D \\
+        \Rightarrow y^2 = 1 - \frac{D}{t}
+    \end{align*}
+\end{defi}
+\begin{remark}
+    The slope field is tangent to the solution curves.
+    Note that if $f(t, y)$ is single valued, then the solution curves cannot cross as this would mean that there are two gradients at that point.
+\end{remark}
+
+\subsection{Fixed (Equilibrium) Points \& Stability}
+\begin{defi}[Fixed / Equilibrium Point]
+    A \emph{fixed} point of an ode
+    \[
+        \diff yx = f(t,y)   
+    \]
+    is a constant solutin $y = c$
+    \[
+        \therefore \qquad diff yx = t \quad \forall t  
+    \]
+\end{defi}
+\begin{eg}
+    Once again consider ($\star$),
+    \[
+        \diff yt = t(1 - y^2)  
+    \]
+    This has fixed points at $y = \pm 1$.
+    The two fixed points have very different character as $t \rightarrow \infty$.
+\end{eg}
+
+\begin{defi}[Stability of fixed point]
+    A fixed point $y = c$ is stable if whenever $y$ deviates slightly from $c$, $y$ converges to $c$ as $t \rightarrow \infty$.
+    Similarly, a fixed point is unstable if whenever $y$ deviates slightly from $c$, $y$ diverges as $t \rightarrow \infty$.
+\end{defi}
+\subsubsection{Perturbation analysis and stability}
+Suppose $y = c$ is a fixed point of 
+\[
+    \diff yx = f(t, y)
+\]
+Consider a small perturbation of $\epsilon$ from $c$.
+\[
+    y(t) = c + \epsilon(t)
+\]
+so
+\begin{align*}
+    \diff \epsilon t &= f(t, c + \epsilon(t)) \\
+    &= f(t, c) + \epsilon \diffp fy (t, c) + O(\epsilon^2) \\
+    &\approx 0 + \epsilon \diffp fy \eval{(t, c)}{}
+\end{align*}
+\begin{remark}
+    If $\diffp fy = 0$ then we need to consider higher order terms in the taylor expansion to determine stability.
+\end{remark}
+\begin{eg}
+    \[
+        \diff yt = t(1 - y^2)
+    \]
+    We have fixed points at $y = \pm 1$.
+    \[
+        \diffp fy = -2ty = \begin{cases}
+            -2t & \text{ if } y = + 1 \\
+            +2t & \text{ if } y = 1
+        \end{cases}  
+    \]
+    Near $y = +1$,
+    \begin{align*}
+        \diff \epsilon t &\approx -2t \epsilon \\
+        &\Rightarrow \ln \epsilon = - t^2 + C  \\
+        &\Rightarrow \epsilon(t) = \epsilon_0 e^{-t^2}
+    \end{align*}
+    Therefore as $t \rightarrow \infty$, $\epsilon(t) \rightarrow 0$, so a stable fixed point.
+
+    Near $y = -1$, 
+    \[  
+        \epsilon(t) = \epsilon_0 e^{t^2}
+    \]
+    So as $t \rightarrow \infty$, $\epsilon(t) \rightarrow \infty$, so an unstable fixed point,
+    and trajectories diverfe from $y = -1$.
+\end{eg}
+
+\subsubsection{Autonomous Systems \& Phase Portraits}.
+In the special case when the forcing term is independant of time $t$,
+\begin{align*}
+    \diff yt = f(y) \\
+    \Rightarrow \int_{0}^{y}{\frac{\diffd u}{f(u)}} = t \pm t_0
+\end{align*}
+
+If $y(t)$ is a solution, any translation $y(t - t_0)$ is also a solution $\forall t_0$.
+Near a fixed point $y = c$, $(f(c) = 0)$ we have
+\[
+    \diff \epsilon t = \epsilon \diffp fy \eval{c}{}
+\]
+Where $\diffp fy \eval{c}{} = k$ is a constant
+\[
+    \therefore \quad \diff \epsilon t = \epsilon k \Rightarrow \epsilon(t) = \epsilon_0 e^{kt}
+\]
+In general, for an autonomous ODE, 
+\begin{itemize}
+    \item $f'(c) < 0 \Rightarrow$ stable fixed point
+    \item $f'(c) > 0 \Rightarrow$ unstable fixed point
+\end{itemize}
+
+\begin{eg}[Chemical Kinetics]
+    Consider the general chemical equation
+    \[
+        A + B \longrightarrow C
+    \]
+    Where values $a(t), b(t)$ are initialised at $a_o$ and $b_0$ and $c(t)$ initialised at $0$.
+    \begin{align*}
+        a(t) = a_0 - c(t)
+        b(t) = b_0 - c(t)
+    \end{align*}
+    Assume that the rate of reaction is proportional to $ab$ (e.g. dilute gasses)
+    \[
+        \diff ct = \lambda a(t)b(t) = \lambda [a_0 - c(t)][b_0 - c(t)] = f(c)
+    \]
+    This is an autonomous system with fixed points $c = a_0, b_0$.
+    Assuming $a_0 < b_0$, $c = b_0$ is unphysical as $A$ is limiting.
+
+    By the perturbation analysis,
+    \begin{align*}
+        \diff fc = \lambda(2c - a_o - b_0) \\
+        = \begin{cases}
+            \lambda(a_0 - b_0) & \text{ at } c = a_0 \\
+            \lambda(b_0 - a_0) & \text{ at } c = b_0
+        \end{cases}
+    \end{align*}
+    Therefore $\lambda(a_0 - b_0)$ is negative and we have a stable fixed point.
+
+    We can see this on a one dimensional phase portrait!
+    % insert phase portrait.
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 10: 27/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}[Population Dynamics (Logistic Equation)]
+    Consider the following parameters
+    \begin{center}
+        \begin{tabular}{lc}
+            Population size & $y(t)$ \\
+            Brith Rate & $\alpha y$ \\
+            Death rate & $\beta y + \gamma y^2$
+        \end{tabular}
+    \end{center}
+
+    Here the $\gamma$ term accounts for when the probability of dying is proportional to the size of the population.
+    For instance there is resource competition for food.
+    Then,
+    \begin{align*}
+        \diff yt &= \alpha y - \beta y - \gamma y^2 \\
+        &= (\alpha - \beta)y - \gamma y^2 \\
+        &= \lambda y - \frac{\lambda}{Y} y^2
+    \end{align*}
+    Which is the form of the ``differential logistic curve''.
+    This is an autonomous first-order non-linear equation with fixed points at $y=0$ and $y=Y$.
+    \[
+        \diff yt =  \lambda \bkt{1- \frac{2y}{Y}} = \begin{cases}
+            \lambda & \text{ if } y = 0 \\
+            -\lambda & \text{ if } y = Y
+        \end{cases}
+    \]
+    Assume that $\lambda > 0$ (birth rate exceeds isolated death rate). Therefore,
+    \begin{itemize}
+        \item $y = 0$ is unstable fixed point,
+        \item $y = Y$ is a stable fixed point
+    \end{itemize}
+    We may sketch the graphs and phase portraits.
+    % insert graphs and phase portrait.
+\end{eg}
+
+\subsubsection{Fixed points in discrete equations}
+Consider a first-order discrete equation.
+\[
+    x_{n+1} = f( x_n )
+\]
+
+\begin{defi}[Fixed Point]
+    A fixed point of a first-order discrete equation is a value of $x_n$ such that
+    \[
+        x_{n+1} = x_{n} \Leftrightarrow f(x_n) = x_n
+    \]
+\end{defi}
+
+We can analyse the stability via perturbation analysis.
+Let $x_f$ be a fixed point, and write
+\begin{align*}
+    x_n &= x_f + \epsilon_n \\
+    x_f + \epsilon_{n+1} &= f(x_f + \epsilon_n) \\
+    &= f(x_f) + \epsilon_n \diffp f x (x_f) + O(\epsilon_n^2) \\
+    \Rightarrow \epsilon_{n+1} &= \epsilon_n \diffp f x (x_f)
+\end{align*}
+
+From this linearised analysis
+\begin{itemize}
+    \item $\abs{f'(x_f)} \leq 1 \Rightarrow$ stable fixed point
+    \item $\abs{f'(x_f)} \geq 1 \Rightarrow$ unstable fixed point
+\end{itemize}
+
+\begin{eg}[Logistic Map]
+    \[
+        x_{n+1} = r x_n (1 - x_n)    
+    \]
+    We are interested in solution where $x_n \geq 0$.
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines = left,
+                xlabel = $x_n$,
+                ylabel = $r(x_n)(1 - x_n)$
+            ]
+            \addplot[
+                domain=-0:1,
+                color=red
+            ]
+            {5.5*x - 5.5*x^2};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Where the peak is at $\frac{r}{4}$. Therefore if we choose $r < 4$ all iterates stay in the range $0 \leq r \leq 1$.
+    We may solve for fixed points, 
+    \[
+        x_n = r(x_n)(1 - x_n) \Rightarrow x_n = 0, 1 - \frac{1}{r}
+    \]
+    And analyse the stability,
+    \[
+        f'(x) = r(1 - 2x) = \begin{cases}
+            r & \text{ at } x_n = 0 \\
+            2 - r & \text{ at } x_n = 1 - \frac{1}{r}
+        \end{cases}
+    \]
+    \begin{description}
+        \item[Fixed point at $x_n = 0$] stable for $0 < r < 1$, unstable for $r > 1$
+        \item[Fixed point at $x_n = 1 - \frac{1}{r}$] stable for $1 < r < 3$, unstable for $r > 3$
+    \end{description}
+
+    We can illustrate this with "cobweb diagrams" (non-examinable).
+    For $0 < r < 1$
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines = left,
+                xlabel = $x_n$,
+                ylabel = $x_{n+1}$
+            ]
+            \addplot[
+                domain=-0:1,
+                color=red
+            ]
+            {0.5*x - 0.5*x^2};
+            \addplot[
+                domain=-0:1,
+                color=blue
+            ]
+            {x};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    The iterates converge to $x_n = 0$ for any starting point $0 < x_n < 1$.
+
+    For $r > 1$,
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines = left,
+                xlabel = $x_n$,
+                ylabel = $x_{n+1}$
+            ]
+            \addplot[
+                domain=-0:1,
+                color=red
+            ]
+            {2*x - 2*x^2};
+            \addplot[
+                domain=-0:1,
+                color=blue
+            ]
+            {x};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 11: 30/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Higher-Order Linear Differential Equations}
+Focus on $2^{nd}$ order ODEs, i.e; $\diff[2]{y}{{x}}$ is the highest derivative,
+but many of the methods apply to higher-orders too.
+
+\subsection{Second-Order ODE with constant coefficients}
+General form
+\[
+    a \diff[2]{y}{x} + b \diff yx + cy = f(x) \tag{$\star$}
+\]
+with $a, b, c$ constants, and $\mathcal{D}_y = a \diff[2]{}{x} + b \diff {}{x} + c$ as linear differential operator.
+
+\begin{defi}[Linear Differential Operator]
+    $\mathcal{D}$ is a \emph{linear differential operator} if for any $y_1(x)$, $y_2(x)$ and constants $\alpha, \beta$
+    \[
+        \mathcal{D}(\alpha y_1 + \beta y_2) = \alpha \mathcal{D} (y_1) + \beta \mathcal{D} (y_2)
+    \]
+\end{defi}
+We can exploit linearity to solve ($\star$) in two steps.
+\begin{description}
+    \item[Step 1] Find complimentary functions that satisfy the homogeneous equation
+    \[
+        a \diff[2]{y_c}{x} + b \diff {y_c}{x} + cy_c = 0
+    \]
+    \item[Step 2] Find a particular integral $y_p$ that satisfy the full equation ($\star$)
+\end{description}
+The solution to the full equation then becomes:
+\[
+    y = \lambda y_c + y_p
+\]
+Since,
+\[
+\mathcal{D}(\lambda y_c + y_p) = 0 +  \mathcal{D}(y_p) = f(x)   
+\]
+If $y_{c_1}$ and $y_{c_2}$ are linearly independant CFs, then $y_{c_1} + y_p$ and $y_{c_2} + y_p$ are linearly independant solutions to ($\star$).
+
+\begin{defi}[Linearly independant functions]
+    A set of $N$ functions
+    \[
+        \crbkt{f_i(x)}
+    \]
+    is linearly independant if
+    \[
+        \sum_{i=1}^{N} c_i f_i(x) = 0 \quad \forall x
+    \]
+    for $N$ constants $c_i$ not all of which are zero.
+    Otherwise, the functions are linearly independant.
+    Equivalently, if any function $f \in \crbkt{f_i(x)}$ can be written as a linear combination of the others, 
+    they are linearly dependant.
+\end{defi}
+\subsubsection{Complementary Functions}
+Recall $\diff {}{x} e^{\lambda x} = \lambda e^{\lambda x}$.
+This is also an eigenfunction of $\mathcal{D}$:
+\begin{align*}
+    \mathcal{D}(e^{\lambda x}) &= a \lambda^2 e^{\lambda x} + b \lambda e^{\lambda x} + c e^{\lambda x}\\
+    &= (a \lambda^2 + b \lambda + c)e^{\lambda x}
+\end{align*}
+
+CFs of ($\star$) satisfy $\mathcal{D}_{y_c} = 0 \Rightarrow$ eigenvalue $=0$.
+Therefore, 
+\[
+    y_c = A e^{\lambda x}    
+\]
+provided that
+\[
+    a \lambda^2 + b \lambda + c = 0
+\]
+We call this the characteristic equation of ($\star$). The characteristic equation will have $2$ roots: $\lambda_1, \lambda_2$.
+
+\begin{enumerate}[cases]
+    \item $\lambda_1 \neq \lambda_2$: have two linearly independant CFs.
+    \[
+        y_{c_1} \propto e^{\lambda_1 x} \text{ and }  y_{c_2} \propto e^{\lambda_2 x}
+    \]
+    The most general complimentary function will be a linear combination of both,
+    \[
+        y_c = A e^{\lambda_1 x} + B e^{\lambda_2 x}
+    \]
+    We see that $y_{c_1}$ and $y_{c_2}$ form a basis for the vector space of solution of the homogeneous equations.
+    Note that if $\lambda_1, \lambda_2 \in \C$ then we have oscillations.
+
+    \item $\lambda_1 = \lambda_2$ (degenerate case): Only generate one $CF$ of the form $e^{\lambda x}$. 
+    See the following example on how to deal with this case.
+\end{enumerate}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Non-degenerate roots that are real
+        \begin{align*}
+            \diff[2]{y}{x} - 5 \diff yx + 6y = 0 &\Rightarrow \lambda^2 - 5 \lambda + 6 = 0 \\
+            &\Rightarrow (\lambda - 3)(\lambda - 2) = 0
+        \end{align*}
+        Therefore, the complimentary function
+        \[
+            y_c = A e^{3x} + B e^{2x}  
+        \]
+
+        \item Complex Roots 
+        \begin{align*}
+            \diff[2]{y}{x} + 4y = 0 &\Rightarrow \lambda^2 + 4 = 0 \\
+            &\Rightarrow \lambda = \pm 2i
+        \end{align*}
+        Therefore, the complimentary function 
+        \begin{align*}
+            y_c &= A e^{2ix} + B e^{-2ix} \\
+            &= A (\cos(2x) + i \sin(2x)) + B(\cos(2x) - i\sin(2x)) \\
+            &= (A + B) \cos (2x) + i (A - B) \sin (2x)
+        \end{align*}
+
+        \item Denegerate case and detuning.
+        \begin{align*}
+            \diff[2]{y}{x} - 4 \diff{y}{x} + 4y = 0 &\Rightarrow \lambda^2 - 4 \lambda + 4 = 0 \\
+            &\Rightarrow (\lambda - 2)^2 = 0 \\
+            &\Rightarrow \lambda = 2
+        \end{align*}
+        This gives only one linearly independant CF $e^{2x}$
+    \end{enumerate}
+\end{eg}
+
+\subsubsection*{Detuning}
+We will remove the degeneracy by considering a ``detuned equation'', for $\epsilon \ll 1$.
+\[
+    \diff[2]{y}{x} - 4 \diff{y}{x} + (4 - \epsilon^2) = 0 
+\]
+In the limit $\epsilon \rightarrow 0$ we recover the equation we want to solve.
+Try $y = e^{\lambda x}$
+\begin{align*}
+    \Rightarrow \lambda^2 - 4 \lambda + (4 - \epsilon) = 0 \\
+    \Rightarrow \lambda = 2 \pm \epsilon
+\end{align*}
+This gives a general solution for
+\begin{align*}
+    y_c(x) &= A e^{(2 + \epsilon) x} + B e^{(2 - \epsilon) x} \\
+    &= e^{2x}[Ae^{\epsilon x} + Be^{-\epsilon x}]
+\end{align*}
+We now apply taylor expansion as $\epsilon \rightarrow 0$,
+\begin{align*}
+    \Rightarrow e^{2x}[A + B + \epsilon (A - b) x + O(A \epsilon^2) + O(B \epsilon^2)]
+\end{align*}
+We need to think carefully about initial conditions, as $A$ and $B$ may be dependant upon $x$.
+
+Consider applying $x = 0$, $y(0) = C$, $y'(0) = D$ to the original equation and detuned equation. We have,
+\[
+    A + B = C \text{ and } 2(A + B) + \epsilon(A - B) = D
+\]
+Therefore,
+\begin{align*}
+    y = e^{2x}[C + (D - 2C) x + O(A \epsilon^2) + O(B \epsilon^2)] \\
+    \Rightarrow \lim_{\epsilon \rightarrow 0} y = e^{2x}[C + (D - 2C)x]
+\end{align*}
+
+We check that $A = \frac{1}{2} \bkt{C + \frac{D - 2C}{\epsilon}}$, and so
+\[
+    O(A \epsilon^2) = O(\epsilon) \rightarrow 0 \text{ as } \epsilon \rightarrow 0
+\]
+The general solution for $y_c$ is
+\[
+    y_c = e^{2x}(\alpha + \beta x)
+\]
+As a general rule, if $y_{c_1}(x)$ is a degenerate CF of a linear ODE with constant coefficients, then
+\[
+    y_{c_2} = x y_{c_1}
+\]
+is a second linearly independant CF.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 12: 01/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Homogeneous $2^{nd}$ order ODEs with non-constant coeffs.}
+Consider differential equations of the form:
+\[
+    y'' + p(x)y' + q(x)y = 0 \tag{$\star$}
+\]
+These are difficult to find! but given one, we can try to find the other.
+\subsubsection{Second CF via reduction of order}
+Aim: Given one solution $y_1(x)$ of ($\star$), find a second $y_2(x)$.
+We will look for solutions of the form
+\[
+    y_2(x) = v(x) y_1(x)
+\]
+We have
+\begin{align*}
+    y'_2(x) &= v'y_1 + vy'_2 \\
+    y''_2(x) &= v''y_1 + 2v'y'_1 + vy''_1
+\end{align*}
+
+If $y_2$ satisfies ($\star$), then
+\[
+    v''y_1 + v' (2y'_1 + py_1) + v(y''_1 + p y'_1 + qy_1) = 0
+\]
+By letting $u = v'$ it follows that,
+\begin{align*}
+    v''y_1 + v' (2y'_1 + py_1) = 0 \\
+    \Rightarrow u' y_1 + u(2y'_1 + py_1) = 0
+\end{align*}
+Which is just a seperable first order ODE, therefore
+\begin{align*}
+    \frac{u'}{u} &= -\frac{2 y'_1}{y_1} - p \\\
+    \Rightarrow ln(u) &= -2 \ln(y_1) - \int_{0}^{x}{p(w) \diffd w} + \ln A \\
+    \Rightarrow u &= \frac{A}{y_1^2} \exp \bkt{-\int_{0}^{x}{p(w) \diffd w}}
+\end{align*}
+We then integrate to solve for $v$.
+
+\begin{eg}
+    \[
+        y'' - 4y' + 4y = 0  
+    \]
+    Have a degenerate solution $y_1 = e^{2x}$.
+    By reduction of order,
+    \begin{align*}
+        \Rightarrow \frac{u'}{u} = -2 \times 2 + 4 = 0 \\
+        \Rightarrow v' = A
+    \end{align*}
+    Therefore $v = Ax + B$ for $A, B$ constants.
+    We have $y_2(x) = (Ax + B)e^{2x}$.
+    So $xe^{2x}$ is a second linearly independant solution.
+\end{eg}
+
+\subsubsection{Phase space}
+For an $n^{th}$ order linear ODE
+\[
+    y^{(n)} + p(x) y^{(n-1)} + \cdots + q(x)y = f(x)
+\]
+If we know $y$ up till $y^{(n-1)}$, then we can determine all of the derivatives by differentiating the whole thing!
+$y^{(n)}(x_0)$ is determined by $y^{(0)}(x_0), y^{(1)}(x_0), \cdots, y^{(n-1)}(x_0)$. 
+Hence higher derivatives are also determined from these by differentiating the ODE.
+We can construct a taylor series of $y(x)$ about the point $x_0$ if I specify $y^{(0)}(x_0), y^{(1)}(x_0), \cdots, y^{(n-1)}(x_0)$.
+
+The state of the system is fully sepcified at any $x$ by a solution vector
+\[
+    \vec Y (x) = \begin{pmatrix}
+        y(x) \\ y^{(1)}(x) \\ \vdots \\ y^{(n-1)}(x)
+    \end{pmatrix}
+\]
+At any $x$, $\vec Y(x)$ defines a point in some $N$-dimensional phase space.
+
+\begin{eg}[SHM]
+    \[
+        y'' + 4y = 0 \Rightarrow \begin{array}{c}
+            y_1(x) = \cos (2x) \\
+            y_2(x) = \sin (2x) \\
+        \end{array}  
+    \]
+    Gives two solution vectors
+    \begin{align*}
+        \vec Y_1 (x) = \begin{pmatrix}
+            y_1 \\ y'_1
+        \end{pmatrix} = \begin{pmatrix}
+            \cos (2x) \\ - 2\sin(2x)
+        \end{pmatrix} \\
+        \vec Y_2 (x) = \begin{pmatrix}
+            y_2 \\ y'_2
+        \end{pmatrix} = \begin{pmatrix}
+            \sin (2x) \\ 2\cos(2x)
+        \end{pmatrix}
+    \end{align*}
+
+    Since, $\vec Y_1$ and $\vec Y_2$ are linearly independant for all $x$, we can use them as a basis for phase space.
+\end{eg}
+
+\subsubsection{Wronskian and linear dependance}
+Recall if $\crbkt{y_i (x)}$ are linearly independant, 
+\[
+    \sum_{i=1}^{n} C_i y_i (x) = 0 \qquad \forall x
+\]
+where $C_i$ are not all zero. This this must hold for all $x$, we can differentiate $x$ times to give,
+\[
+    \sum_{i=1}^{n} C_i \vec Y_i (x) = 0 \qquad \forall x
+\]
+and we see that
+\[
+    \crbkt{y_i (x)} \text{ linearly independant } \Rightarrow \crbkt{\vec Y_i (x)} \text{ linearly independant }
+\]
+
+\begin{defi}[Fundamental Matrix / Wronskian]
+    If $\crbkt{y_i (x)}$ are linearly independant,
+    the \emph{wronskian} is the determinant of the fundamental matrix given by
+    \begin{align*}
+        W(x) &= \det (\vec Y_1 (x), \cdots, \vec Y_n (x)) \\
+        &= \begin{vmatrix}
+            y_1 & y_2 & \cdots & y_n \\
+            y'_1 & y'_2 & \cdots & y'_n \\
+            y''_1 & y''_2 & \cdots & y''_n \\
+            \vdots & \vdots & & \vdots \\
+            y^{(n-1)}_1 & y^{(n-1)}_2 & \cdots & y^{(n-1)}_n
+        \end{vmatrix}
+    \end{align*}
+    If the $y_i$'s are linearly dependant, then $W(x) = 0$ for all $x$. 
+    Therefore, by contrapositive,
+    \[
+       \exists x, \quad W(x) \neq 0 \Rightarrow \crbkt{y_i(x)} \text{ are linearly independant}
+    \]
+    This acts as a test for linear independance.
+\end{defi}
+\begin{remark}
+    Note that
+    \[
+        W(x) \neq 0 \forall x \nRightarrow \crbkt{y_i(x)} \text{ are linearly dependant}
+    \]
+    See the moodle notes for the $2 \times 2$ case.
+\end{remark}
+
+\begin{eg}
+    \[
+        y'' + 4y = 0 \Rightarrow \begin{array}{c}
+            y_1(x) = \cos (2x) \\
+            y_2(x) = \sin (2x) \\
+        \end{array}  
+    \]
+    This has a wronskian,
+    \begin{align*}
+        W(x) &= \begin{vmatrix}
+            \cos (2x) & \sin (2x) \\ 
+            - 2\sin(2x) & 2\cos(2x)
+        \end{vmatrix} \\
+        &= 2 \cos^2(2x) + 2 \sin^2(2x) = 2 \forall x
+    \end{align*}
+    Therefore $W(x) \neq 0$ which implies that $y_1$ and $y_2$ are linearly independant.
+\end{eg}
+
+\subsubsection{Abels Theorem}
+\begin{thm}[Abel's Theorem]
+    Given any 2 solutions to,
+    \[
+        y'' + p(x) y' + q(x)
+    \]
+    if $p(x)$ and $q(x)$ are continuous on an interval $I$, then either
+    \begin{itemize}
+        \item $W(x) = 0 \qquad \forall x \in I$
+        \item $W(x) \neq 0 \qquad \forall x \in I $
+    \end{itemize}
+\end{thm}
+\begin{proof}
+    Heres a sketch proof:
+    \begin{align*}
+        W &= y_1 y_2' - y_2y_1' \\
+        W' &= y_1' y_2' + y_1 y_2''- y_2' y_1' - y_1'' y_2 \\
+        &= y_1 y_2'' - y_2 y_1'' \\
+        &= y_2 (py_1' + q y_1) - y_1 (p y_2' + q y_2) \\
+        &= p (y_1 y_2' - y_2y_1') \\
+        &= - pW
+    \end{align*}
+    Which is a seperable ODE for $W$. Hence,
+    \[
+        W(x) = W(x_0) \exp \bkt{- \int_{x_0}^{x}{p(t) \diffd t}}  
+    \]
+    This is known as Abel's identity.
+    If $W(x)$ vanishes at some $x_0$, then it is $0$ for all $x$. 
+    Otherwise it is never $0$ as the exponential term can never be $0$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 13: 03/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{eg}[Bessel's Equation]
+    \begin{align*}
+        x^2 y'' + xy' + (x^2 - n^2)y = 0 \\
+        \Rightarrow y'' + \frac{1}{x} y' + \bkt{1 - \frac{n^2}{x^2}}y = 0
+    \end{align*}
+    By Abel's Identity,
+    \[
+        W(x) = W(x_0) \exp \bkt{- \int_{x_0}^{x}{\frac{1}{u} \diffd u}} = W(x_0) \frac{x_0}{x}
+    \]
+    Note that Abel's identity allows us to determine the form of the wronskian without having to solve the ODE.
+\end{eg}
+
+\subsubsection*{Geometric Interpriation}
+From Abel's Theorem, the solution vectors are either always colinear or never colinear as $x$ varies.
+\begin{itemize}
+    \item If the Wronskian is $0$ then the solution vectors are colinear
+    \item Otherwise the Wronskian $\neq 0$ and the vectors are not colinear.
+\end{itemize}
+Therefore if $\vec Y_1$ and $\vec Y_2$ form a basis at some point $x_p$ then they form a basis for all $x$.
+
+\subsubsection*{Application of Abel's Theorem}
+Since
+\[
+    W(x_0) \exp \bkt{\int_{x_0}^{x}{p(u) \diffd u}} = y_1 y_2' - y'_1 y_2
+\]
+If we know $y'_1$ then we can use this differential equation to solve for $y_2$.
+This turns out to be identical to the reduction of order formula,
+\[
+    \diff {}{x} \bkt{\frac{y_2}{y_1}} = \frac{W(x_0)}{y_1^2} \exp \bkt{\int_{x_0}^{x}{p(u) \diffd u}} 
+\]
+\subsubsection*{Generalisation}
+Abel's Theorem also holds for solutions of $n^{th}$ order linear homogeneous ODEs.
+\[
+    W' = -p(x)W 
+\]
+for
+\[
+    y^{(n)} + p(x) y^{(n-1)} + \cdots + r(x) y = 0
+\]
+So for any linear homogeneous ODE,
+\[
+    W(x) = W(x_0) \exp \bkt{\int_{x_0}^{x}{p(u) \diffd u}}
+\]
+\subsubsection{Linear Equidimensional ODEs}
+\begin{defi}[Equidimensional ODEs]
+    A linear second order ODE is equidimensional if it has the form 
+    \[
+        a x^2 y'' + bx y' + cy = f(x) \tag{$\star$}  
+    \]
+    If this were in a physical setting, then each term would have the same dimension as $y$.
+\end{defi}
+\subsubsection*{Scaling Property of solutions of homogeneous ODES}
+Let $y = g(x)$ be a solution of ($\star$) with $f = 0$.
+\[
+    \Rightarrow  a x^2 g(x)'' + bx g(x)' + cg(x) = 0 \\
+\]
+If $x = \alpha x$
+\[
+    \Rightarrow  a x^2 g(\alpha x)'' + bx g(\alpha x)' + cg(\alpha x) = 0 \\
+\]
+Consider a new function $\tilde{y} = g(\alpha x)$,
+\begin{align*}
+    x \diff {\tilde{y}}{x} = x \alpha g'(\alpha x) \tag{by chain rule}\\
+    x^2 \diff[2] {\tilde{y}}{x} = x^2 \alpha^2 g'(\alpha x)
+\end{align*}
+So $\tilde{y}$ is also a solution, hence,
+\[
+    a x^2 \diff[2]{\tilde{y}}{x} + bx \diff{\tilde{y}}{x} + c\tilde{y} = 0
+\]
+\subsubsection*{Solving by Eigenfunctions}
+\[
+    y = x^k  
+\]
+is an eigenfunction of $x \diff{}{x}$ with eigenvalue $k$. Since
+\[
+    x \diff{}{x}(x^k) = k \times x^k
+\]
+Let's look for a CF of ($\star$) $y_c = x^k$
+\begin{align*}
+    a (k)(k-1) x^k + b k x^k +  c x^k = 0 \\
+    \Rightarrow ak^2 + bk + c = 0
+\end{align*}
+Therefore we have a characteristic equation with roots $k_1, k_2$.
+If $k_1 \neq k_2$ a general CF is
+\[
+    y_c = A x^{k_1} + B x^{k_2}
+\]
+\subsubsection*{Solving by Substitution}
+Another approach is to switch independant variable to $z = \ln x$. Then, 
+\begin{align*}
+    \diff yz &= \diff yx \times \diff xz = \diff yx \times e^z = x \diff yx \\
+    \diff[2]{y}{z} &= e^z \diff yx + e^z e^z \diff[2]{y}{x} \\
+    &= x \diff yx + x^2 \diff[2]{y}{x}
+\end{align*}
+It follows that ($\star$) becomes
+\begin{align*}
+    a x^2 \diff[2]{y}{x} + b x \diff{y}{x} + cy = f(x) \\
+    \Rightarrow a (\diff[2]{y}{z} - \diff{y}{z}) + b \diff{y}{z} + cy = f(e^z) \\
+    \Rightarrow a \diff[2]{y}{z} + (b-a)\diff yz + cy = f(e^z)
+\end{align*}
+This is now in constant coefficients and we can solve
+\[
+    a \lambda^2 + (b-a) \lambda + c = 0
+\]
+to get the same roors as in $k_1$ and $k_2$.
+\begin{align*}
+    \text{CFs } &\Rightarrow y_c = A e^{\lambda_1 z} + B e^{\lambda_2 z} \\
+    &\Rightarrow y_c = A x^{\lambda_1} + B x^{\lambda_2}
+\end{align*}
+In the degenerate case, $k_1 = k_2 = k$ we know that
+\begin{align*}
+    y_c &= A e^{k z} + B z e^{k z} \\
+    &= (A + B \ln x) x^k
+\end{align*}
+\subsection{Inhomogeneous (forced) $2^{nd}$ order ODEs}
+\subsubsection{P.Is of ODEs with constant coefficients}
+When dealing with forced ODEs,
+\[
+    a \diff[2]{y}{x} + b \diff yx + cy = f(x)
+\]
+We can try
+\begin{center}
+    \begin{tabular}{c | c}
+        $f(x)$ & $y_p(x)$ \\
+        \hline \\
+        $e^{Mx}$ & $A e^{Mx}$ \\
+        $\sin (kx)$ or $\cos (kx)$ & $A \sin (kx) + B \cos (kx)$ \\
+        $n$-degree Polynomial $P_n(x)$ & polynomial of the same degree
+    \end{tabular}
+\end{center}
+\begin{eg}
+\[
+    y'' - 5y' + 6y = 2x + e^{4x}  
+\]
+We try a $y_p = ax + b + c e^{4x}$. Then
+\begin{align*}
+    y'_p &= a + 4c e^{4x} \\
+    y''_p &= 16c e^{4x}
+\end{align*}
+\begin{align*}
+    \Rightarrow (16c - 20c + 6c)e^{4x} + 6ax + (6b - 5a) = 2x + e^{4x} \\
+    \Rightarrow c = \frac{1}{2}, a = \frac{1}{3}, b = \frac{5}{18}
+\end{align*}
+Therefore, the P.I is given by
+\[
+    y_p = \frac{1}{3} x + \frac{5}{18} + \frac{1}{2} e^{4x}
+\]
+And our complimentary function is given by
+\[
+    y_c = \alpha e^{3x} + \beta e^{2x}
+\]
+And our general solution, 
+\[
+    y = \alpha e^{3x} + \beta e^{2x} + \frac{1}{3} x + \frac{5}{18} + \frac{1}{2} e^{4x}
+\]
+\end{eg}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 14: 06/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+The linearity of the ODE allows us to superpose trial $y_p$ if $f(x)$ is a superposition.
+Trials generally work, unless the forcing term is a root of the homogeneous equation.
+
+\subsubsection*{Resonance}
+What if $f(x)$ is a C.F or instead a term that is present in the C.F?
+We can detune again!
+\begin{eg}
+    \[
+        y'' + w_0^2 y = \sin (w_0 t)  
+    \]
+    We first solve for the complimentary functions,
+    \[
+        y_c = A \sin (w_0 t) + B \cos (w_0 t) \tag{$\star$}  
+    \]
+    Then we consider a detuned equation,
+    \[
+        y'' + w_0^2 y = \sin (wt) \qquad \text{ for } w \neq w_0\tag{$\dagger$}  
+    \]
+    Try P.I $y_p = C \sin (wt)$, and substitute into ($\dagger$)
+    \begin{align*}
+        (-w^2 + w_0^2) C \sin (wt) = \sin (wt) \\
+        \Rightarrow C = \frac{1}{w_0^2 -w^2}
+    \end{align*}
+    In order to regularise the behaviour as $w \rightarrow w_0$, 
+    let's try to add a complimentary function. We can try
+    \[
+        y_p (t) = \frac{1}{w_0^2 -w^2} (\sin (wt) - \sin (w_0t))
+    \]
+    Now, we can evaluate the limit via L'H\^opital's Rule,
+    \begin{align*}
+        \lim_{w \rightarrow w_0} \frac{\sin wt - \sin w_0 t}{w_0^2 -w^2} &= \lim_{w \rightarrow w_0} \frac{t \cos wt}{-2w} \\
+        &= \frac{-t \cos (w_0t)}{2 w_0}
+    \end{align*}
+    P.I of $\star$ has been resonantly driven and we get
+    \[
+        y_p(t) = \frac{-t \cos (w_0t)}{2 w_0}
+    \]
+\end{eg}
+
+\begin{remark}[General Rule]
+    If the forcing term is a linear combination of CFs then a suitable P.I to try is
+    \[
+        y_p = t \times (\text{non-resonant P.I})  
+    \]
+    If the C.Fs arae degenerate then we may need higher order 
+    \[
+        y_p = t^2 \times (\text{non-resonant P.I})  
+    \]
+    to try.
+\end{remark}
+\subsubsection*{Resonance in Equidimensional ODEs}
+Consider an equidimensional ODE (non-degenerate):
+\[
+    a x^2 y'' + bxy' + cy = f(x)
+\]
+This has complimentary functions
+\[
+    y_c = A x^{k_1} + B x^{k_2} \qquad (k_1 \neq k_2)
+\]
+If the forcing term in proportional to $x^{k_1}$ or $x^{k_2}$ then the P.I is of the form
+\[
+    y_p = x^{k_i} \ln x  
+\]
+We can see this via the sub $z = \ln x$ and we know how to deal with the resonant case for constant coefficients.
+\begin{remark}
+    In the degenerate case where $k_1 = k_2$ we will need to consider higher order
+    \[
+        y_p = x^{k_i}(\ln x )^2
+    \]
+\end{remark}
+\subsubsection{Variation of Parameters}
+This is a systematic method to find P.I given two linearly independant C.F. 
+Consider the following,
+\[
+    y'' + p(x) y' + q(x) y = f(x) \tag{$\star$}
+\]
+with linearly independant CFs, $y_1$ and and $y_2$ and the two solution vectors
+\[
+    \vec Y_1 (x) = \begin{pmatrix}
+        y_1 \\ y'_1
+    \end{pmatrix} \text{  and  }
+    \vec Y_2 (x) = \begin{pmatrix}
+        y_2 \\ y'_2
+    \end{pmatrix}
+\]
+By abel's theorem, we know that these are never colinear. 
+Therefore we can use these as a basis in phase space to make the solution vector of the P.I of ($\star$) as
+\[
+    \vec Y_p = \begin{pmatrix}
+        y_p \\ y'_p
+    \end{pmatrix} = u(x) \vec Y_1 + v(x) \vec Y_2
+\]
+In components,
+\begin{align*}
+    y_p &= u(x) y_1 + v(x) y_2 \tag{$\dagger$}\\
+    y'_p &= u(x) y'_1 + v(x) y'_2 \tag{$\ddagger$}\\
+    \Rightarrow y''_p &= u(x) y''_1 + u'(x) y'_1 + v(x) y''_2 + v'(x) y'_2
+\end{align*}
+It follows that
+\begin{align*}
+    f(x) =& y''_p + p(x) y'_p + q(x) y_p \\
+    =& u(x) y''_1 + u'(x) y'_1 + v(x) y''_2 + v'(x) y'_2 + \\
+    &+ p(x) (u(x) y'_1 + v(x) y'_2) \\
+    &+ q(x) (u(x) y_1 + v(x) y_2) \\
+    =& u'(x)y'_1 + v'(x)y'_2
+\end{align*}
+
+Also, by differentiating $\dagger$ and comparing it to $\ddagger$
+\begin{align*}
+    y'_p = u(x) y'_1 + u'(x) y_1 + v(x) y'_2 + v'(x) y_2 \\
+    = u(x) y'_1 + v(x) y'_2 \tag{compare to $\ddagger$} \\
+    \Rightarrow u'(x) y_1 + v'(x) y_2 = 0
+\end{align*}
+
+Together, we get
+\begin{align*}
+    \begin{pmatrix}
+        y_1 & y_2 \\
+        y'_1 & y'_2 
+    \end{pmatrix} &\begin{pmatrix}
+        u' \\ v'
+    \end{pmatrix} 
+    = \begin{pmatrix}
+        0 \\ f
+    \end{pmatrix} \\
+    \Rightarrow &\begin{pmatrix}
+        u' \\ v'
+    \end{pmatrix} = \frac{1}{W} \begin{pmatrix}
+        y'_2 & - y_2 \\
+        -y'_1 & y_1
+    \end{pmatrix} 
+    \begin{pmatrix}
+        0 \\ f
+    \end{pmatrix}
+\end{align*}
+Therefore, we can solve for $u'$ and $v'$
+\[
+    u' = \frac{- y_2}{W} f \text{ and } v' = \frac{y_1}{W} f     
+\]
+Then we integrate to find a general
+\[
+    y_p = y_2(x) \int^{x}{\frac{y_1(t)}{W(t)} f(t) \diffd t} - y_1(x) \int^{x}{\frac{y_2(t)}{W(t)} f(t) \diffd t}
+\]
+Note that changing the lower bounds of the limits adds multiples of C.Fs.
+We can check that the expression is symmetric under swapping $y_1$ and $y_2$ since,
+\[
+    \begin{vmatrix}
+        y_1 & y_2 \\
+        y'_1 & y'_2 
+    \end{vmatrix}
+    = - \begin{vmatrix}
+        y_2 & y_1 \\
+        y'_2 & y'_1 
+    \end{vmatrix}
+\]
+
+\begin{eg}
+    \[
+        y'' + 4y = \sin (2x)  
+    \]
+    CFs are
+    \[
+        y_1 = \sin 2x \text{ and } y_2 = \cos 2x    
+    \]
+    The forcing term is resonant, and we can solve for the wronskian
+    \[
+        W(x) = -2   
+    \]
+    So, 
+    \begin{align*}
+        y_p &= \cos 2x \int^{x}{\frac{-1}{2} (\sin 2t) (\sin 2t) \diffd t} - \sin 2x \int^{x}{\frac{-1}{2} (\cos 2t) (\sin 2t) \diffd t} \\
+        &= \frac{-1}{4} \cos 2x \bkt{x - \frac{1}{4} \sin 4x} + \frac{1}{4} \sin 2x \bkt{\frac{-1}{4}\cos 4x} \\
+        &= \frac{1}{16} \sin 2x - \frac{1}{4} x \cos 2x
+    \end{align*}
+    Which is the same result as detuning just with a added complimentary function that we can remove.
+\end{eg}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 15: 08/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Forced Oscillating Systems}
+\subsubsection*{Transients and Damping}
+% insert the cool diagram.
+By Newton's $2^{nd}$ law:
+\begin{align*}
+    m \ddot{g} &= \sum {\text{forces}} \\
+    &= -k y - b\dot{y} + F(t) \\
+    \Rightarrow& m \ddot{y} + b \dot{y} + k y = F(t)
+\end{align*}
+Where $b > 0$ and $k > 0$ are positive constants.
+For $b = 0$ (no damping) and $F(t) = 0$ we have simple SHM at angular frequency
+\[
+    w_0 = \sqrt{\frac{k}{m}}
+\]
+We can move to dimensionless time coordinate $\tau = w_0 t$. Divide by $k$ to get
+\[
+    y'' + 2k y' + y = \frac{F(t)}{k} = F(\tau)  
+\]
+In this substitution we see that the unforced system is determined by one dimensionless coordinate $k$.
+\subsubsection{Free (unforced or "natural") response}
+In this case $F = 0$ hence,
+\begin{align*}
+    y'' + 2k y' + y = 0 \\
+    \Rightarrow \lambda^2 + 2k \lambda + 1 = 0 \tag{characteristic equation}\\
+    \lambda_1, \lambda_2 = -k \pm \sqrt{k^2 - 1}
+\end{align*}
+
+\subsubsection*{Light Damping (under damping): $k < 1$}
+We have that $\lambda_1, \lambda_2 \in \C$:
+\[
+    \lambda_1, \lambda_2 = -k \pm i \sqrt{1 - k^2}
+\]
+A general solution is
+\[
+    y(\tau) = e^{-k \tau} [A \sin(\sqrt{1 - k^2} \tau) + B \cos (\sqrt{1 - k^2} \tau)]
+\]
+This is a damped oscillator. It oscilates above and below the equilibruim position inside the $e^{-k\tau}$ envelope.
+Oscillations occur at 
+\[
+    w_{\text{free}} = w_0 \sqrt{1 - k^2}
+\]
+and we see that
+\[
+    w_{\text{free}} \rightarrow w_0 \text{ as } k \rightarrow 0
+\]
+\subsubsection*{Critical Damping: $k = 1$}
+We have the degenerate case: $\lambda_1 = \lambda_2 = -k$.
+A general solution is
+\[
+    y(\tau) = e^{-k \tau}(A + B \tau)  
+\]
+This case has the shortest "transient" effect
+\subsubsection*{Heavy Damping (over damping): $k > 1$}
+$\lambda_1, \lambda_2 \in \R$. WLOG, take $\abs{\lambda_1} < \abs{\lambda_2}$. We have
+\[
+    \lambda_1 = -k + \sqrt{k^2 - 1} \text{ and } \lambda_2 = -k - \sqrt{k^2 - 1}
+\]
+A general solution is then
+\[
+    y(\tau) = A e^{- \abs{\lambda_1} \tau} + B e^{- \abs{\lambda_2} \tau}
+\]
+Note that the unforced response decays eventually in all cases.
+\subsubsection{Forced Response}
+We have the C.F $+$ P.I ``transient response'' initially, over $\tau$,
+the C.F dies away and we are left with the P.I. 
+We say that the system settles into a specific P.I or ``steady state response'' for any choice of initial conditions.
+
+\begin{eg}
+    \[
+        \ddot{y} + \frac{b}{m} \dot{y} + \frac{k}{m} y = \frac{F_0}{m} \sin wt \tag{$\star$} 
+    \]
+    Let $\mu = \frac{b}{m}$ and $w_0^2 = \frac{k}{m}$
+    If we assume light damping $\mu < 2 w_0$, we have C.F
+    \[
+        y_c(t) = e^{-\frac{\mu}{2}t} (A \sin (w_{\text{free}} t) + B \cos (w_{\text{free}} t))   
+    \]
+    where
+    \[
+        w_{\text{free}} = \sqrt{w_0^2 - \frac{\mu^2}{4}}
+    \]
+
+    For the P.I, try
+    \[
+        y_p(t) = (C \sin wt + D \cos wt) \frac{F_0}{m}  
+    \]
+    If we substitute this into ($\star$)
+    \begin{align*}
+        \sin wt &\Rightarrow -w^2C - \mu w D + w_0^2 C = 1 \\
+        \cos wt &\Rightarrow -w^2D - \mu w C + w_0^2 D = 0
+    \end{align*}
+    This gives,
+    \[
+        y_p(t) = \frac{F_0}{m} \frac{(w_0^2 - w^2) \sin wt - \mu w \cos wt}{(w_0^2 - w^2)^2 + (\mu w)^2}  
+    \]
+    We see that the amplitude of the $y_p$ is given By
+    \[
+        \frac{F_0}{m} \sqrt{C^2 + D^2} = \frac{F_0}{m} \frac{1}{\sqrt{(w_0^2 - w^2)^2 + (\mu w)^2}}  
+    \]
+    If we plot the amplitude graph we see that it peaks at
+    \[
+        w_{\text{res}} = \sqrt{w_0^2 - \frac{\mu^2}{2}}    
+    \]
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 16: 10/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Impulses \& point forces}
+Consider a sudden force applied between $t = \tau - \epsilon$ and $t = \tau + \epsilon$.
+For example, striking an oscilator. As $\epsilon \rightarrow 0$ only the impulse
+\[
+    I \equiv \int_{\tau - \epsilon}^{\tau + \epsilon}{F(t) \diffd t}    
+\]
+matters for the subsequent motion. 
+Therefore it is mathematically convinent to consider the limit of such a sudden impact.
+
+Consider a forced, damped oscillator
+\[
+    m \ddot{y} + b \dot{y} + ky = F(t)
+\]
+We integrate the ODE across the interval $t = \tau - \epsilon$ to $t = \tau + \epsilon$.
+\[
+    \lim_{\epsilon \rightarrow 0} \bkt{ m \dot{y} \eval{\tau - \epsilon}{\tau + \epsilon} + b y\eval{\tau - \epsilon}{\tau + \epsilon} + k \int_{\tau - \epsilon}^{\tau + \epsilon} y \diffd t } = I    
+\]
+Since we want $y$ to be continuous and finite, we know that as $\epsilon \rightarrow 0$
+\begin{align*}
+    y\eval{\tau - \epsilon}{\tau + \epsilon} = 0 \\
+    \int_{\tau - \epsilon}^{\tau + \epsilon} y \diffd t = 0
+\end{align*}
+It follows that:
+\[
+    m \dot{y} \eval{\tau - \epsilon}{\tau + \epsilon} = I
+\]
+the velocity is discontinuous at $T$
+\subsubsection{Delta function forcing}
+We will formalise the idea of an impulse force. Consider a family of functions $\mathcal{D}(t; \epsilon)$ with 
+\begin{enumerate}[label=\arabic*.]
+    \item $\lim_{\epsilon \rightarrow 0} \mathcal{D}(t; \epsilon) = 0 0 \qquad \forall t \neq 0$
+    \item $\int_{-\infty}^{\infty}{\mathcal{D}(t; \epsilon) \diffd t} = 1$
+\end{enumerate}
+The impulse force earlier can then be written as
+\[
+    F(t) = I \times \mathcal{D}(t; \epsilon)  
+\]
+
+\begin{remark}[Example family]
+    We have the normalise gaussian,
+    \[
+        \mathcal{D}(t; \epsilon) = \frac{1}{\epsilon \sqrt{\pi}} e^{\frac{-t^2}{\epsilon^2}}
+    \]
+    This family is not unique, but for any family, the limit as $\epsilon \rightarrow 0$ yields a unique function.
+    This is the \emph{Dirac Delta Function}.
+\end{remark}
+\begin{defi}[Dirac Delta Function]
+    The \emph{Dirac Delta Function} is defined by
+    \[
+        \delta(x) \equiv \lim_{\epsilon \rightarrow 0} \mathcal{D}(x; \epsilon) 
+    \]
+    Note that we should only use its integral properties. These are
+    \begin{enumerate}
+        \item $\delta(x) = 0 \qquad \forall x \neq 0 $
+        \item $\int_{-\infty}^{\infty}{\delta(x) \diffd x} = 1$
+        \item $\int_{-\infty}^{\infty}{g(x)\delta(x) \diffd x} = g(0)$ (sampling property)
+    \end{enumerate}
+    For all function $g(x)$ that are continuous at $x = 0$. 
+    The sampling property generalises to for $b > a$
+    \[
+        \int_{a}^{b}{g(x)\delta(x - x_0) \diffd x} = \begin{cases}
+            g(x_0) & \text{ if } a < x_0 < b \\
+            0 & \text{ if } x_0 < a \text{ or } x_0 > b\\
+            \text{undefined} & \text{ otherwise}
+        \end{cases}
+    \]
+\end{defi}
+\subsubsection{Delta-Function Forcing}
+Consider 
+\[
+    y'' + p(x)y' + q(x) y = \delta(x)
+\]
+For $x < 0$ or $x > 0$ we have $y'' + p(x)y' + q(x) y = 0$.
+However, discontinuity in $y'$ at $x = 0$: integrating from $x = - \epsilon$ to $x = \epsilon$
+\[
+    \lim_{\epsilon \rightarrow 0} \bkt{y' \eval{- \epsilon}{\epsilon}} = 1
+\]
+This is called the ``Jump Condition''.
+As a general rule, the highest order derivative term in the ODE addresses the delta function in the jump condition.
+
+\begin{eg}
+    \[
+        y'' - y = 3 \delta(x - \frac{\pi}{2})  
+    \]
+    With $y = 0$ at $x = 0$ and $x = \pi$
+    \begin{itemize}
+        \item For $0 \leq x < \frac{\pi}{2}$, $y'' - y = 0 \Rightarrow y = A \sinh x$ for constant A
+        \item For $\frac{\pi}{2} \leq x < \pi$, $y'' - y = 0 \Rightarrow y = C \sinh (\pi - x)$ for constant C
+    \end{itemize}
+    We join these curves at $x = \frac{\pi}{2}$
+    \begin{enumerate}
+        \item $y$ is continuous $\Rightarrow A = C$
+        \item $\lim_{\epsilon \rightarrow 0} y' \eval{\frac{\pi}{2} - \epsilon}{\frac{\pi}{2} + \epsilon} = 3$
+        \[
+            \Rightarrow -C \cosh(\frac{\pi}{2}) - A \sinh(\frac{\pi}{2}) = 3 \Rightarrow C = A = \frac{-3}{2 \cosh{\frac{\pi}{2}}} 
+        \]
+    \end{enumerate}
+
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                xlabel = $x$,
+                ylabel = $y$
+            ]
+            \addplot[
+                domain=0:1.5707,
+                color=red
+            ]
+            {-0.5978 * sinh(\x)};
+            \addplot[
+                domain=1.5707:3.14159265,
+                color=red
+            ]
+            {-0.5978 * sinh(3.14159265 - \x)};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    We see that there is a discontinuity in $y'$ at $x = \frac{\pi}{2}$.
+\end{eg}
+\subsubsection{Heaviside step function $H(x)$}
+\begin{defi}[Heaviside Function]
+    The \emph{heaviside step function} given by
+    \[
+        H(x) \equiv \int_{-\infty}^{\infty} {\delta(t) \diffd t} 
+    \]
+    Takes the values
+    \[
+        H(x) = \begin{cases}
+            0 & \text{ for } x < 0 \\
+            1 & \text{ for } x > 0 \\
+            \text{undefined} & \text{otherwise}
+        \end{cases}
+    \]  
+    By the Fundamental Theorem of Calculus:
+    \[
+        \diff Hx = \delta(x)
+    \]
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 17: 13/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
