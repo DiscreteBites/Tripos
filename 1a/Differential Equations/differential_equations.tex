@@ -2513,5 +2513,591 @@ As a general rule, the highest order derivative term in the ODE addresses the de
 %%%%%%%%%%%%%%%%%%%%%%
 % Lecture 17: 13/11/2023
 %%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Forcing with $H(x)$}
+Consider
+\[
+    y'' + p(x)y' + q(x)y = H(x)  
+\]
+This expands into
+\[
+    y'' + p(x)y' + q(x)y = \begin{cases}
+        0 & \text{ for } x < 0 \\
+        1 & \text{ for } x > 0
+    \end{cases}
+\]
+It follows that
+\begin{align*}
+    y'' \eval{-\epsilon}{\epsilon} + p(x)y' \eval{-\epsilon}{\epsilon} + q(x)y \eval{-\epsilon}{\epsilon} = 1 \\
+    \lim_{\epsilon \rightarrow 0} \sqbkt{y'' \eval{-\epsilon}{\epsilon} + p(0)y' \eval{-\epsilon}{\epsilon} + q(0)y \eval{-\epsilon}{\epsilon}} = 1 \tag{$\star$}
+\end{align*}
+
+If $y'' \sim H(x)$ around $x = 0$ then $y'$ and $y$ are continuous as ($\star$) is satisfied.
+This gives the jump conditions for Heaviside forcing,
+\[
+    \lim_{\epsilon \rightarrow 0} y' \eval{-\epsilon}{\epsilon} = 0 \text{ and } \lim_{\epsilon \rightarrow 0} y \eval{-\epsilon}{\epsilon} = 0
+\]
+In the typical situation $y = 0$ for $x < 0$, we will have 2 arbitrary constants in $y$ for $x > 0$, which are determined by the two ``jump conditions'',
+$y = 0$ and $y' = 0$ as $x \rightarrow 0^+$
+
+\subsection{Higher-Order Discrete Equations}
+Consider a linear discrete $2^{nd}$ order equation.
+\[
+    a y_{n+2} + b y_{n+1} + c y_n = f_n  
+\]
+Note that we can derive $2^{nd}$ order derivatives from
+\[
+    \diff[2]{y}{x} \approx \frac{y(x_n + h) + y(x_n - h) - 2y(x_n)}{h^2}
+\]
+We can solve with similar methods to ODEs: $y_n = y^{c}_n + y^p_n$.
+Complementary function $y^c_n$ will satisfy
+\[
+    a y^c_{n+2} + b y^c_{n+1} + c y^c_n = 0 \tagstar
+\]
+For an ODE with constant coefficients, we try $y \propto e^{\lambda x}$.
+This translates to a suitable P.I being
+\[
+    y^c_n \propto k^n
+\]
+Substituting this into \refstar,
+\begin{align*}
+    a k^{n+2} + b k^{n+1} + c k^n = 0 \\
+    \Rightarrow a k^2 + bk + c = 0
+\end{align*}
+Which is the characteristic equation with roots $k = k_1, k_2$.
+A general C.F then looks like
+\[
+    y^c_n = \begin{cases}
+        A k_1^n + B k_2^n & \text{ if } k_1 \neq k_2 \\
+        (A + Bn) k^n & \text{ if } k_1 = k_2 = k
+    \end{cases}
+\]
+
+For particular integrals we can try the following,
+\begin{center}
+    \begin{tabular}{c|c}
+        $f_n$ & $y_p$ \\
+        \hline
+        $k^n$ & $Ak^n$ if $k \neq k_1, k_2$ \\
+        $k^n$ & $Ank^n$ (degenerate or resonant case) \\
+        $n^p, \quad p \in \Z^+$ & $An^p + Bn^{p-1} + \cdots + Cn + D$
+    \end{tabular}
+\end{center}
+
+\begin{eg}[Fibonacci Seq]
+    \[
+        y_n = y_{n-1} + y_{n-2}  
+    \]
+    where $y_0 = y_1 = 1$
+    \[
+        \begin{array}{ccccccccc}
+            y_0 & y_1 & y_2 & y_3 & y_4 & y_5 & y_6 & y_7 & \cdots \\
+            \hline
+            1   & 1   & 2   & 3   & 5   & 8   & 13  & 21 & \cdots
+        \end{array}  
+    \]
+    Try a general solution $k^n \Rightarrow k^2 - k - 1 = 0$,
+    \begin{align*}
+        \Rightarrow k = \frac{1 \pm \sqrt{5}}{2} \\
+        \Rightarrow \phi_i = \frac{1 + \sqrt{5}}{2}, \phi_2 = \frac{1 - \sqrt{5}}{2}
+    \end{align*}
+    A general solution is then,
+    \[
+        y_n = A \phi_1^n + B \phi_2^n  
+    \]
+    We can determine $A$ and $B$ by initial conditions;
+    \begin{align*}
+        y_0 = 1 \Rightarrow A + B = 1 \\
+        y_1 = 1 \Rightarrow A \phi_1 + B \phi_2 = A \phi_1 - \frac{B}{\phi_1} = 1
+    \end{align*}
+    Solving for $A$ and $B$ gives,
+    \[
+        A = \frac{\phi_1}{\sqrt{5}} \text{ and } B = \frac{-\phi_2}{\sqrt{5}} = \frac{1}{\sqrt{5}} \frac{1}{\phi_1}
+    \]
+    It follows that
+    \[
+        y_n = \frac{\phi_1^{n+1} - \phi_2^{n+1}}{\sqrt{5}}  
+    \]
+    Since $\phi_1 > 1$
+    \[
+        y_n \rightarrow \frac{\phi_1^{n+1}}{\sqrt{5}} \text{ as } n \rightarrow \infty
+    \]
+    Therefore the ratio of the terms in the fibonacci series tends to the golden ratio,
+    \[
+        \therefore \lim_{n \rightarrow \infty} \frac{y_{n+1}}{y_n} = \phi_1  
+    \]
+\end{eg}
+
+\subsection{Series Solutions}
+Series solutions of linear homogeneous $2^{nd}$ order ODEs. Consider
+\[
+    p(x) y'' + q(x) y' + r(x) y = 0 \tagstar
+\]
+We seek a series solution around $x = x_0$. This may now always work!
+The feasibility depends critically on the form of $p, q, r$ around $x_0$.
+
+\subsubsection{Classification of Singular points}
+\begin{defi}[Ordinary and Singular poinrs of ODEs]
+    A point $x_0$ is called an ordinary point about \refstar if both
+    \[
+        \frac{q(x)}{p(x)} \text{ and } \frac{r(x)}{p(x)}
+    \]
+    have taylor series about $x_0$ (``analytic'' there).
+    Otherwise $x_0$ is a singular point.
+    For example, $\frac{1}{x}$ has no taylor series about $x = 0$.
+\end{defi}
+
+\subsubsection*{Types of singular point}
+If $x_0$ is a singular point, but \refstar can be written as
+\[
+    P(x)(x - x_0)^2 y'' + Q(x)(x - x_0)y' + R(x)y = 0
+\]
+with
+\[
+    \frac{Q(x)}{P(x)} \text{ and } \frac{R(x)}{P(x)}
+\]
+analytic at $x_0$, then $x_0$ is a regular singular point.
+Otherwise, $x_0$ is a singular point.
+\begin{itemize}
+    \item For regular singular points, we can always get at least $1$ series solution.
+    \item For irregular singular points, there is no gaurantee for any series solutions.
+\end{itemize}
+Equivalently, if 
+\[
+   (x - x_0) \frac{q(x)}{p(x)} \equiv \frac{Q(x)}{P(x)}
+\]
+and
+\[
+    (x - x_0)^2 \frac{r(x)}{p(x)} \equiv \frac{R(x)}{P(x)}
+\]
+are analytic at $x = x_0$ then they are regular singular points.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 18: 15/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}
+    Let's consider an equidimensional differential equation,
+    \[
+        (1 - x^2)y'' -2x y' + 2y = 0  
+    \]
+    We see that $x = \pm 1$ are singular points, as $p(x) = 0$ there. 
+    We have
+    \[
+        \frac{q(x)}{p(x)} = \frac{-2x}{1 - x^2} = \frac{2x}{(x - 1)(x + 1)}  
+    \]
+    and
+    \[
+        \frac{r(x)}{p(x)} = \frac{-2}{(x - 1)(x + 1)}
+    \]
+    Therefore, we can remove the pole by multiplying by $(x \pm 1)$ and $(x \pm 1)^2$.
+    Hence, $x = \pm 1$ are regular singular points. For instance,
+    \[
+        (x - 1) \frac{q(x)}{p(x)} = \frac{2x}{x + 1}
+    \]
+    To expand about $x = 1$, we write $x = 1 + \epsilon$
+    \begin{align*}
+        \frac{2x}{x + 1} &= \frac{2(1 + \epsilon)}{2 + \epsilon} \\
+        &= (1 + \epsilon)(1 + \frac{\epsilon}{2})^{-1} \\
+        &= (1 + \epsilon)(1 - \frac{\epsilon}{2} + \bkt{\frac{\epsilon}{2}}^2 - \cdots) \\
+        &= 1 + \frac{1}{2} \epsilon + \cdots \\
+        &= 1 + \frac{1}{2} (x - 1) + \cdots
+    \end{align*}
+\end{eg}
+
+\begin{eg}
+    \[
+        \sin x y'' + \cos y' + 2y = 0
+    \]
+    We have
+    \[
+        \frac{q(x)}{p(x)} = \frac{\cos x}{\sin x} \text{ and } \frac{r(x)}{p(x)} = \frac{2}{\sin x}
+    \]
+    when $x = n \pi$ we have singular points. However, if we let $\epsilon = x - n\pi$
+    \[
+        (x - n \pi) \frac{q}{p} = \epsilon \frac{\cos(n\pi + \epsilon)}{\sin(n\pi + \epsilon)} = \frac{\epsilon \cos \epsilon}{\sin \epsilon}
+    \]
+    which we can write as a convergent power series about $\epsilon = 0$. Also,
+    \[
+        (x - n \pi)^2 \frac{r}{p} = \frac{\epsilon^2 c}{(-1)^n \sin \epsilon}
+    \]
+    which also has a convergent power series.
+    It followd that $x = n \pi$ is a regular singular point.
+\end{eg}
+
+\begin{eg}
+    \[
+        \bkt{1 + \sqrt{x}} y'' - 2x y' + 2y = 0  
+    \]
+    $x = 0$ is a singular point as
+    \[
+        \frac{q}{p} = \frac{-2x}{1 + \sqrt{x}}  
+    \]
+    does not have a defined second derivative. 
+    Moreover, 
+    \[
+        x\frac{q}{p} = \frac{-2x^2}{1 + \sqrt{x}}
+    \]
+    does not have a taylor series either, so $x = 0$ is an irregular singular point.
+\end{eg}
+
+\subsubsection{Method of Frobenius}
+Consider a general equation of the form
+\[
+    p(x)y'' + q(x)y' + r(x) y = 0 \tagstar
+\]
+
+\begin{thm}[Fuch's Theorem]
+    \begin{enumerate}[label=(\arabic*)]
+        \item If $x = x_0$ is an ordinary point of \refstar, therer are $2$ linearly independant solutions of the form
+        \[
+            y(x) = \sum_{n=0}^{\infty} a_n (x - x_0)^n  
+        \]
+        \item If $x = x_0$ is a regular singular point of \refstar, there is at least one solution of the form
+        \[
+            y(x) = \sum_{n=0}^{\infty} a_n (x - x_0)^{n + \sigma} \tag{$a_0 \neq 0$}
+        \]
+        Note that in this case we can take $a_0 \neq 0$, as if it were the case we could simply redefine the series.
+        There is no gaurantee that we obtain two linearly independant solutions of this form.
+        \item For irregular singular points the method may fail completely
+    \end{enumerate}
+\end{thm}
+\begin{eg}[Ordinary Points]
+    We will look for series solutions about $x = 0$ of
+    \[
+        (1 - x^2)y'' - 2x y' + 2y = 0 \tagstar  
+    \]
+    $x = 0$ is an ordinary point, hence we expect $2$ power series solutions.
+    Note that in this case $x = \pm 1$ are the regular singular points.
+    We will begin by writing down our test solution
+    \begin{align*}
+        y &= \sum_{n=0}^{\infty} a_n x^n \\
+        y' &= \sum_{n=1}^{\infty} n a_n x^{n-1} \\
+        y'' &= \sum_{n=2}^{\infty} n (n-1) a_n x^{n-2} \\
+    \end{align*}
+
+    For convinience, We multiply \refstar by $x^2$ to make it equidimensional but with polynomail coefficients
+    \[
+        (1 - x^2)x^2 y'' - 2x^3 y' + 2x^2 y = 0
+    \]
+    Substituting,
+    \[
+        \sum_{n=2}^{\infty} (1 - x^2)n(n-1) a_n x^{n} - 2 \sum_{n=1}^{\infty} x^2 n a_n x^{n} + 2 \sum_{n=0}^{\infty} x^2 a_n x^n = 0
+    \]
+    We now need to ensure that coefficients are identically $0$ for all terms.
+    For $n \geq 2$, the coefficient of $x^n$ is given by
+    \begin{align*}
+        a_n n(n-1) - a_{n-2}(n-2)(n-3) - 2a_{n-2}(n-2) + 2 a_{n-2} = 0 \\
+        \Rightarrow n(n-1) a_n = n(n-3) a_{n-2} \\
+        \Rightarrow a_n = \frac{n-3}{n-1}a_{n-2}
+    \end{align*}
+    Which is a recurrence relation where $a_0$ and $a_1$ are free arbitrary constants in our solution.
+    Since $a_3 = 0$, $a_5 = 0$, and all odd terms will be $0$.
+    One such solution is 
+    \[
+        y = a_1 x  
+    \]
+    The other even solution is 
+    \begin{align*}
+        a_n = \frac{n-3}{n-1} a_{n-2} &= \frac{n-3}{n-1} \frac{n-5}{n-3} a_{n-4} \\
+        &= \frac{-1}{n-1} a_0
+    \end{align*}
+    Therefore a second solution is
+    \[
+        y = a_0\sqbkt{1 - x^2 - \frac{1}{3}x^3 - \frac{1}{5} x^6 + \cdots}  
+    \]
+    Note that $\ln(1 \pm x) = \pm x - \frac{x^2}{2} \pm \frac{x^3}{3} - \cdots$
+    Therefore,
+    \[
+        y = a_0 \sqbkt{1 - \frac{1}{2} x \ln \bkt{\frac{1 + x}{1 - x}}}  
+    \]
+    Where we use the difference of $2$ power series to remove the even power terms.
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 19: 17/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}[Regular Singular Point]
+    \[
+        4x y'' + 2(1 - x^2)y' - xy = 0 \tagstar  
+    \]
+    $x = 0$ is a regular singular point. By Fuch's Theorem, we try
+    \[
+        y = \sum_{n=0}^{\infty} a_n x^{n + \sigma} \tag{$a_0 \neq 0$}  
+    \]
+    Once again, we multiply through to make the equation ``equidimensional'' this time multiply \refstar by $x$.
+    \begin{align*}
+        \Rightarrow 4x^2 y'' + 2(1 - x^2)xy' - x^2y = 0 \\
+        \Rightarrow \sum_{n=0}^{\infty} a_n x^{n + \sigma} \sqbkt{4(n + \sigma)(n + \sigma - 1 ) + 2 (n + \sigma)(1 - x^2) - x^2}
+    \end{align*}
+    To determine $\sigma$ we look at the lowest power of $x$
+    \begin{align*}
+        x^\sigma&: a_0 \sqbkt{4\sigma(\sigma - 1) + 2\sigma} = 0 \\
+        \Rightarrow& 2 a_0 \sigma (2 \sigma -1) = 0
+    \end{align*}
+    This is called the ``indicial equation'' for the inex $\sigma$.
+    Since $a_0 \neq 0 \Rightarrow \sigma = 0$ or $\sigma = \frac{1}{2}$.
+    The next lowest power of $x$ is
+    \begin{align*}
+        x^{\sigma + 1}&: a_1 [4 (\sigma + 1)(\sigma) + 2 (\sigma + 1)] \\
+        \Rightarrow& 2 a_1 (\sigma + 1)(2 \sigma + 1) = 0
+    \end{align*}
+    For both cases $\sigma = 1, \frac{1}{2}$ this implies that $a_1 = 0$.
+    For higher powers, $n + \sigma$ for $n \geq 2$
+    \begin{align*}
+        x^{n + \sigma}&: a_n [4(n + \sigma)(n + \sigma -1) + 2(n + \sigma)] -a_{n-2} [2 (n -2 + \sigma) - 1] \\
+        &\Rightarrow 2(n + \sigma)(2n + 2\sigma -1) a_n = (2n + 2\sigma -3)a_{n-2} \tagdagger
+    \end{align*}
+    Now we consider the two cases of $\sigma$ seperately.
+    \begin{enumerate}[cases]
+        \item $\sigma = 0$ 
+        \begin{align*}
+            \text{\refdagger} \Rightarrow& 2n(n-1) a_n = (2n -3) a_{n-2} \\
+            \Rightarrow& a_n = \frac{2n -3}{2n(n-1)}a_{n-2}
+        \end{align*}
+        This gives
+        \begin{align*}
+            a_2 =& \frac{1}{4 \times 3} a_0 \\
+            a_4 =& \frac{5}{8 \times 7} a_2 \\
+            \vdots
+        \end{align*}
+        and
+        \[
+            a_1 = 0 \Rightarrow a_3 = 0, a_5 =0, \cdots  
+        \]
+        Together this gives us a solution
+        \[
+            y = a_0 \bkt{1 + \frac{x^2}{4 \times 3} + \frac{5 x^4}{8 \times 7 \times 4 \times 3} + \cdots}    
+        \]
+
+        \item $\sigma = \frac{1}{2}$
+        \begin{align*}
+            \text{\refdagger} \Rightarrow& (2n + 1)(2n)a_n = (2n -2)a_{n-2} \\
+            \Rightarrow& a_n = \frac{n-1}{n (2n + 1)} a_{n-2}
+        \end{align*}
+        This gives,
+        \begin{align*}
+            a_2 = \frac{1}{2 \times 5} a_0 \\
+            a_4 = \frac{3}{4 \times 9} a_2 \\
+            \vdots
+        \end{align*}
+        Together we have a solution
+        \[
+            y = b_0 \bkt{1 + \frac{x^2}{2 \times 5} + \frac{3x^3}{4 \times 9 \times 2 \times 5} + \cdots}  
+        \]
+    \end{enumerate}
+    In this example, we have determined two linearly independant series solutions. However, this is generally not the case.
+\end{eg}
+
+\subsubsection{Second Solutions}
+Expanding about a regular singular point, Fuch's Theorem gaurantees one Frobenius Solution. 
+Whether you get a second depends on the roots $\sigma_1, \sigma_2$ of the indicial equation.
+\begin{enumerate}
+    \item If $\sigma_1 - \sigma_2$ is not an integer, then there are two linearly independant series solutions. 
+    \[
+        y_1 = (x - x_0)^{\sigma_1} \sum_{n=0}^{\infty}{a_n (x - x_0)^n}
+    \] 
+    and
+    \[
+        y_2 = (x - x_0)^{\sigma_2} \sum_{n=0}^{\infty}{b_n (x - x_0)^n}
+    \] 
+
+    \item If $\sigma_1 - \sigma_2$ is a non-zero integer, then we get one series solution involding a larger root say $\sigma_2$
+    \[
+        y_1 = (x - x_0)^{\sigma_2} \sum_{n=0}^{\infty}{a_n (x - x_0)^n}
+    \]
+    and a second solution is of the form
+    \[
+        y_2 = (x - x_0)^{\sigma_1} \sum_{n=0}^{\infty}{b_n (x - x_0)^n} + cy_1(x) \ln(x - x_0)
+    \]
+    where the constant C (which may be zero) is determined in terms of $a_0$ in $y_1$ and $b_0$.
+    This maintains that the general solution still has $2$ arbitrary constants as required for $2^{nd}$ order ODEs.
+
+    \item If $\sigma_1 - \sigma_2 = 0$, the log term is always required in the second solution ($c \neq 0$)
+\end{enumerate}
+
+\begin{eg}
+    \[
+        x^2 y'' - xy = 0 \tagstar  
+    \]
+    $x = 0$ is a regular singular point. We look for solutions of the form
+    \[
+        y = \sum_{n=0}^{\infty} a_n x^{n + \sigma}  \tag{$a_0 \neq 0$}
+    \]
+    This equation is already in a nice almost equidimensional form, so
+    \[
+        \text{\refstar} \Rightarrow \sum_{n=0}^{\infty} [a_n (n+\sigma)(n+\sigma -1)]x^{n + \sigma} - a_n (x) x^{n + \sigma + 1} = 0\\
+    \]
+    The lowest power of $x$ is $x^\sigma$
+    \begin{align*}
+        x^\sigma&: a_0 \sigma (\sigma -1) = 0 \\
+        \Rightarrow& \sigma = 0 \text{ or } \sigma = 1
+    \end{align*}
+    For $n \geq 1$
+    \[
+        a_n (n + \sigma)(n + \sigma -1) - a_{n-1} = 0  
+    \]
+    \begin{enumerate}[cases]
+        \item $\sigma = 1$
+        \begin{align*}
+            a_n = \frac{1}{n(n+1)} a_{n-1} \\
+            \Rightarrow a_n = \frac{1}{n! (n+1)!} a_0
+        \end{align*}
+        Giving,
+        \[
+            y_1 = a_0 x(1 + \frac{x}{2} + \frac{x^2}{12} + \cdots)    
+        \]
+        
+        \item $\sigma = 0$. If we substitute $\sigma = 0 \Rightarrow a_n(n)(n-1) = a_{n-1}$ then
+        \[
+            n = 1 \Rightarrow a_0 = 0 \contradiction  
+        \]
+        Therefores this does not generate a Frobenius series, and we need to include the log term
+        \[
+            y_2(x) = \sum_{n=0}^{\infty} b_n x^n + c y_1(x) \ln(x)    
+        \]
+        (Non-examinable) To determine $\crbkt{b_n}$ and $C$ we may proceed by direct substitution or reduction of order. 
+        See the moodle notes for more.
+    \end{enumerate}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 20: 20/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Multivariate Functions - Applications}
+In this section, we will cover
+\begin{enumerate}
+    \item Directional Derivatives and the Gradient vector
+    \item Extrema
+    \item Coupled systems of first order ODEs
+    \item Partial differential equations
+\end{enumerate}
+\subsection{Directional Derivative}
+Consider a function $f(x, y)$ and a vector displacement $\vec{\diffd s} = (\diffd x, \diffd y)$
+An infinitessimal change in $f$ by the multivariate chain rule is,
+\begin{align*}
+    \diffd f &= \diffp{f}{x} \diffd x + \diffp{f}{y} \diffd y \\
+    &= (\diffd x, \diffd y) \cdot (\diffp{f}{x}, \diffp{f}{y}) \\
+    &= \vec{\diffd s} \cdot \nabla f
+\end{align*}
+
+\begin{defi}[Gradient of $f$]
+    The gradient of $f$ denoted $\nabla f$ is defined to be
+    \[
+        \nabla f \equiv (\diffp{f}{x}, \diffp{f}{y}) \tagstar
+    \]
+\end{defi}
+We may write $\vec{\diffd s} = \diffd s \uvec s$ where $\uvec s$ is a unit direction vector.
+
+\begin{defi}[Directional Derivative]
+    The direction derivative of a function $f$ in the direction $\uvec s$ is
+    \[
+        \diff{f}{s} = \uvec s \cdot \nabla f  
+    \]
+    We think of this as the rate of change of $f(x, y)$ in the direction of $\uvec s$.
+    We can then define the gradient vector $\nabla f$ geometrically as the vector such that
+    \[
+        \diff{f}{s} = \uvec s \cdot (\nabla f) \qquad \forall \uvec s  
+    \]
+    This geometric definition reduces to \refstar in catersian coordinates.
+\end{defi}
+\subsubsection*{Properties of the gradient vector}
+\[
+    \diff{f}{s} = \uvec s \cdot \nabla f = \cos \theta \abs{\nabla f}  
+\]
+\begin{enumerate}
+    \item Direction of gradient vector is that in which $f$ increases most rapidly
+    \item Magnitude of $\nabla f$ is the maximum rate of change of $f$:
+    \[
+        \abs{\nabla f} = \max_{\forall \theta} \bkt{\diff{f}{s}}  
+    \]
+    \item If $\uvec s$ is parallel to the contours of $f$, then
+    \[
+        0 = \diff fs = \uvec s \cdot \nabla f  
+    \]
+    Hence, $\nabla f$ is perpendicular to the contours of $f(x, y)$
+\end{enumerate}
+
+\subsection{Stationary Points}
+There is always least one direction at any point $x, y$ for which $\diff fs = 0$. (These would be parallel to the contours of $f(x, y)$)
+
+\begin{defi}[Stationary Points]
+    A stationary point is such that
+    \[
+        \diff fs = 0 \qquad \forall \uvec s \Rightarrow \nabla f = \vec 0
+    \]
+\end{defi}
+
+\subsubsection*{Types of stationary points}
+
+\begin{description}
+    \item[Local Maxima] Contours of $f$ are usually locally elliptical
+    \item[Local Mimima] Contours are once again locally elliptical
+    \item[Saddle Point] Contours cross only at saddle points, and the contours are locally hyperbolic
+\end{description}
+
+\subsection{Classification of Stationary Points}
+We want to consider how $f$ changes in the vicinity of stationary points.
+
+\subsubsection{Taylor series for multivariate functions}
+Consider how $f(x, y)$ varies along the line $\vec x (s) = \vec x_0 + s \uvec s$.
+This allows us to think of $f(x(s), y(s))$ as a function of $s$ along the line, and we can apply the usual single variable taylor series.
+\begin{align*}
+    f(\vec x_0 + s \uvec s) &= f(\vec x_0) + s \diff fs \eval{\vec x_0}{} + \frac{1}{2} s^2 \diff[2] fs \eval{\vec x_0}{} + \cdots \\
+    &= f(\vec x_0) + s \uvec s \cdot \nabla f \eval{\vec x_0}{} + \frac{1}{2} s^2 \uvec s \cdot \nabla(\uvec s \cdot \nabla) \eval{\vec x_0}{} + \cdots
+\end{align*}
+
+We define the finite displacement $\delta \vec x \equiv s \uvec s$ with respect to its compoenents
+\[
+    \delta x = x(s) - x_0 \text{ and } \delta y = y(s) - y_0
+\]
+Then,
+\begin{itemize}
+    \item The second term above becomes
+    \[
+        s \uvec s \cdot \nabla f = \delta \vec x \cdot \nabla f = \delta x \diffp fx + \delta y \diffp fy
+    \]
+    \item The third term above becomes
+    \begin{align*}
+        s^2 \uvec s \cdot \nabla(\uvec s \cdot \nabla f) &= (\delta x \cdot \nabla f)(\delta x \cdot \nabla f) f \\
+        &= (\delta x \diffp fx + \delta y \diffp fy)(\delta x \diffp fx + \delta y \diffp fy) \\
+        &= (\delta x)^2 \diffp[2] fx + \delta x \delta y \diffp{f}{{x}{y}} + \delta y \delta x \diffp{f}{{y}{x}} + (\delta y)^2 \diffp[2] fy \\
+        &= (\delta x, \delta y) \begin{pmatrix}
+            f_{xx} & f_{xy} \\
+            f_{yx} & f_{yy}
+        \end{pmatrix} \eval{\vec x_0}{}
+        \begin{pmatrix}
+            \delta x \\ \delta y
+        \end{pmatrix}
+    \end{align*}
+\end{itemize}
+
+\begin{defi}[Hessian Matrix]
+    The hessian matrix is
+    \[
+        \dunder{H} = \begin{pmatrix}
+            f_{xx} & f_{xy} \\
+            f_{yx} & f_{yy}
+        \end{pmatrix} = \nabla \nabla f
+    \]
+    Note that when the partial derivatives commute, $\dunder{H}$ is symmetric.
+\end{defi}
+
+\begin{defi}[Multivariate Taylor Series]
+    \begin{align*}
+        f(x_0 + \delta x, y_0 + \delta y) = f(x_0, &y_0) + \bkt{\delta x \diffp fx + \delta y \diffp fy}\eval{x_0, y_0}{} \\
+        &+ \frac{1}{2} \sqbkt{(\delta x)^2 \diffp[2] fx + 2\delta x \delta y \diffp{f}{{x}{y}} + (\delta y)^2 \diffp[2] fy}\eval{x_0, y_0}{} \\
+        &+ \cdots
+    \end{align*}
+    In the coordinate free form we have
+    \[
+        f(\vec x_0 + \delta \vec x) = f(\vec x_0) + \delta \vec x \cdot (\nabla f) \eval{x_0}{} + \frac{1}{2} \delta \vec x \dunder{H} \delta \vec x^T + \cdots 
+    \]
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 21: 20/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
