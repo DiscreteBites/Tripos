@@ -1166,7 +1166,7 @@ We will look at ODEs with the general form:
 If ($\star$) is exact, then $\diffd f = 0 \Rightarrow f(x, y) = c$ for a constant $c$ is a solution.
 We can use the multivariate chain rule
 \[
-    \diffd f = \diffp fx \eval{y}{} \diffd x + \diffp fy \eval{x}{} \diffd y
+    \diffd f = \diffp fx \eval_{y}{} \diffd x + \diffp fy \eval_{x}{} \diffd y
 \]
 So, $\exists f(x, y)$ such that
 \[
@@ -1212,9 +1212,9 @@ This is a neccesary condition (but not sufficient) for exactness:
     \end{align*}
     Where we systematically found $f$ by repeated integrations,
     \begin{align*}
-        P &= \diffp fx \eval{}{y} = 2x - 3y^2 \\
+        P &= \diffp fx \eval^{y} = 2x - 3y^2 \\
         &\Rightarrow f(x, y) = x^2 - 3y^2x + h(y) \\
-        Q &= \diffp fy \eval{}{x} = 6y^2 - 6xy \\
+        Q &= \diffp fy \eval^{x} = 6y^2 - 6xy \\
         &\Rightarrow f(x, y) = 2y^3 - 3xy^2 + g(x)
     \end{align*}
 \end{eg}
@@ -1331,7 +1331,7 @@ so
 \begin{align*}
     \diff \epsilon t &= f(t, c + \epsilon(t)) \\
     &= f(t, c) + \epsilon \diffp fy (t, c) + O(\epsilon^2) \\
-    &\approx 0 + \epsilon \diffp fy \eval{(t, c)}{}
+    &\approx 0 + \epsilon \diffp fy \eval_{(t, c)}{}
 \end{align*}
 \begin{remark}
     If $\diffp fy = 0$ then we need to consider higher order terms in the taylor expansion to determine stability.
@@ -1373,9 +1373,9 @@ In the special case when the forcing term is independant of time $t$,
 If $y(t)$ is a solution, any translation $y(t - t_0)$ is also a solution $\forall t_0$.
 Near a fixed point $y = c$, $(f(c) = 0)$ we have
 \[
-    \diff \epsilon t = \epsilon \diffp fy \eval{c}{}
+    \diff \epsilon t = \epsilon \diffp fy \eval_{c}{}
 \]
-Where $\diffp fy \eval{c}{} = k$ is a constant
+Where $\diffp fy \eval_{c}{} = k$ is a constant
 \[
     \therefore \quad \diff \epsilon t = \epsilon k \Rightarrow \epsilon(t) = \epsilon_0 e^{kt}
 \]
@@ -2385,16 +2385,16 @@ Consider a forced, damped oscillator
 \]
 We integrate the ODE across the interval $t = \tau - \epsilon$ to $t = \tau + \epsilon$.
 \[
-    \lim_{\epsilon \rightarrow 0} \bkt{ m \dot{y} \eval{\tau - \epsilon}{\tau + \epsilon} + b y\eval{\tau - \epsilon}{\tau + \epsilon} + k \int_{\tau - \epsilon}^{\tau + \epsilon} y \diffd t } = I    
+    \lim_{\epsilon \rightarrow 0} \bkt{ m \dot{y} \eval_{\tau - \epsilon}^{\tau + \epsilon} + b y\eval_{\tau - \epsilon}^{\tau + \epsilon} + k \int_{\tau - \epsilon}^{\tau + \epsilon} y \diffd t } = I    
 \]
 Since we want $y$ to be continuous and finite, we know that as $\epsilon \rightarrow 0$
 \begin{align*}
-    y\eval{\tau - \epsilon}{\tau + \epsilon} = 0 \\
+    y\eval_{\tau - \epsilon}^{\tau + \epsilon} = 0 \\
     \int_{\tau - \epsilon}^{\tau + \epsilon} y \diffd t = 0
 \end{align*}
 It follows that:
 \[
-    m \dot{y} \eval{\tau - \epsilon}{\tau + \epsilon} = I
+    m \dot{y} \eval_{\tau - \epsilon}^{\tau + \epsilon} = I
 \]
 the velocity is discontinuous at $T$
 \subsubsection{Delta function forcing}
@@ -2445,7 +2445,7 @@ Consider
 For $x < 0$ or $x > 0$ we have $y'' + p(x)y' + q(x) y = 0$.
 However, discontinuity in $y'$ at $x = 0$: integrating from $x = - \epsilon$ to $x = \epsilon$
 \[
-    \lim_{\epsilon \rightarrow 0} \bkt{y' \eval{- \epsilon}{\epsilon}} = 1
+    \lim_{\epsilon \rightarrow 0} \bkt{y' \eval_{- \epsilon}^{\epsilon}} = 1
 \]
 This is called the ``Jump Condition''.
 As a general rule, the highest order derivative term in the ODE addresses the delta function in the jump condition.
@@ -2462,7 +2462,7 @@ As a general rule, the highest order derivative term in the ODE addresses the de
     We join these curves at $x = \frac{\pi}{2}$
     \begin{enumerate}
         \item $y$ is continuous $\Rightarrow A = C$
-        \item $\lim_{\epsilon \rightarrow 0} y' \eval{\frac{\pi}{2} - \epsilon}{\frac{\pi}{2} + \epsilon} = 3$
+        \item $\lim_{\epsilon \rightarrow 0} y' \eval_{\frac{\pi}{2} - \epsilon}^{\frac{\pi}{2} + \epsilon} = 3$
         \[
             \Rightarrow -C \cosh(\frac{\pi}{2}) - A \sinh(\frac{\pi}{2}) = 3 \Rightarrow C = A = \frac{-3}{2 \cosh{\frac{\pi}{2}}} 
         \]
@@ -2527,14 +2527,14 @@ This expands into
 \]
 It follows that
 \begin{align*}
-    y'' \eval{-\epsilon}{\epsilon} + p(x)y' \eval{-\epsilon}{\epsilon} + q(x)y \eval{-\epsilon}{\epsilon} = 1 \\
-    \lim_{\epsilon \rightarrow 0} \sqbkt{y'' \eval{-\epsilon}{\epsilon} + p(0)y' \eval{-\epsilon}{\epsilon} + q(0)y \eval{-\epsilon}{\epsilon}} = 1 \tag{$\star$}
+    y'' \eval_{-\epsilon}^{\epsilon} + p(x)y' \eval_{-\epsilon}^{\epsilon} + q(x)y \eval_{-\epsilon}^{\epsilon} = 1 \\
+    \lim_{\epsilon \rightarrow 0} \sqbkt{y'' \eval_{-\epsilon}^{\epsilon} + p(0)y' \eval_{-\epsilon}^{\epsilon} + q(0)y \eval_{-\epsilon}^{\epsilon}} = 1 \tag{$\star$}
 \end{align*}
 
 If $y'' \sim H(x)$ around $x = 0$ then $y'$ and $y$ are continuous as ($\star$) is satisfied.
 This gives the jump conditions for Heaviside forcing,
 \[
-    \lim_{\epsilon \rightarrow 0} y' \eval{-\epsilon}{\epsilon} = 0 \text{ and } \lim_{\epsilon \rightarrow 0} y \eval{-\epsilon}{\epsilon} = 0
+    \lim_{\epsilon \rightarrow 0} y' \eval_{-\epsilon}^{\epsilon} = 0 \text{ and } \lim_{\epsilon \rightarrow 0} y \eval_{-\epsilon}^{\epsilon} = 0
 \]
 In the typical situation $y = 0$ for $x < 0$, we will have 2 arbitrary constants in $y$ for $x > 0$, which are determined by the two ``jump conditions'',
 $y = 0$ and $y' = 0$ as $x \rightarrow 0^+$
@@ -3044,8 +3044,8 @@ We want to consider how $f$ changes in the vicinity of stationary points.
 Consider how $f(x, y)$ varies along the line $\vec x (s) = \vec x_0 + s \uvec s$.
 This allows us to think of $f(x(s), y(s))$ as a function of $s$ along the line, and we can apply the usual single variable taylor series.
 \begin{align*}
-    f(\vec x_0 + s \uvec s) &= f(\vec x_0) + s \diff fs \eval{\vec x_0}{} + \frac{1}{2} s^2 \diff[2] fs \eval{\vec x_0}{} + \cdots \\
-    &= f(\vec x_0) + s \uvec s \cdot \nabla f \eval{\vec x_0}{} + \frac{1}{2} s^2 \uvec s \cdot \nabla(\uvec s \cdot \nabla) \eval{\vec x_0}{} + \cdots
+    f(\vec x_0 + s \uvec s) &= f(\vec x_0) + s \diff fs \eval_{\vec x_0}{} + \frac{1}{2} s^2 \diff[2] fs \eval_{\vec x_0}{} + \cdots \\
+    &= f(\vec x_0) + s \uvec s \cdot \nabla f \eval_{\vec x_0}{} + \frac{1}{2} s^2 \uvec s \cdot \nabla(\uvec s \cdot \nabla) \eval_{\vec x_0}{} + \cdots
 \end{align*}
 
 We define the finite displacement $\delta \vec x \equiv s \uvec s$ with respect to its compoenents
@@ -3066,7 +3066,7 @@ Then,
         &= (\delta x, \delta y) \begin{pmatrix}
             f_{xx} & f_{xy} \\
             f_{yx} & f_{yy}
-        \end{pmatrix} \eval{\vec x_0}{}
+        \end{pmatrix} \eval_{\vec x_0}{}
         \begin{pmatrix}
             \delta x \\ \delta y
         \end{pmatrix}
@@ -3086,18 +3086,721 @@ Then,
 
 \begin{defi}[Multivariate Taylor Series]
     \begin{align*}
-        f(x_0 + \delta x, y_0 + \delta y) = f(x_0, &y_0) + \bkt{\delta x \diffp fx + \delta y \diffp fy}\eval{x_0, y_0}{} \\
-        &+ \frac{1}{2} \sqbkt{(\delta x)^2 \diffp[2] fx + 2\delta x \delta y \diffp{f}{{x}{y}} + (\delta y)^2 \diffp[2] fy}\eval{x_0, y_0}{} \\
+        f(x_0 + \delta x, y_0 + \delta y) = f(x_0, &y_0) + \bkt{\delta x \diffp fx + \delta y \diffp fy}\eval_{x_0, y_0}{} \\
+        &+ \frac{1}{2} \sqbkt{(\delta x)^2 \diffp[2] fx + 2\delta x \delta y \diffp{f}{{x}{y}} + (\delta y)^2 \diffp[2] fy}\eval_{x_0, y_0}{} \\
         &+ \cdots
     \end{align*}
     In the coordinate free form we have
     \[
-        f(\vec x_0 + \delta \vec x) = f(\vec x_0) + \delta \vec x \cdot (\nabla f) \eval{x_0}{} + \frac{1}{2} \delta \vec x \dunder{H} \delta \vec x^T + \cdots 
+        f(\vec x_0 + \delta \vec x) = f(\vec x_0) + \delta \vec x \cdot (\nabla f) \eval_{x_0}{} + \frac{1}{2} \delta \vec{x} \dunder{H} \delta \vec x^T + \cdots 
     \]
 \end{defi}
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 21: 20/11/2023
+% Lecture 21: 22/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Nature of Stationary points and the Hessian}
+Let $\vec x_0$ be a stationary point of $f$.
+\[
+    \nabla f \eval_{\vec x_0}{} = 0  
+\]
+Around $\vec x_0$
+\[
+    \Rightarrow f(\vec x) \approx f(\vec x_0) + \frac{1}{2} \delta \vec x \dunder{H} \delta \vec x^T + \cdots 
+\]
+Nature of stationary points depends on properties of the Hessian.
+
+\begin{defi}[Positive definite and negative definite matrices]
+    A (real) symmetric matrix $\dunder{H}$ is \emph{positive definite} if $\forall \vec x \neq 0 \in \R^n$
+    \[
+        \vec x \dunder{H} \vec x^T >0    
+    \]
+    Note the strict inequality. 
+    Similarly, $\dunder H$ is negative definite if $\forall \vec x \neq 0 \in \R^n$
+    \[
+        \vec x \dunder{H} \vec x^T <0    
+    \]
+    Otherwise, it is indefinite.
+\end{defi}
+If $\dunder H$ is positive definite, then $\delta x \dunder H \delta x^T > 0$, so $f(\vec x) > f(\vec x_0)$ in some small vinicity around $\vec x_0 \forall \vec x$:\
+\[
+    \dunder H \text{ is positive definite } \Rightarrow \text{ Local Minimum}  
+\]
+Similarly,
+\[
+    \dunder H \text{ is negative definite } \Rightarrow \text{ Local Maximum}  
+\]
+If it is indefinite, it may be a maxima, minima or saddle point.
+
+\subsubsection*{Definiteness of a matrix and it's eigenvalues}
+Since $\dunder H$ is real symmetric, we can diagonalise it with an orthogonal transformation.
+In $n$-dimensions, use coordinates along the principle axes (eigenvalue basis)
+\[
+    \Rightarrow \delta \vec x \dunder{H}\delta  \vec x^T = (\delta x_1, \cdots, \delta x_n) \begin{pmatrix}
+        \lambda_1 & \cdots & 0 \\
+        \vdots & \ddots & \vdots \\
+        0 & \cdots & \lambda_n
+    \end{pmatrix}\begin{pmatrix}
+        \delta x_1 \\ \vdots \\ \delta x_n
+    \end{pmatrix}
+\]
+It follows that
+\[
+    \dunder H \text{ is positive definite } \Leftrightarrow \text{ all } \lambda_i > 0 
+\]
+similarly,
+\[
+    \dunder H \text{ is negative definite } \Leftrightarrow \text{ all } \lambda_i < 0 
+\]
+However, if all the eigenvalues of $\dunder H$ are non-zero and of mixed sign, we have a saddle point.
+If any of the eigenvalues are $0$, then we have to consider higher order terms in the taylor series.
+
+\begin{eg}
+    \[
+        f(x, y) = x^2 + y^4  
+    \]
+    Has a global minimum at $(0, 0)$ Let's compute the hessian,
+    \[
+        \dunder H = \begin{pmatrix}
+            2 & 0 \\
+            0 & 12 y^2
+        \end{pmatrix} \Rightarrow \dunder H \eval_{(0, 0)}{} = \diag(2, 0)
+    \]
+    which has a zero eignvalue.
+\end{eg}
+
+\subsubsection*{Definiteness and the Signature of $\dunder H$}
+This is an alternative way to determine definiteness without having to calculate eignvalues.
+
+\begin{defi}[Signature]
+    The signature of $\dunder H$ is the pattern of signs of the ordered (sub)determinants of the leading principle minors of $\dunder H$.
+    For example, take the $n \times n$ Hessian matrix
+    \[
+        f(x_1, \cdots, x_n)  
+    \]
+    We consider the signs of the following determinants
+    \[
+        f_{x_1x_1}, \begin{vmatrix}
+            f_{x_1x_1} & f_{x_1x_2} \\
+            f_{x_2x_1} & f_{x_2x_2}
+        \end{vmatrix}, \begin{vmatrix}
+            f_{x_1x_1} & f_{x_1x_2} & f_{x_1x_3} \\
+            f_{x_2x_1} & f_{x_2x_2} & f_{x_2x_3} \\
+            f_{x_3x_1} & f_{x_3x_2} & f_{x_3x_3}
+        \end{vmatrix}, 
+        \cdots,
+        \begin{vmatrix}
+            f_{x_1x_1} & \cdots & f_{x_1x_n} \\
+            \vdots & \ddots & \vdots \\
+            f_{x_nx_1} & \cdots & f_{x_nx_n}
+        \end{vmatrix}
+    \]
+\end{defi}
+
+\begin{defi}[Sylvester's Criterion]
+\[
+    \dunder H \text{ is positive definite } \Leftrightarrow \text{ signature is } +, +, \cdots, +
+\]
+\[
+    \dunder H \text{ is negative definite } \Leftrightarrow \text{ signature is } -, +, \cdots, (-1)^n
+\]
+\end{defi}
+
+\subsubsection{Contours near stationary points}
+Let $f(x, y)$ have stationary points at $(x_0, y_0)$. 
+Adopt coordinates aligned with the principle axes of $\dunder H$ there.
+then
+\[
+    \dunder H = \begin{pmatrix}
+        \lambda_1 & 0 \\
+        0 & \lambda_2
+    \end{pmatrix}
+\]
+for $\lambda_1, \lambda_2$ assumed to be non-zero.
+Write $\vec x = \vec x_0 + (\xi, \eta)$. Then around $\vec x_0$,
+\[
+    f(\vec x) \approx f(\vec x_0) + \frac{1}{2}(\lambda_1 \xi^2 + \lambda_2 \eta^2)
+\]
+Contours of $f$ close to $\vec x_0$ satisfy that $\lambda_1 \xi^2 + \lambda_2 \eta^2$ is constant.
+Therefore,
+\begin{itemize}
+    \item Maximum or Minimum; $\lambda_1\lambda_2 > 0$ (same sign) and we have elliptical contours
+    \item Saddle point; $\lambda_1\lambda_2 < 0$ (opposite sign) and we have hyperbolic contours 
+\end{itemize}
+
+\begin{eg}
+    \[
+        f(x, y) = 4x^3 - 12 xy + y^2 + 10y + 6  
+    \]
+    This has partial derivaties,
+    \[
+        f_x = 12x^2 - 12 y \text{ and } f_y = - 12x + 2y + 10  
+    \]
+    Stationary points satisfy $f_x = f_y = 0$
+    \begin{align*}
+        f_x = 0 &\Rightarrow y = x^2 \\
+        f_y = 0 &\Rightarrow x^2 - 6x + 5 = 0 \\
+        &\Rightarrow (x - 1)(x - 5) = 0 \\
+        &\Rightarrow x = 1, 5
+    \end{align*}
+    Therefore the stationary points are $(1, 1)$ and $(5, 25)$.
+    Now we compute the hessian,
+    \[
+        f_{xx} = 24x \text{ and } f_{xy} = -12 \text{ and } f_{yy} = 2  
+    \]
+    Substituting values,
+    \[
+        \dunder H = \begin{pmatrix}
+            24x & -12 \\
+            -12 & 2
+        \end{pmatrix}
+    \]
+    \begin{enumerate}[cases]
+        \item For $(1,1)$
+        \[
+            \dunder H \eval_{(1,1)}{} = \begin{pmatrix}
+                24 & -12 \\
+                -12 & 2
+            \end{pmatrix}
+        \]
+        We apply Sylvesters criterion, 
+        \[
+            \abs{\dunder H_1} = 24, \abs{\dunder H_2} = 48 - 144 = - 96
+        \]
+        Therefore the signature is $+, -$ and is indefinite.
+        However, $\abs{\dunder H} < 0 \Rightarrow \lambda_1, lambda_2 \neq 0$ and we have opposite signs. 
+        Therefore this is a saddle point
+
+        \item For $(5, 25)$
+        \[
+            \dunder H \eval_{(1,1)}{} = \begin{pmatrix}
+                120 & -12 \\
+                -12 & 2
+            \end{pmatrix}
+        \]
+        We apply Sylvestors criterion,
+        \[
+            \abs{\dunder H_1} = 120, \abs{\dunder H_2} = 240 - 144 = 96
+        \]
+        Therefore the signature is $+, +$ and the Hessian is positive definite.
+        So we have a minimum point.
+    \end{enumerate}
+
+    Near the saddle point, write $(x, y) = (1, 1) + (\delta x, \delta y)$.
+    Then contours have the form
+    \begin{align*}
+        f_{xx}(\delta x)^2 + 2 f_{xy}(\delta x)(\delta y) + f_{yy}(\delta y)^2 = \text{ constant} \\
+        \Rightarrow 12 (\delta x)^2 - 12 (\delta x)(\delta y) + (\delta y)^2 = \text{ constant} 
+    \end{align*}
+
+    The intersecting straight line contours through the saddle point are therefore described by
+    \begin{align*}
+        12 (\delta x)^2 - 12 (\delta x)(\delta y) + (\delta y)^2 = 0 \\
+        \Rightarrow \delta y = (6 \pm 2 \sqrt{6}) \delta x
+    \end{align*}
+\end{eg}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 22: 24/11/2023
 %%%%%%%%%%%%%%%%%%%%%%
 
+\subsection{Systems of Linear Equations}
+Consider two functions $y_1(t)$ and $y_2(t)$ with
+\begin{align*}
+    y'_1 = a y_1 + b y_2 + f_1(t) \\
+    y'_2 = c y_1 + d y_2 + f_2(t)
+\end{align*}
+Here we assume $a, b, c, d$ are constants, but they may be function of time and we will still consider this system to be linear.
+We may write this in a vector form
+\[
+    \vec Y' = \dunder M \vec Y + F(t)
+\]
+Where
+\[
+    \dunder M = \begin{pmatrix}
+        a & b \\
+        c & d
+    \end{pmatrix}, 
+    \vec V = \begin{pmatrix}
+        y_1 \\ y_2
+    \end{pmatrix},
+    F(t) = \begin{pmatrix}
+        f_1 \\ f_2
+    \end{pmatrix}
+\]
+There are two main ways to solve these ODEs.
+\begin{description}
+    \item[Convert to a higher-order ODE in one variable]:
+    \begin{align*}
+        y''_1 &= a y'_1 + b y'_2 + f'_1(t) \\
+        &= a  y'_1 + b (c y_1 + d y_2 + f_2(t)) + f'_1(t) \\ 
+        &= a  y'_1 + bc y_1 + d [ y'_1 - a y_1 - f_1(t)] + bf_2(t) + f'_1(t)
+    \end{align*}
+    \[
+        \Rightarrow y''_1 - (a + d)y'_1 + (ad - bc) y_1 = bf_2 - df_1 + f'_1
+    \]
+    Which is a linear $2^{nd}$ order ODE with constant coefficients that we know how to solve.
+
+    \item[Directly using matrix methods] This method is much more general as it sometimes allows us to deal with higher order ODEs by reducing them into a set of coupled first order ODEs.
+    For example,
+    \[
+        y'' + \alpha y' + \beta y = f  
+    \]
+    If we define $y_1 \equiv y$ and $y_2 \equiv y'$ then
+    \[
+        y'_1 = y_2 \text{ and } y'_2 = - \alpha y_2 - \beta y_1 + f  
+    \]
+    This yield
+    \[
+        \Rightarrow \vec Y' = \begin{pmatrix}
+            0 & 1 \\
+            -\beta & -\alpha
+        \end{pmatrix}
+        \begin{pmatrix}
+            y_1 \\ y_2
+        \end{pmatrix}
+        + \begin{pmatrix}
+            0 \\ f
+        \end{pmatrix}
+    \]
+\end{description}
+
+\subsubsection{Matrix Methods}
+To solve $\vec Y' = \dunder M \vec Y + F(t)$
+\begin{enumerate}[label=(\arabic*)]
+    \item Write $\vec Y = \vec Y_c + \vec Y_p$ where the complimentary function satisfies the homogeneous equation,
+    \[
+        \vec Y'_C = \dunder M \vec Y_c
+    \]
+
+    \item We look for complimentary functions of the form
+    \[
+        \vec Y_C = \vec v e^{\lambda t}
+    \]
+    Where $\vec v$ is a constant vector. Then we have
+    \[
+        \vec Y'_C = \lambda \vec v e^{\lambda t} = (\dunder M \vec v)e^{\lambda t}
+    \]
+    Therefore $\lambda \vec v = \dunder M \vec v$, meaning that $\vec v$ is an eigenvector of $\dunder M$ with eigenvalue $\lambda$.
+    For a system with $n$ equations, we will have $n$ such complimentary solutions (if all eigenvectors are distinct) which can be summed over to form general complementary solutions.
+
+    \item Find a particular solution $\vec Y_p$ that satisfies the full system.
+    It's form will depend on the forcing vector $F(t)$
+\end{enumerate}
+
+\begin{eg}
+    \[
+        \vec Y' = \begin{pmatrix}
+            -4 & 24 \\
+            1 & -2
+        \end{pmatrix} \vec Y + \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} e^t
+    \]
+    The complementary functions will depend on the eigenvectors of $\dunder M$
+    \[
+        \Rightarrow \det(M - \lambda I) = 0 \Rightarrow \lambda = 2, -8
+    \]
+    with eigenvectors
+    \[
+        v_1 = \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} \text{ and }
+        v_2 = \begin{pmatrix}
+            -6 \\ 1
+        \end{pmatrix}
+    \]
+    A general C.F is then given by
+    \[
+        \vec Y_c = A \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix}e^{2t}
+        + B \begin{pmatrix}
+            -6 \\ 1
+        \end{pmatrix}e^{-8t}
+    \]
+    for $A, B$ constants.
+    For a particular solution, try $\vec Y_p = \vec u e^t$
+    \begin{align*}
+        \Rightarrow& \vec u e^t = \dunder M \vec u e^t + \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} e^t \\
+        \Rightarrow& \vec u = \dunder M \vec u + \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} \\
+        \Rightarrow& \vec u (I - M) = \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} \\ 
+        \Rightarrow& \vec u = (I - M)^{-1} \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} \\
+        &= -\begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix}
+    \end{align*}
+    A general solution is then given by
+    \[
+        \vec Y = A \begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix}e^{2t}
+        + B \begin{pmatrix}
+            -6 \\ 1
+        \end{pmatrix}e^{-8t}
+        -\begin{pmatrix}
+            4 \\ 1
+        \end{pmatrix} e^t
+    \]
+\end{eg}
+\begin{remark}
+    If the forcing term is proprotional to $e^{\lambda t}$ with $\lambda$ an eigenvalue of $\dunder M$ (resonant, degenerate case)
+    try
+    \[
+        \vec Y_p = (\vec a + \vec b t) e^{\lambda t}  
+    \]
+\end{remark}
+
+\subsubsection{Non-degenerate Phase Portraits}
+For $n$ $1^{st}$ order ODEs, we have a phase portrait with points
+\[
+    \vec Y = (y_1, \cdots, y_n)^T
+\]
+
+Consider the homogeneous case
+\[
+    \vec Y' = \dunder M \vec Y
+\]
+We have a fixed point at $\vec Y = \vec 0$. 
+For $n = 2$, the general solution is (when the eigenvalues are distinct)
+\[
+    \vec Y(t) = \vec v_1 e^{\lambda_1 t} + \vec v_2 e^{\lambda_2 t}
+\]
+We consider a phase portrait in the case $\lambda_1 \neq 0$, $\lambda_2 \neq 0$, $\lambda_1 \neq \lambda_2$.
+
+\begin{enumerate}[cases]
+    \item $\lambda_1, \lambda_2 \in \R$ and opposite sign. 
+    WLOG, let $\lambda_1 > 0$ and $\lambda_2 < 0$, we have that both eigenvectors $v_1, v_2$ can be chosen to be real.
+    These are called ``saddle nodes''.
+    
+    \item $\lambda_1, \lambda_2 \in \R$ and same sign.
+    WLOG, let $\abs{\lambda_1} > \abs{\lambda_2}$ and $v_1, v_2$ are real.
+    Since $\abs{\lambda_1} > \abs{\lambda_2}$, $\lambda_1$ dominates forward and time, and $\lambda_2$ dominates backwards in time.
+    For $\lambda_1, \lambda_2 > 0$ we have ``unstable nodes''.
+    For $\lambda_1, \lambda_2 < 0$ we have ``stable nodes''.
+
+    \item $\lambda_1, \lambda_2 \in \C$ and complex conjugate.
+    \[
+        \lambda_1 = \lambda_2^* \Leftrightarrow v_2 = v_1^*  
+    \]
+    We may then write
+    \[
+        \vec Y(t) = c \vec v_1 e^{\Re(\lambda_1) t} \times e^{i\Im(\lambda_1 t)} + c^* \vec v_1^* e^{\Re(\lambda_1) t} \times e^{-i\Im(\lambda_1 t)} 
+    \]
+    We see that when $\Re(\lambda_1) > 0$ we have an unstable spiral, moving away from the origin.
+    When $\Re(\lambda_1) < 0$ we have a stable spiral, moving towards the origin.
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 23: 27/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+    However, if $\Re(\lambda_1) = 0$ then we have a \emph{center} and $\vec Y(t)$ is periodic.
+    We have closed elliptical trajectories in phase space. 
+    The rotation direction can be found by determining $\vec Y'$ at one point.
+    If $y'_2 > 0$ at $\vec Y = \begin{pmatrix}
+        1 \\ 0        
+    \end{pmatrix}$, then it is rotating counter clockwise
+\end{enumerate}
+
+\subsection{Nonlinear Dynamical System}
+Consider an autonomous system of two non-linear, first-order ODEs
+\begin{align*}
+    x' = f(x, y) \\
+    y' = g(x, y) \tagstar
+\end{align*}
+We can learn about phase space trajectories by investigating equilibrium points.
+\subsubsection{Equilibrium Points}
+\begin{defi}[Equilibrium Point]
+    An equilibrium point or a fixed point of \refstar is a point at which
+    \[
+        x' = y' = 0  
+    \]
+    If $(x_0, y_0)$ is a fixed point, then
+    \[
+        f(x_0, y_0) = g(x_0, y_0) = 0  
+    \]
+    We can solve these equations to determine the fixed points.
+\end{defi}
+
+We can analyse the stability of equilibrium points from perturbation analysis:
+Consider a small perturbation to both variables,
+\[
+    x(t) = x_0 + \xi (t) \text{ and } y(t) = y_0 + \eta (t)
+\]
+Then by the multivariate taylor series,
+\begin{align*}
+    x' = f(x, y) \Rightarrow \xi'(t) =& f(x_0 + \xi, y_0 + \eta) \\
+    =& f(x_0, y_0) + \xi \diffp fx (x_0, y_0) + \eta \diffp fy (x_0, y_0) + \cdots
+\end{align*}
+Since $(x_0, y_0)$ is a fixed point, $f(x_0, y_0) = 0$. Therefore for small $\xi, \eta$
+\begin{align*}
+    \xi'(t) &= \xi \diffp fx (x_0, y_0) + \eta \diffp fy (x_0, y_0) \\
+    \eta'(t) &= \xi \diffp gx (x_0, y_0) + \eta \diffp gy (x_0, y_0) \\
+    \Rightarrow& \begin{pmatrix}
+        \xi'(t) \\ \eta'(t)
+    \end{pmatrix} = \underbrace{\begin{pmatrix}
+        \diffp fx (x_0, y_0) & \diffp fy (x_0, y_0) \\
+        \diffp gx (x_0, y_0) & \diffp gy (x_0, y_0)
+    \end{pmatrix}}_{\dunder M} \begin{pmatrix}
+        \xi \\ \eta
+    \end{pmatrix}
+\end{align*}
+This is a linear system of homogeneous ODEs, and the eigenvalues of $\dunder M$ determines the stability of equilibrium points.
+
+\begin{eg}[Predator-Prey System]
+    Consider the following predator prey system,
+    \begin{center}
+        \begin{tabular}{cl}
+            $x(t)$ :& No. of prey at time $t$ \\
+            $y(t)$ :& No. of predator at time $t$
+        \end{tabular}
+    \end{center}
+    with prey dynamics
+    \[
+        x' = \underbrace{\alpha x}_{\text{births - death}} - \underbrace{\beta x^2}^{\text{resource competition}} - \underbrace{\gamma xy}_{\text{predation of prey}}  
+    \]
+    and predator dynamics
+    \[
+        y' = \underbrace{\epsilon xy}_{\text{birth term}} - \underbrace{\delta y}^{\text{natural death}}    
+    \]
+    where $\alpha, \beta, \gamma, \epsilon, \delta$ as positive constants.
+
+    Let's condier the specific case
+    \begin{align*}
+        x' = 8x - 2x^2 - 2xy \\
+        y' = xy - y
+    \end{align*}
+    We can solve for the equilibrium points,
+    \begin{align*}
+        8x - 2x^2 - 2xy = 0 \\
+        \Rightarrow x = 0 \text{ or } x + y = 4 \\
+        xy - y = 0 \\
+        \Rightarrow y = 0 \text{ or } x = 1
+    \end{align*}
+    Therefore, if $x = 0 \Rightarrow y = 0$
+    If $x = 4 - y$, then $y=0, x = 4$ and $y = 3, x = 1$.
+    Therefore we have three equilibrium points, $(0,0)$, $(1, 3)$ and $(4, 0)$.
+    \[
+        \begin{pmatrix}
+            f_{xx} & f_{xy} \\
+            f_{yx} & f_{yy}
+        \end{pmatrix} = \begin{pmatrix}
+            8 - 4x - 2y & -2x \\
+            y & x-1
+        \end{pmatrix}
+    \]
+    \begin{enumerate}[cases]
+        \item $(0,0)$:
+        \[
+            \begin{pmatrix}
+                \xi'(t) \\ \eta'(t)
+            \end{pmatrix} = \begin{pmatrix}
+                8 & 0 \\
+                0 & -1
+            \end{pmatrix} \begin{pmatrix}
+                \xi \\ \eta
+            \end{pmatrix}
+        \]
+        This has eigenvalues $8$, $-1$ with corresponding eigenvectors $\begin{pmatrix}
+            1 // 0
+        \end{pmatrix}$ and $\begin{pmatrix}
+            0 // 1
+        \end{pmatrix}$
+        Therefore we have a saddle node.
+
+        \item $(4, 0)$:
+        \[
+            \begin{pmatrix}
+                \xi'(t) \\ \eta'(t)
+            \end{pmatrix} = \begin{pmatrix}
+                -8 & -8 \\
+                0 & 3
+            \end{pmatrix} \begin{pmatrix}
+                \xi \\ \eta
+            \end{pmatrix}
+        \]
+        This has eigenvalues $-8$, $3$ with corresponding eigenvectors $\begin{pmatrix}
+            1 // 0
+        \end{pmatrix}$ and $\begin{pmatrix}
+            -8 // 11
+        \end{pmatrix}$
+        Therefore we have a saddle node.
+
+        \item $(1, 3)$:
+        \[
+            \begin{pmatrix}
+                \xi'(t) \\ \eta'(t)
+            \end{pmatrix} = \begin{pmatrix}
+                -2 & -2 \\
+                3 & 0
+            \end{pmatrix} \begin{pmatrix}
+                \xi \\ \eta
+            \end{pmatrix}
+        \]
+        This has eigenvalues $-1 \pm i \sqrt{5}$. 
+        Since the real part is negative, we have a stable spiral.
+        To get the direction of the spiral, consider a point $\begin{pmatrix}
+            1 \\ 0
+        \end{pmatrix}$
+        \[
+            \begin{pmatrix}
+                \xi'(t) \\ \eta'(t)
+            \end{pmatrix} = \begin{pmatrix}
+                -2 & -2 \\
+                3 & 0
+            \end{pmatrix} \begin{pmatrix}
+                1 \\ 0
+            \end{pmatrix} = \begin{pmatrix}
+                -2 \\ 3
+            \end{pmatrix}
+        \]
+        Therefore, $\eta' > 0$ indicating an anticlockwise spiral
+    \end{enumerate}
+
+    \begin{tikzpicture}
+
+    \end{tikzpicture}
+\end{eg}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 24: 29/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Partial Differential Equations}
+PDEs are differential equations with multiple independant variables.
+We will illustrate the key ideas with wave equations.
+
+\subsubsection{First-Order Wave equations}
+Consider $\psi(x, t)$ satisfying
+\[
+    \diffp \psi t - c \diffp \psi x = 0 \tagstar
+\]
+We can solve this with the \emph{Method of Characteristics}.
+How does $\psi$ vary with $t$ along a path $x(t)$, so that $\psi$ becomes a function in just $t$?
+\begin{align*}
+    \diff \psi t &= \diffp \psi t + \diffp \psi x \diff xt \\
+    &= \diffp \psi t (c + \diff xt) \tag{using \refstar}
+\end{align*}
+Then, if we choose a path such that $\diff xt = -c$, then $\psi$ will be constant along that path.
+\[
+    \Rightarrow x(t) = x_0 - ct
+\]
+Paths of this form $x = x_0 - ct$ are characteristics of \refstar.
+As $\psi$ is constant along the characteristics, the most general solution of \refstar is
+\[
+    \psi(x, t) = f(x_0) = f(x + ct)
+\]
+This simply translates the $x$ dependance of $\psi$ at $t = 0$ to the left at speed $c$.
+
+\begin{eg}[Unforced Wave Equation]
+    \[
+        \diffp \psi t - c \diffp \psi x = 0 
+    \]
+    with $\psi(x, 0) = x^2 - 3$
+    A general solution is given by
+    \[
+        \psi(x, t) = f(x + ct)  
+    \]
+    At $t = 0$, $\psi(x, 0) = x^2 - 3$
+    \[
+        \Rightarrow f(x) = x^2 - 3 \Rightarrow f(x + ct) = (x + ct)^2 - 3  
+    \]
+\end{eg}
+
+\begin{eg}[Forced Wave Equation]
+    \[
+        \diffp \psi t - c \diffp \psi x = e^{-t}
+    \]
+    with $\psi(x, 0) = e^{-x^2}$.
+    The characteristics have $x = x_0 + 5t$.
+    Along the characteristic curves,
+    \begin{align*}
+        \diff \psi t = \diffp \psi t + 5 \diffp \psi x = e^{-t}  
+        \Rightarrow \psi = e^{-t} + f(x_0)
+    \end{align*}
+    Since $x_0 = x - 5t$
+    \begin{align*}
+        \psi (x, 0) = f(x - 5t) - e^{-t} \eval_{t=0}{} = f(x) - 1 \\
+        \Rightarrow f(x) = 1 + e^{-x^2}
+    \end{align*}
+    A general solution is then
+    \[
+        \psi = 1 + e^{(x - 5t)^2} - e^{-t}  
+    \]
+\end{eg}
+\subsubsection{Second-Order Wave equation}
+$1^{st}$ order systems only describe waves propogating in one direction.
+The relevant equation for systems supporting waves in both directions is given y
+\[
+    \diffp[2] \psi t - c^2 \diffp[2] \psi x = 0
+\]
+which can be factored as
+\[
+    \bkt{\diffp {}t- c \diffp {}x}\bkt{\diffp {}t + c \diffp {}x}\psi = 0 \tagdagger
+\]
+Since partial derivates commute, the cross terms cancel as usual.
+Therefore, we have two sets of characteristics
+\[
+    f(x + ct) \text{ and } g(x - ct)
+\]
+where $f$ is nulled by $\bkt{\diffp {}t- c \diffp {}x}$ and $g$ is nulled by $\bkt{\diffp {}t + c \diffp {}x}$.
+Hence a general solution to \refdagger is
+\[
+    \psi(x, t) = f(x + ct) + g(x - ct)
+\]
+which is a superposition of left and right moving wave equations.
+
+Is this the most general solution? Yes! To see this consider a change in variables
+\[
+    \xi = x + ct \text{ and } \eta = x - ct    
+\]
+Then,
+\begin{align*}
+    \diffp {}x \eval_{t} &= \diffp \xi x \eval_{t} \diffp {}\xi \eval_{\eta} + \diffp \eta x \eval_{t} \diffp {}\eta \eval_{\xi} = \diffp {}\xi \eval_{\eta} + \diff{}\eta \eval_{\xi} \\
+    \diffp {}t \eval_{x} &= c \diffp {}\xi \eval_{\eta} - c \diffp {}\eta \eval_{\xi} 
+\end{align*}
+The wave equation becomes
+\begin{align*}
+    \diffp {}t \eval_{x} - c\diffp {}x \eval_{t} = -2 c \diff{}{\eta} \eval_{\xi} \\
+    \diffp {}t \eval_{x} + c\diffp {}x \eval_{t} = 2 c \diff{}{\xi} \eval_{\eta} \\
+\end{align*}
+\[
+    \text{\refdagger} \Rightarrow -4c^2 \diffp{\psi}{{\eta}{\xi}} = 0 \Rightarrow \psi = f(\xi) + g(\eta)
+\]
+\begin{eg}
+    \[
+        \diffp[2] \psi t - c^2 \diffp[2] \psi x = 0
+    \]
+    with $\psi(x, 0) = \frac{1}{1 + x^2}$ and $\diffp \psi t (x, 0) = 0$ (at rest at $t = 0$).
+    We think of this has deforming the string into the shape of $\frac{1}{1 + x^2}$ and then letting it go.
+    A general solution is given by
+    \[
+        \psi(x, t) = f(x + ct) + g(x - ct)  
+    \]
+    At $t = 0$
+    \[
+        f(x) + g(x) = \frac{1}{1 + x^2}  
+    \]
+    Also,
+    \[
+        \diffp \psi t (x, 0) \Rightarrow cf'(x) - cg'(x) = 0 \Rightarrow f(x) = g(x) + A
+    \]
+    We combine and solve,
+    \begin{align*}
+        A + 2 f(x) &= \frac{1}{1 + x^2}
+        \Rightarrow f(x) &= \frac{1}{2(1 + x^2)} + \frac{A}{2}
+        g(x) &=  \frac{1}{2(1 + x^2)} - \frac{A}{2}
+    \end{align*}
+    Hence, 
+    \[
+        \psi(x, t) = \frac{1}{2} \sqbkt{\frac{1}{1 + (x + ct)^2} + \frac{1}{1 + (x - ct)^2}}
+    \]
+\end{eg}
 \end{document}
