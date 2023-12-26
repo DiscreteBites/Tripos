@@ -3802,5 +3802,42 @@ The wave equation becomes
     \[
         \psi(x, t) = \frac{1}{2} \sqbkt{\frac{1}{1 + (x + ct)^2} + \frac{1}{1 + (x - ct)^2}}
     \]
+    Below is a plot of this for $c = 1$, $t=0, 2, 4, 6$
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=12cm,
+                height=7cm,
+                samples=1000,
+                axis lines = center,
+                ticks= none,
+                ymin=0,
+                ymax= 1.1, 
+                xlabel = $x$,
+                ylabel= $\psi$
+            ]
+            \addplot[
+                domain=-8:8,
+                color=red
+            ]
+            {0.5 * (1/(1 + \x^2) + 1/(1 + \x^2))};
+            \addplot[
+                domain=-10:10,
+                color=red
+            ]
+            {0.5 * (1/(1 + (\x + 2)^2) + 1/(1 + (\x - 2)^2))};
+            \addplot[
+                domain=-8:8,
+                color=red
+            ]
+            {0.5 * (1/(1 + (\x + 4)^2) + 1/(1 + (\x - 4)^2))};
+            \addplot[
+                domain=-8:8,
+                color=red
+            ]
+            {0.5 * (1/(1 + (\x + 6)^2) + 1/(1 + (\x - 6)^2))};
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
 \end{eg}
 \end{document}
