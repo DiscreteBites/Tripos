@@ -1148,9 +1148,10 @@ and we see that the converse is true for this case. However, this is not always 
             sm \equiv 0 \mod m \quad&\quad tn \equiv 0 \mod n\\
         \end{align*}
         Hence, we can use these equations to pick out the congruences we want.
-        \[
-            x = a(tn) + b(sm) \equiv a \mod m \equiv b \mod n  
-        \]
+        \begin{align*}
+            x = a(tn) + b(sm) &\equiv a \mod m \\
+            &\equiv b \mod n  
+        \end{align*}
         \item [(Uniqueness)] Suppose $y$ is also a solution, that is $y \equiv a \mod m, y \equiv b \mod n$. Then,
         \begin{align*}
             &\Leftrightarrow y \equiv x \mod m \quad\wedge\quad y \equiv x \mod n \\
@@ -1175,13 +1176,1935 @@ and we see that the converse is true for this case. However, this is not always 
 \begin{defi}[Euler Totient]
     We denote $\varphi(m)$ to be the number of integers $a$ with $1 \leq a \leq m$ such that $(a, m) = 1$, that is $\varphi(m)$ is the number of units modulo $m$.
     $\varphi$ is known as the Euler totient function.
+    By convention,
+    \[
+        \varphi(1) =  1  
+    \]
 \end{defi}
 
 \begin{eg}
     $\varphi(p) = p - 1$ for prime $p$ and $\varphi(pq) = pq - p - q + 1$ when $p, q$ are distinct primes. In this case out of all $pq$ numbers there are $p$ many multiples of $q$ and $q$ many multiples of $p$ to be removed. We add $1$ to account for $pq$ occuring in both counts. We see that
     \[
-        \varphi(pq) = pq - p - q + 1 = \varphi()
+        \varphi(pq) = pq - p - q + 1 = (p-  1)(q - 1) = \varphi(p) \varphi(q)
     \]
 \end{eg}
+
+\begin{question}
+    How do powers of an integer behave modulo $p$?
+    Let's consider modulo $7$,
+    \begin{center}
+        \begin{tabular}{ccccc}
+            $2^1$ & $2^2$ & $2^3$ & $2^4$ & $\cdots$\\
+            \hline 
+            $2$ & $4$ & $1$ & $2$ & $\cdots$
+        \end{tabular}
+    \end{center}
+    How about modulo $11$?
+    \begin{center}
+        \begin{tabular}{cccccccccc}
+            $2^1$ & $2^2$ & $2^3$ & $2^4$ & $2^5$ & $2^6$ & $2^7$ & $2^8$ & $2^9$ & $2^{10}$ \\
+            \hline 
+            $2$ & $4$ & $8$ & $5$ & $10$ & $9$ & $7$ & $3$ & $6$ & $1$
+        \end{tabular}
+    \end{center}
+\end{question}
+
+\begin{nthm}[Fermat's Little Theorem]\label{th:2-13}
+    Let $p$ be a prime, then
+    \[
+        a^p \equiv a \mod p \qquad \forall a \in \Z  
+    \]
+    Equivalently,
+    \[
+        a^{p-1} \equiv 1 \mod p \qquad \forall a \neq 0 \in \Z
+    \]
+\end{nthm}
+
+\begin{proof}
+    If $a$ is non-zero, then $a$ is a unit mod $p$.
+    \[
+        ax \equiv ay \mod p \Leftrightarrow x \equiv y \mod p  
+    \]
+    Hence, the numbers $a, 2a, 3a, \cdots, (p-1)a$ are pairwise incongruent modulo $p$.
+    Also, $a \neq 0$, so they are infact $1, 2, \cdots, p-1$ in some order.
+    Hence,
+    \begin{align*}
+        a \cdot 2a \cdots (p-1)a \equiv 1 \cdot 2 \cdots (p-1) \mod p \\
+        \Rightarrow a^{p-1}(p-1)! \equiv (p-1)! \mod p
+    \end{align*}
+    But $(p-1)!$ is a unit modulo $p$ since it is a product of units. 
+    Therefore we may cancel it to obtain
+    \[
+        a^{p-1} = 1 \mod p  
+    \]
+\end{proof}
+
+\begin{thm}[Fermat-Euler Theorem]
+    Let $(a,m) = 1$. Then
+    \[
+        a^{\varphi(m)} \equiv 1 \mod m  
+    \]
+\end{thm}
+\begin{proof}
+    Let 
+    \[
+        u = \crbkt{x \in \Z \mid 0 < x < m, (x, m) = 1}  
+    \]
+    be the $\varphi(m)$ numbers $<m$ that are coprime to $m$. 
+    Label them $u_1, u_2, \cdots, u_{\varphi(m)}$.
+    Then
+    \[
+        au_1, au_2, \cdots, au_{\varphi(m)}
+    \]
+    are all distinct modulo $m$ and invertible (since $a$ is a unit).
+    Hence they are just $u_1, u_2, \cdots, u_{\varphi(m)}$ is some order.
+    It follows that
+    \begin{align*}
+        au_1 \cdot au_2 \cdots au_{\varphi(m)} \equiv u_1 \cdot u_2 \cdots u_{\varphi(m)} \mod m \\
+        \Rightarrow a^{\varphi(m)} \prod_{i=1}^{\varphi(m)} u_i \equiv \prod_{i=1}^{\varphi(m)} u_i \mod m
+    \end{align*}
+    Where $\prod_{i=1}^{\varphi(m)} u_i$ is a unit modulo $m$ since it is a product of units.
+    Therefore we may cancel,
+    \[
+        a^{\varphi(m)} \equiv 1 \mod m  
+    \]
+\end{proof}
+
+\begin{question}
+    What is $(p-1)! \mod p$?
+    When $p = 5$, $4! = 24 \equiv -1 \mod 5$.
+    When $p = 7$, $6! = 720 \equiv -1 \mod 7$.  
+\end{question}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 9: 24/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{nlemma}\label{lem:2-14}
+    Let $p$ ne a prime. Then
+    \[
+        x^2 \equiv 1 \mod p \Leftrightarrow x \equiv \pm 1 \mod p  
+    \]
+\end{nlemma}
+\begin{proof}
+    We seek to show that
+    \[
+        x^2 \equiv 1 \mod p \Leftrightarrow (x+1)(x-1) \equiv 0 \mod p
+    \]
+    Recall proposition \ref{prop:2-4}: If $p$ is prime and $p \mid ab$ then $p \mid a$ or $p \mid b$.
+    So if $p$ is prime, then 
+    \[
+        ab \equiv 0 \mod p \Leftrightarrow a \equiv 0 \text{ or } b \equiv 0 \mod p
+    \]
+    Hence,
+    \begin{align*}
+        x^2 \equiv 1 \mod p &\Leftrightarrow x^2 - 1 \equiv 0 \mod p \\
+        &\Leftrightarrow (x + 1)(x - 1) \equiv 0 \mod p \\
+        &\Leftrightarrow x + 1 \equiv 0 \text{ or } x - 1 \equiv 0 \mod p
+    \end{align*}
+\end{proof}
+\begin{remark}
+    A more general fact is true, a non-zero polynomial of degree $k$ over $\Z_p$ has at most $k$ roots in $\Z_p$.
+\end{remark}
+
+\begin{nthm}[Wilson's Theorem]
+    \[
+        (p-1)!  \equiv -1 \mod p 
+    \]
+\end{nthm}
+\begin{proof}
+    It is easily checked for $p=2$, so we assume that $p > 2$.
+    Note that the units modulo $p$ come in pairs whose product is $1$, together with some elements that are self inverse; i.e. elements $x$ such that
+    \[
+        x^2 \equiv 1 \mod p  
+    \]
+    By Lemma \ref{lem:2-14}, the elements that are self inverse are precisely $\pm 1$, so the remaining $p - 3$ elements (units) of $\Z_p$ come in inverse pairs.
+    Hence, $(p - 1)!$ is a product of $\frac{p - 3}{2}$ pairs of mutual inverses together with $+1$ and $-1$, so
+    \[
+        (p - 1) ! \equiv -1 \mod p  
+    \]
+\end{proof}
+
+\begin{question}
+    When is $-1$ a square modulo $p$? (if ever).
+    When $p = 5$, $2^2 = 4 \equiv -1 \mod 5$ and $3^2 = 9 \equiv -1 \mod 5$.
+    When $p = 7$, there are no examples.
+    When $p = 13$, $5^2 \equiv -1 \mod 13$
+\end{question}
+
+\begin{nprop}
+    Let $p$ be a prime, then $-1$ is a square modulo $p$ if and only if 
+    \[
+        p \equiv 1 \mod 4  
+    \]
+\end{nprop}
+\begin{proof}
+    Suppose $p \equiv 1 \mod 4$.
+    By Wilson's Theorem $(p - 1)! \equiv -1 \mod 4$, where
+    \begin{align*}
+        (p-1)! \equiv& 1 \times 2 \times 3 \cdots \frac{p-1}{2} \frac{p + 1}{2} \cdots (p - 3)(p - 2)(p - 1) \\
+        \equiv& \sqbkt{1 \times 2 \times 3 \cdots \frac{p-1}{2}}^2 (-1)^{\frac{p - 1}{2}} \\
+        \equiv& \bkt{1 \times 2 \times 3 \cdots \frac{p-1}{2}}^2
+    \end{align*}
+    If $p = 4k + 1$ for some $k \in \Z^+$,
+    \begin{align*}
+        \frac{p-1}{2} = 2k \\
+        \therefore -1 \equiv \bkt{\frac{p - 1}{2}!}^2 \mod p
+    \end{align*}
+    So $-1$ is a square modulo $p$.
+
+    Suppose, on the contrary that $p \equiv -1 \mod 4$, i.e, $p = 4k + 3$ for some $k \in \Z^+$. 
+    If $-1$ were a square modulo $p$, then there would be some $z \in Z$ such that $z^2 \equiv -1 \mod p$.
+    Then, by Fermat's little theorem,
+    \begin{alignat*}{3}
+        1 \equiv z^{p -1} &\equiv z^{4k + 2} &&\mod p \\
+        &\equiv z^{2(2k + 1)} &&\mod p \\
+        &\equiv (-1)^{2k + 1} &&\mod p \\
+        &\equiv -1 &&\mod p \qquad  \contradiction
+    \end{alignat*}
+\end{proof}
+\begin{remark}
+When $p \equiv 1 \mod 4$, Wilson's Theorem tells us a solution to $x^2 \equiv -1 \mod p$.
+For example, $p = 29$, so $x = 14!$ works. 
+\end{remark}
+
+\subsection{Public Key Cryptography}
+Let us agree to write messages as sequences of numbers. For example, one possible scheme would be to encode
+\begin{center}
+    \begin{tabular}{c|c|c|c|c|c}
+        A & B & $\cdots$ & Z & ! & $\cdots$ \\
+        \hline
+        $00$ & $01$ & $\cdots$ & $25$ & $26$ & $\cdots$
+    \end{tabular}
+\end{center}
+I wish for each of the IA students to be able to send messages in encrypted form in such a way that I can decrypt them easily but the same is not true for any third party.
+We use the RSA encryption scheme.
+
+\begin{defi}[RSA Scheme (Rivest, Shamir, Adleman)]\leavevmode
+    \begin{itemize}
+        \item I think of two large primes $p$ and $q$.
+        \item I let $n$ be the product of $p$ and $q$ and pick an encoding exponent $e$ such that $e$ is coprime to $\varphi(n) = (p-1)(q-1)$
+        \item Publish the pair of numbers $(n, e)$ which is called my encryption scheme.
+    \end{itemize}
+\end{defi}
+
+\begin{description}
+    \item[To send me an encrypted message]\leavevmode
+    \begin{itemize}
+        \item you chop your message into number $M < n$
+        \item you send the number
+        \[
+            M^e \mod n  
+        \]
+        which can be computed quickly by repeated squaring and applying $\mod n$
+    \end{itemize}
+    
+    \item[To decrypt the message]\leavevmode
+    \begin{itemize}
+        \item I work out the decoding exponent $d$ such that
+        \[
+            ed \equiv 1 \mod \sqbkt{\varphi(n)} 
+        \]
+        We can do this via Euclid's Algorithm
+        \item I compute
+        \[
+            (M^e)^d \equiv M^{k \varphi(n) + 1} \equiv M \mod n 
+        \]
+        Note that this uniquely determines $M$ as $M < n$.
+    \end{itemize}
+\end{description}
+\begin{proof}
+    \[
+        M^{ed} \equiv 1 \mod pq  
+    \]
+    If $(M,n) = 1$, then by Fermat-Euler
+    If $(M, n) \neq 1$ then $M \equiv 0 \mod p$ or $M \equiv 0 \mod q$.
+    We will show that $M^{ed} \equiv m \mod p$ and $M^{ed} \equiv m \mod q$
+    \begin{enumerate}[cases]
+        \item $M \equiv 0 \mod p \Rightarrow M^{ed} \equiv 0 \mod p$.
+        
+        $M \not \equiv 0 \mod q$, then
+        \[
+            M^{ed} \equiv M^{ed - 1}M \equiv M^{k \varphi(n)} M \equiv M^{k' (q-1)} M \equiv M \mod q
+        \]
+        By Fermat's Little theorem.
+
+        \item $M \equiv 0 \mod q \Rightarrow M^{ed} \equiv 0 \equiv M \mod q$.
+        
+        $M \not \equiv 0 \mod p$, then
+        \[
+            M^{ed} \equiv M^{ed - 1}M \equiv M^{k \varphi(n)} M \equiv M^{k' (p-1)} M \equiv M \mod p
+        \]
+        By Fermat's Little theorem.
+    \end{enumerate}
+
+    Therefore $M^{ed} \equiv M \mod p$ and $M^{ed} \equiv M \mod q$.
+    By the Chinese Remainder Theorem, let $\alpha p + \beta q = 1$
+    \[
+        M^{ed} = M(\alpha p) + M(\beta q) \equiv M \mod pq
+    \]
+\end{proof}
+
+\begin{remark}
+    In order to decrypt in this way, I needed $n$ and $d$, or $n, e$ and $\varphi(n)$.
+    Finding $\varphi(n)$ is as difficult as finding the prime factors of $n$ which is believed to be computationally hard.
+    It is not know if RSA can be broken without factorisation.
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 10: 26/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The Reals}
+So far we have seen that
+\[
+    \N \subset \Z \subset \Q
+\]
+Where we moved to $\Z$ in search of an inverse for addition, and we moved to $\Q$ in search of an inverse for multiplication.
+Where does the need for the reals arise?
+
+\begin{nprop}
+    There is no rational $x$ with $x^2 = 2$.
+\end{nprop}
+\begin{proof} (1) 
+    Suppose $x^2 = 2$, note that we may assume that $x > 0$ since $(-x)^2 = x^2$.
+    If $x$ is rational, then $x = \frac{a}{b}$ for some $a, b \in \N$.
+    Then
+    \[
+        x^2 = \frac{a^2}{b^2} = 2 \Leftrightarrow a^2 = 2 b^2  
+    \]
+    If a prime factor occurs in $a^2$, then it occurs with an even power.
+    Therefore the exponent of $2$ in the prime factorisation of $a^2$ is even, likewise for $b^2$.
+    However, $2b^2$ has an odd power in its prime factorisation.
+    This contradicts the Fundamental Theorem of Arithmetic $\contradiction$.
+\end{proof}
+\begin{remark}
+    The same proof shows that if $x^2 = n$ for some $n \in \N$, then for $x \in \Q$, $n$ must be square.
+\end{remark}
+
+\begin{proof} (2)
+    Suppose these exists $x = \frac{a}{b}$ such that $x^2 = 2$ for $a, b \in \N$.
+    Then given any integers $c, d \in \Z$, $cx + d$ is of the form $\frac{e}{b}$ for some $e \in \Z$.
+    Thus, if $cx + d > 0$, then $cx + d \geq \frac{1}{b}$.
+    But 
+    \[
+        0 < x - 1 < 1  
+    \]
+    So for sufficiently large $n$,
+    \[
+        0 < (x - 1)^n < \frac{1}{b}  
+    \]
+    But for any $n \in \N$, $(x - 1)^N$ is of the form $cx + d$ for some $c, d \in \Z$ since $x^2 = 2$. $\contradiction$ 
+\end{proof}
+
+So ``$\Q$ has a gap''. How do we express this fact making reference only to $\Q$.
+What are we saying about $\sqrt{2}$? $2$ is the upper bound for the set of $x$ such that $x^2 < 2$,
+but so is $1.5$, $1.42$, $1.41421356$, all of which are $\in \Q$.
+
+\begin{remark}[Crucial Point]
+    In $\Q$, this set has no least upper bound.
+    It is in this sense that $\Q$ has a gap.
+    In $\R$ we will say that $\R$ has no gaps of this kind.
+\end{remark}
+
+\subsection{The Reals}
+\begin{defi}[Real Numbers]
+    The \emph{real numbers} $\R$ are a set with elements $0, 1$ where $(0 \neq 1)$,
+    equipped with $2$ operations $+$ and $\cdot$ and an ordering $<$ satisfying the following.
+    \begin{enumerate}[label=(\arabic*)]
+        \item $+$ is commutative and associative with identity $0$ and every $x$ has an inverse under $+$.
+        \item $\cdot$ is commutative and associative with identity $1$ and every non-zero $x$ has an inverse under $\cdot$.
+        \item $\cdot$ is distributive over addition, that is $\forall a, b, c$
+        \[
+            a(b + c) = ab + ac    
+        \]
+        Therefore $\R$ is a field.
+        \item $\forall a, b$ exactly one of $a < b$ or $a > b$ or $a = b$ holds.
+        Further, $\forall a, b, c$ if $a < b$ and $b < c$ then $a < c$ (Transitivity)
+        \item $\forall a, b, c$ if 
+        \[
+            a < b \Rightarrow a + c < b + c
+        \]
+        and
+        \[
+            a < b \Rightarrow ac < bc  
+        \]
+        if $c > 0$.
+        \item Given any set $S$ of reals that is non-empty and bounded above, $S$ has a least upper bound.
+        (Known as the least upper bound axiom)
+    \end{enumerate}
+\end{defi}
+
+\begin{defi}[Bounded above]
+    We say that a set $S$ is bounded above if $\exists x \in \R$ such that
+    \[
+        x \geq y \qquad \forall y \in S
+    \]
+    Such an $x$ is called an upper bound for $S$.
+\end{defi}
+
+\begin{defi}[Least upper bound]
+    We say that $x$ is a least upper bound for $S$ if $x$ is the upper bound for $S$ such that every other upperbound $x'$
+    \[
+        x' \geq x
+    \]
+    Such a least upper bound is unique. If $x$ and $y$ are both least upperbounds then
+    \[
+        x \geq y \quad \text{ and } y \geq x \Rightarrow x = y
+    \]
+    When $x$ is a least upperbound for $S$ we may write
+    \[
+        \sup(S) = x  
+    \]
+\end{defi}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}
+        \item From (1) - (5) we can check that $0 < 1$.
+        \begin{proof}
+            Indeed if not, then $0 > 1$ since $0 \neq 1$.
+            Then,
+            \begin{align*}
+                0 -1 > 1 - 1 \\
+                \Rightarrow -1 > 0
+            \end{align*}
+            Hence $-1 > 0$ and by (5), we can multiply by it on both sides,
+            \[
+                1 = -1 \times (-1) > (-1) \times 0 = 0   
+            \]
+            which is a contradiction. $\contradiction$
+        \end{proof}
+        \item We may consider $\Q$ as contained in the reals by identifying $\frac{a}{b} \in \Q$ with $a \cdot b^{-1} \in \R$.
+        \item $\Q$ does not satisfy (6) as 
+        \[
+            s = \crbkt{x \in \Q \mid x^2 < 2}  
+        \]
+        does not have a supremum in $\Q$
+        \item Justifying non-empty and bounded above. They are crucial!
+        If $S$ is empty, then every real $x \in \R$ is an upperbound for $S$, so there is no least upper bound.
+        If $S$ is not bounded above, then it has no upper bound, and certainly no least upper bound.
+        \item It is possible to construct out of $\Q$ and check that axioms hold.
+        But let's just say it takes effort (Dedekind Cuts)
+    \end{enumerate}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 11: 28/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item $S = \crbkt{x \in \R \mid 0 \leq x \leq 1}$.
+        Is $2$ an upper bound for $S$? Yes.
+        \[
+            \forall x \in S, \quad x \leq S  
+        \]
+        If $\frac{3}{4}$ an upper bound for $S$? No. 
+        Take for instance $\frac{7}{8} \in S$ and $\frac{7}{8} > \frac{3}{4}$.
+        The least upperbound is $1$ because,
+        \begin{enumerate}[label=(\roman*)]
+            \item $1$ is an upper bound $\forall x \in S$, $x \leq 1$
+            \item Every other upper bound $y$ is such that $y \geq 1$. as ($1 \in \S$)
+        \end{enumerate}
+        Hence $\sup(S) = 1$
+
+        \item $S = \crbkt{x \in \R \mid 0 < x < 1}$
+        \begin{enumerate}[label=(\roman*)]
+            \item $2$ is an upper bound $\forall x \in S$, $x \leq 2$
+            \item $\frac{3}{4}$ is not an upper bound $\frac{7}{8} \in S$ and $\frac{7}{8} > \frac{3}{4}$
+        \end{enumerate}
+        We have $\sup(S) = 1$
+        \begin{enumerate}[label=(\roman*)]
+            \item $1$ is an upper bound (as $\forall x \in S$, $x < 1$)
+            \item no upper bound $c$ is such that $c < 1$.
+            \begin{proof}
+                Suppose that exists such a $c$.
+                Indeed $c$ is certianly greater than $0$.
+                In fact we can argue that $c$ has to be at least $\frac{1}{2}$, since $\frac{1}{2} \in S$,
+                then if $c < 1$, then $0 < c < 1$, then
+                \[
+                    \frac{c + 1}{2} \in S  
+                \]
+                However,
+                \[
+                    c < \frac{c + 1}{2} < 1
+                \]
+                which contradicts $c$ being an upper bound.
+            \end{proof}
+        \end{enumerate}
+
+        \begin{warning}
+            Note that $1$ is not an element of $S$. 
+            If $S$ has a greatest element then
+            \[
+                \sup(S) = \max(S)  
+            \]
+            however, the supremum exists even when there is no greatest element, in which case
+            \[
+                \sup(S) \notin S  
+            \]
+        \end{warning}
+
+        \item $s = \crbkt{0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \cdots} = \crbkt{1 - \frac{1}{n} \mid n \in \N}$
+        Clearly, $1$ is an upper bound. Is there an upper bound $< 1$?
+    \end{enumerate}
+\end{eg}
+
+\begin{nprop}[Axiom of Archimedes]\label{prop:3-2}
+    (not really an axiom...) $\N$ is not bounded above in $\R$.
+\end{nprop}
+\begin{proof}
+    Suppose on the contrary that $\N$ is bounded above.
+    Let $c = \sup(\N)$.
+    By definition of $c$ as a supremum, $c - 1$ is not an upper bound for $\N$,
+    so
+    \[
+        \exists c \in \N \text{ such that } n > c - 1  
+    \]
+    But then
+    \[
+        n + 1 \in \N \text{ with } n + 1 > c  
+    \]
+    contradicts the fact that $c$ was an upper bound. $\contradiction$.
+\end{proof}
+\begin{remark}
+    Hence we say that there are arbitrarily large number $n \in \N$
+\end{remark}
+
+\begin{ncor}\label{cor:3-3}
+    For any $t > 0$, $\exists n \in \N$ such that $\frac{1}{n} < t$.
+    In other words, there are arbitrarily small real numbers.
+\end{ncor}
+\begin{proof}
+    Given $t > 0$, by proposition \ref{prop:3-2}, $\exists n \in \N$ such that $n > \frac{1}{t}$.
+    Hence, $\frac{1}{n} < t$.
+\end{proof}
+
+\begin{defi}[Bounded below]
+    A set $S$ is said to be \emph{bounded below} if $\exists x$ such that $x \leq y, \forall y \in S$.
+    Such an $x$ is called a lower bound for $S$. 
+\end{defi}
+
+\begin{defi}[Greatest lowest bound]
+    If $S$ is non-empty and bounded below, then the set 
+    \[
+        -S = \crbkt{-y \mid y \in S}  
+    \]
+    is non empty and bounded above, and hence it has a least upper bound, say $c$.
+    Hence, $-c$ is the \emph{greatest lower bound} for $S$.
+    We denote it by 
+    \[
+        \inf (S)  
+    \]
+\end{defi}
+
+Corollary \ref{cor:3-3} immediately implies that
+\[
+    \inf \bkt{\crbkt{\frac{1}{n} \mid n \in \N}} = 0
+\]
+proposition \ref{prop:3-2} and corollary \ref{cor:3-3} show that there are no ``infinitely large'' or ``infinitely small'' numbers in $\R$.
+
+Going back to example (3):
+\[
+    \sup \bkt{\crbkt{1 - \frac{1}{n} \mid n \in \N}} = 1
+\]
+For suppose $c < 1$ is an upper bound for $S$. Then $1 - \frac{1}{n} \leq c$ $\forall n \in \N$,
+so $0 < 1 - c < \frac{1}{n}$ $\forall n \in \N$ since $c < 1$, but this contradicts corollary \ref{cor:3-3}. $\contradiction$
+
+\begin{nthm}
+    There exists $x \in \R$ with $x^2 = 2$
+\end{nthm}
+\begin{proof}
+    Let $S = \crbkt{x \in \R \mid x^2 < 2}$.
+    Note that $S$ is non empty since $1 \in S$. $S$ is bounded above by $2$.
+    Hence $S$ has a supremum, which we denote $c$.
+    Observe $1 < c < 2$. We claim $c^2 = 2$.
+    Suppose that $c^2 < 2$.
+    For $0 < t < 1$ we have
+    \[
+        (c + t)^2 = c^2 + 2ct + t^2 < c^ + 4t + t = c^2 + 5t  
+    \]
+    For sufficiently small $t$ ($t \leq \frac{2 - c^2}{5}$), then
+    \[
+        (c + t)^2 \leq c^2 + 5t \leq 2  
+    \]
+    which contradicts that $c$ is an upper bound. $\contradiction$
+    Suppose $c^2 > 2$. For $0 < t < 1$ we have
+    \[
+        (c - t)^2 = c^2 - 2ct + t^2 > c^2 - 4t + 0 \geq 2  
+    \]
+    for sufficiently small $t \leq \frac{c^2 - 2}{4}$.
+    This contradicts the assumption that $c$ is the least upper bound for $S$.
+    Since $(c - t) \leq c$ and $c - t$ is an upper bound for $S$. $\contradiction$
+\end{proof}
+
+\begin{remark}
+    The same proof shows that $\sqrt[n]{x}$ exists $\forall n \in N$ and $\forall x \in \R$
+    such that $x$ is positive.
+    \[
+        \forall n \in \N, \forall x \in \R, x \geq 0 \Rightarrow \exists y \in \R \text{ such that } y^n = x  
+    \]
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 12: 31/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{defi}[Irrational]
+    A real that is not rational is called \emph{irrational}.
+    For instance the following are irrational 
+    \[
+        \sqrt{2}, \sqrt{3}, \sqrt{7}, \sqrt{15}, \cdots
+    \]
+\end{defi}
+\begin{remark}
+    Also, $2 + 3 \sqrt{5}$ is irrational.
+    Indeed suppose that $2 + 3 \sqrt{5} = \frac{a}{b}$ for $a, b \in \N$.
+    Then, $\sqrt{5} = \frac{a - 2b}{3b} \in \Q$ which is a contradiction. $\contradiction$ 
+\end{remark}
+
+\begin{prop}[Dense]
+    The rationals are \emph{dense} in $\R$, in the sense that $\forall a, b \in \R$ where $a < b$
+    \[
+        \exists c \in \Q \text{ with } a < c < b
+    \]
+\end{prop}
+\begin{proof}
+    We may assume that $0 < a$, as we can always shift a negative problem to above $0$.
+    By corollary \ref{cor:3-3}, $\exists n \in N$ such that $\frac{1}{n} < b - a$.
+    Let
+    \[
+        T = \crbkt{k \in \N \mid \frac{k}{n} \geq b}  
+    \]
+    by the Axiom of Archimedes, $\exists N$ such that $N > b$.
+    Hence, $nN \in T$, so $T \neq \emptyset$.
+    By the Well-Ordering Principle, $T$ has a least element $m$.
+    Set $c = (m-1) \frac{1}{n}$.
+    Since $m -1 \notin T$, $c < b$.
+    If $c \leq a$ then 
+    \[
+        \frac{m}{n} = c + \frac{1}{n} < a + (b - a) = b  
+    \]
+    which is a contradiction. $\contradiction$
+\end{proof}
+
+\begin{prop}
+    The irrationals are also \emph{dense} in $\R$, i.e,
+    \[
+        \forall a < b \in \R \quad \exists c \in \R \setminus \Q  
+    \]
+    with $a < c < b$.
+\end{prop}
+\begin{proof}
+    Indeed take a rational $c$ such that (we can do this since the rationals are dense)
+    \[
+        a \sqrt{2} < c < b \sqrt{2}  
+    \]
+    then,
+    \[
+        a < \frac{c}{\sqrt{2}} < b  
+    \]
+\end{proof}
+
+\subsection{Sequences}
+\begin{defi}
+    A \emph{sequence} is an enumerated collection of objects in which repititions are allowed and the order matters. 
+    Write 
+    \[
+        a_1, a_2, a_3, \cdots \text{ or } (a_n)_{n=1}^\infty  
+    \]
+    We will assume that sequences have infinitely many elements, unless told otherwise.
+\end{defi}
+
+What does it mean for a sequence $a_1, a_2, a_3, \cdots$ to ``tend'' to a limit $l$.
+It is not enough that the terms get closer and closer to $l$. 
+For example, we would not want
+\[
+    0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \frac{4}{5}, \cdots
+\]
+to tend to $37$.
+
+Also, it is not enough that the terms get ``arbitrarily close'' to $l$, 
+in the sense that $\forall \epsilon > 0$, $\exists n \in \N$ such that 
+\[
+    l - \epsilon < a_n < l + \epsilon
+\]
+For example, we would not want
+\[
+    0, 10, \frac{1}{2}, 10, \frac{2}{3}, 10, \frac{3}{4}, 10, \frac{4}{5}, \cdots
+\]
+to tend to $1$.
+
+We want the sequence to get and stay within $\epsilon$ of $l$. 
+Formally, the sequence $a_1, a_2, a_3, \cdots$ tend to the limit $l \in \R$ as $n \rightarrow \infty$ if
+\[
+    \forall \epsilon > 0, \exists N \in \N, \text{ such that } \forall n > N, \quad l - \epsilon < a_n < l + \epsilon
+\]
+More compactly written,
+\[
+    \forall \epsilon > 0, \exists N \in \N, \forall n > N, \abs{a_n - l} < \epsilon
+\]
+
+\begin{defi}[Absolute value]
+    Where the \emph{absolute value} $\abs{x}$ of $x \in \R$ is defined by
+    \[
+        \abs{x} = \begin{cases}
+            x & \text{ if } x \geq 0 \\
+            -x & \text{ if } x < 0
+        \end{cases}  
+    \]
+    We think if $\abs{a - b}$ as the distance between the numbers $a$ and $b$ on $\R$.
+\end{defi}
+\begin{eg}
+    \[
+        \abs{2 - 9} = \abs{9 - 2} = 7  
+    \]
+\end{eg}
+
+\begin{prop}[Triangle inequality]
+    It is easy to check that the \emph{triangle inequality} holds, $\forall a, b, c \in \R$
+    \[
+        \abs{a - c} \leq \abs{a - b} + \abs{b - c}  
+    \]
+\end{prop}
+
+\begin{defi}[Convergence \& Diverges]
+    When $(a_n)_{n=1}^\infty$ tends to a limit $l$ as $n$ tends to $\infty$ we write
+    \begin{itemize}
+        \item $a_n \rightarrow \infty$ as $n \rightarrow \infty$ 
+        \item $\lim_{n \rightarrow \infty} a_n = l$
+        \item $(a_n)_{n=1}^\infty$ converges to $l$.
+    \end{itemize}
+    If there is a limit $l$ but is not specified, we simply say ``$(a_n)_{n=1}^\infty$ converges''.
+    If $(a_n)_{n=1}^\infty$ does not converge, then we say it diverges.
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\roman*)]
+        \item Consider the following sequence 
+        \[
+            0, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \cdots
+        \]
+        the $n^{th}$ term of this sequence is $a_n = 1 - \frac{1}{n}$.
+        Given some $\epsilon > 0$, choose $N > \frac{1}{\epsilon}$.
+        If $n \geq N$, then
+        \[
+            \abs{a_n - 1} = \abs{1 - \frac{1}{n} - 1} = \frac{1}{n} \leq \frac{1}{N} < \epsilon  
+        \]
+        Hence $a_n \rightarrow 1$ as $n \rightarrow \infty$.
+
+        \item Consider the following sequence
+        \[
+            0, \frac{1}{2}, 0, \frac{1}{4}, 0, \frac{1}{6}, \cdots    
+        \]
+        The $n^{th}$ term is given by
+        \[
+            a_n = \begin{cases}
+                \frac{1}{n} & n \text{ is even}\\
+                0 & n \text{ is odd}
+            \end{cases}  
+        \]
+        Given some $\epsilon > 0$, choose $N > \frac{1}{\epsilon}$.
+        If $n \geq N$, then 
+        \[
+            \abs{a_n - 0} \leq \frac{1}{n} \leq \frac{1}{N} \leq \epsilon
+        \]
+        Hence $a_n \rightarrow 0$ as $n \rightarrow \infty$.
+
+        \item Consider the following sequence
+        \[
+            \frac{1}{2}, \frac{1}{2} + \frac{1}{4}, \frac{1}{2} + \frac{1}{4} + \frac{1}{8}, \cdots 
+        \]
+        where the $n^{th}$ term is given by
+        \[
+            a_n = 1 - \frac{1}{2^n}
+        \]
+        Given $\epsilon > 0$ choose $N > \frac{1}{\epsilon}$.
+        If $n \geq N$ then
+        \[
+            \abs{a_n -1} = \frac{1}{2^n} \leq \frac{1}{n} \leq \frac{1}{N} < \epsilon
+        \]
+        Hence $a_n \rightarrow 1$ as $n \rightarrow \infty$.
+        \begin{remark}
+            Note that we needed to guess the limit before proving it.
+            Also, we get no extra points for finding the smallest $N$,
+            so just find one that works!    
+        \end{remark}
+
+        \item Consider the following sequence,
+        \[
+            1, -1, 1, -1, \cdots
+        \]
+        where
+        \[
+            a_n = (-1)^n  
+        \]
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 13: 31/10/2023
+%%%%%%%%%%%%%%%%%%%%%%
+        If $a_n$ does not tend to $l$ we write 
+        \[
+            a_n \not \rightarrow l  
+        \]
+        This means 
+        \[
+            \exists \epsilon > 0, \forall N \in \N, \exists n \geq N \text{ such that } \abs{a_n - l} \geq \epsilon 
+        \]
+        Let us show that $a_n \not \rightarrow 0$
+        Indeed let $\epsilon = 1$, observe that $\abs{a_N - 0} = 1 \forall N \in \N$.
+        In fact, $a_n$ does not converge to any limit $l \in \R$.
+        Suppose $a_n \rightarrow l$ as $n \rightarrow \infty$ for some $l \in \R$.
+        Let $\epsilon = 1$, so 
+        \[
+            \exists N \in \N, \forall n \geq N, \abs{a_n - l} < 1  
+        \]
+        In particular,
+        \[
+            \abs{1 - l} < 1 \text{ and } \abs{-1 -l} < 1  
+        \]
+        Because of the triangle inequality
+        \[
+            2 = \abs{1 - (-1)} \leq \abs{1 - l} + \abs{-1 - l} < 2 \quad \contradiction
+        \]
+        Hence $((-1)^n)_{n=1}^\infty$ is divergent.
+    \end{enumerate}
+\end{eg}
+
+\subsection*{Uniqueness of limit}
+We implicitly assumed that if a limit exists, then it is unique.
+Indeed suppose $a_n \rightarrow l$ and $a_n \rightarrow k$ where $l \neq k$.
+Choose
+\[
+    \epsilon = \frac{1}{2} \abs{l - k}
+\]
+Then, $\exists N \in \N$ such that $\forall n \geq N$, $\abs{a_n - l} < \epsilon$,
+but also, $\exists M \in \N$ such that $\forall m \geq M$, $\abs{a_n - l} < \epsilon$.
+
+But then for any $n \geq \max \crbkt{N, M}$
+\[
+    2 \epsilon = \abs{l - k} \leq \abs{a_n - l} + \abs{a_n - k} < 2\epsilon \contradiction
+\]
+
+\begin{question}
+    Can we show that a limit exists without finding the limit itself? Yes!
+\end{question}
+A sequence $(a_n)_{n=1}^\infty$ is bounded if $\exists b \in \R$ such that $\abs{a_n} \leq b$ $\forall n \in \N$.
+Note that a convergent sequence is always bounded.
+If $a_n \rightarrow l$ as $n \rightarrow \infty$ then $\exists N \in \N$ such that $\forall n > N$
+\[
+    \abs{a_n - l} < 1
+\]
+Hence,
+\[
+    \abs{a_n} \leq \max \crbkt{\abs{a_1}, \abs{a_2}, \abs{a_3}, \cdots \abs{a_N-1}, l + 1 }
+\]
+However, not all bounded sequences are convergent.
+
+\begin{defi}[Monotonic]
+    A sequence $(a_n)_{n=1}^\infty$ is monotonic if it is either increasing or decreasing.
+    It is
+    \begin{itemize}
+        \item Increasing if $a_{n+1} \geq a_n$ $\forall n \in \N$
+        \item Decreasing if $a_{n+1} \leq a_n$ $\forall n \in \N$
+    \end{itemize}
+\end{defi}
+
+\begin{nthm}\label{th:3-5}
+    Every bounded monotonic sequence converges.
+\end{nthm}
+\begin{remark}
+    Note that this is not true in $\Q$. For example, decimal expansions of numbers
+    \[
+        1.4, 1.41, 1.414, \cdots  
+    \]
+    increases, but does not converge as $\sqrt 2 \notin \Q$!
+    So we know that the least upper bound axiom is important. 
+\end{remark}
+\begin{proof}
+    Suppose $(a_n)$ is increasing.
+    Then the set
+    \[
+        S = \crbkt{a_n \mid n \geq 1}  
+    \]
+    is clearly non-empty as $a_1 \in S$.
+    It is also bounded above since $(a_n)$ is bounded.
+    So, by the least upper bound axiom,
+    $S$ has a supremum, $l = \sup (S)$.
+    Given $\epsilon > 0$, $l - \epsilon$ is not an upper bound for $S$, so $\exists N \in \N$ such that$\forall n \geq N$ $a_n > l - \epsilon$.
+    Thus, $\forall n \geq N$
+    \[
+        l - \epsilon < a_n < l
+    \]
+    Hence $\forall n \geq N$, $\abs{a_n - l} < \epsilon$, so $a_n \rightarrow l$.
+\end{proof}
+\begin{remark}
+    The decreasing case is similar. We can make use of this existing proof by using $-b_n$ for $b_n$ a decreasing sequence.
+    \begin{enumerate}[label=(\arabic*)]
+        \item Note that for an increasing sequence to converge, we only need to know that it is bounded above.
+        \item The sequence $(a_n)_{n=1}^\infty$ with $a_n = n$ is increasing but it is not bounded. 
+        If an increasing sequence diverges, it goes to $\infty$
+        \item Theorem \ref{th:3-5} is in fact equivalent to the least upper bound axiom.
+        \item It is possible to show that every sequence has a monotonic subsequence, (an infinite one!!)
+    \end{enumerate}
+\end{remark}
+
+\begin{nprop}\label{prop:3-6}
+    If $a_n \leq d$, $\forall n$ and $a_n \rightarrow c$ as $n \rightarrow \infty$ then $c \leq d$
+\end{nprop}
+\begin{proof}
+    Suppsoe $c > d$,
+    then let $\epsilon = \abs{c - d} > 0$.
+    By the assumption that $a_n \rightarrow c$, $\exists N \in \N$ such that
+    \[
+        \forall n \geq N, \quad \abs{a_n - c} < \epsilon  
+    \]
+    But this then implies that $a_n > d$, which contradicts $d$ as an upper bound. $\contradiction$
+\end{proof}
+\begin{warning}
+    If $a_n < d$ and $a_n \rightarrow c$ as $n \rightarrow \infty$ we need not have
+    $c < d$, instead $c$ can be $\leq d$.
+    For instance,
+    \[
+        \frac{1}{2}, \frac{1}{2} + \frac{1}{4}, \frac{1}{2} + \frac{1}{4} + \frac{1}{8}, \cdots   
+    \]
+    has each term $<1$ but a limit $=1$
+\end{warning}
+
+\begin{nprop}\label{prop:3-7}
+    If $a_n \rightarrow c$ as $n \rightarrow \infty$ and $b_n \rightarrow d$ as $n \rightarrow \infty$
+    then $a_n + b_n \rightarrow c + d$ as $n \rightarrow \infty$.
+\end{nprop}
+\begin{proof}
+    Given $\epsilon >0$
+    \begin{align*}
+        \exists N \in \N \forall n \geq N, \quad \abs{a_n - c} < \frac{\epsilon}{2} \\
+        \exists M \in \N \forall m \geq M, \quad \abs{b_n - d} < \frac{\epsilon}{2}
+    \end{align*}
+    Then choose $N^* = \max \crbkt{M, N}$ then for $n \geq N^*$
+    \[
+        \abs{a_n + b_n - (c + d)} \leq \abs{a_n - c} + \abs{b_n - d} \leq \epsilon  
+    \]
+    This is colloquially known as an ``epsilon over $2$'' argument.
+\end{proof}
+
+\subsection{Series}
+In the reals, the sum of any $2$ numbers is defined.
+So by induction, finite sums are defined. 
+But \emph{infinite sums} apriori are not.
+Nevertheless
+\[
+    1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} \cdots = \ln 2    
+\]
+Let $(a_n)$ be a sequence. 
+Then
+\[
+    S_k = \sum_{n=1}^{k} a_n
+\]
+is the $k^{th}$ partial sum of the series whose $n^{th}$ term is $a_n$.
+We will write 
+\[
+    \sum_{n=1}^\infty a_n = \lim_{k \rightarrow \infty} S_k
+\]
+if the limit exists.
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item The series whose $n^{th}$ term is $a_n = r^n$ for some $\abs{r} < 1$ is known as the geometric series.
+        \[
+            S_k = r + r^2 + r^3 + \cdots + r^k = \frac{r^{k+1} - r}{r - 1} = \frac{r(1 - r^k)}{1 - r}  
+        \]
+        Then the limit of the infinite sum
+        \[
+            \lim_{k \rightarrow \infty} S_k = \frac{r}{1 - r}  
+        \]
+        since $r^k \rightarrow 0$.
+        Hence,
+        \[
+            \sum_{n=1}^{\infty} r^n = \frac{r}{1-r}  
+        \]
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 14: 04/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+        \item The series whose $n^{th}$ term is given by $a_n = \frac{1}{n}$ is known as the Harmonic Series.
+        \[
+            S_{2^k} = 1 + \frac{1}{2} + \underbrace{\frac{1}{3} + \frac{1}{4}}_{\text{each } \geq \frac{1}{4}} + \underbrace{\frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8}}_{\text{each } \geq \frac{1}{8}}  + \cdots + \frac{1}{2^k}
+        \]
+        By comparing terms, we can find a lower bound for $S_{2^k}$
+        \[
+            S_{2^k} \geq 1 + \frac{1}{2} + 2 \times \frac{1}{4} + 4 \times \frac{1}{8} + \cdots + 2^{k-1} \times \frac{1}{2^k}
+        \]
+        In general
+        \[
+            \frac{1}{2^m + 1} + \frac{1}{2^m + 2} + \cdots \frac{1}{2^{m+1}} \geq 2^m \times \frac{1}{2^{m+1}} = \frac{1}{2} 
+        \]
+        Hence,
+        \[
+            S_{2^k} \geq 1 + \frac{k}{2}  
+        \]
+        So the partial sums are increasing and unbounded so $\sum_{n=1}^{\infty} \frac{1}{n}$ diverges.
+
+        \item $a_n = \frac{1}{n^2}$
+        \[
+            S_{2^k -1} = 1 + \underbrace{\frac{1}{2^2} + \frac{1}{3^2}}_{\leq 2 \times \frac{1}{2^2}} + \underbrace{\frac{1}{4^2} + \frac{1}{5^2} + \frac{1}{6^2} + \frac{1}{7^2}}_{\leq 4 \times \frac{1}{4^2}} + \cdots + \frac{1}{(2^k - 1)^2}   
+        \]
+        In general
+        \[
+            \frac{1}{(2^m)^2} + \frac{1}{(2^m + 1)^2} + \cdots + \frac{1}{(2^{m+1} -1)^2} \leq \frac{2^m}{(2^m)^2} = \frac{1}{2^m}  
+        \]
+        So
+        \[
+            S_{2^k -1} \leq 1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{2^{k-1}} = \frac{1 - 2^{-k}}{\frac{1}{2}} < 2 
+        \]
+        By theorem \ref{th:3-5}, $\sum_{n=1}^{\infty} \frac{1}{n^2}$ converges and its partial sumsare increasing and bounded above.
+        In fact,
+        \[
+            \sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
+        \]
+    \end{enumerate}
+\end{eg}
+
+\subsection{Decimal Expansions}
+Let $(d_n)$ be a sequence of digits with $d_n \in \crbkt{0, 1, 2, \cdots, 9}$.
+Then $\sum_{n=1}^\infty \frac{d_n}{10^n}$ converges to some limit $x$, where $0 \leq x \leq 1$
+because the partial sums
+\[
+    S_m = \sum_{n=1}^m \frac{d_n}{10^n}
+\]
+are increasing and bounded by
+\[
+    \sum_{n=1}^\infty \frac{9}{10^n} = \frac{\frac{9}{10}}{1 - \frac{1}{10}} = 1
+\]
+We say that $0.d_1d_2d_3\cdots$ is the decimal expansion of the limit $x$.
+We have shown that given a decimal expansion we have a real number.
+Next, we will show the converse, given a real number its decimal expansion exists.
+
+\begin{question}
+    Given a real $0 \leq x \leq 1$ does it have a decimal expansion?
+\end{question}
+Pick $d_1 \in \Z$ maximal such that
+\[
+    \frac{d_1}{10} \leq x \leq 1
+\]
+Then since $x < 1$, $0 \leq d_1 \leq 9$ and
+\[
+    0 \leq x - \frac{d_1}{10} < \frac{1}{10}
+\]
+because $d_1$ was chosen to be maximal.
+Now pick $d_2$ such that
+\[
+    \frac{d_2}{100} \leq x - \frac{d_1}{10}
+\]
+Then $0 \leq d_2 \leq 9$ since 
+\[
+    0 \leq x - \frac{d_1}{10} < \frac{1}{10}
+\]
+and since $d_2$ is maximal, 
+\[
+    0 \leq x - \frac{d_1}{10} - \frac{d_2}{100} 
+\]
+Inductively, pick $d_n \in \Z$ maximal such that
+\[
+    \frac{d_n}{10^n} \leq x - \sum_{j=1}^{n-1} \frac{d_j}{10^j}
+\]
+so
+\[
+    0 \leq x - \sum_{j=1}^{n} \frac{d_j}{10^j} < \frac{1}{10^n}
+\]
+Since $\frac{1}{10^n} \rightarrow 0$ as $n \rightarrow \infty$
+\[
+    x - \sum_{j=1}^{n} \frac{d_j}{10^j} \rightarrow 0
+\]
+That is,
+\[
+    x = \sum_{j=1}^{\infty} \frac{d_j}{10^j} = 0.d_1d_2d_3\cdots
+\]
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Decimal expansions need not be unique. For example
+        \[
+            0.47999\cdots = 0.4800\cdots  
+        \]
+        \begin{proof}
+            Suppose $0.a_1a_2a_3\cdots = 0.b_1b_2b_3\cdots$.
+            We may assume $a_j = b_j$ for $j < k$ for some $k$
+            and $a_k < b_k$ wlog.
+            Then,
+            \[
+                \sum_{j = k+1}^\infty \frac{a_j}{10^j} \leq \sum_{j = k+1}^\infty \frac{9}{10^j} = \frac{9}{10^{k + 1}}\frac{1}{1 - \frac{1}{10}} = \frac{1}{10^k}
+            \]
+            Hence, we must have that
+            \[
+                b_k = a_k + 1  
+            \]
+            (For if $b_k > a_k +1$ then
+            \[
+                b - a \geq 2 10^{-k} - 10^{-k} > 0  
+            \])
+            and $a_j = 9$, $b_j =0$ $\forall j > k$.
+        \end{proof}
+
+        \item A decimal expansion is periodic if after a finite number of terms, it repeats in blocks of length $k$.
+        \[
+            \exists l, k \text{ such that } d_{n+k} = d_n \qquad \forall n > l  
+        \]
+        A periodic decimal is rational.
+        For example, $x = 0.7832147147147\cdots = \frac{7832}{10000} + 0.0000147147147\cdots$
+        \begin{align*}
+            \Rightarrow 10^4x - 7832 &= \frac{147}{10^3} + \frac{147}{10^6} + \cdots \\
+            &= 147 \sum_{n=1}^\infty \frac{1}{10^{3n}} = 147 \times \frac{1}{10^3} \frac{1}{1- \frac{1}{10^3}}
+        \end{align*}
+        so $x \in \Q$.
+        Conversely, if $x \in \Q$, it has a periodic decimal expansion. To see this we write
+        \[
+            x = \frac{p}{2^a5^b q}  
+        \]
+        where $a, b, p, q \in \Z$ and $a, b, q \geq 0$ and $(q, 10) = 1$.
+        Therefore
+        \[
+            10^{\max \crbkt{a, b}} x = \frac{t}{q} = n + \frac{c}{q}  
+        \]
+        for $n, c \in \Z$ and $0 \leq c < q$.
+        By Fermat-Euler Theorem, since $(q, 10) = 1$,
+        \begin{align*}
+            10^{\varphi(q)} \equiv 1 \mod q \\
+            \Rightarrow 10^{\varphi(q)} - 1 = kq
+        \end{align*}
+        for some $k \in \N$.
+        Hence,
+        \[
+            \frac{c}{q} = \frac{kc}{kq} = \frac{kq}{10^{\varphi(q)} - 1} = kc \sum_{j=1}^\infty \frac{1}{(10^{\varphi(q)})^j}
+        \]
+        with blocks of length $\varphi(q)$. We need to make sure that $kc < \varphi(q)$.
+        Since $0 \leq kc \leq kq$ and $kq = 10^{\varphi(q)} - 1$,
+        we can write $kc$ as a $\varphi(q)$ digit number $d_1d_2\cdots d_{\varphi(q)}$
+        \[
+            \therefore \quad \frac{c}{q} = 0.d_1d_2\cdots d_{\varphi(q)}d_1d_2\cdots d_{\varphi(q)} \cdots
+        \]
+        so $x$ is periodic.
+    \end{enumerate}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 15: 07/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Eulers Number}
+Define
+\[
+    e = 1 + \frac{1}{1!} + \frac{1}{2!} + \frac{1}{3!} + \frac{1}{4!} + \cdots  
+\]
+Note that by theorem \ref{th:3-5} this series converges, the sequence of partial sums is increasing and bounded above by
+\[
+    e < 1 + \frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \cdots = 3
+\]
+If we define $0! = 1$ then
+\[
+    e = \sum_{j=0}^\infty \frac{1}{j!}
+\]
+
+\begin{nprop}\label{prop:3-8}
+    $e$ is irrational.
+\end{nprop}
+\begin{proof}
+    Suppose $e$ were rational, i.e $e = \frac{p}{q}$ where $p, q \in \N$ and $q > 1$ since $2 < e < 3$.
+    Clearly, $q! \times e \in \N$, but 
+    \[
+        q! e = q! + q! + \frac{q!}{2!} + \frac{q!}{3!} + \cdots + \frac{q!}{q!} + \frac{q!}{(q+1)!} + \cdots  
+    \]
+    Therefore,
+    \begin{align*}
+        q!e &= N + x \text{ for some } N \in \N\\
+        \text{ where } x &= \sum_{j=q+1}^{\infty} \frac{q!}{j!} = \sum_{j=1}^\infty \frac{q!}{(q + j)!} \\
+        &= \frac{1}{q+1} + \frac{1}{(q+1)(q+2)} + \frac{1}{(q+1)(q+2)(q+3)} + \cdots
+    \end{align*}
+    In general
+    \[
+        \frac{q!}{(q + j)!} \leq \frac{1}{(q+1)^j}  
+    \]
+    Hence,
+    \begin{align*}
+        x &\leq \frac{1}{q +1} + \frac{1}{(q + 1)^2} + \frac{1}{(q + 1)^3} + \cdots \\
+        &= \frac{1}{q + 1} \times \frac{1}{1 - \frac{1}{q + 1}} = \frac{1}{q}
+    \end{align*}
+    Since $q > 1$, $x < 1$.
+    This contradicts the fact that $q!e$ was a natural number. $\contradiction$
+    So $e$ is irrational
+\end{proof}
+
+\subsection{Algebraic and Transcendental numbers}
+\begin{defi}[Algebraic]
+    We way that a real number is \emph{algebraic} if it is a root of a non zero polynomial with integer coefficients. (or rational coefficients)
+\end{defi}
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item Every rational number is algebraic. 
+        \[
+            x = \frac{p}{q} \Rightarrow qx - p = 0  
+        \]
+        \item $\sqrt{2}$ is algebraic: it satisfies
+        \[
+            x^2 - 2 = 0
+        \]
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Transcendental]
+    A real number is \emph{transcendental} if it is not algebraic.
+\end{defi}
+
+\begin{nthm}[Louiville 1851]\label{th:3-9}
+    The number
+    \[
+        L = \sum_{n=1}^\infty \frac{1}{10^{n!}}  
+    \]
+    if transcendental.
+\end{nthm}
+\begin{proof}
+    We will need two facts about polynomials
+    \begin{enumerate}[label=(\Alph*)]
+        \item For any polynomial $p$, $\exists$ constant $k$ such that
+        \[
+            \abs{p(x) - p(y)} \leq k \abs{x - y}  \qquad \forall 0 \leq x, y \leq 1
+        \]
+        Indeed suppose
+        \[
+            p(x) = a_d x^d + \cdots + a_0  
+        \]
+        Then
+        \begin{align*}
+            p(x) - p(y) = a_d (x^d - y^d) + \cdots + a_1(x - y) \\
+            \Rightarrow (x - y) \sqbkt{a_d(x^{d-1} + x^{d-2}y + \cdots + y^{d-1}) + \cdots + a_1}
+        \end{align*}
+        Hence,
+        \[
+            \abs{p(x) - p(y)} \leq \abs{x - y} \sqbkt{
+                (\abs{a_d} + \abs{a_{d - 1}} + \cdots + \abs{a_1}) \times d
+            }
+        \]
+
+        \item A non zero polynomial of degree $d$ has at most $d$ real roots.
+        Indeed given a polynomial $p$ of degree $d$, we may assume by induction that the fact hold $\forall$ polynomials of degree $< d$,
+        and also assume that $p$ has a root, $r$ say, otherwise we are done. 
+        By long division we may write
+        \[
+            p(x) = (x - r)q(x)  
+        \]
+        where $q(x)$ is a polynomial of degree $<d = d-1$ so each root of $p$ is either $r$ or a root of $q(x)$.
+        But by the inductive hypothesis, $q(x)$ has at most $d-1$ roots.
+    \end{enumerate}
+    Now we can proceed with the proof of theorem \ref{th:3-9}.
+    Write
+    \[
+        L_n = \sum_{k=1}^n \frac{1}{10^{k!}}  
+    \]
+    so that $L_n \rightarrow L$ as $n \rightarrow \infty$.
+    Suppose $L$ is not transcendental, then there exists a polynomial $p$ of which $L$ is a root.
+    Then by fact (A), exists a constant $k$ such that $\forall 0 \leq x, y \leq 1$
+    \[
+        \abs{p(x) - p(y)} \leq k \abs{x - y}
+    \]
+    Note that
+    \[
+        \abs{L - L_n} = \sum_{k=n+1}^\infty \frac{1}{10^{k!}} \leq 2 \times \frac{1}{10^{(n+1)!}}
+    \]
+    Suppose $p$ has degree $d$.
+    \[
+        p(x) = a_d x^d + a_{d-1} x^{d-1} + \cdots + a_0  
+    \]
+    with $a_i \in \Z$ and $a_d \neq 0$. Notice that $L_n = \frac{s}{10^{n!}}$ for some $s \in \N$,
+    so $p(L_n) = \frac{t}{10^{d(n!)}}$ for some $t \in \Z$.
+
+    By fact (B), for sufficiently large $n$, $L_n$ is not a root of $p$, as there can only be $d$ roots of $p$.
+    Hence,
+    \[
+        \abs{p(L_n)} \geq \frac{1}{10^{d(n!)}} 
+    \]
+    Applying fact (A) this gives,
+    \[
+        \abs{p(L_n) - p(L)} \geq \frac{1}{10^{d(n!)}} 
+    \]
+    Therefore,
+    \[
+        \frac{1}{10^{d(n!)}} \leq \abs{p(L_n) - p(L)} \leq k \abs{L - L_n} \leq k \times 2 \times \frac{1}{10^{(n+1)!}}
+    \]
+    This is a contradiction for sufficiently large $n$. $\contradiction$
+\end{proof}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item The same proof shows that any real number $x$ such that $\forall n \in \N$, $\exists \frac{p}{q} \in \Q$
+        such that
+        \[
+            0 < \abs{x - \frac{p}{q}} < \frac{1}{q^n}  
+        \]
+        is transcendental.
+        \item Such numbers $x$ are known as Louiville numbers.
+        \item This proof does not show that $e$ is transcendental, but it is.
+        \item We will give another proof of the existence of transcendental numbers in the chapter 4.
+    \end{enumerate}
+\end{remark}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 16: 09/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Complex Numbers}
+Some polynomials have no real roots, e.g $x^2 + 1 = 0$.
+We will try to define such a solution $x$ to $x^+1 = 0$ into existence. (such that it is contradiction free!)
+
+The \emph{complex numbers} written $\C$ consist of $\R^2$ (the set of all ordered paris of real numbers $(a, b)$ for $a, b \in \R$)
+together with operations $+$ and $\cdot$ defined by
+\begin{itemize}
+    \item $(a, b) + (c, d) = (a+c, b + d)$
+    \item $(a, b) \cdot (c, d) = (ac - bd, bc + ad)$
+\end{itemize}
+
+We can use $\R$ as contained in $\C$ by identifying $a \in \R$ with
+$(a, 0) \in \C$. Note that
+\[
+    (a, 0) + (b, 0) = (a+b, 0)
+\]
+and similarly
+\[
+    (a, 0) \cdot (b, 0) = (ab, 0)
+\]
+Now let $i = (0, 1)$. Then $i^2 = (-1, 0)$ which corresponds to $-1 \in \R$.
+Note that every $z \in \C$ is of the form $a + bi$ for some real numbers $a, b \in R$.
+Indeed,
+\[
+    (a, b) = (a, 0)(1, 0) + (b, 0)(0, 1) = a + bi
+\]
+
+\begin{remark}\leavevmode
+    \item $\C$ obeys all the usual rules of arithmetic. 
+    In particular, it obeys (1) - (3) set out for $\R$, including that for $z \neq 0 \in \C$, $\exists w$ such that $zw = 1$.
+    Indeed, given $z = a + bi$, note that $(a + bi) \times (a - bi) = a^2 + b^2$, so
+    \[
+        (a + bi) \times \frac{a - bi}{a^2 + b^2} = 1  
+    \]
+    A structure obeying rules (1) - (3) is called a \emph{field}. For example,
+    \[
+        \C, \Q, \R, \Z_p  
+    \]
+    for $p$ a prime (but not $\Z$!)
+
+    \item Every non-zero polynomial (even allowing complex coefficients) has a root in $\C$.
+    This is known as the Fundamental Theorem of Algebra
+\end{remark}
+
+\section{Sets, Function and Relations}
+\subsection{Sets}
+A \emph{set} is a collection of mathematical objects. For example, $\R, \N, \crbkt{1, 5, 9} , (-2, 3]$.
+The order of elements does not matter ``is immaterial'' and elements are counted to belong to the set only once.
+For example,
+\[
+    \crbkt{1, 3, 7} = \crbkt{1, 7, 3} \text{ and } \crbkt{3, 4, 4, 8} = \crbkt{3, 4, 8}
+\]
+We write $x \in A$ if $x$ is an element of $A$ and $x \notin A$ if not.
+Two sets are equal if they have the same elements. 
+That is $A = B$ for sets $A$, $B$, if and only if $\forall x$
+\[
+    x \in A \Longleftrightarrow x \in B
+\]
+In particular, there is only one empty set $\emptyset$.
+
+\begin{defi}[Subset]
+    A set $B$ is a \emph{subset} of a set $A$, written 
+    \[
+        B \subseteq A  
+    \]
+    or 
+    \[
+        B \subset A \tag{strict inclusion}
+    \]
+    if every element of $B$ is an element of $A$. 
+    $B$ is said to be a proper subset of $A$ if $B$ is contained in $A$ and $B \neq A$.
+\end{defi}
+One way of expressing that two sets are equal $A = B$ if
+\[
+    A \subseteq B \text{ and } B \subseteq A
+\]
+If $A$ is a set and $P$ is a property of some elements of $A$, then we can construct
+\[
+    \crbkt{x \in A \mid P(x)}
+\]
+for the subset of $A$ comprising those elements for which $P(x)$ holds.
+\begin{eg}
+    \[
+        \crbkt{n \in \N \mid n \text{ is prime}}  = \crbkt{2, 3, 5, 7, \cdots} \in \N
+    \]
+\end{eg}
+
+\begin{defi}[Union]
+    If $A$ and $B$ are sets, then their \emph{union}, written
+    \[
+        A \cup B = \crbkt{x \mid x \in A \text{ or } x \in B}
+    \]
+\end{defi}
+
+\begin{defi}[Intersection]
+    Their \emph{intersection} written $A \cap B$ is defined to be
+    \[
+        A \cap B = \crbkt{x \mid x \in A \text{ and } x \in B}  
+    \]
+\end{defi}
+\begin{remark}
+    We can view interseection as a special case of subset selection
+    \[
+        A \cap B = \crbkt{x \in A \mid x \in B}  
+    \]
+\end{remark}
+
+\begin{defi}[Set Difference]
+    Similarly, we have \emph{set difference}
+    \[
+        A \setminus B = {x \in A \mid x \notin B}  
+    \]
+\end{defi}
+
+Note that $\cap$ and $\cup$ are commutative and associative.
+Also, $\cup$ is distributive over $\cap$. i.e
+\[
+    A \cup (B \cap B) = (A \cup B) \cap (A \cup C)
+\]
+and $\cap$ is distributive over $\cup$
+\[
+    A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
+\]
+\begin{proof}
+    To prove that
+    \[
+        A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
+    \]
+    we will show that 
+    \[
+        \text{LHS} \subseteq \text{RHS} \text{ and } \text{RHS} \subseteq \text{LHS}
+    \]
+    If $x \in A \cap (B \cup C)$, then $x \in A$ and $x \in B \cup C$, 
+    so $x \in A$ and ($x \in B$ or $x \in C$). 
+    If $x \in B$ then $x \in A \cup B$,
+    on the other hand if $x \in C$ then $x \in A \cup C$.
+    In any case 
+    \[
+        x \in (A \cap B) \cup (A \cap C)
+    \]
+    Hence
+    \[
+        A \cap (B \cup C) \subseteq (A \cap B) \cup (A \cap C)  
+    \]
+    Conversely, asumme that $x \in (A \cap B) \cup (A \cap C)$, 
+    then $x \in A \cap B$ or $x \in A \cap C$.
+    If $x \in A \cap B$ then $x \in A$ and $x \in B$ and so $x \in B \cup C$.
+    If $x \in A \cap C$ then $x \in A$ and $x \in C$ and so $x \in B \cup C$.
+    So therefore
+    \[
+        x \in A \cap (B \cup C)
+    \]
+    Hence,
+    \[
+        (A \cap B) \cup (A \cap C) \subseteq A \cap (B \cup C) 
+    \]
+    Therefore the two sets are equal
+\end{proof}
+
+Suppose $A_1, A_2, \cdots$ are sets, then
+\[
+    \bigcap_{n=1}^\infty A_n = A_1 \cap a_2 \cap a_3 \cap \cdots = \crbkt{x \mid x \in A_n \quad \forall n \in \N}
+\]
+Similarly, 
+\[
+    \bigcup_{n=1}^\infty A_n = A_1 \cup a_2 \cup a_3 \cup \cdots = \crbkt{x \mid x \in A_n \quad \text{ for some } n \in \N}
+\]
+
+\begin{warning}
+    $\bigcup_{n=1}^\infty A_n$ is not the limit of anything!
+    More generally, given any index set $I$ and a collection of sets $A_i$ that are indexed by $i \in I$, we write
+    \[
+        \bigcap_{i \in I} A_i = \crbkt{x \mid x \in A_i \quad \forall i \in I}
+    \]
+    and
+    \[
+        \bigcup_{i \in I} A_i = \crbkt{x \mid x \in A_i \quad \text{ for some } i \in I}
+    \]
+\end{warning}
+
+\begin{defi}[Cartesian Product]
+    Given sets $A$ and $B$, we can form their \emph{cartesian product}
+    \[
+        A \times B = \crbkt{(a, b) \mid a \in A \text{ and } b \in B}  
+    \]
+    which is the set of ordered pairs $(a, b)$ with $a \in A$ and $b \in B$.
+    Note that we can define the ordered pair $(a, b)$ as $\crbkt{\crbkt{a, b}, a}$.
+    We can extend this definition to ordered triples and so on. For example,
+    \[
+        \R^3 = \R \times \R times \R = \crbkt{(a, b, c) \mid x, y, z \in \R}
+    \]
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 17: 11/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{defi}[Power set]
+    For any set $X$, we can form the \emph{power set} $\wp(X)$ consisting of all subsets of $X$.
+    \[
+        \wp(X) = \crbkt{Y \mid Y \subseteq X}
+    \]
+\end{defi}
+\begin{eg}
+    If $X = \crbkt{1, 2}$ then
+    \[
+        \wp(X) = \crbkt{\{1\}, \{2\}, \{1, 2\}}  
+    \]
+\end{eg}
+\begin{warning}
+    Given a set $A$, we can form the set of elements
+    \[
+        \crbkt{x \in A \mid P(x)}  
+    \]
+    for any property $P$, but we cannot form
+    \[
+        \crbkt{x \mid P(x)}  
+    \]
+    Indeed suppose
+    \[
+        X = \crbkt{x \mid x \text{ is a set and } x \not in x}  
+    \]
+    were a set.
+    Then $X \in X \Rightarrow X \notin X \contradiction$.
+    On the otherhand $X \notin X \Rightarrow X \in X \contradiction$.
+    This is known as Russell's paradox. 
+    Similarly, there is no ``universal set'' $Y$, meaning a set $Y$ such that $\forall x$, $x \in Y$
+    otherwise we could form $X$ above by subset selection.
+
+    Therefore, to garuntee that a set exists, it should be obtained from known sets $\N, \R$ in one of the ways discussed.
+\end{warning}
+
+\subsection{Finite sets}
+Write
+\[
+    \N_0 = \N \cup \crbkt{0} = \crbkt{0, 1, 2, 3, \cdots}
+\]
+Given $n \in \N_0$ we say a set $A$ has size $n$ if
+\[
+    A = \crbkt{a_1, a_2 \cdots, a_n}
+\]
+with elements $a_i$ distinct.
+For example, $\crbkt{1, 3, 7}$ has  size $3$, and $\emptyset$ has size $0$.
+We say that $A$ is finite if $\exists n \in \N_0$ such that $A$ has size $n$,
+otherwise $A$ is infinite.
+
+\begin{nprop}\label{prop:4-1}
+    A set of size $n$ has exactly $2^n$ subsets
+\end{nprop}
+\begin{proof} (1)
+    We may assume that our set is $\crbkt{1, 2, \cdots, n}$.
+    To specify a subset $S$ of $\crbkt{1, 2, \cdots, n}$, we must specify if $1 \in S$ or $1 \notin S$,
+    if $2 \in S$ or $2 \notin S$, and so on. 
+    Hence the number of choices for $S$ is
+    \[
+        \underbrace{2}_{1 \in S ?} \times\underbrace{2}_{2 \in S ?} \times \underbrace{2}_{3 \in S ?} \times \cdots \times \underbrace{2}_{n \in S ?} =2^n 
+    \]
+\end{proof}
+
+\begin{proof} (2)
+    By induction on $n$. Clearly this is true for $n = 0$.
+    Given $n > 0$, and a subset $T \subseteq \{1, 2, \cdots, n-1\}$,
+    how many $S \subseteq \{1, 2, \cdots, n\}$ are there such that
+    \[
+        S \cap \{1, 2, \cdots, n-1\} = T  
+    \]
+    There are exactly $2$, namely $T$ and $T \cup \{n\}$.
+    Hence the number of subsets of $\{1, 2, \cdots, n\}$
+    \begin{align*}
+        =& 2 \times \text{\# of subsets of } \{1, 2, \cdots, n-1\} \\
+        =& 2 \times 2^{n-1} \tag{by inductive hypothesis}\\
+        =& 2^n
+    \end{align*}
+\end{proof}
+
+If a set $A$ has size $n$ we write ``$\abs{A} = n$'' or ``$\#A = n$''. 
+So proposition \ref{prop:4-1} says that
+\[
+    \abs{A} = n \Longrightarrow \wp(A) = 2^n
+\]
+
+\begin{defi}[Binomial Coefficient]
+    Given $n \in \N_0$ and $0 \leq k \leq n$ we write $\binom{n}{k}$ ``$n$ choose $k$'' for the number of subsets of an $n$-element set that are of size $k$.
+    In otherwords,
+    \[
+        \binom{n}{k} = \abs{\{S \subseteq \{1, \cdots, n\}\mid \abs{S} = k\}}    
+    \]
+    We call $\binom{n}{k}$ a binomial coefficient.
+\end{defi}
+\begin{eg}
+    Subsets of size $2$ of $\{1, 2, 3, 4\}$ are precisely,
+    \[
+        \{1, 2\}, \{1, 3\}, \{1, 4\}, \{2, 3\}, \{2, 4\}, \{3, 4\} 
+    \]
+    Therefore
+    \[
+        \binom{4}{2} = 6  
+    \]
+\end{eg}
+Note that by definition
+\[
+    \binom{n}{0} = 1, \binom{n}{n} = 1, \binom{n}{1} = n \tag{for $n > 0$} 
+\]
+and
+\[
+    \binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^n
+\]
+Also, we have $\forall n \in \N_0$ and $0 \leq k \leq n$
+\[
+    \binom{n}{k} = \binom{n}{n - k}
+\]
+For example, $\binom{8}{5} = \binom{8}{3}$.
+Indeed specifying which $k$ elements to pick is the same as specifying which $n-k$ elements not to pick.
+Moreover $\forall n \in \N$ and $1 \leq k \leq n-1$,
+\[
+    \binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}
+\]
+For example, $\binom{8}{3} = \binom{7}{2} + \binom{7}{3}$.
+Indeed the number of subsets of $\{1, 2, \cdots, n\}$ of size $k$ that do not include $n$ is $\binom{n-1}{k-1}$,
+and the number of subsets that do include $n$ is $\binom{n-1}{k-1}$.
+
+\begin{defi}[Pascal's triangle]
+    We obtain \emph{Pascal's triangle}
+    \begin{center}
+        \begin{tabular}{>{$n=}l<{$\hspace{12pt}}*{13}{c}}
+            0 &&&&&&&1&&&&&&\\
+            1 &&&&&&1&&1&&&&&\\
+            2 &&&&&1&&2&&1&&&&\\
+            3 &&&&1&&3&&3&&1&&&\\
+            4 &&&1&&4&&6&&4&&1&&\\
+            5 &&1&&5&&10&&10&&5&&1&\\
+            6 &1&&6&&15&&20&&15&&6&&1
+        \end{tabular}
+    \end{center}
+    Each row starts and ends with a $1$ and the remaining entries are the sum of the terms above.
+\end{defi}
+
+\begin{nprop}\label{prop:4-2}
+    \[
+        \binom{n}{k} = \frac{n(n-1)(n-2)(n-3) \cdots (n - k + 1)}{k (k-1) (k-2) \cdots 2 \times 1} = \frac{n!}{k!(n-k)!}  
+    \]
+\end{nprop}
+\begin{proof}
+    Given a set of size $n$, there are
+    \[
+        n(n-1)(n-2)(n-3) \cdots (n - k + 1)
+    \]
+    ways to pick $k$ elements in order, one by one.
+    But each subset of $k$ is picked
+    \[
+        k (k-1) (k-2) \cdots 2 \times 1
+    \]
+    ways by this method.
+    Hence, the number of subsets of size $k$ in $\{1, 2, \cdots, n\}$ is
+    \[
+        \frac{n(n-1)(n-2)(n-3) \cdots (n - k + 1)}{k (k-1) (k-2) \cdots 2 \times 1} 
+    \]
+\end{proof}
+\begin{remark}
+    Note that this formula tells us that, for example
+    \begin{itemize}
+        \item $\binom{n}{2} = \frac{n(n-1)}{2} \sim \frac{n^2}{2}$
+        \item $\binom{n}{3} = \frac{n(n-1)(n-2)}{3!} \sim \frac{n^3}{6}$
+    \end{itemize}
+\end{remark}
+
+\begin{nthm}\label{th:4-3}
+    For all $a, b \in \R$, $n \in \N$
+    \[
+        (a + b)^n = \binom{n}{0} a^n + \binom{n}{1} a^{n-1} b + \cdots + \binom{n}{n-1} a^1b^{n-1} +\binom{n}{n} b^n  
+    \]
+\end{nthm}
+\begin{proof}
+    When we expand $(a + b)^n = (a + b)(a + b) \cdots (a + b)$,
+    we obtain terms of the form $a^{n - k}b^k$ for $0 \leq k \leq n$,
+    and the number of terms of that form is precisely $\binom{n}{k}$ as we must specify $k$ brackets from which to pick $b$.
+    Hence, 
+    \[
+        (a + b)^n = \sum_{k=0}^n \binom{n}{k} a^{n - k}b^k 
+    \]
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 18: 14/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{eg}
+    \[
+        (1 + x)^n = 1 + nx + \frac{n(n-1)}{2} x^2 + \binom{n}{3} x^3 + \cdots + \binom{n}{n} x^n  
+    \]
+    so for small $x$, a good approximation for $x \ll 1$ is $1 + nx$.
+    For example,
+    \[
+        (1.00001)^2 \approx 1.00008  
+    \]
+    A better approximation would be $1 + nx + \frac{n(n-1)}{2} x^2$
+    \[
+        (1.00001)^2 \approx 1.00008 + 28 \times(0.00001)^2
+    \]
+\end{eg}
+
+\begin{question}
+    What can we say about the relationship between sizes of unions and intersections of finite sets.
+    For example,
+    \[
+        \abs{A \cup B} = \abs{A} + \abs{B} - \abs{A \cap B}  
+    \]
+    Also,
+    \[
+        \abs{A \cup B \cup C} = \abs{A} + \abs{B} + \abs{C} - \abs{A \cap B} - \abs{B \cap C}- \abs{C \cap A} + \abs{A \cap B \cap C}  
+    \]
+\end{question}
+
+\begin{nthm}[Inclusion-Exclusion Principle]\label{th:4-4}
+    Let $S_1, S_2, \cdots, S_n$ be finite sets, then
+    \begin{align*}
+        \abs{S_1 \cup S_2 \cup \cdots \cup S_n} = \sum_{\abs{A} = 1} \abs{S_A} &- \sum_{\abs{A} = 2} \abs{S_A} + \sum_{\abs{A} = 3} \abs{S_A} - \cdots \\ 
+        &+ (-1)^{n-1} \sum_{\abs{A} = n} \abs{S_A}
+    \end{align*}
+    Where
+    \[
+        S_A = \bigcap_{i \in A} S_i  
+    \]
+    and $\sum_{\abs{A} = k}$ is taken over all $A \subseteq \{1, 2, \cdots, n\}$ of size $k$.
+    Equivalently,
+    \[
+        \abs{\bigcup_{i=1}^n S_i} = \sum_{r = 1}^n (-1)^{r + 1} \sum_{\substack{
+            A \subseteq \{1, \cdots, n\} \\ 
+            \abs{A} = r
+        }} \abs{\bigcap_{i \in A} S_i} 
+    \]
+\end{nthm}
+\begin{proof}
+    Let $x \in S_1 \cup S_2 \cup \cdots \cup S_n$. 
+    Say $x \in S_i$ for $k$ of the $S_i$, we want $x$ to be counted exactly once in the RHS of the formula.
+    Indeed,
+    \[
+        \#\{A \mid \abs{A} = 1 \text{ with } x \in S_A\} = k  
+    \]
+    and
+    \[
+        \#\{A \mid \abs{A} = 2 \text{ with } x \in S_A\} = \binom{k}{2}  
+    \]
+    In general,
+    \[
+        \#\{A \mid \abs{A} = r \text{ with } x \in S_A\} = \binom{k}{r}
+    \]
+    for $r \leq k$ and $=0$ when $r > k$.
+    Thus, the number of times $x$ is counted by the RHS is
+    \begin{align*}
+        k - \binom{k}{2} + \binom{k}{3} - \binom{k}{4} + \cdots + (-1)^{k+1} \binom{k}{k} \\
+        = 1 - \bkt{1 - k + \binom{k}{2} + \cdots + (-1)^k \binom{k}{k}} \\
+        = 1 - (1 - 1)^k \\
+        = 1
+    \end{align*}
+\end{proof}
+
+\subsection{Functions}
+
+Given sets $A$ and $B$ a function $f$ from $A$ to $B$ is a ``rule'' that assigns to every element $x \in A$ a unique element $f(x) \in B$.
+More formally, a function from $A$ to $B$ is a subset of
+\[
+    f \subseteq A \times B
+\]
+such that $\forall x \in A$, there is a unique $y \in B$ such that $(x, y) \in f$.
+If $f$ is a function from $A$ to $B$ we write
+\begin{align*}
+    f : A &\rightarrow B \\
+    x &\mapsto f(x) = y
+\end{align*}
+if $(x, y) \in f$.
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item \begin{align*}
+            f : \R &\rightarrow \R \\
+            x &\mapsto x^2
+        \end{align*}
+        is a function.
+
+        \item \begin{align*}
+            f : \R &\rightarrow \R \\
+            x &\mapsto \frac{1}{x}
+        \end{align*}
+        is not a function. $f(0) = ?$
+
+        \item \begin{align*}
+            f : \R &\rightarrow \R \\
+            x &\mapsto \pm \sqrt{\abs{x}}
+        \end{align*}
+        is not a function. $f(x)$ is not unique.
+
+        \item \begin{align*}
+            f : \R &\rightarrow \R \\
+            x: &\mapsto \begin{cases}
+                1 & \text{ if } x \in \Q \\
+                0 & \text{ otherwise}
+            \end{cases}
+        \end{align*}
+        is a function.
+
+        \item $f: \{1, 2, 3, 4, 5\} \rightarrow \{1, 2, 3, 4\}$ given by,
+        \begin{center}
+            \begin{tikzpicture}
+                \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$,$4$, $5$},B/{$1$, $2$, $3$, $4$}} {
+                    \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                    \foreach[count=\j] \lj in \lsetmi {
+                        \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                    }
+                    \end{scope}
+                    \node[ellipse, draw, fit=(\lseti), 
+                    label={[name=l-\lseti]above:$\lseti$}] {};
+                }
+                \draw[->] (n-1-A) -- (n-1-B);
+                \draw[->] (n-2-A) -- (n-3-B);
+                \draw[->] (n-3-A) -- (n-1-B);
+                \draw[->] (n-4-A) -- (n-3-B);
+                \draw[->] (n-5-A) -- (n-4-B);
+            \end{tikzpicture}
+        \end{center}
+
+        \item $f: \{1, 2, 3\} \rightarrow \{1, 2, 3\}$ given by,
+        \begin{center}
+            \begin{tikzpicture}
+                \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$},B/{$1$, $2$, $3$}} {
+                    \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                    \foreach[count=\j] \lj in \lsetmi {
+                        \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                    }
+                    \end{scope}
+                    \node[ellipse, draw, fit=(\lseti), 
+                    label={[name=l-\lseti]above:$\lseti$}] {};
+                }
+                \draw[->] (n-1-A) -- (n-1-B);
+                \draw[->] (n-2-A) -- (n-3-B);
+                \draw[->] (n-3-A) -- (n-2-B);
+            \end{tikzpicture}
+        \end{center}
+
+        \item $f: \{1, 2, 3\} \rightarrow \{1, 2, 3, 4\}$ given by,
+        \begin{center}
+            \begin{tikzpicture}
+                \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$},B/{$1$, $2$, $3$, $4$}} {
+                    \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                    \foreach[count=\j] \lj in \lsetmi {
+                        \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                    }
+                    \end{scope}
+                    \node[ellipse, draw, fit=(\lseti), 
+                    label={[name=l-\lseti]above:$\lseti$}] {};
+                }
+                \draw[->] (n-1-A) -- (n-1-B);
+                \draw[->] (n-2-A) -- (n-4-B);
+                \draw[->] (n-3-A) -- (n-2-B);
+            \end{tikzpicture}
+        \end{center}
+
+        \item $f: \{1, 2, 3, 4\} \rightarrow \{1, 2, 3\}$ given by,
+        \begin{center}
+            \begin{tikzpicture}
+                \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$,$4$},B/{$1$, $2$, $3$}} {
+                    \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                    \foreach[count=\j] \lj in \lsetmi {
+                        \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                    }
+                    \end{scope}
+                    \node[ellipse, draw, fit=(\lseti), 
+                    label={[name=l-\lseti]above:$\lseti$}] {};
+                }
+                \draw[->] (n-1-A) -- (n-3-B);
+                \draw[->] (n-2-A) -- (n-3-B);
+                \draw[->] (n-3-A) -- (n-1-B);
+                \draw[->] (n-4-A) -- (n-2-B);
+            \end{tikzpicture}
+        \end{center}
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Injective]
+    We say that $f: A \rightarrow B$ is \emph{injective} if $\forall a, a' \in A$
+    \[
+        a \neq a' \Longrightarrow f(a) \neq f(a')  
+    \]
+    (distinct elements stay distinct).
+    Equivalently $f$ is injective if
+    \[
+        f(a) = f(a') \Longrightarrow a = a'  
+    \]
+    (every element in $B$ has at most $1$ arrow going into it)
+\end{defi}
+\begin{eg}
+    From the examples above, (5) and (8) are not injective, but (6) and (7) are.
+\end{eg}
+
+\begin{defi}[Surjective]
+    We say that $f: A \rightarrow B$ is \emph{sujective} if $\forall b \in B$, $\exists a \in A$ such that
+    \[
+        f(a) = b  
+    \]
+    (Everything on the RHS is ``hit'' by something from $A$).
+\end{defi}
+\begin{eg}
+    (5) and (7) are not surjective but (6) and (8) are.
+\end{eg}
+
+\begin{defi}[Bijective]
+    We say that $f: A \rightarrow B$ is \emph{bijective} if it is both surjective an injective.
+\end{defi}
+\begin{eg}
+    (6) is the only bijection on our list. 
+    If $f: A \rightarrow B$ is bijective then everything in $B$ is ``hit'' exactly once. 
+    (that is, $f$ pairs the elements of $A$ and $B$)
+\end{eg}
+
+\begin{defi}[Permutation]
+    A \emph{permutation} of $A$ is a bijection $f: A \rightarrow A$.
+\end{defi}
+
+\begin{defi}[Domain \& Codomain]
+    Given $f: A \rightarrow B$, we say that $A$ is the \emph{domain} and $B$ is the \emph{codomain}.
+\end{defi}
+
+\begin{defi}[Image]
+    The \emph{image} of $f$ is the set
+    \[
+        f(A) = \crbkt{f(a) \mid a \in A} = \crbkt{b \in B \mid f(a) = b \text{ for some } a \in A}  
+    \]
+    The image of $f$ is denoted by $\im(f)$
+\end{defi}
+\begin{eg}
+    Consider the function
+    \begin{align*}
+        f: \R &\rightarrow \R \\
+        x &\mapsto x^2
+    \end{align*}
+    then 
+    \[
+        \im(f) = \crbkt{y \in \R \mid y \geq 0}  
+    \]
+\end{eg}
+\begin{warning}
+    When specifying a function, we must specify its domain and codomain. 
+    For instance, the question ``Is the function $f(x) = x^2$ injective?'' is meaningless as
+    $f: \N \rightarrow N$ would be injective, but $f: \Z \rightarrow \Z$ would not be.
+\end{warning}
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item $f$ is surjective if and only if $f(A) = B$. 
+        In particular if $\abs{B} > \abs{A}$ then there can be no surjective function from $A \rightarrow B$
+
+        \item There is no injection from $A \rightarrow B$ if $\abs{A} > \abs{B}$
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 19: 16/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+        \item If $f: A \rightarrow A$, then $f$ is injective if and only if $f$ is surjective.
+        \item There is no bijection from $A$ to any proper subset of $A$.
+    \end{enumerate}
+\end{remark}
 
 \end{document}
