@@ -3106,5 +3106,933 @@ if $(x, y) \in f$.
         \item There is no bijection from $A$ to any proper subset of $A$.
     \end{enumerate}
 \end{remark}
+Note that (3) and (4) do not hold for infinite sets:
+\begin{enumerate}[label=(\alph*)]
+    \item Consider the following map
+    \begin{align*}
+        f: \N &\rightarrow \N \\
+        x &\mapsto x + 1
+    \end{align*}
+    it is injective but not surjective.
+    \begin{center}
+        \begin{tikzpicture}
+            \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$,$\vdots$},B/{$1$, $2$, $3$, $4$, $\vdots$}} {
+                \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                \foreach[count=\j] \lj in \lsetmi {
+                    \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                }
+                \end{scope}
+                \node[ellipse, draw, fit=(\lseti), 
+                label={[name=l-\lseti]above:$\lseti$}] {};
+            }
+            \draw[->] (n-1-A) -- (n-2-B);
+            \draw[->] (n-2-A) -- (n-3-B);
+            \draw[->] (n-3-A) -- (n-4-B);
+            \draw[->, densely dotted] (n-4-A) -- (n-5-B);
+        \end{tikzpicture}
+    \end{center}
 
+    \item Consider the following map
+    \begin{align*}
+        g: \N &\rightarrow \N \\
+        x &\mapsto \begin{cases}
+            x - 1 & \text{ if } x \neq 1 \\
+            1 & \text{ if } x = 1
+        \end{cases}
+    \end{align*}
+    it is surjective but not injective.
+    \begin{center}
+        \begin{tikzpicture}
+            \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$,$\vdots$},B/{$1$, $2$, $3$, $\vdots$}} {
+                \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                \foreach[count=\j] \lj in \lsetmi {
+                    \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                }
+                \end{scope}
+                \node[ellipse, draw, fit=(\lseti), 
+                label={[name=l-\lseti]above:$\lseti$}] {};
+            }
+            \draw[->] (n-1-A) -- (n-1-B);
+            \draw[->] (n-2-A) -- (n-1-B);
+            \draw[->] (n-3-A) -- (n-2-B);
+            \draw[->, densely dotted] (n-4-A) -- (n-3-B);
+        \end{tikzpicture}
+    \end{center}
+
+    \item Consider the following map
+    \begin{align*}
+        h : \N & \rightarrow \N \setminus \{ 1 \}\\
+        x &\mapsto x + 1
+    \end{align*}
+    is a bijection from $\N$ to a proper subset of itself.
+    \begin{center}
+        \begin{tikzpicture}
+            \foreach[count=\i] \lseti/\lsetmi in {A/{$1$,$2$,$3$,$\vdots$},B/{$2$, $3$, $4$, $\vdots$}} {
+                \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+                \foreach[count=\j] \lj in \lsetmi {
+                    \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+                }
+                \end{scope}
+                \node[ellipse, draw, fit=(\lseti), 
+                label={[name=l-\lseti]above:$\lseti$}] {};
+            }
+            \draw[->] (n-1-A) -- (n-1-B);
+            \draw[->] (n-2-A) -- (n-2-B);
+            \draw[->] (n-3-A) -- (n-3-B);
+            \draw[->, densely dotted] (n-4-A) -- (n-4-B);
+        \end{tikzpicture}
+    \end{center}
+\end{enumerate}
+
+\begin{eg}[Further Examples]\leavevmode
+    \begin{enumerate}
+        \item For any set $X$, we say 
+        \begin{align*}
+            \Id_x: X &\rightarrow X \\
+            x &\mapsto x
+        \end{align*}
+        is the identity function on $X$.
+
+        \item Given a set $X$ and some subset $A \subseteq X$, we have the indicator function, or characteristic function of $A$
+        \begin{align*}
+            I_A : X &\rightarrow \{0, 1\} \\
+            x &\mapsto \begin{cases}
+                1 & \text{ if } x \in A \\
+                0 & \text{ otherwise}
+            \end{cases}
+        \end{align*}
+
+        \item A sequence of reals $x_1, x_2, \cdots$ is a function from $\N$ to $\R$, $n \mapsto x_n$.
+        \item The operation $+$ on $\N$ is a function
+        \begin{align*}
+            \N \times \N &\rightarrow \N \\
+            (a , b) &\mapsto a + b
+        \end{align*}
+
+        \item A set $X$ has size $n$ if and only if there is a bijection between the set
+        \begin{align*}
+            \{1, 2, \cdots, n\} &\rightarrow X = \{a_1, a_2, \cdots, a_n\} \\
+            i &\mapsto a_i
+        \end{align*}
+        this function identifies every element with it's index.
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Function composition]
+    Given $f: A \rightarrow B$ an $g: B \rightarrow C$, the composition
+    \[
+        g \circ f
+    \]
+    is a function from $A \rightarrow C$ and is defined by
+    \begin{align*}
+        g \circ f : A &\rightarrow C \\
+        a &\mapsto g(f(a))
+    \end{align*}
+    We say that this is ``$g$ composed with $f$'' or ``$g$ after $f$''.
+\end{defi}
+\begin{eg}
+    Take
+    \begin{align*}
+        f: \R &\rightarrow \R \\
+        x &\mapsto 2x
+    \end{align*}
+    and
+    \begin{align*}
+        g: \R &\rightarrow \R \\
+        x &\mapsto x + 1
+    \end{align*}
+    then $g \circ f = g(2x) = 2x + 1$ and $f \circ g = f(x + 1) = 2x + 2$.
+\end{eg}
+\begin{remark}
+    Note that they are not the same. 
+    In general, function composition is not commutative.
+    In the example above, 
+    \[
+        f \circ g \neq g \circ f  
+    \]
+    since
+    \[
+        f \circ g(1) = 4 \neq 3 = g \circ f(1) 
+    \]
+    However, function composition is associative, given 
+    \begin{itemize}
+        \item $f: A \rightarrow B$
+        \item $g: B \rightarrow C$ 
+        \item $h: C \rightarrow D$
+    \end{itemize}
+    we have 
+    \[
+        h \circ (g \circ f) = (h \circ g) \circ f  
+    \]
+    Indeed for every $x \in A$,
+    \begin{align*}
+        (h \circ (g \circ f))(x) = h((g \circ f)(x)) = h(g(f(x))) \\
+        ((h \circ g) \circ f)(x) = (h \circ g)(f(x)) = h(g(f(x)))
+    \end{align*}
+    Therefore it is associative.
+    We may therefore drop the brackets and write $h \circ g \circ f$ without any ambiguity.
+\end{remark}
+
+\begin{defi}[Invertible]
+    We say that $f: A \rightarrow B$ is \emph{invertible} if $\exists g: B \rightarrow A$ such that
+    \[
+        g \circ f = \Id_A \text{ and } f \circ g = \Id_B
+    \]
+\end{defi}
+\begin{eg}
+    Consider
+    \begin{align*}
+        f : \R &\rightarrow \R \\
+        x &\mapsto 2x + 1
+    \end{align*}
+    and
+    \begin{align*}
+        g : \R &\rightarrow \R \\
+        x &\mapsto \frac{x - 1}{2}
+    \end{align*}
+    Indeed, $\forall x \in \R$, 
+    \[
+        (g \circ f)(x) = g(2x + 1) = \frac{2x + 1 - 1}{2} = x  
+    \]
+    Therefore $g \circ f = \Id_{\R}$.
+    Also, $\forall x \in \R$
+    \[
+        (f \circ g)(x) = f \bkt{\frac{x-1}{2}} = x  
+    \]
+    Therefore $f \circ g = \Id_{\R}$.
+    Hence $f$ is invertible with inverse $g$.
+\end{eg}
+
+\begin{warning}
+    Consider the following two maps
+    \begin{align*}
+        f : \N &\rightarrow \N \\
+        x &\mapsto x + 1
+    \end{align*}
+    and
+    \begin{align*}
+        g : \N &\rightarrow \N \\
+        x &\mapsto \begin{cases}
+            x - 1 & \text{ if } x \neq 1 \\
+            1 & \text{ if } x = 1
+        \end{cases}
+    \end{align*}
+    We have that $g \circ f = \Id_{\N}$, but $f \circ g \neq \Id_{\N}$ because $(f \circ g)(1) = 2$.
+\end{warning}
+
+\begin{question}
+    Given $f: A \rightarrow B$, when is there a map $g: B \rightarrow A$ such that $g \circ f = \Id_A$?
+\end{question}
+If such a $g$ existed, and for $a, a' \in A$, $f(a) = f(a')$ then
+\[
+    g(f(a)) = g(f(a')) \Rightarrow a = a'  
+\]
+Thus $f$ must be injective.
+\begin{center}
+    \begin{tikzpicture}
+        \foreach[count=\i] \lseti/\lsetmi in {A/{$a$,$a'$},B/{$\bullet$, $\bullet$}} {
+            \begin{scope}[local bounding box=\lseti, x=2cm, y=0.5cm]
+            \foreach[count=\j] \lj in \lsetmi {
+                \node[minimum width=1em] (n-\j-\lseti) at (\i,-\j) {\lj};
+            }
+            \end{scope}
+            \node[ellipse, draw, fit=(\lseti), 
+            label={[name=l-\lseti]above:$\lseti$}] {};
+        }
+        \draw[->] (n-1-A) -- (n-1-B);
+        \draw[->] (n-2-A) -- (n-2-B);
+        \draw[->] (l-A) -- node[above]{$f$}(l-A.center-|l-B.west);
+    \end{tikzpicture}
+\end{center}
+Conversely, if $f$ is injective, we can find $g$ such that $g \circ f = \Id_A$.
+If $b \in f(A)$, let $g(b) = a$ where $a$ is the unique element of $A$ with $f(a) = b$.
+Otherwise if $b \notin f(A)$ then $g(b)$ can be anything.
+
+\begin{question}
+    Given $f: A \rightarrow B$, when is there a map $g: B \rightarrow A$ such that $f \circ g = \Id_B$?
+\end{question}
+We need to have that $f(g(B)) = B$.
+So $f$ must be surjective. 
+Conversely, if $f$ is surjective, we can find $g: B \rightarrow A$ with $f \circ g = \Id_B$.
+For each $b \in B$ pick some $a \in A$ with $f(a) = b$ and put $g(b) = a$.
+It follows that $f: A \rightarrow B$ is invertible if and only if $f$ is bijective.
+We write
+\[
+    f^{-1}: B \rightarrow A
+\]
+for the inverse of $f$ when it exists.
+
+\begin{warning}
+    Given $f: A \rightarrow B$ and $U \subseteq B$, we sometimes write
+    \[
+        f^{-1}(U) = \{a \in A \mid f(a) \in U\}
+    \]
+    for the preimage of $U$.
+    This set can be defined for any $f$. 
+    This does not mean that $f$ is invertible.
+\end{warning}
+
+\subsection{Relations}
+A \emph{relation} on a set $X$ is a subset $R \subseteq X \times X$. 
+We usually write $aRb$ for $(a, b) \in R$, and say ``$a$ is related to $b$ by $R$''.
+
+\begin{eg}[Some relations on $\N$]\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item $aRb$ if $a, b$ share the same final digit
+        \item $aRb$ if $a \mid b$
+        \item $aRb$ if $a \neq b$
+        \item $aRb$ if $a = b = 1$
+        \item $aRb$ if $\abs{a - b} \leq 3$
+        \item $aRb$ if either $a$ and $b$ $\leq 4$ or $a, b \geq 5$ 
+    \end{enumerate}
+\end{eg}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 20: 21/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+There are three properties a relation might have that are of special interest.
+\begin{itemize}
+    \item $R$ is \emph{reflexive} if $\forall x \in X$, $xRX$
+    \item $R$ is \emph{symmetric} if $\forall x,y \in X$, $xRy \Rightarrow yRx$
+    \item $R$ is \emph{transitive} if $\forall x,y,z \in X$, $xRy$ and $yRz$ $\Rightarrow xRz$
+\end{itemize}
+
+\begin{eg}\leavevmode
+    \begin{center}
+        \begin{tabular}{l|cccccc}
+            & (1) & (2) & (3) & (4) & (5) & (6) \\
+            \hline
+            reflexive  & $\checkmark$ & $\checkmark$ & $\times$     & $\times$     & $\checkmark$ & $\checkmark$ \\
+            symmetric  & $\checkmark$ & $\times$     & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ \\
+            transitive & $\checkmark$ & $\checkmark$ & $\times$     & $\checkmark$ & $\times$     & $\checkmark$
+        \end{tabular}
+    \end{center}
+\end{eg}
+
+\begin{defi}[Equivalence relation]
+    A relation $R$ is an \emph{equivalence relation} if it is reflective, symmetric and transitive.
+    We write $a \sim b$ for $aRb$. 
+    We see that (1) and (6) are equivalence relations.
+\end{defi}
+
+\begin{eg}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \setcounter{enumi}{6}
+        \item $X = \Z$, for $a, b \in Z$, let $a \sim b$ if $a \equiv b \mod 5$.
+        This equivalence relation partitions $\Z$ into ``pieces'' consisting of related elements namely
+        \[
+            \crbkt{x \in \Z \mid x \equiv 0 \mod 5}, \cdots \crbkt{x \in \Z \mid x \equiv 4 \mod 5}   
+        \]
+    \end{enumerate}
+\end{eg}
+
+\begin{defi}[Partition]
+    Given a set $X$, a partition of $X$ is simply a collecetion of pairwise disjoint subsets 
+    (called ``parts'') whose union is $X$.
+\end{defi}
+
+\begin{defi}[Equivalence class]
+    If $\sim$ is an equivalence relation on $X$, 
+    then the \emph{equivalence class} of $x \in X$ is denoted by
+    \[
+        [x] = \crbkt{y \in X \mid y \sim x}  
+    \]
+\end{defi}
+\begin{eg} 
+    \begin{alignat*}{3}
+        \text{(1):}&& \qquad [376] &= \crbkt{y \in X \mid y \in x}  \\
+        \text{(7):}&& \qquad [12] &= \crbkt{y \mid y \equiv 2 \mod 5}
+    \end{alignat*}
+\end{eg}
+
+\begin{nthm}\label{th:4-5}
+    Let $\sim$ be any equivalence relation on $X$. 
+    Then the equivalence class form a partition of $X$.
+\end{nthm}
+\begin{proof}
+    Since $\sim$ is reflexive, we have that
+    \[
+        x \in [x] \ \forall x \in X \Longrightarrow \bigcup_{x \in X}[x] = X  
+    \]
+    It remains to show that distinct classes are pairwise disjoint,
+    that is, $\forall x, y \in X$, either 
+    \[
+        [x] \cap [y] = \emptyset \text{ or } [x] = [y]
+    \]
+    Suppose $[x] \cap [y] \neq \emptyset$ then let $z \in [x] \cap [y]$.
+    Then $z \sim x$, so by symmetry $x \sim z$, and also $z \sim y$.
+    Thus by transitivity, $x \sim y$. 
+    Now let $w \in [y]$, so $y \sim w$.
+    Since $x \sim y$, by transitivity $x \sim w$
+    \[
+        \therefore w \in [x]    
+    \]
+    Hence, if 
+    \[
+        [x] \cap [y] \neq \emptyset \Longrightarrow [y] \subseteq [x]
+    \]
+    Similarly, $[x] \subseteq [y]$.
+    Hence
+    \[
+        [x] = [y]  
+    \]
+\end{proof}
+
+Conversely, given any partition of $X$, there is an equivalence relation $R$ whose equivalence classes are precisely the parts of the partition:
+Just define $a \sim b$ if $a$ and $b$ lie in the same part.
+
+\begin{remark}
+    This is a useful viewpoint. 
+    For example, it is now easy to see that there is now an equivalence relation on $\N$ with three equivalence classes where two are infinite and one is finite!
+    Simply take a partition with this property.
+    This lets us move between a global viewpoint (partitions) and local view point (equivalence relations).
+\end{remark}
+
+\begin{defi}[Quotient]
+    Given an equivalence relation $R$ on a set $X$, the \emph{quotient} of $X$ by $R$ is 
+    \[
+        X / R = \crbkt{[x] \mid x \in X}   
+    \]
+    where $[x]$ is the equivalence class of $x$.
+\end{defi}
+\begin{eg}
+    In (1), $X / R$ has size $10$, in (7), $X / R$ has size $5$.
+    In fact this explains why we sometimes write
+    \[
+        \Z / 5\Z  
+    \]
+    instead of $\Z_5$.
+\end{eg}
+
+\begin{defi}[Quotient map / Projection map]
+    The map
+    \begin{align*}
+        q : X &\rightarrow X / R \\
+        x &\mapsto [x]
+    \end{align*}
+    if the \emph{quotient map} or \emph{projection map}.
+\end{defi}
+
+\begin{eg}
+    On $\Z \times \N$ define
+    \[
+        (a, b)R(c, d) \Longleftrightarrow ad = bc
+    \]
+    It is easy to see that this is a equivalence relation.
+    For example,
+    \[
+        [(1, 2)] = \crbkt{(1, 2), (2, 4), (3, 6), \cdots}  
+    \]
+    so we could regard the set $(\Z \times \N) / R$ as a copy of $\Q$ by identifying
+    \[
+        [(a, b)] = \frac{a}{b} \in \Q
+    \]
+    The quotient map is then
+    \begin{align*}
+        q : \Z \times \N &\rightarrow (\Z \times \N) / R \\
+        (a, b) &\mapsto \frac{a}{b}
+    \end{align*}
+\end{eg}
+
+\section{Countability}
+We would like to talk about sizes of infinite sets. 
+For example, we say that $\N$ ``looks smaller than'' $\Z$ and ``a lot smaller than'' $\Q$,
+which in turn ``looks much smaller than'' $\R$.
+
+\subsection{Countable Sets}
+\begin{defi}[Countable]
+    We say that a set $X$ is \emph{countable} if $X$ is finite or there is a bijection $X \rightarrow \N$.
+    (``at most as big as $\N$''). That is $X$ is countable if and only if we can list the elements of $X$ as
+    \[
+        x_1, x_2, x_3, \cdots  
+    \]
+\end{defi}
+
+\begin{eg}
+    \begin{enumerate}[label=(\arabic*)]
+        \item Any finite set is countable
+        \item $\N$ is countable
+        \item $\Z$ is countable.
+        We may indeed list the elements of $\Z$ as
+        \[
+            0, 1, -1, 2, -2, 3, -3, \cdots  
+        \]
+        i.e
+        \[
+            x_n = \begin{cases}
+                \frac{n}{2} & \text{ if } n \text{ is even} \\
+                -\frac{n-1}{2} & \text{ if } n \text{ is odd}
+            \end{cases}
+        \]
+    \end{enumerate}
+\end{eg}
+
+\begin{nlemma}\label{lem:5-1}
+    Any subset of $\N$ is countable.
+\end{nlemma}
+\begin{proof}
+    If $S \subseteq \N$, $S \neq \emptyset$ by WOP, there is a least element $s_1 \in S$.
+    If $S \setminus \{ s_1 \} \neq \emptyset$, then by WOP, there is a least element $s_2 \in S$.
+    If $S \setminus \{s_1, s_2\} \neq \emptyset$, similarly, etc, etc.
+    If at some point the process ends, then $S$ consists of all of the points
+    \[
+        \{s_1, s_2, \cdots, s_m\}  
+    \]
+    then $S$ is finite.
+    If this process goes on forever, then the map
+    \begin{align*}
+        g : \N &\rightarrow S \\
+        n &\mapsto s_n
+    \end{align*}
+    is well defined.
+    For every $n$, there is a unique $s_n$ and it is injective.
+    It is also surjective because if $k \in S$, then $k \in \N$, and there are $<k$ elements of $S$ less than $k$, so $k = S_n$ for some $n \leq k$.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 21: 23/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{warning}
+    In $\R$, let $S = \crbkt{\frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \cdots} \cup \{ 1\}$.
+    Then $S$ is countable as we can list it as
+    \[
+        1, \frac{1}{2}, \frac{2}{3}, \frac{3}{4}, \cdots
+    \]
+    but if we had tried to list the elements in increasing order (as in the proof of lemma \ref{lem:5-1}), theen $1$ would not be on the list.
+\end{warning}
+
+\begin{nthm}\label{th:5-2}
+    The following statements are equivalent:
+    \begin{enumerate}
+        \item $X$ is countable
+        \item there is an injection $X \rightarrow \N$
+        \item $X = \emptyset$ or there is a surjection $\N \rightarrow X$
+    \end{enumerate}
+\end{nthm}
+\begin{proof}\leavevmode
+    \begin{enumerate}[cases]
+        \item ((i) $\Rightarrow$ (ii)) Plainly (i) $\Rightarrow$ (ii) for if $X$ is finite, it obviously injects into $\N$,
+        and if $X$ bijects with $\N$, then it certainly injects into $\N$.
+
+        \item ((ii) $\Rightarrow$ (i)) Conversely, if there is an ibjection $f: X \rightarrow \N$, then $f$ is a bijection between $X$ and $S = f(X)$.
+        If $S$ is finite, then so is $X$. 
+        If $S$ is infinite, then by lemma \ref{lem:5-1}, there is a bijection $g: S \rightarrow \N$, and thus we have a bijection
+        \[
+            \begin{tikzcd}
+                X \arrow[r, "f"] & S \arrow[r, "g"] & \N
+            \end{tikzcd}
+        \]
+        so (ii) $\Rightarrow$ (i)
+        
+        \item ((i) $\Rightarrow$ (iii)) Plainly (i) $\Rightarrow$ (iii)
+        \item ((iii) $\Rightarrow$ (ii)) Finally, suppose $X \neq \emptyset$ and there is a surjection $f: \N \rightarrow X$.
+        Define $g: X \rightarrow \N$ such that
+        \[
+            g(a) = \min f^{-1}(\{a\})
+        \]
+        which exist by WOP.
+        By construction, $g$ is injective so (iii) $\Rightarrow$ (ii). 
+    \end{enumerate}
+\end{proof}
+
+\begin{ncor}\label{cor:5-3}
+    Any subset of a countable set is countable
+\end{ncor}
+\begin{proof}
+    If $Y \subseteq X$ and $X$ is countable, then take the injection $X \rightarrow \N$ restricted to $Y$.
+\end{proof}
+
+We may this view ``countable'' by saying that a set is ``at most as big as $\N$''.
+
+\begin{nthm}\label{th:5-4}
+    $\N \times \N$ is countable
+\end{nthm}
+\begin{proof} (1)
+    Define $a_1 = (1, 1)$ and $a_n$ inductively, given $a_{n-1} = (p, q)$ by
+    \[
+        a_n = \begin{cases}
+            (p-1, q+1) & \text{ if } p \neq 1 \\\
+            (p + q, 1) & \text{ if } p = 1
+        \end{cases}  
+    \]
+    Claim: This list contains every point $(x, y) \in \N \times \N$.
+    Proceed by induction on $x + y$.
+\end{proof}
+\begin{proof} (2)
+    Define
+    \begin{align*}
+        f : \N \times \N &\rightarrow \N \\
+        (x, y) &\mapsto 2^x3^y
+    \end{align*}
+    then $f$ is injective by the fundamental theorem of arithmetic.
+\end{proof}
+
+\begin{ncor}\label{cor:5-5}
+    $\Z \times \Z$ is countable
+\end{ncor}
+\begin{proof}
+    Since $\Z$ is countable, there is an injection $f: \Z \rightarrow \N$,
+    further since $\N \times \N$ is countable, there is an injection $g: \N \times \N \rightarrow \N$.
+    Therefore we have an injection
+    \[
+        \begin{tikzcd}
+            \Z \times \Z \arrow[r, "(f\,f)"] & \N \times \N \arrow[r, "g"] & \N
+        \end{tikzcd}
+    \]
+    By induction $\Z^k$ is countable for any $k \in \N$. 
+\end{proof}
+
+\begin{nthm}\label{th:5-6}
+    A countable union of countable sets is countable.
+\end{nthm}
+\begin{proof} (1)
+    May assume that out countable sets are indexed by $\N$,
+    so given countable sets $A_1, A_2, \cdots$, we wish to show
+    \[
+        \bigcup_{n \in \N} A_n  
+    \]
+    is countable.
+    For each $i \in \N$, since $A_i$ is countable, we can list it's elements as
+    \[
+        a_1^{(i)}, a_2^{(i)}, a_3^{(i)}, \cdots  
+    \]
+    Then define 
+    \begin{align*}
+        f : \bigcup_{n \in \N} A_n & \rightarrow \N \\
+        x &\mapsto 2^i 3^j
+    \end{align*}
+    where $x = a_j^{(i)}$ for the least $i$ sycg tgat $x \in A_i$ (as $x$ could be in more than one of the $A_i$). This is an injection.
+\end{proof}
+\begin{proof} (2)
+    Let $I$ be a countable index set, and for each $i \in I$, $A_i$ is a countable set.
+    Since $I$ is countable there is an injection
+    \[
+        f: I \rightarrow \N  
+    \]
+    and for each $i \in I$ since $A_i$ is countable, there is an injection $g_i$
+    \[
+        g_i: A_i \rightarrow \N  
+    \]
+    We then construct an injection
+    \[
+        h: \bigcup_{i \in I} A_i \rightarrow \N \times \N
+    \]
+    as follows:
+    For each $x \in \bigcup_{i \in I} A_i$, pick 
+    \[
+        m_x = \min \crbkt{j \in \N \mid x \in A_i, \quad f(i) = j}  
+    \]
+    (basically the ``minimally indexed set'' that contains $x$) which exists by the well-ordering principle.
+    Let $i_x \in I$ be such that 
+    \[
+        f(i_x) = m_x  
+    \]
+    (basically the index of the ``minimally indexed set'') which is unqiue because $f$ is injective.
+    Then
+    \[
+        h(x) = (m_x, g_{i_x}(x))  
+    \]
+    defines an injection.
+\end{proof}
+\begin{eg}
+    \[
+        \Q = \bigcup_{n \in \N} \frac{1}{n} \Z = \bigcup_{n \in \N}\crbkt{\frac{m}{n} \mid m \in \Z}  
+    \]
+    which is a countable uniton of countable sets, hence countable.
+\end{eg}
+
+\begin{nthm}\label{th:5-7}
+    The set $A$ of algebraic numbers is countable.
+\end{nthm}
+\begin{proof}
+    If suffices to show that the set of all polynomials with integer coefficients is countable,
+    as then $A$ is a countable union of finite sets, so by theorem \ref{th:5-6}, $A$ is countable.
+    In fact, it suffices to show that for each $d \in \N$, the set $P_d$ of all integer polynomials of degree $d$ is countable, again by theorem \ref{th:5-6}.
+    But the map
+    \begin{align*}
+        P_d &\rightarrow \Z^{d + 1} \\
+        p(x) = a_dx^d + \cdots + a_0 &\mapsto (a_d, \cdots, a_0)
+    \end{align*}
+    is an injection from $P_d \rightarrow \Z^{d + 1}$ which is countable. 
+    Therefore $P_d$ is countable.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 22: 23/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Uncountable Sets}
+\begin{question}
+    A set is \emph{uncountable} if it is not countable.
+    Do uncountable sets exist?
+\end{question}
+\begin{nthm}\label{th:5-8}
+    $\R$ is uncountable
+\end{nthm}
+\begin{proof}
+    If $\R$ were countable, we would be able to list all the reals as
+    \[
+        r_1, r_2, r_3, \cdots  
+    \]
+    write each $r_n$ in decimal form in some way
+    \begin{alignat*}{8}
+        r_1 & = && n_1. && d_{11} && d_{12} && d_{13} && d_{14} && \cdots \\
+        r_2 & = && n_2. && d_{21} && d_{22} && d_{23} && d_{24} && \cdots \\
+        r_3 & = && n_3. && d_{31} && d_{12} && d_{13} && d_{14} && \cdots \\
+        \vdots 
+    \end{alignat*}
+    for $d_{ij} \in \{0, 1, 2, 3, \cdots, 9\}$.
+    Define $r = 0.d_1d_2d_3\cdots$ by
+    \[
+        d_n = \begin{cases}
+            1 & \text{ if } d_{nn} \neq 1 \\
+            2 & \text{ if } d_{nn} = 1
+        \end{cases}
+    \]
+    This $r$ is not on the list (because $\forall n \in N$, $r \neq r_n$). 
+    This contradicts the assumption that $\R$ is countable.
+\end{proof}
+\begin{remark}
+    This is known as a ``diagonal argument'' due to Cantor (1870s).
+    Note that since we made no mention to $n_i$, in fact the open interval $(0, 1)$ is uncountable. 
+\end{remark}
+
+\begin{ncor}\label{cor:5-9}
+    There are uncountably many transcendental numbers.
+\end{ncor}
+\begin{proof}
+    Let $\A$ denote the set of algebraic numbers.
+    If $R \setminus A$ were countable, then since $\A$ is countable by theorem \ref{th:5-7}
+    \[
+        R = R \setminus A \cup A  
+    \]
+    which would be countable $\contradiction$.
+\end{proof}
+
+\begin{nthm}\label{th:5-10}
+    $\wp(\N)$ is uncountable.
+\end{nthm}
+\begin{proof} (1)
+    If $\wp(\N)$ were countable, we could list it as
+    \[
+        s_1, s_2, s_3, \cdots  
+    \]
+    Let 
+    \[
+        S = \{n \in \N \mid n \notin S_n\}  
+    \]
+    Then $S$ is not on our list since $\forall n \in \N$, $S \neq S_n$, as $S$ and $S_n$ differ in the element $n$. $\contradiction$
+    Hence $\wp(\N)$ is uncountable.
+\end{proof}
+\begin{remark}
+    This is another example of a ``diagonal argument''
+\end{remark}
+\begin{proof} (2)
+    Note that there is an injection from $(0, 1)$ into $\wp(\N)$:
+    write $x \in (0, 1)$ in binary $0.x_1x_2x_3\cdots$ $x_i \in {0, 1}$ (not ending in an infinite sequence of $1$'s).
+    and send
+    \[
+        f(x) = \crbkt{n \in \N \mid x_n = 1}  
+    \]
+    For example
+    \[
+        0.11101100 \cdots \mapsto \{1, 2, 3, 5, 6, \cdots\}
+    \]
+    This is an injection.
+\end{proof}
+
+In fact, proof (1) of theorem \ref{th:5-10} shows the following.
+
+\begin{nthm}\label{th:5-11}
+    For any set $X$, there is no bijection between $X$ and its power set $\wp(X)$.
+\end{nthm}
+\begin{proof}
+    Given any $f: X \rightarrow \wp(X)$, we shall show that it is not a surjection.
+    Indeed let 
+    \[
+        S = \crbkt{x \in X \mid x \notin f(x)}  
+    \]
+    Then, $S$ does not belong to the image of $f$ since $\forall x \in X$, $S$ and $f(x)$ differ in the element $x$ and thus $S \neq f(x)$ for any $x \in X$.
+\end{proof}
+
+\begin{remark}\leavevmode
+    \begin{enumerate}[label=(\arabic*)]
+        \item This is reminiscent of Russell's Paradox
+        \item In fact, theorem \ref{th:5-11} gives us another proof that there is not universal set.
+        For suppose we have such a universal set $V$, then we would also have $\wp(V) \subseteq V$ in which we would have a surjection from $V \rightarrow \wp(V)$.
+    \end{enumerate}
+\end{remark}
+
+\begin{eg}
+    Let $\crbkt{A_i \mid i \in I}$ be a family of open pairwise disjoint intervals of $\R$.
+    Must the family be countable?
+\end{eg}
+\begin{warning}
+    We need to be careful about how we list our intervals, so as to not leave out interval that occur after an ``infinte number'' of other intervals.
+    Nevertheless, the family is countable.
+\end{warning}
+
+\begin{proof} (1)
+    Each interval $A_i$ contains a rational and $\Q$ is countable.
+    So since the intervals are disjoint, we have an injection from $I \rightarrow \Q$.
+    Hence the family is countable.
+\end{proof}
+\begin{proof} (2)
+    The set 
+    \[
+        \crbkt{i \in I \mid A_i \text{ has length } \geq 1}  
+    \]
+    is countable as it injects into $\Z$.
+    This is the case since we can always find a unique $k \in \Z$ for each interval.
+    Similarly, the set
+    \[
+        \crbkt{i \in I \mid A_i \text{ has length } \geq \frac{1}{2}}
+    \]
+    is countable as it injects into $\frac{1}{2}\Z$. 
+    More generally, for each $n \in \N$,
+    \[
+        \crbkt{i \in I \mid A_i \text{ has length } \geq \frac{1}{n}}
+    \]
+    is countable. 
+    Thus $\crbkt{A_i \mid i \in I}$ is countable as it is a union of countable sets.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 23: 28/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+In summary, to show that $X$ is countable,
+\begin{enumerate}[label=(\arabic*)]
+    \item List it's elements (may be fiddly)
+    \item Inject the set into $\N$
+    \item Use ``a countable union of countable sets is countable''
+    \item If ``in / near $\R$'' consider $\Q$
+\end{enumerate}
+To show that $X$ is uncountable,
+\begin{enumerate}[label=(\arabic*)]
+    \item Run a diagonal (cantor type) argument
+    \item Inject another uncountable set into $X$, e.g.
+    \[
+        (0, 1) \in \R, \qquad \wp(\N)
+    \]
+\end{enumerate}
+Intuitively, we think of ``$A$ bijects with $B$'' as saying that $A$ and $B$ are of the ``same size''.
+Similarly, ``$A$ injects into $B$'' as saying that ``$A$ is at most as big as $B$'',
+and ``$A$ surjects onto $B$'' as saying that ``$A$ is at least as big as $B$''.
+
+We should get that if $A$ is at most as big as $B$, then also $B$ is at least as big as $A$, and conversely, for these to make sense.
+
+\begin{nlemma}\label{lem:5-12}
+    Given non-empty sets $A$ and $B$, there exists an injection $f: A \rightarrow B$
+    if and only if there exists a surjection $g: B \rightarrow A$
+\end{nlemma}
+\begin{proof}
+    Suppose $f: A \rightarrow B$ is injective.
+    Fix $a_0 \in A$.
+    Define
+    \begin{align*}
+        g : B &\rightarrow A \\
+        b &\mapsto \begin{cases}
+            \text{unique } a \in A \text{ s.t. } f(a) = b & \text{ if it exists} \\
+            a_0 & \text{ otherwise}
+        \end{cases}
+    \end{align*}
+    $g$ is indeed surjective.
+    Conversely, suppose $g : B \rightarrow A$ is surjective, then define
+    \begin{align*}
+        f: A &\rightarrow B \\
+        a &\mapsto \text{some } b \in B \text{ s.t. } g(b) = a 
+    \end{align*}
+    this function is indeed injective.
+\end{proof}
+
+We also need if ``$A$ is at most as big as $B$'' and ``$B$ is at most as big as $A$'',
+then $A$ and $B$ are the same size.
+
+\begin{nthm}[Schr\"oder-Bernstein Theorem]\label{th:5-13}
+    If $f: A \rightarrow B$ and $g: B \rightarrow A$ are injections, then there exists a bijection
+    \[
+        h: A \rightarrow B  
+    \]
+\end{nthm}
+\begin{proof}
+    For $a \in A$ write $g^{-1}(a)$ for the $b \in B$ (if it exists) such that $g(b) = a$.
+    Similarly, for $b \in B$ write $f^{-1}(b)$ for the $a \in A$ (if it exists) such that $f(a) = b$.
+    We call 
+    \[
+        g^{-1}(a), f^{-1}(g^{-1}(a)), g^{-1}(f^{-1}(g^{-1}(a))), \cdots
+    \]
+    the ancestor sequence of $a \in A$ (might terminate).
+    Similarly, define the ancestor sequence of $b \in B$.
+    Let
+    \begin{align*}
+        A_0 &= \crbkt{a \in A \mid \text{ ancestor sequence stops at even time i.e; last point in } A} \\
+        A_1 &= \crbkt{a \in A \mid \text{ ancestor sequence stops at odd time i.e; last point in } B} \\
+        A_\infty &= \crbkt{a \in A \mid \text{ ancestor sequence never terminates}}
+    \end{align*}
+    Similarly, define $B_0$, $B_1$, $B_\infty$.
+    Note that $f$ bijects $A_0$ with $B_1$ (observing that every $b \in B_1$) has at least one ancestor, so is $f(a)$ for some $a \in A_0$,
+    and similarly, $g$ bijects $B_0$ with $A_1$.
+    Then the function
+    \begin{align*}
+        h: A &\rightarrow B \\
+        a &\mapsto \begin{cases}
+            f(a) & \text{ if } a \in A_0 \\
+            g^{-1}(a) & \text{ if } a \in A_1 \\
+            f(a) (\text{ or } g(a)) & \text{ if } a \in A_\infty
+        \end{cases}
+    \end{align*}
+    is a bijection.
+\end{proof}
+
+\begin{eg}
+    Is there a bijection from $[0, 1]$ to $[0, 1] \cup [2, 3]$?
+    Observe that we have an injection 
+    \begin{align*}
+        f: [0, 1] &\rightarrow [0, 1] \cup [2, 3] \\
+        x &\mapsto x
+    \end{align*}
+    and we also have an injection
+    \begin{align*}
+        g: [0, 1] \cup [2, 3] &\rightarrow [0, 1] \\
+        x &\mapsto \frac{x}{3}
+    \end{align*}
+    Therefore by Schr\"oder-Bernstein, we have our desired bijection.
+\end{eg}
+\begin{remark}
+    If would also be useful to be able to say that for any two set $A$ and $B$, either $A$ injects into $B$ or $B$ injects into $A$.
+    THis is true but harder to prove. (See Logic \& Set Theory part II)
+\end{remark}
+
+\begin{question}
+    Does every set $X$ inject into one of
+    \[
+        \N, \wp(\N), \wp(\wp(\N)), \cdots
+    \]
+    No! For example,
+    \[
+        X = \N \cup \wp(\N) \cup \wp(\wp(\N)) \cup \cdots
+    \]
+    Does every set $X'$ inject into one of the following,
+    \[
+        X, \wp(X), \wp(\wp(X)), \cdots  
+    \]
+    No! For example,
+    \[
+        X' = X \cup \wp(X) \cup \wp(\wp(X)) \cup \cdots 
+    \]
+    Does every set $X''$ inject into one of the following,
+    \[
+        X', \wp(X'), \wp(\wp(X')), \cdots  
+    \]
+    No! For example,
+    \[
+        X'' = X' \cup \wp(X') \cup \wp(\wp(X')) \cup \cdots 
+    \]
+    Does every set $Y$ inject into one of $X$, $X'$, $X''$, $\cdots$?
+    No! For example,
+    \[
+        Y = X \cup X' \cup X'' \cup X''' \cup \cdots
+    \]
+\end{question}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 24: 30/11/2023
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Bonus!: More about primes}
+\subsection{Bertrand's Postulate}
 \end{document}
