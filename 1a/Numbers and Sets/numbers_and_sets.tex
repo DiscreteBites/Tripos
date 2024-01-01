@@ -4033,6 +4033,178 @@ then $A$ and $B$ are the same size.
 %%%%%%%%%%%%%%%%%%%%%%
 % Lecture 24: 30/11/2023
 %%%%%%%%%%%%%%%%%%%%%%
-\section{Bonus!: More about primes}
+\section{Bonus! More about primes}
 \subsection{Bertrand's Postulate}
+Betrand postulated around 1845 that for every natural number $n > 1 \in \N$,
+there is always a prime $p$, such that $n \leq p < 2n$.
+The primes
+\[
+    2, 3, 5, 7, 13, 23, 43, 83, 163, 317, 631, 1259, 2503
+\]
+show that it is true for $n < 2^{11}$.
+Betrand checked it for $n < 3,000,000$.
+Chebychev (1850) gaves a proof.
+Erd\"os (1932) gave an elementary proof based on the properties of $\binom{2n}{n}$
+
+\begin{description}
+    \item[Observation $1$]
+    \[
+        \binom{2n}{n} \geq \frac{2^n}{2n + 1} \tag{1}
+    \]
+    \begin{proof}
+        Since
+        \[
+            \frac{\binom{2n}{k + 1}}{\binom{2n}{k}} = \frac{2n - k}{k + 1}  
+        \]
+        it is evident that the sequence $\binom{2n}{k}$ increases for $k < n$ and decreases for $k > n$.
+        In particular,
+        \[
+            \binom{2n}{n} \geq \frac{2^{2n}}{2n + 1}  
+        \]
+        Since
+        \[
+            \sum_{k}{\binom{2n}{k}} = 2^{2n}
+        \]
+        and there are $2n + 1$ coefficients.
+    \end{proof}
+    
+    \item[Observation $2$] If $p \leq n$ is a prime dividing $\binom{2n}{n}$, then
+    \[
+        p \leq \frac{2n}{3} \tag{2}  
+    \]
+    \begin{proof}
+        Suppose
+        \[
+            \frac{2n}{3} < p \leq n  
+        \]
+        then,
+        \[
+            p \leq n < 2p \leq 2n < 3p  
+        \]
+        Consider
+        \[
+            \binom{2n}{n} = \frac{2n (2n - 1)\cdots(n + 1)}{n (n-1) \cdots 3 \cdot 2 \cdot 1}  
+        \]
+        Where the 
+        \begin{itemize}
+            \item numerator only contains one copy of $p$ since $n < 2p \leq 2n$
+            \item denominator only contains one copy of $p$ since $p \leq n$
+        \end{itemize}
+        Hence the numerator and denominator are divisible by exactly one copy of $p$.
+        \[
+            \therefore p \nmid \binom{2n}{n}  
+        \]
+    \end{proof}
+
+    \item[Observation $3$] If $p$ is a prime and $p^k \mid \binom{2n}{n}$, then
+    \[
+        p^k \leq 2n \tag{3}    
+    \]
+    \begin{proof}
+        The greatest power of $p$ dividing $n! = n(n-1) \cdots 3 \cdot 2 \cdot 1$ is given by
+        \[
+            \floor{\frac{n}{p}} + \floor{\frac{n}{p^2}} + \cdots = \sum_{i \geq 1} \floor{\frac{n}{p^i}}
+        \]
+        Hence, if $k$ is a power of $p$ dividing $\binom{2n}{n} = \frac{(2n)!}{(n!)^2}$, then
+        \begin{align*}
+            k &\leq \sum_{i \geq 1} \floor{\frac{2n}{p^i}} - 2\sum_{i \geq 1} \floor{\frac{n}{p^i}} \\
+            &= \sum_{i \geq 1}^{l} \bkt{\floor{\frac{2n}{p^i}} - 2\floor{\frac{n}{p^i}}}
+        \end{align*}
+        where $l$ is the greatest power of $p$ such that $p^l \leq 2n$. Then, since
+        \[
+            \floor{2x} - 2 \floor{x} \leq 1  
+        \]
+        it follows that.
+        \begin{align*}
+            \therefore \quad k &\leq \sum_{i = 1}^{l} 1 \\
+            &= l
+        \end{align*}
+        So $k \leq l$, therefore
+        \[
+            p^k \leq 2n  
+        \]
+    \end{proof}
+
+    \item[Observation $4$] For all $m \geq 2$
+    \[
+        \prod_{\substack{
+            p \leq m \\
+            p \text{ is prime}
+        }} p \leq 4^m
+    \]
+    \begin{proof}
+        By induction on $m$.
+        It is true for $m = 2$.
+        If $m > 2$ is even, then
+        \[
+            \prod_{p \leq m} p = \prod_{p \leq m - 1} p  \leq 4^{m - 1} < 4^m  
+        \]
+        If $m = 2k + 1$ is odd, then all primes $k + 2 \leq p \leq 2k + 1$ divide 
+        \[
+            \binom{2k + 1}{2k} = \frac{(2k + 1)!}{k!(k+1)!} = \frac{(2k + 1)(2k) \cdots (k + 2)}{k(k-1)(k-2)\cdots 2 \cdot 1}
+        \]
+        Thus
+        \[
+            \prod_{k + 2 \leq p \leq 2k + 1} \leq \binom{2k + 1}{2k} = \binom{2k +1}{k + 1} \leq \frac{2^{2k + 1}}{2} = 4^k 
+        \]
+        By the inductive hypothesis,
+        \[
+            \prod_{p \leq m} p = \prod_{p \leq k + 1} p \times \prod_{k + 2 \leq p \leq 2k + 1} p \leq 4^{k + 1} \times 4^k = 4^{m}
+        \]
+    \end{proof}
+\end{description}
+\begin{thm}[Betrand's Postulate]
+    For all natural numbers $n \geq 2$, $\exists p$ such that
+    \[
+        n \leq p < 2n  
+    \]
+\end{thm}
+\begin{proof}
+    Fix $n \geq 2$. Clearly the prime factors of $\binom{2n}{n}$ are all $< 2n$.
+    Suppose the theorem fails. 
+    Then all prime factors of $\binom{2n}{n}$ are infact $<n$.
+    By observation (2), they are all $< \frac{2n}{3}$.
+    By observation (3), each prime that appears in the prime factorisation of $\binom{2n}{n}$ contributes at most $\leq 2n$.
+    Moreover, if $p > \sqrt{2n}$ then $p$ contributes at most $p$ to the factorisation (since $p^2 > 2n$).
+    Now, by observation (1),
+    \begin{align*}
+        \frac{2^{2n}}{2n + 1} &\leq \binom{2n}{n} \\
+        &\leq \prod_{p \leq \sqrt{2n}} (2n) \times \prod_{\sqrt{2n} < p \leq \frac{2n}{3}} p \\
+        &\leq (2n)^{\sqrt{2n}} \times 4^{\frac{2n}{3}} \tag{observation (4)}
+    \end{align*}
+    which fails when $n$ is large. $\contradiction$
+\end{proof}
+\begin{remark}
+    How large?
+    \[
+        4^{\frac{2n}{3}} \leq (2n + 1)(2n)^{\sqrt{2n}}  
+    \]
+    and for $n \geq 18$,
+    \[
+        (2n + 1) \leq (2n)^2 \leq (2n)^{\frac{\sqrt{2n}}{3}}
+    \]
+    so
+    \[
+        4^{\frac{n}{3}} \leq (2n)^{\frac{4 \sqrt{2n}}{3}} \text{ or } 4^n \leq (2n)^{4 \sqrt{2n}}  
+    \]
+    Set $s = \sqrt{2n}$ this becomes,
+    \begin{align*}
+        4^n &\leq (2n)^{4 \sqrt{2n}} \\
+        4^{\frac{s^2}{2}} &\leq s^8s \\
+        4^s & \leq s^16
+    \end{align*}
+    which fails as soon as $2 = 2^6$ and larger.
+    Hence the proof works when $n \geq 2^{11}$ and we saw that the result is true when $n < 2^{11}$.
+\end{remark}
+
+\subsection{Prime Number Theorem}
+In fact, with the same set of observations and a tiny bit more work, one can show that if
+\[
+    \Pi(x) = \# \crbkt{p \leq x \mid p \text{ prime}}
+\]
+then
+\[
+    c_1 \frac{x}{\log x} \leq \Pi(x) \leq c_2 \frac{x}{\log x}
+\]
+for some constants, $c_1, c_2 > 0$.
 \end{document}
