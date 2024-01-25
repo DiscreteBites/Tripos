@@ -3614,7 +3614,7 @@ However, not all matrices are invertible.
 \begin{defi}[General Linear Group $\GL_n(\R)$]
     Let
     \[
-        \GL_n(\R) = {A \in M_n(\R) \mid \det(A) neq 0}  
+        \GL_n(\R) = \{A \in M_n(\R) \mid \det(A) \neq 0\}  
     \]
     this is a group under matrix multiplication
 \end{defi}
@@ -3638,7 +3638,7 @@ Recall another fact from IA Vectors and Matrices,
 \begin{remark}
     Since $\SL_n(\R)$ is a kernel, $\SL_n(\R) \triangleleft \GL_n(\R)$ and
     \[
-        \GL_n(\R) \ \SL_n(R) \cong \im(\det)
+        \GL_n(\R) / \SL_n(R) \cong \im(\det)
     \]
     For any $x \in \R$,
     \[
@@ -3739,7 +3739,7 @@ Let's make contact with another familiar idea from IA V \& M. There is a natural
 Recall that multiplication in $\M$ looked similar to multiplication of $2 \times 2$ matrices.
 This is explained by the next result
 \begin{prop}
-    Identity 
+    Identify
     \[
         \C_\ast = \crbkt{
             \begin{pmatrix}
@@ -3751,7 +3751,7 @@ This is explained by the next result
     \]
     Then
     \[
-        \C_\ast \triangleleft \GL_2(\C) \text{ and } \GL_2(\C) \ \C_\ast \cong \M
+        \C_\ast \triangleleft \GL_2(\C) \text{ and } \GL_2(\C) / \C_\ast \cong \M
     \]
 \end{prop}
 \begin{proof}
@@ -3857,16 +3857,16 @@ Hence, we can characterise $\Or(n)$ using the dot product.
 \begin{proof}
     Let $A = (a_{ij})$
     \begin{description}
-        \item[(i) $Rightarrow$ (ii)] Let $\crbkt{e_1, \cdots e_2}$ be the standard basis for $\R^n$. 
+        \item[(i) $\Rightarrow$ (ii)] Let $\crbkt{e_1, \cdots e_2}$ be the standard basis for $\R^n$. 
         Then we can retrive the $i^{th}$ column of $A$ as $Ae_i$. Since $(Ae_i) \cdot (Ae_j) = e_i \cdot e_j = \delta_{ij}$,
         the columns form an orthonormal basis.
-        \item[(ii) $Rightarrow$ (iii)] As explained above $(Ae_i) \cdot (Ae_j) = \delta_{ij}$. 
+        \item[(ii) $\Rightarrow$ (iii)] As explained above $(Ae_i) \cdot (Ae_j) = \delta_{ij}$. 
         Since $u \cdot v = u^Tv$, this means that 
         \[
             (Ae_i)^T(Ae_j) = e^T_iA^TAe_j = \delta_{ij}
         \]
         but $e^T_iMe_j = M_{ij}$ for any matrix $M$, therefore $A^TA = I$
-        \item[(iii) $Rightarrow$ (i)] Suppose $u, v \in \R^n$ then,
+        \item[(iii) $\Rightarrow$ (i)] Suppose $u, v \in \R^n$ then,
         \begin{align*}
             (Au) \cdot (Av) &= u^TA^TAv \\
             &= u^Tv \tag{since $A^TA = I$}\\
