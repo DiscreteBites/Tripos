@@ -253,7 +253,7 @@ Taylor series are often used for approximations. To consider the errors these ap
 A stronger form of this exists, if $f^{(n+1)}(x)$ exists $\forall x \in [x_0, x_0 + h]$ as in continuous in this range,
 \begin{align*}
     E_n &= O(h^{n+1}) \quad \text{as} \quad x \rightarrow 0 \\
-    &= \frac{f^{n+1}(x_n)}{(n+1)!}h^{n+1} \quad \text{for} \quad x \in [x_0, x_0 +h]
+    &= \frac{f^{n+1}(x_n)}{(n+1)!}h^{n+1} \quad \text{for} \quad x_n \in [x_0, x_0 +h]
 \end{align*}
 This is due to Lagrange. Note that $E_n = O(h^{n+1})$ is stronger than $\underline{o}(h^n)$. For instance, consider $h^{n + 0.5} = \underline{o}(h^n)$ but $\neq O(h^{n+1})$ as $h \rightarrow 0$
 
@@ -631,9 +631,6 @@ Applying this get
         \diffd f = \diffp{f}{x} \diffd x + \diffp{f}{y} \diffd y
     \] 
     and more generally, for a function $f$ whose arguments are $x_1, x_2, \cdots, x_n$,
-    % \[
-    %     \diffd f = \diffp{f}{x_1} \diffd x_1 + \ldots + \diffp{f}{x_n} \diffd x_n
-    % \]
     \[
         \diffd f = \diffp{f}{{x_1}} \diffd x_1 + \ldots + \diffp{f}{{x_n}} \diffd x_n
     \]
@@ -1298,11 +1295,11 @@ gives us the gradient of a solution curve through any point $(t, y)$
 \begin{defi}[Fixed / Equilibrium Point]
     A \emph{fixed} point of an ode
     \[
-        \diff yx = f(t,y)   
+        \diff yt = f(t,y)   
     \]
-    is a constant solutin $y = c$
+    is a constant solution $y = c$
     \[
-        \therefore \qquad diff yx = t \quad \forall t  
+        \therefore \qquad \diff yx = t \quad \forall t  
     \]
 \end{defi}
 \begin{eg}
@@ -1610,7 +1607,7 @@ If $y_{c_1}$ and $y_{c_2}$ are linearly independant CFs, then $y_{c_1} + y_p$ an
     \[
         \crbkt{f_i(x)}
     \]
-    is linearly independant if
+    is linearly dependant if
     \[
         \sum_{i=1}^{N} c_i f_i(x) = 0 \quad \forall x
     \]
@@ -1946,7 +1943,7 @@ Therefore if $\vec Y_1$ and $\vec Y_2$ form a basis at some point $x_p$ then the
 \subsubsection*{Application of Abel's Theorem}
 Since
 \[
-    W(x_0) \exp \bkt{\int_{x_0}^{x}{p(u) \diffd u}} = y_1 y_2' - y'_1 y_2
+    W(x_0) \exp \bkt{-\int_{x_0}^{x}{p(u) \diffd u}} = y_1 y_2' - y'_1 y_2
 \]
 If we know $y'_1$ then we can use this differential equation to solve for $y_2$.
 This turns out to be identical to the reduction of order formula,
@@ -2126,7 +2123,7 @@ We can detune again!
     \[
         y_p = t \times (\text{non-resonant P.I})  
     \]
-    If the C.Fs arae degenerate then we may need higher order 
+    If the C.Fs are degenerate then we may need higher order 
     \[
         y_p = t^2 \times (\text{non-resonant P.I})  
     \]
@@ -2554,7 +2551,7 @@ Complementary function $y^c_n$ will satisfy
     a y^c_{n+2} + b y^c_{n+1} + c y^c_n = 0 \tagstar
 \]
 For an ODE with constant coefficients, we try $y \propto e^{\lambda x}$.
-This translates to a suitable P.I being
+This translates to a suitable C.F being
 \[
     y^c_n \propto k^n
 \]

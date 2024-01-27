@@ -398,7 +398,7 @@ From this definition we can see that this group is non-abelian -- as matrix mult
     The identity map, $\Id_x$ is defined as the map $x \mapsto x$. 
 \end{defi}
 
-\begin{lemma}[Compositive is associative]
+\begin{lemma}[Composition is associative]
     Consider maps $f, g, h$ of sets $w, x, y, z$
     \begin{center}
         \begin{tikzpicture}
@@ -1254,7 +1254,8 @@ The group we mentioned previously, $C_n \cong \Z_n$ have a special property.
 \begin{remark}\leavevmode
     \begin{enumerate}
         \item If $Gx = X$, that is if the orbit is the whole set, then this is called Transitive.
-        \item If every element $g \in G$ apart from $e_G$ has $x \in X$ such that $gx \neq x$, then $G \gact X$ is called Faithful. In this case, the associated homomorphism from $G \rightarrow \Sym(X)$ is surjective, since the kernel would be the trivial subgroup.
+        \item If every element $g \in G$ apart from $e_G$ has $x \in X$ such that $gx \neq x$, then $G \gact X$ is called Faithful. 
+        In this case, the associated homomorphism from $G \rightarrow \Sym(X)$ is injective, since the kernel would be the trivial subgroup.
     \end{enumerate}
 \end{remark}
 
@@ -1640,7 +1641,7 @@ In otherwords, the number of cosets of the stabiliser of $x$ is the same as the 
     \]
     That is, $t^k$ shifts the $p$-tuples by $k$ places. We can check that this is an action and that
     \[
-        t^k \cot t^l = t^{k + l} 
+        t^k \cdot t^l = t^{k + l} 
     \]
     Further we need to check that this action is well defined. Since the values of $k$ can be considered modulo $p$, the action would be equal. More importantly, we need to check that $t^k(g_1, g_2, \cdots, g_p) \in X$.
     Suppose therefore that $g_1g_2\cdots g_p = e$. For convinence let
@@ -1811,7 +1812,7 @@ In otherwords, the number of cosets of the stabiliser of $x$ is the same as the 
     The \emph{center} of a group $G$ is the set of elements of $G$ that commute with all other elements. 
     \begin{align*}
         Z(G) &= \{h \in G \mid hg = gh \forall g \in G\} \\
-        &= \bigcup_{g \in G} C_G(g)
+        &= \bigcap_{g \in G} C_G(g)
     \end{align*}
 \end{defi}
 
@@ -2800,7 +2801,7 @@ Let $\phi: G \rightarrow H$ be a homomorphism. We know that $\ker \phi \leq G$. 
             &= \phi(g_2k) \\
             &= \phi(g_2) \\
             &= \overline{\phi}(g_2 \ker \phi)
-        \end{align*}
+        \end{align*}`'
         \item[Homomorphism] For $g_1, g_2 \in G$
         \begin{align*}
             \overline{\phi}(g_1 \ker \phi)\overline{\phi}(g_2 \ker \phi) &= \phi(g_1)\phi(g_2)\\
@@ -2954,7 +2955,7 @@ then $\Sym(x) = S_n$
     \end{enumerate}
 \end{thm}
 \begin{proof}
-    For some $\sigma \in S_n$, the action $\sigma \gact X = \{1, 2, \cdots, n \}$ partitions $X$ into $k$ orbits:
+    For some $\sigma \in S_n$, the action $\anglebk{\sigma} \gact X = \{1, 2, \cdots, n \}$ partitions $X$ into $k$ orbits:
     \[
         \anglebk{\sigma}x_1 \cup \anglebk{\sigma}x_2 \cup \cdots \cup \anglebk{\sigma}x_k
     \]
@@ -2966,7 +2967,7 @@ then $\Sym(x) = S_n$
         &(x_k \ \cdots \ \sigma^{n_k - 1}(x_k))
     \end{align*}
     which are all disjoint cycles since orbits parition.
-
+    
     For uniqueness, note that the only choices we made were
     \begin{enumerate}
         \item choice of orbit representative $x_i$
