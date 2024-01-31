@@ -2883,6 +2883,7 @@ and the number of subsets that do include $n$ is $\binom{n-1}{k-1}$.
 \begin{proof}
     Let $x \in S_1 \cup S_2 \cup \cdots \cup S_n$. 
     Say $x \in S_i$ for $k$ of the $S_i$, we want $x$ to be counted exactly once in the RHS of the formula.
+    We will proceed by counting the number of subsets of indicies that contain $x$.
     Indeed,
     \[
         \#\{A \mid \abs{A} = 1 \text{ with } x \in S_A\} = k  
