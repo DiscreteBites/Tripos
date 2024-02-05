@@ -39,11 +39,13 @@
 \date{\nterm\ \nyear}
 \title{Part \npart\ --- \ncourse}
 
+% Text commands
+\newcommand{\ts}{\textsuperscript}
 
+% Enumeration macros
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 \newcommand\ilnumberthis{\addtocounter{equation}{1}(\theequation)}
 
-\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
 \setlist[enumerate,1]{label={(\roman*)}}
 
 \newcounter{temp_equation_var}
@@ -81,6 +83,9 @@
   align=left,
   leftmargin=\parindent
 }
+
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}
 
 % Tags and Refs
 \newcommand{\tagstar}{\tag{$\star$}}
@@ -210,6 +215,11 @@
 \newcommand{\uvec}[1]{\hat{\vec{#1}}}
 \newcommand{\tvec}[1]{\tilde{\vec{#1}}}
 
+\newcommand{\dvec}[1]{\dot{\vec{#1}}}
+\newcommand{\ddvec}[1]{\ddot{\vec{#1}}}
+\newcommand{\dddvec}[1]{\dddot{\vec{#1}}}
+\newcommand{\ddddvec}[1]{\ddddot{\vec{#1}}}
+
 \newcommand{\eval}{\Big{|}}
 
 \newcommand{\dunder}[1]{\underline{\underline{#1}}}
@@ -232,8 +242,8 @@
 % \DeclareMathOperator{\multinomial}{multinomial}
 % \DeclareMathOperator{\Poisson}{Poisson}
 % \DeclareMathOperator{\var}{var}
-% \newcommand{\E}{\mathbb{E}}
-% \newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
 
 % Algebra
 \DeclareMathOperator{\Hom}{Hom}
@@ -263,7 +273,7 @@
 \newcommand{\D}{\mathrm{D}}
 % \newcommand{\dR}{\mathrm{dR}}
 % \newcommand{\exterior}{\mathchoice{{\textstyle\bigwedge}}{{\bigwedge}}{{\textstyle\wedge}}{{\scriptstyle\wedge}}}
-% \newcommand{\F}{\mathbb{F}}
+\newcommand{\F}{\mathcal{F}}
 % \newcommand{\G}{\mathcal{G}}
 % \newcommand{\Gr}{\mathrm{Gr}}
 % \newcommand{\haut}{\mathrm{ht}}
@@ -284,7 +294,6 @@
 % \newcommand{\wto}{\stackrel{\mathrm{w}}{\to}}
 % \renewcommand{\d}{\mathrm{d}}
 % \renewcommand{\P}{\mathbb{P}}
-%\renewcommand{\F}{\mathcal{F}}
 
 \let\Im\relax
 \let\Re\relax
