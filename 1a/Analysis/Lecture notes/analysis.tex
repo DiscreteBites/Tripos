@@ -1,0 +1,166 @@
+\documentclass{article}
+
+\def\npart {IA}
+\def\nterm {Lent}
+\def\nyear {2024}
+\def\nlecturer {Prof. C.\ Warnick}
+\def\ncourse {Probability}
+
+\setcounter{tocdepth}{2}
+
+\input{../../../header.tex}
+\numberwithin{equation}{section}
+
+\begin{document}
+\maketitle{
+    \small
+    \noindent\textbf{Limits and Convergence}\\
+    Sequences and series in $\R$ and $\C$. Sums, products and quotients.
+    Absolute convergence; absolute convergence implies convergence. 
+    The Bolzano-Weierstrass theorem and applications (the General Principle of Convergence). 
+    Comparison and ratio tests, alternating series test.\hspace*{\fill}[6]
+    
+    \vspace{10pt}
+    \noindent\textbf{Continuity}\\
+    Continuity of real and complex valued functions defined on subsets of $\R$ and $\C$.
+    The intermediate value theorem. A continuous function on a closed bounded interval is bounded and attains its bounds.\hspace*{\fill}[5]
+
+    \vspace{10pt}
+    \noindent\textbf{Differentiability}\\
+    Differentiability of functions from $\R$ to $\R$. Derivative of sums and products. The chain rule.
+    Derivative of the inverse function. Roll's theorem; the mean value theorem. One-dimensional version of the inverse function theorem.
+    Taylor's theorem from $\R$ to $\R$; Lagrange's form of the remainder. Complex differentiaion.\hspace*{\fill}[5]
+        
+    \vspace{10pt}
+    \noindent\textbf{Power series}\\
+    Complex power series and radius of convergence. Exponential, trigonometric and hyperbolic functions, and relations between them.
+    *Direct proof of the differentiability of a power series within its circle of convergence*.\hspace*{\fill}[4]
+
+    \vspace{10pt}
+    \noindent\textbf{Integration}\\
+    Definition and basic properties of the Riemann integral. A non-integrable function.
+    Integrability of monotonic functions. Integrability of piecewise-continuous functions.
+    The fundamental theorem of calculus. Differentiation of indefinite integrals.
+    Integration by parts. The integral form of the remainder in Taylor's theorem. Impropper integrals.\hspace*{\fill}[6]
+}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 19/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Limits and Convergence}
+Consider a sequence of real numbers $a_1, a_2, a_3, \cdots$ which we write as $(a_n)$ or $(a_n)_{n=1}^\infty$ for $a_n \in \R$.
+
+\begin{defi}[Limit]
+    We say that $a_n \rightarrow a$ as $n \rightarrow \infty$ for some $a \in \R$ if:
+    Given $\epsilon > 0$, $\exists N \in \N$ such that $\forall n \geq N$
+    \[\abs{a_n - a} < \epsilon\]
+\end{defi}
+
+\begin{remark}
+    We can freely replace the strict inequality with $\leq$ and it does not change the definition. 
+    We can also replace $\epsilon$ with any multiple of $\epsilon$ say $5 \epsilon$.
+    We also assume that $\infty \notin \R$, so $a = \infty$ is not allowed.
+\end{remark}
+\begin{defi}[Increasing and decreasing]\leavevmode
+    \begin{enumerate}
+        \item If $a_n \leq a_{n+1}, \ \forall n$, then $(a_n)$ is \emph{increasing}
+        \item If $a_n \geq a_{n+1}, \ \forall n$, then $(a_n)$ is \emph{decreasing} 
+        \item If $a_n < a_{n+1}, \ \forall n$, then $(a_n)$ is \emph{strictly increasing} 
+        \item If $a_n > a_{n+1}, \ \forall n$, then $(a_n)$ is \emph{strictly decreasing} 
+    \end{enumerate}
+\end{defi}
+
+In all cases $(a_n)$ is \emph{monotone}. This allows us to state the \emph{fundamental axiom of real numbers}.
+
+\begin{thm}[Fundamental axiom of real numbers]
+    An increasing sequence of real numbers which is bounded above converges (i.e, it has a limit).
+    For instance, if $a_n \in \R$ with
+    \[a_1 \leq a_2 \leq \cdots \ \text{ and } \ a_n \leq A \ \forall n\]
+    There exists $a \in \R$ such that $a_n \rightarrow a$ as $n \rightarrow \infty$.
+    Equivalently, a decreasing sequence bounded below has a limit.
+\end{thm}
+
+This is equivalent to the \emph{least upper bound axiom}, that states that any non-empty set that is bounded above has a \emph{supremum}.
+\begin{defi}[Supremum]
+    If $S \subset R$ and $S \neq \emptyset$ we say that
+    \[\sup(S) = k\]
+    if 
+    \begin{enumerate}
+        \item $x \leq k \ \forall x \in S$ ($k$ is an upperbound for $S$)
+        \item Given $\epsilon > 0 \ \exists x \in S$ such that $x > k - \epsilon$ ($k$ is a least upper bound)
+    \end{enumerate}
+\end{defi}
+
+A similar definition for greatest lower bound (infimum). 
+If $\sup(S) \in S$ we say that $\sup(S)$ is the minimum of $S$ and write
+\[\sup(S) = \max(S)\]
+
+\begin{ex}
+    Show that the fundamental axiom is equivalent to the least upperbound axiom.
+\end{ex}
+
+\begin{nlemma}\leavevmode
+    \begin{enumerate}
+        \item The limit is unique, i.e; if $a_n \rightarrow a$ and $a_n \rightarrow b$ as $n \rightarrow \infty$ then $a = b$.
+        \item If $a_n \rightarrow a$ as $n \rightarrow \infty$ and $n_1 < n_2 < n_3 < \cdots$ is a set of increasing indicies, 
+        then $a_{n_j} \rightarrow a$ as $j \rightarrow \infty$. (subsequences converge to the same limit)
+        \item If $a_n = c \ \forall n$ then $a_n \rightarrow c$ as $n \rightarrow \infty$
+        \item If $a_n \rightarrow a$ and $b_n \rightarrow b$ then $a_n + b_n \rightarrow a + b$ 
+        \item If $a_n \rightarrow a$ and $b_n \rightarrow b$ then $a_nb_n \rightarrow ab$
+        \item If $a_n \rightarrow a$ and $a_n \neq 0$ and $a \neq 0$ then $\frac{1}{a_n} \rightarrow \frac{1}{a}$
+        \item If $a_n \leq A$ and $a_n \rightarrow a$ then $a \leq A$. (note that this is not true if we insist $a < A$)
+        \item If $a_n \rightarrow a$ and $c_n \rightarrow a$ as $n \rightarrow \infty$ and
+        \[a_n \leq b_n \leq c_n \rightarrow b_n \rightarrow a\]
+    \end{enumerate}
+\end{nlemma}
+
+\begin{proof}
+    We will do (i), (ii) and (v), the others wil be exercises.
+    \begin{enumerate}
+        \item For any $\epsilon >0$ find $N_1(\epsilon)$ and $N_2(\epsilon)$ such that
+        \begin{align*}
+            n \geq N_1(\epsilon) \Rightarrow \abs{a_n - a} < \epsilon
+            n \geq N_2(\epsilon) \Rightarrow \abs{a_n - b} < \epsilon
+        \end{align*}
+        Hence if $n \geq \max(N_1, N_2)$ then,
+        \begin{align*}
+            0 \leq \abs{b - a} &= \abs{b - a_n + a_n - a} \\
+            &\leq \abs{b - a_n} + \abs{a_n - a} \\
+            &< 2\epsilon
+        \end{align*}
+
+        This implies that $\abs{b - a} = 0$, as otherwise we can set $\epsilon = \frac{1}{3} \abs{b - a}$ to find
+        \[0 \leq \abs{b - a} < \frac{2}{3} \abs{b - a} \ \contradiction\]
+
+        \item Since $n_j < n_{j + 1} \Rightarrow n_{j+1} \geq n_j + 1$, and hence by induction we have $n_j \geq j$.
+        As $a_n \rightarrow a$ as $n \rightarrow \infty$, given $\epsilon >0 \ \exists N = N(\epsilon)$ such that
+        \[n \geq N(\epsilon) \Rightarrow \abs{a_n - a} < \epsilon\]
+        So if we choose $j \geq N(\epsilon)$ then $n_j \geq j \geq N(\epsilon)$ which implies that
+        \[\abs{a_{n_j} - a} < \epsilon\]
+        Hence $a_{n_j} \rightarrow a$ as $j \rightarrow \infty$
+        
+        \item As $a_n \rightarrow a$ and $b_n \rightarrow b$ as $n \rightarrow \infty$ for any $\epsilon > 0 \ \exists N_1 = N_1(\epsilon), N_2 = N_2(\epsilon)$
+        such that
+        \begin{align*}
+            n \geq N_1(\epsilon) \Rightarrow \abs{a_n - a} < \epsilon \\
+            n \geq N_2(\epsilon) \Rightarrow \abs{b_n - a} < \epsilon
+        \end{align*}
+        Now,
+        \begin{align*}
+            \abs{a_nb_n - ab} &= \abs{a_nb_n - a_nb + a_nb - ab} \\
+            &\leq \abs{a_nb_n - a_nb} + \abs{a_nb - ab} \\
+            &= \abs{a_n}\abs{b_n - b} + \abs{b}{a_n -a}
+        \end{align*}
+        If $n \geq N_1$ then $\abs{a_n - a} \leq 1$, therefore
+        \[\abs{a_n} = \abs{a_n + a - a} \leq \abs{a_n - a} + \abs{a} \leq (1 + \abs{a})\]
+        Thus if $n \geq N_3 = \max(N_1, N_2)$ then,
+        \[\abs{a_nb_n - ab} < (1 + \abs{a})\epsilon + \abs{b}\epsilon = (1 + \abs{a} + \abs{b})\epsilon\]
+        which can be made arbitrarily small. 
+        Therefore
+        \[a_nb_n \rightarrow ab\]
+    \end{enumerate}
+\end{proof}
+
+\end{document}

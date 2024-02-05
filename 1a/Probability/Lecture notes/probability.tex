@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\def\npart {IA}
+\def\nterm {Lent}
+\def\nyear {2024}
+\def\nlecturer {Prof. J.\ Norris}
+\def\ncourse {Probability}
+
+\setcounter{tocdepth}{2}
+
+\input{../../../header.tex}
+\numberwithin{equation}{section}
+
+\begin{document}
+\maketitle{
+    \small
+    \noindent\textbf{Basic concepts}\\
+    Classical probability, equally likely outcomes. Combinatorial analysis, permutations and combinations.
+    Striling's formula (asymptotics for $\log n!$ proved).\hspace*{\fill}[3]
+    
+    \vspace{10pt}
+    \noindent\textbf{Axiomatic approach}\\
+    Axioms (countable case). Probability spaces. Inclusion-exclusion formula. Countinuity and subadditivity of probability measures. 
+    Independance. Binomial, Poisson and geometric distributions. Relation between Poisson and binomial distributions. 
+    Condition probability, Baye's formula. Examples, including Simpon's paradox.\hspace*{\fill}[5]
+
+    \vspace{10pt}
+    \noindent\textbf{Discrete random variables}\\
+    Expectation. Functions of random variable, indicator function, variance, standard deviation.
+    Covariance, independence of random variables. Generating functions: sums of independent random variables, random sum formula, moments.
+    
+    \vspace{5pt}
+    \noindent Conditional expectation. Random walks: gambler's ruin, recurrence relations.
+    Difference equations and their solution. Mean time to absorption, Branching processes: generating functions and extinction probability.
+    Combinatorial applications of generating functions.\hspace*{\fill}[7]
+    
+    \vspace{10pt}
+    \noindent\textbf{Continuous random variables}\\
+    Distributions and density functions. Expectations: expectation of a function of a random variable.
+    Uniform, normal and exponential random variables. Memoryless property of exponential distribution.
+
+    \vspace{5pt}
+    \noindent Joint distributions: transformation of random variables (including Jacobians), examples.
+    SimulationL generating continuous random variables, Box-Muller transform, rejection sampling.
+    Geometrical probability: Betrand's paradox, Buffon's needle. Correlation coefficient, bivariate normal random variables.\hspace*{\fill}[6]
+
+    \vspace{10pt}
+    \noindent\textbf{Inequalities and Limits}\\
+    Markov's inequality, Chebyshev's inequality. Weak law of large numbers. 
+    Convextivity: Jensen's inequality for general random variables, AM/GM inequality.
+
+    \vspace{5pt}
+    \noindent Moment generating functions and statement (no proof) of continuity theorem. 
+    Statement of central limit theorem and sketch of proof. Examples, including sampling.\hspace*{\fill}[3]
+}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 19/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Mathematical Models for randomness}
+\subsection{General definitions}
+
+Let $\Omega$ be a set. Let $\F$ be a set of subsets of $\Omega$.
+We say that $\F$ is a $\sigma$-algebra if
+\begin{itemize}
+    \item $\Omega \in \F$
+    \item $\forall A \in \F$ and all sequences $(A_n : n \in \N)$ in $\F$
+    \[\Rightarrow A^c \in \F, \qquad \bigcup_n A_n \in \F\]
+\end{itemize}
+
+Thus equivalently, $\F$ is non-empty and closed under countable set operations.
+Note that 
+\[ \bigcap_n A_n = \bkt{\bigcup_n A_n^c}^c\]
+Let $\F$ be a $\sigma$-algebra. We say that a function
+\[ \Prob: \F \rightarrow [0, 1] \]
+is a \emph{probability measure} if
+\begin{enumerate}
+    \item $\Prob(\Omega) = 1$
+    \item $\forall$ sequences $(A_n : n \in \N)$ of disjoint elements of $\F$,
+    \[\Rightarrow \Prob \bkt{\bigcup_n A_n} = \sum_n \Prob(A_n)\]
+    This is known as \emph{countable additivity}
+\end{enumerate}
+
+Let $\Prob$ be a probability measure on $(\Omega, \F)$, then $(\Omega, \F, \Prob)$ is a \emph{probability space}.
+
+Elements of $\Omega$ are called \emph{outcomes} and elements of $\F$ are \emph{events}.
+We interprit $\Prob(A)$ as the \emph{probability} of event $A$.
+
+\subsection{Equally likely outcomes}
+Let $\Omega$ be a finite set, we'll always take $\F$ to be $\wp(\Omega)$ in this case (unless stated).
+Sometimes symmetry suggests a model with all outcomes equally likely,
+\[\Prob(A) = \frac{\abs{A}}{\abs{\Omega}}\]
+
+\begin{ex}
+    Show that $(\Omega, \F, \Prob)$ is a probability space.
+    This comes down to $\abs{A \cup B} = \abs{A} + \abs{B}$ for $A$, $B$ disjoint.
+\end{ex}
+
+\subsection{Throwing a dice}
+$\Omega = {1, 2, 3, 4, 5, 6}$, $\F = \wp(\Omega)$ and $\Prob(A) = \frac{\abs{A}}{\abs{\Omega}}$.
+For example,
+\[\Prob({2, 5, 6}) = \frac{1}{2}\]
+
+\subsection{Balls from a bag}
+Let the balls be numbered $1, 2, \cdots, n$. Randomly remove all at once $k$ balls. 
+What is the probability that we have chosen balls $1, 2, \cdots, k$.
+We have 
+\begin{enumerate}
+    \item $\Omega = \{k \text{ element subsets of } \{1, \cdots, n\}\} \Rightarrow \abs{\Omega} = \binom{n}{k}$
+    \item $A = \{\{1, \cdots, k\}\} \Rightarrow \abs{A} = 1$
+\end{enumerate}
+Hence,
+\[\Prob(A) = \frac{1}{\abs{\Omega} = \binom{n}{k}^{-1}}\]
+
+\subsection{Well-Shuffled pack of cards}
+$\Omega =$ set of permutations of cards $\{1, 2, \cdots, 52\} \Rightarrow \abs{\Omega} = 52!$.
+What is the probability for a well-shuffled pack that the first two cards are aces?
+\begin{align*}
+    \abs{A} &= 4 \times 3 \times 50! 
+    \therefore \Prob(A) &= \frac{4 \times 3 \times 50! }{52!} = \frac{1}{221}
+\end{align*}
+
+\subsection{Distribution of the largest digit}
+Observe from a string of random digits $n$ digits. What is the probability that the greatest of these digits is $k$?
+\begin{align*}
+    \Omega &= \{0, 1, \cdots, a\}^n  \Rightarrow \abs{\Omega} = 10^n\\
+    A_k &= \{\text{all digits are } \leq k\}  \Rightarrow \abs{A_k} = (k+1)^n\\
+    B_k &= \{\text{greatest digit is } k\} \Rightarrow B_k = A_k \setminus A_{k-1} \\
+    \therefore& \abs{B_k} = \abs{A_k} - \abs{A_{k-1} } \\
+    \Rightarrow& \Prob{B_k} = \frac{(k+1)^n - k^n}{10^n}
+\end{align*}
+
+\subsection{Coincident Birthdays}
+Suppose $n$ people in a room. Find $\Prob(n) = $ probability that two have the same birthday.
+Assume birthdays are numbered $\{1, 2, \cdots, 365\}$ and all equally likely.
+\begin{align*}
+    \Omega = \{1, 2, \cdots, 365\}^n \\
+    A = \{\text{all different}\} \Rightarrow \abs{A} = \frac{365!}{(365 - n)!}
+\end{align*}
+So $\Prob(\text{two the same}) = 1 - \frac{365 \times 364 \times \cdots \times (365 -n +1)}{365^n}$
+In fact,
+\begin{align*}
+    \Prob(22) = 0.476 \\
+    \Prob(23) = 0.507
+\end{align*}
+So if $n \geq 23$ we are more than likely to have two with the same birthday.
+
+\end{document}

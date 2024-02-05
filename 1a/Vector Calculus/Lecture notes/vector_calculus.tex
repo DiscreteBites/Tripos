@@ -1,0 +1,196 @@
+\documentclass{article}
+
+\def\npart {IA}
+\def\nterm {Lent}
+\def\nyear {2024}
+\def\nlecturer {Prof. D.\ Tong}
+\def\ncourse {Vector Calculus}
+
+\setcounter{tocdepth}{2}
+
+\input{../../../header.tex}
+\numberwithin{equation}{section}
+
+\begin{document}
+\maketitle{
+    \small 
+    \noindent\textbf{Curves in $\R^3$}\\
+    Parameterised curves and arc length, tangents and normals to curves in $\R^3$; curvature and torsion.\hspace*{\fill}[1]
+    
+    \vspace{10pt}
+    \noindent\textbf{Integration in $\R^2$ and $\R^3$}\\
+    Line integrals. Surface and volume integrals: definitions, examples using Cartesian, cylindrical and spherical coordinates; change of variables.\hspace*{\fill}[4]
+
+    \vspace{10pt}
+    \noindent\textbf{Vector operations}\\
+    Directional derivatives. The gradient of a real-valued function: definition; intterpretation as normal to level surfaces;
+    examples including the use of cylindrical, spherical *and general curvilinear* coordinates
+    
+    \vspace{5pt}
+    \noindent Divergence, curl and $\nabla^2$ in Cartesian coordinates, examples; 
+    formulae for these operators (statement only) in cylindrical, spherical *and general curvilinear* coordinates. 
+    Solenoidal fields, irrotational fields and conservative fields; scalar potentials. Vector derivative identities \hspace*{\fill}[5]
+    
+    \vspace{10pt}
+    \noindent\textbf{Integration theorems}\\
+    Divergence theorem, Green's theorem, Stoke's theorem, Green's second theorem: statement;
+    informal proofs; examples; applications to fluid dynamics, and to electromagnetism including statement of Maxwell's equations. \hspace*{\fill}[5]
+
+    \vspace{10pt}
+    \noindent\textbf{Laplace's equation}\\
+    Laplace's equation in $\R^2$ and $\R^3$: uniqueness theorem and maximum principle. 
+    Solution of Poisson's equation by Gauss's method (for spherical and cylindrical symmetry) and as an integral. \hspace*{\fill}[4]
+
+    \vspace{10pt}
+    \noindent\textbf{Cartesian tensors in $\R^3$}\\
+    Tensor transformation laws, addition, multiplication, contraction, with emphasis on tensors of second rank.
+    Isotropic second and third rank tensors. Symmetric and antisymmetric tensors. Revision of principal axes and diagonalisation.
+    Quotient theorem. Examples indlucing inertia and conductivity.\hspace*{\fill}[5]
+}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 18/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Introduction}
+We will learn to differentiate and integrate functions (or maps) of the form
+\[f : \R^m \rightarrow \R^n\]
+and element of $\R^m$ or $\R^n$ is a vector, so this subject is called ``vector calculus''.
+
+\begin{eg}[Maps]\leavevmode
+    \begin{enumerate}
+        \item A function $f: \R \rightarrow \R^n$ defines a \emph{curve} in $\R^n$.
+        In physics, we think of the domain as time, and the codomain as space, (usually with $n = 3$), and we write this as
+        \[ f: t \mapsto \vec x(t)\] 
+        with $\vec x(t) \in \R^n$. Generalising, a map $f: \R^2 \rightarrow \R^n$ defines a \emph{surface} in $\R^n$, and so on.
+
+        \item In other applications, the domain $\R^m$ might be viewed as physical space. 
+        For example, in physics a \emph{scalar field} is a map
+        \[f: \R^3 \rightarrow \R\]
+        For example, temperature $T(\vec x)$ is an example of a scalar field, as is the Higgs boson field.
+        
+        \item A \emph{vector field} is a map $f: \R^3 \rightarrow R^n$.
+        For example, the electric field $\vec E(x)$ and the magnetic field $\vec B(x)$ are vector fields. 
+    \end{enumerate}
+\end{eg}
+
+\section{Curves}
+We consider maps of the form $f: \R \rightarrow \R^n$. 
+Assign a coordiante $t$ to $\R$ and use cartesian coordiantes on $\R^n$
+\[ \vec x = (\vec x^1, \cdots \vec x^n) = x^i \vec e_i \tag{summation notation over $i$}\]
+
+\begin{notation}
+In this course, the lecture will use super-scripts i.e. $\vec x^i$ to denote the the $i^{th}$ component of the vector $\vec x$.
+He mentions something about this being the right way to do things, but that this will only bear fruit in future courses.
+\end{notation}
+
+With $\vec e_i$ the orthonormal basis of $\R^n$ such that
+\[\vec e_i \cdot \vec e_j = \delta_{ij}\]
+In expanded form,
+\begin{align*}
+    \vec e_1 &= (1, 0, \cdots, 0) \\
+    \vec e_2 &= (0, 1, \cdots, 0) \\
+    \vdots & \\
+    \vec e_n &= (0, 0, \cdots, 1)
+\end{align*}
+
+For $\R^3$ we also use the notation
+\[\{\vec e_i\} = \{\uvec x, \uvec y, \uvec z\}\]
+The image of the function is a \emph{parameterised curve}, with $t$ the parameter. We call the curve $C$.
+
+\begin{eg}\leavevmode
+\begin{enumerate}
+    \item Consider the map $\R \rightarrow \R^3$ given by 
+    \[\vec x(t) = (at, bt^2, 0)\]
+    The curve $C$ is the parabola $a^2y = b^2x$ lying in the plane $z = 0$.
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines=center,
+                xlabel = $x$,
+                ylabel = $z$,
+                zlabel = $y$,
+                xtick=\empty,
+                ytick=\empty,
+                ztick=\empty,
+                xmin=-2,
+                xmax=2,
+                ymin=-2,
+                ymax=2,
+                zmin=-2,
+                zmax=2
+            ]
+            \addplot3[
+                color=red,
+                variable=\t,
+                domain=-1.3:1.3,
+                samples y=0
+            ]
+            (\t, 0, \t^2);
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    \item Consider $\vec x (t) = (\cos t, \sin t, t)$. The curve $C$ is a helix
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis lines=center,
+                xlabel = $z$,
+                ylabel = $y$,
+                zlabel = $x$,
+                xtick=\empty,
+                ytick=\empty,
+                ztick=\empty,
+                xmin=-1,
+                xmax=7*pi,
+                ymin=-2,
+                ymax=2,
+                zmin=-2,
+                zmax=2
+            ]
+            \addplot3[
+                color=red,
+                variable=\t,
+                domain=0:7*pi,
+                samples=70,
+                samples y=0
+            ]
+            (\t, {sin(\t r)}, {cos(\t r)});
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Note that the choice of paramterisation is not unique!
+    For example, consider $\vec x(t) = (\cos \lambda t, \sin \lambda t, \lambda t)$ gives the same helix $\forall \lambda \neq 0$.
+    Sometimes, the choice of paramterisation matters. i.e, if $t$ is the time and $\vec x(t)$ is position, then the velocity $\dvec x \propto \lambda$
+\end{enumerate}
+\end{eg}
+
+\subsection{Differentiating the Curve}
+A vector function $\vec x(t)$ is said to be differentiable at $t$ if as $\delta t \rightarrow 0$ we have
+\[ \vec x(t + \delta t) - \vec x(t) = \dvec x(t)\delta t + O(\delta t^2)\]
+Note that we use this to define $\dvec x(t)$ at the point $t$.
+If $\dvec x(t)$ exists everywhere, then the curve is said to be \emph{smooth}.
+
+\begin{remark}
+    \begin{enumerate}
+        \item ``Big O'' notation $O(\delta t^2)$ means terms proportional to $\delta t^2$
+        \item ``Little O'' notation $\underline{o}(\delta t^2)$ means strictly smaller than $\delta t^2$
+        \item In physics, dot is usually used to denote differentiation with respect to time ($\dvec x(t)$).
+        The prime is used for spatial differentiation ($f'(x)$). In maths, these are used interchangably.
+    \end{enumerate}
+\end{remark}
+
+\begin{notation}
+    We write
+    \[
+        \delta \vec x(t) = \vec x(t + \delta t) - \vec x(t)   
+    \]
+    The derivative is then
+    \[ \dvec x(t) \equiv \diff {\vec x}{t} := \lim_{\delta t \rightarrow 0} \frac{\delta \vec x}{\delta t}\]
+    We also sometimes write
+    \[ \diffd \vec x := \dvec x \diffd t\]
+\end{notation}
+
+\end{document}

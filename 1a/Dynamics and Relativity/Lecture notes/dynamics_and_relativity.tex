@@ -1,0 +1,141 @@
+\documentclass{article}
+
+\def\npart {IA}
+\def\nterm {Lent}
+\def\nyear {2024}
+\def\nlecturer {Prof. S.\ Hartnoll}
+\def\ncourse {Dynamics and Relativity}
+
+\setcounter{tocdepth}{2}
+
+\input{../../../header.tex}
+\numberwithin{equation}{section}
+
+\begin{document}
+\maketitle{
+    \small 
+    \noindent\textbf{Basic Concepts}\\
+    Space and time, frames of reference, Galilean transformations. Newton's laws. Dimensional analysis.
+    Examples of forces, including gravity, friction and Lorentz.\hspace*{\fill}[4]
+    
+    \vspace{10pt}
+    \noindent\textbf{Newtonian dynamics of a single particle}\\
+    Equation of motion in Cartesian and plane polar coordinates. Work, conservative forces and potential energy, motion and the shape of the potential energy function;
+    stable equilibria and small oscillations; effect of damping.
+
+    \vspace{5pt}
+    \noindent Angular velocity, angular momentum, torque
+
+    \vspace{5pt}
+    \noindent Orbits: the $u(\theta)$ equation; escape velocity; Kepler's laws; stability of orbits; motion in a repulsive potential (Rutherford Scattering).
+
+    \vspace{5pt}
+    \noindent Rotating frames: centrifugal and Coriolis forces.\\
+    *Brief discussion of Foucault pendumum.*\hspace*{\fill}[8]
+
+    \vspace{10pt}
+    \noindent\textbf{Newtonian dynamics of systems of particle}\\
+    Momentum, angular momentum, energy. Motion relative to the centre of mass; the two body problem. \\
+    Variable mass problems; the rocket equation.\hspace*{\fill}[2]
+
+    \vspace{10pt}
+    \noindent\textbf{Rigid bodies}\\
+    Moments of inertia, angular momentum and energy of a rigid body. 
+    Parallel axis theorem. Simple examples of motion involving both rotation and translation (e.g. rolling).\hspace*{\fill}[3]
+
+    \vspace{10pt}
+    \noindent\textbf{Special Relativity}\\
+    The principle of relativity. Relativity and simultaneity. The invariant interval. Lorents transformations in $(1 + 1)$-dimensional spacetime.
+    Time dilation and length contraction. The Minkowski metric for $(1 + 1)$-dimensional spacetime.
+
+    \vspace{5pt}
+    \noindent Lorentz transformations in $(3 + 1)$-dimensions. 4-vectors and Lorents invariants. Proper time. 4-velocity and 4-momentum.
+    Conservation of 4-momentum in particle decay. Collisions. The Newtonian limit. \hspace*{\fill}[7]
+}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 1: 18/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Structure of the Newtonian Universe}
+
+Three dimensional space can be endowed with a \emph{cartesian reference frame} (origin and axes),
+such that points in space are labelled:
+\[\vec x = (x_1, x_2, x_3)\]
+\emph{Time} can be labelled with respect to an arbitrary reference time by a real number $t$.
+A \emph{point particle} is an idealised object that is completely determined by it's position at a given time: $\vec x(t)$.
+For example we could have $\vec x$ trace the trajectory of a tennis ball travelling through space.
+It's \emph{velocity} is the vector
+\[\vec v \equiv \diff{\vec x}{t} = \dvec{x}\]
+From Vector Calculus, we know that this vector is tangent to the trajectory. Recall that in cartesian coordinates, 
+\[\diff{\vec x}{t} = \crbkt{\diff {x_3}{t}, \diff {x_2}{t}, \diff {x_3}{t}}\]
+The \emph{acceleration} is:
+\[\vec a = \ddvec{x} = \dvec{v} = \diff[2]{x}{t}\]
+The above structure is \textbf{not enough} to write down laws of physics.
+
+\begin{quote}
+    ``Who's reference frame do we use? Note that they can move with respect to each other and hence produce different observations''
+\end{quote}
+
+Consider a free particle that does not experience any forces, i.e; ``nothing happens'' to it.
+The position of this particle is given by $\vec x(t)$ but which frame (origin and axis) do we use?
+There is a conflict as the particle may be at rest in one frame but moving in a complicated way in another frame.
+
+\subsection{Law of inertia}
+There exist \emph{inertial frames}, in which a free particle has a constant velocity.
+
+In an inertial frame we may write
+\[\dvec v = \ddvec x = 0\]
+The law of inertia is a way to state \emph{Newton's First Law}.
+
+\begin{quote}
+    ``As far as we know, this is a true fact about the universe, but not an obvious one!''
+\end{quote}
+
+\subsection{Galilean relativity principle}
+A frame that is related to an inertial frame by a \emph{Galilean transformation} is also an inertial frame,
+and all laws of physics are the same in both frames.
+
+\begin{defi}[Galilean transformation]
+    The new frame $\vec x'$ is related to the old frame $\vec x$ by 
+    \[\vec x' = R \vec x + \vec k + \vec w t\]
+    where
+    \begin{itemize}
+        \item $R$ is an orthogonal $3x3$ matrix ($R^TR = I$)
+        \item $\vec k$ is a constant vector
+        \item $\vec w$ is a constant velocity
+    \end{itemize}
+\end{defi}
+
+For example, a mass dropped from the mast of a moving ship lands at the same place as if the ship were at rest.
+
+It is easy to see that if $\ddvec x = 0 \Leftrightarrow \ddvec x' = 0$.
+Hence Galilean relativity constrains the types of forces that are possible.
+
+The Galilean transformations form the Galilean group; often supplemented by time translations
+\[t' = t + t_0\]
+A result of this is that we treat all inertial frames as having the same time, called \emph{absolute time}
+Galilean Relativity implies that the Laws of Physics make reference to no special point, direction, time or velocity.
+All of these things can only be relative.
+Hence, one cannot be ``at rest'', you have to be at rest with respect to something.
+
+However, \textbf{acceleration is not relative}.
+If you are accelerating in an inertial frame, you will be accelerating in all other inertial frames with the same magnitude.
+This makes clear that acceleration will be the main object that shows up in the laws of physics.
+
+\section{Forces}
+Once there is more than one particle in the universe, there will be interactions between these particles.
+In Newtonian physics, these interactions are described by forces.
+
+\subsection{Newtons 2\ts{nd} Law}
+In an inertial frame,
+\[\dvec p = \vec F\]
+where the momentum is defined to be
+\[\vec p \equiv m \dvec x\]
+for a particle will \emph{intertial mass} $m$. 
+The mass is an additional property of point particles, it could change over time, but we will assume that it is constant in time unless stated otherwise.
+
+The force $\vec F$ depends on the interaction, but can only depend on $\vec x$ and $\dvec x$.
+Hence, Newtons 2\ts{nd} Law is a second order DE for $\vec x(t)$.
+Given $\vec x$ and $\dvec x$ at $t = 0$ for all particles, Newton's equations uniquely determines $\vec x(t)$ for all future times.
+\end{document}
