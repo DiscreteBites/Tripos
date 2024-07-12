@@ -1577,11 +1577,11 @@ Let $f$ be a linear map $f: U \rightarrow V$.
         spans the image of $f$.
         \item[Linear indedpendance] Suppose
         \[
-            \alpha_{m+1}f(e_{m+1}) + \alpha_{m+2}f(e_{m+2}) +\cdots, \alpha_Nf(e_{N}) = 0 \tag{$\star$}
+            \alpha_{m+1}f(e_{m+1}) + \alpha_{m+2}f(e_{m+2}) +\cdots + \alpha_Nf(e_{N}) = 0 \tag{$\star$}
         \]
         \begin{align*}
-            \Rightarrow f(\alpha_{m+1}f(e_{m+1}), \alpha_{m+2}f(e_{m+2}), \cdots, \alpha_Nf(e_{N})) = 0 \\
-            \therefore \alpha_{m+1}f(e_{m+1}), \alpha_{m+2}f(e_{m+2}), \cdots, \alpha_Nf(e_{N}) \in \ker(f) \\
+            \Rightarrow f(\alpha_{m+1}e_{m+1} + \alpha_{m+2}e_{m+2} + \cdots + \alpha_Ne_{N}) = 0 \\
+            \therefore \alpha_{m+1}e_{m+1} + \alpha_{m+2}e_{m+2} + \cdots + \alpha_Ne_{N} \in \ker(f) \\
             \Rightarrow \alpha_1 x_1 + \cdots + \alpha_N e_m = \alpha_{m+1}e_{m+1} + \cdots + \alpha_{N}e_{N}
         \end{align*}
         However, $e_1, e_2, \cdots, e_n$ is a basis for $U$ and are therefore linearly independant. 
