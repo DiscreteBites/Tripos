@@ -3,7 +3,7 @@
 \def\npart {IB}
 \def\nterm {Easter}
 \def\nyear {2024}
-\def\nlecturer {Prof O.R. Willaims}
+\def\nlecturer {Prof O.R. Williams}
 \def\ncourse {Groups, Rings and Modules}
 
 \setcounter{tocdepth}{2}
@@ -14,7 +14,7 @@
 \maketitle{
     \small
     \noindent\textbf{Groups}\\
-    Basic concepts of group theory recalled from Part IA Groups. Normal subgroups, quotient groups andisomorphism theorems. 
+    Basic concepts of group theory recalled from Part IA Groups. Normal subgroups, quotient groups and isomorphism theorems. 
     Permutation groups. Groups acting on sets, permutation representations. Conjugacy classes, centralizers and normalizers. 
     The centre of a group. Elementary properties of finite $p$-groups. Examples of finite linear groups and groups arising from geometry. 
     Simplicity of $A_n$. Sylow subgroups and Sylow theorems. Applications, groups of small order.\hspace*{\fill} [8]
@@ -38,8 +38,229 @@
 \tableofcontents
 
 %%%%%%%%%%%%%%%%%%%%%%
-% Lecture 1: 5/10/2023
+% Lecture 1: 19/01/2024
 %%%%%%%%%%%%%%%%%%%%%%
 
-\section{Examples and Definitions}
+\section{Groups}
+\subsection{Basic concepts}
+\begin{defi}[Group]
+    A \emph{group} is a triple $(G, \cdot, e)$ of a set $G$, a function $\tmap{\cdot}{G \times G}{G}$, and an elmenent $e \in G$ satisfying
+    \begin{enumerate}[label=(G\arabic*)]
+        \item $a \cdot (b \cdot c) = (a \cdot b) \cdot c$ \hspace*{\fill}(Associativity)
+        \item $a \cdot e = a = e \cdot a$ \hspace*{\fill}(Identity)
+        \item for each $a \in G$, $\exists a^{-1}$ such that $a \times a^{-1} = e = a^{-1} \times a$ \hspace*{\fill}(Inverse)
+    \end{enumerate}
+\end{defi}
+\begin{defi}[Subgroup]
+    If $(G, \cdot, e)$ is a group and $H \subseteq G$ is a subset, then we call it a \emph{subgroup} if
+    \begin{enumerate}
+        \item $a, b \in H \implies a \cdot b \in H$
+        \item $e \in H$
+        \item $(H, \cdot, e)$ is a group
+    \end{enumerate}
+\end{defi}
+\begin{lemma}
+    If $H \neq \emptyset$ then $H \subseteq G$ is a subgroup if and only if $$ \forall h_1, h_2 \in H, \ h_1h_2^{-1} \in H$$
+\end{lemma}
+\begin{eg}\leavevmode
+    \begin{enumerate}
+        \item Additive Groups $(\Z, +, 0), (\Q, +, 0), (\R, +, 0), \cdots$
+        \item Groups of Symmetries: 
+            \begin{itemize}
+                \item $S_n$ Symmetric Group $=$ bijections of $\crbkt{1, \cdots, n}$ to itself
+                \item $D_{2n}$ Dihedral Group $=$ Symmetries of regular $n-$gon
+                \item $\GL_n(\R)$ general linear group $=$ Symmetries of $\R^n$
+            \end{itemize}
+        \item Subgroups of these: 
+            \begin{itemize}
+                \item $A_n$ Alternating Group $A_n \leq S_n$, the even permutations
+                \item $C_n$ cyclic group of rotational symmetries of $n-$gon $C_n \leq D_{2n}$
+                \item $\SL_n(\R) \leq \GL_n(R)$ special linear group $\crbkt{A \in \GL_n(\R) \mid \det A = 1}$
+            \end{itemize}
+        \item Abelian Groups: ($G$ s.t. $a \cdot b = b \cdot a, \ \forall a, b \in G$) e.g. $V_4 = C_2 \times C_2$
+        \item Quaternion Group $Q = \crbkt{\pm 1, \pm i, \pm j, \pm k}$ with $i^2 = j^2 = k^2 = -1$ and $ij = k$
+    \end{enumerate}
+\end{eg}
+\begin{defi}[Left coset]
+    For a subgroup $H \leq G$, the \emph{left coset} is $$ gH = \crbkt{x \in G \mid x = g \cdot h \text{ for some } h \in H}$$
+\end{defi}
+
+The collection of all left cosets of $H$ gives a partition of $G$.
+All $H-$cosets are in bijection with $H$ by \map{f}{gH}{H}{g \cdot h}{h}
+
+\begin{thm}[Lagrange]
+    If $G$ is a finite group and $H \leq G$ then $$ |G| = |H| \cdot |G:H| $$ where $|G:H|$ is the number of left cosets of $H$ in $G$
+\end{thm}
+
+\begin{defi}[Order]
+    The \emph{order} of $g \in G$ is the least $n \in \N \cup \crbkt{\infty}$ such that $g^n = e$. Write $\ord (g) = n$ for this number.
+    If $g^M = e$ then $\ord (g) | M$
+\end{defi}
+\begin{lemma}
+    $\ord (g) \mid \abs{G}$ if G is a finite group.
+\end{lemma}
+\begin{proof}
+    If $n = \ord (g)$, then $H = \crbkt{e, g, g^2, \cdots, g^{n-1}}$
+    \begin{claim}
+        $H$ is a subgroup of $G$.
+        \begin{proof}
+            Let $g^i, g^j \in H$ then $g^i \cdot (g^j)^{-1} = g^{i - j}$.
+            By the Euclidean division algorithm, write $i - j = pn + r$ with $0 \leq r < n$ then 
+            $ g^{i - j} = g^{pn +r} = (g^n)^p \cdot g^r = g^r \in H $
+        \end{proof}
+    \end{claim}
+    So $H$ is indeed a subgroup, and hence by Lagrange's theorem $n = \abs{H} \mid \abs{G}$
+\end{proof}
+
+\subsection{Normal subgroups, Quotients, Homomorphisms, Isomorphisms}
+We invent normal subgroups by wanting the set of cosets to be a group. If $gH = g'H$ then $g^{-1}g' \in H$ and the converse holds. 
+Let $G / H$ be the set of left cosets of $H$ in $G$ and try to define a multiplication $$ (g_1H) \cdot (g_2H) = g_1g_2H $$ 
+
+then we check that if we change the coset representatives, we get the same answer. I.e, for $h \in H$
+\begin{itemize}
+    \item If $g_2H = g_2hH$ is another coset representative then $$ (g_1H) \cdot (g_2h H) = g_1 g_2h H = g_1g_2 H $$ 
+    \item If $g_1H = g_1hH$ then $$ (g_1hH) \cdot (g_2H) = g_1h g_2 H $$ which we would like to be equal to $g_1g_2H$
+\end{itemize}
+The two cosets are equal if and only if $$ (g_1g_2)^{-1}(g_1hg_2) \in H \iff g_2^{-1}hg_2 \in H$$
+Hence the definition is legal if and only if $$g_2^{-1} h g_2 \in H \quad \forall g_2 \in G, h \in H$$
+
+\begin{defi}[Normal]
+    A subgroup $H \leq G$ is normal, denoted $H \triangleleft G$ if $$ g^{-1}hg \in H \quad \forall h \in H, g \in G $$
+\end{defi}
+
+\begin{prop}
+    If $H \triangleleft G$, then the set $G / H$ of left cosets forms a group under the operation $$ (g_1H) \cdot (g_2H) = (g_1g_2) H $$ with $e_{G / H} = eH$.
+    We call this the quotient group of $G$ by $H$.
+\end{prop}
+\begin{proof}
+    The discussion shows that this well-defines a binary operation of $G / H$. All axioms follow from the fact that they hold in $G$.
+\end{proof}
+
+\begin{defi}[Homomorphism, Kernel, Image]
+    If $(G, \cdot_G, e_G)$ and $(H, \cdot_H, e_H)$ are groups, a function $\tmap{\phi}{G}{H}$ is a \emph{homomorphism} if 
+    \begin{itemize}
+        \item $\phi(g_1 \cdot_G g_2) = \phi(g_1) \cdot_h \phi(g_2)$
+        \item $\phi(e_G) = e_H$
+    \end{itemize}The \emph{kernel} of $\phi$ is $$ \ker \phi = \crbkt{g \in G \mid \phi(g) = e_H}$$
+    The \emph{image} of $\phi$ is $$ \Im \phi = \crbkt{h \in H \mid \exists g \in G, h = \phi(g) } $$
+\end{defi}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 2: 22/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{lemma}
+    $\ker \phi$ is a normal subgroup of $G$ and $\Im \phi$ is a subgroup of $H$.
+\end{lemma}
+\begin{proof}
+    \begin{claim}
+        $\phi(g^{-1}) = \phi(g)^-1$
+        \begin{proof}
+            Consider $e_G = gg^{-1}$, applying $\phi$ gives $e_H = \phi(gg^{-1}) = \phi(g)\phi(g^{-1})$.
+            Hence, $\phi(g^{-1})$ is an inverse for $\phi(g)$ in $H$. But inverses are unique, hence $\phi(g^{-1}) = \phi(g)^-1$.
+        \end{proof}
+    \end{claim}
+    Let $a, b \in \ker \phi$. Then $$ \phi(ab^{-1}) = \phi(a) \phi(b)^{-1} = e_H e_H^{-1} = e_H $$
+    Hence $ab^{-1} \in \ker \phi$. Note that $e_G \in \ker \phi$ so $\ker \phi \neq \emptyset$, hence it is a subgroup. 
+    For $a \in \ker \phi$ and $g \in G$, $$ \phi(g^{-1}ag) = \phi(g)^{-1} \phi(a) \phi(g) = \phi(g)^{-1}\phi(g) = e_H $$
+    Hence $g^{-1}ag \in \ker \phi$ and $\ker \phi \normalin G$.
+
+    Let $a, b \in \Im \phi$, so $a = \phi(A)$ and $b = \phi(B)$ for some $A, B \in G$.
+    Consider $$ab^{-1} = \phi(A)\phi(B)^{-1} = \phi(A)\phi(B^{-1}) = \phi(AB^{-1})$$
+    So $ab^{-1} \in \Im(\phi)$, so it is a subgroup.
+\end{proof}
+
+\begin{defi}[Isomorphism]
+    A homomorphism which is also a bijection is called an isomorphism.
+    If $\tmap \phi G H$ is an isomorphism, so is $\tmap{\phi^{-1}}{H}{G}$. If there is an isomorphism from $G$ to $H$ write $G \cong H$.
+\end{defi}
+
+\begin{thm}[First Isomorphism theorem]
+    Let $\tmap{\phi}{G}{H}$ be a homomorphism, then $\ker \phi \normalin H$, and the function \map{f}{\faktor{G}{\ker \phi}}{\Im \phi}{g \ker \phi}{\phi(g)}
+    is well-defined, and is an isomorphism.
+\end{thm}
+\begin{proof}
+    We already know that $\ker \phi \normalin G$. To see that $f$ is well-defined, suppose that $ g \ker \phi = g' \ker \phi \implies g^{-1}g' \in \ker \phi $
+    so $ e_H = \phi(g^{-1}g') = \phi(g)^{-1}\phi(g') \implies \phi(g) = \phi(g')$ so $f(g \ker \phi) = f(g' \ker \phi)$.
+    Also, 
+    \begin{align*}
+        f(g \ker \phi \cdot g' \ker \phi) &= f(g g' \ker \phi) \\
+            &= \phi(gg') \\
+            &= \phi(g) \phi(g') =f(g \ker \phi)f(g' \ker \phi)
+    \end{align*}
+    and $f(e_G \ker \phi) = \phi(e_G) = e_H$ so $f$ is a homomorphism. To see that $f$ is bijective, note that
+    \begin{itemize}
+        \item If $\phi(g) \in \Im \phi$ then it is $f(g \ker \phi)$ so $f$ is surjective / onto.
+        \item If $f(g' \ker \phi) = f(g \ker \phi) \implies \phi(g) = \phi(g')$ so $e_H = \phi(g)^{-1}\phi(g') = \phi(g^{-1}g')$. 
+        Hence, $$ g^{-1}g' \in \ker \phi \implies g\ker\phi = g'\ker\phi$$ so $f$ is injective / 1 to 1.
+    \end{itemize}
+\end{proof}
+
+\begin{eg}
+    Consider the function \map{\phi}{\C^+}{\C^{\times} = \crbkt{z \in \C \mid z \neq 0}}{z}{e^z}
+    As $e^{z + w} = e^z \cdot e^w$ and $e^0 = 1$, $\phi$ is a homomorphism from $(\C, +, 0)$ to $(C^{\times}, \times, 1)$.
+    It is surjective by the existence of the natural log, i.e. the natural log is defined for all complex numbers.
+    The kernel $ \ker \phi = \crbkt{z \in \C \mid e^z = 1} = 2\pi i \Z $ hence $$\implies \faktor{\C}{2\pi i \Z} \cong C^{\times}$$ 
+\end{eg}
+
+\begin{thm}[Second Isomorphism theorem]
+    Let $H \leq G$ and $K \normalin G$, then $HK = \crbkt{g \in G \mid g = hk \ \text{, for } h \in H, k \in K}$ is a subgroup of $G$, and $H \cap K$ is a normal subgroup of H.
+    Also $$ \faktor{HK}{K} \cong \faktor{H}{H \cap K} $$
+\end{thm}
+\begin{proof}
+    Let $hk$ and $h'k'$ be elements of $HK$. Consider 
+    \begin{align*}
+        h'k'(hk)^{-1} &= h'k'k^{-1}h^{-1} \\
+        &= h' h^{-1} h k'k^{-1}h^{-1}
+    \end{align*} then $h' h^{-1} \in H$ and since $K \normalin G$, we have that $h k'k^{-1}h^{-1} \in K$. So $HK$ is a subgroup.
+
+    To see that $H \cap K$ is a normal subgroup of $H$ note that the intersection of subgroups is a subgroup, and a normal subgroup is normal inside any subgroup that contains it entirely.
+    Suppose $a \in H \cap K$ then for any $h \in H$, $h a h^{-1} \in H$ since $a \in H$ is a subgroup, and $h a h^{-1} \in K$ since $a \in K$ and $K$ is normal in $H$.
+    Hence, $H \cap K \normalin H$.
+
+    Consider the homomorphism \map{\phi}{H}{\faktor{HK}{K}}{h}{hK}.
+    To see that this is a homomorphism, note
+    \begin{itemize}
+        \item $K \normalin HK$ since $HK$ is a subgroup that contains $K$ entirely
+        \item for $h_1, h_2 \in H$, $ \phi(h_1) \cdot \phi(h_2) = h_1 K \cdot h_2 K = (h_1h_2)K = \phi(h_1 \cdot h_2)$
+    \end{itemize}
+    Alternatively, note that this is a composition of two homomorphisms $$ H \rightarrow HK \rightarrow \faktor{HK}{K} $$ and is therefore a homomorphism.
+
+    So by the 1st Isomorphism Theorem, $$ \faktor{H}{\ker \phi} \cong \Im \phi $$
+    \begin{itemize}
+        \item $\ker \phi = \crbkt{h \in H \mid hK = eK} = H \cap K$
+        \item $\Im \phi = \crbkt{gK \mid gK = hK \text{ for some } h \in H} = \faktor{HK}{K}$
+    \end{itemize}
+    Therefore $$ \faktor{H}{H \cap K} \cong \faktor{HK}{K}$$
+\end{proof}
+
+If $K \normalin G$, then there is a bijection between $$ \crbkt{\text{subgroups of } \faktor{G}{K}} \rightleftarrows \crbkt{\text{subgroups of } G \text{ containing } K} $$
+via
+\begin{align*}
+    X \leq \faktor{G}{K} &\longmapsto \crbkt{g \in G | gK \in X} \\
+    \faktor{L}{K} \leq \faktor{G}{K} &\longmapsfrom K \leq L \leq G
+\end{align*}
+Notice that $K \leq L = \crbkt{g \in G | gK \in X} \leq G$ since, $X \leq \faktor{G}{K} \implies eK \in X$,
+and hence $\forall k \in K$, $kK = K = eK \in X$, and it is a subgroup since, 
+for $a, b \in L$, $aK, bK \in X$ and $X$ is a subgroup so $(ab^{-1})K = (aK)(bK)^{-1} \in X$ hence $ab^{-1} \in L$.
+Also, the reverse arrow is the inverse of the first since for $L = \crbkt{g \in G | gK \in X}$, $$ \faktor{L}{K} = \crbkt{gK \mid g \in L} = X $$
+This induces a bijection $$ \crbkt{\text{normal subgroups of } \faktor{G}{K}} \rightleftarrows \crbkt{\text{normal subgroups of } G \text{ containing } K}$$
+
+\begin{thm}[Third Isomorphism theorem]
+    Let $K \leq L \leq G$ be normal subgroups of $G$. Then $$ \faktor{\frac{G}{K}}{\frac{L}{K}} \cong \faktor{G}{L}$$
+\end{thm}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Lecture 3: 24/01/2024
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{proof}
+    Let \map{\phi}{\faktor{G}{K}}{\faktor{G}{L}}{gK}{gL}
+    This is well-defined since if $gK = g'K$ then $g^{-1}g' \in K \leq L$ so $gL = g'L$. 
+    Also, as $\phi(g_1K)\phi(g_2K) = g_1L \cdot g_2L = (g_1g_2)L = \phi((g_1g_2)K)$, it is a homomorphism.
+    The function is also surjective since $gL = \phi(gK)$ so the image of $\phi$ is $\faktor{G}{L}$.
+    The kernel is $$ \ker \phi = \crbkt{gK \in \faktor{G}{K} \mid gL = L} = \crbkt{gK \in \faktor{G}{K} \mid g \in L} = \faktor{L}{K}$$
+    Then we finish the proof by applying the first isomorphism theorem.
+\end{proof}
+
 \end{document}
