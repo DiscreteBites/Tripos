@@ -101,7 +101,6 @@
 \theoremstyle{definition}
 \newtheorem*{aim}{Aim}
 \newtheorem*{axiom}{Axiom}
-\newtheorem*{claim}{Claim}
 \newtheorem*{cor}{Corollary}
 \newtheorem*{conjecture}{Conjecture}
 \newtheorem*{defi}{Definition}
@@ -127,9 +126,35 @@
 \newtheorem{nprop}[nthm]{Proposition}
 \newtheorem{ncor}[nthm]{Corollary}
 
-% \renewcommand{\labelitemi}{--}
-% \renewcommand{\labelitemii}{$\circ$}
-% \renewcommand{\labelenumi}{(\roman{*})}
+% Nested claim in proof
+\newlist{Claim}{description}{1}
+\setlist[Claim]{
+  labelindent=2em
+}
+\newenvironment{claim}{
+  \let\qedsymbol\relax
+  \Claim\item[\textbf{Claim :}]
+}{
+  \endClaim
+  \let\qedsymbol\originalqedsymbol
+}
+
+\newlist{nClaim}{description}{1}
+\setlist[nClaim]{
+  labelindent=2em
+}
+\newcounter{nclaim}[nthm]
+\renewcommand\thenclaim{\arabic{nclaim}}
+\let\originalqedsymbol\qedsymbol
+\newenvironment{nclaim}{
+  \let\qedsymbol\relax
+  \refstepcounter{nclaim}
+  \nClaim\item[\textbf{Claim \thenclaim:}]
+}{
+  \endnClaim
+  \let\qedsymbol\originalqedsymbol
+}
+
 
 \let\stdsection\section
 \renewcommand\section{\newpage\stdsection}
@@ -274,7 +299,7 @@
 % \newcommand{\dR}{\mathrm{dR}}
 % \newcommand{\exterior}{\mathchoice{{\textstyle\bigwedge}}{{\bigwedge}}{{\textstyle\wedge}}{{\scriptstyle\wedge}}}
 \newcommand{\F}{\mathcal{F}}
-% \newcommand{\G}{\mathcal{G}}
+\newcommand{\G}{\mathcal{G}}
 % \newcommand{\Gr}{\mathrm{Gr}}
 % \newcommand{\haut}{\mathrm{ht}}
 % \newcommand{\Hol}{\mathrm{Hol}}
@@ -334,11 +359,11 @@
 % \DeclareMathOperator{\like}{like}
 % \DeclareMathOperator{\Lk}{Lk}
 % \DeclareMathOperator{\Maps}{Maps}
-% \DeclareMathOperator{\orb}{orb}
-% \DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\orb}{orb}
+\DeclareMathOperator{\ord}{ord}
 % \DeclareMathOperator{\otp}{otp}
 % \DeclareMathOperator{\poly}{poly}
-% \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\rank}{rank}
 % \DeclareMathOperator{\rel}{rel}
 % \DeclareMathOperator{\Rad}{Rad}
 \DeclareMathOperator{\Re}{Re}
@@ -364,3 +389,10 @@
 % Composities
 \newcommand{\spnset}[1]{\spn \crbkt{#1}}
 \newcommand{\dimset}[1]{\dim \crbkt{#1}}
+\newcommand{\tmap}[3]{{#1 : #2 \rightarrow #3}}
+\newcommand{\map}[5]{
+  \begin{align*}
+    #1 : #2 &\longrightarrow #3 \\
+    #4 &\longmapsto #5
+  \end{align*}
+}
