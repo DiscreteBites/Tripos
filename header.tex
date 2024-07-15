@@ -1,5 +1,6 @@
 \usepackage{alltt}
 \usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{faktor}
 \usepackage{esdiff}
 \usepackage{booktabs}
 \usepackage{caption}
@@ -162,6 +163,10 @@
 % Strike through
 \def\st{\bgroup \ULdepth=-.55ex \ULset}
 
+% Symbols 
+\newcommand{\mapsfrom}{\mathrel{\reflectbox{\ensuremath{\mapsto}}}}
+\newcommand{\longmapsfrom}{\mathrel{\reflectbox{\ensuremath{\longmapsto}}}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Maths Symbols %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -273,7 +278,9 @@
 % Algebra
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\im}{im}
-\newcommand{\gact}{\curvearrowright}
+\DeclareMathOperator{\gact}{\curvearrowright}
+\DeclareMathOperator{\normalin}{\triangleleft}
+\DeclareMathOperator{\hasnormal}{\triangleright}
 
 % \DeclareMathOperator{\adj}{adj}
 % \DeclareMathOperator{\Ann}{Ann}

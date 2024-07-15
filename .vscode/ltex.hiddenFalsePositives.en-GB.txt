@@ -1,0 +1,4 @@
+{"rule":"IN_PRINCIPAL","sentence":"^\\QUnique factorization in principal ideal domains, and in polynomial rings.\\E$"}
+{"rule":"MISSING_GENITIVE","sentence":"^\\QHilbert basis theorem.\\E$"}
+{"rule":"CAPITALIZATION_NNP_DERIVED","sentence":"^\\QModules Definitions, examples of vector spaces, abelian groups and vector spaces with an endomorphism.\\E$"}
+{"rule":"CAPITALIZATION_NNP_DERIVED","sentence":"^\\QStructure of finitely generated modules over Euclidean domains, applications to abelian groups and Jordan normal form.\\E$"}
